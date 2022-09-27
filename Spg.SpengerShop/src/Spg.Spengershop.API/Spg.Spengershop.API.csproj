@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Spg.Spengershop.Application\Spg.Spengershop.Application.csproj" />
+    <ProjectReference Include="..\Spg.Spengershop.Domain\Spg.Spengershop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

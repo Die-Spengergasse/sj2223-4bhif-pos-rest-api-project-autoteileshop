@@ -1,4 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using Spg.Spengershop.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//DB
+DbContextOptions options = new DbContextOptionsBuilder()
+    .UseSqlite("Data Source=SpengerShop.db")
+    .Options;
+
+SpengerShopContext db = new SpengerShopContext(options);
+db.Database.EnsureDeleted();
+db.Database.EnsureCreated();
+
 
 // Add services to the container.
 

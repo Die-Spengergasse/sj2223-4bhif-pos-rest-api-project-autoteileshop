@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Spg.Spengershop.Domain\Spg.Spengershop.Domain.csproj" />
+    <ProjectReference Include="..\Spg.Spengershop.Infrastructure\Spg.Spengershop.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
