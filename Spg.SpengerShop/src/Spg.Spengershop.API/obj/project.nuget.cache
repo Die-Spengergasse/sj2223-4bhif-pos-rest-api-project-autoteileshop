@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "scFXpAAt43aLQS4FKOKaFB+QxH9vYNPzhIScroS/9YisByqpneLUOUP6YY4GNrOthPmcTZDf7MB0O+GKVubcHw==",
+  "dgSpecHash": "VkciL0+b2Uz3kxEZBlkx/x1eweJCPDuQ+otcQWvXdP4DvjsYI660xbBZHbquOKbyuKQOb2dA4M+Rv9FpH1EWHQ==",
   "success": true,
-  "projectFilePath": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\Spg.Spengershop.API\\Spg.Spengershop.API.csproj",
+  "projectFilePath": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\src\\Spg.Spengershop.API\\Spg.Spengershop.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\david\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

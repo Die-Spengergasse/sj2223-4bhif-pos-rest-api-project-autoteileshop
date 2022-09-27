@@ -230,11 +230,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\Spg.Spengershop.API\\Spg.Spengershop.API.csproj",
+      "projectUniqueName": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\src\\Spg.Spengershop.API\\Spg.Spengershop.API.csproj",
       "projectName": "Spg.Spengershop.API",
-      "projectPath": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\Spg.Spengershop.API\\Spg.Spengershop.API.csproj",
+      "projectPath": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\src\\Spg.Spengershop.API\\Spg.Spengershop.API.csproj",
       "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-      "outputPath": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\Spg.Spengershop.API\\obj\\",
+      "outputPath": "D:\\4 Klasse\\Pos1 Repo\\git-github-fundamentals-David-vie21\\Spg.SpengerShop\\src\\Spg.Spengershop.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
