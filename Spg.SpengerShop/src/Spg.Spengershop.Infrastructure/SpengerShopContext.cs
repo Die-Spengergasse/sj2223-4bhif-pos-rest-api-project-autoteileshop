@@ -16,9 +16,13 @@ namespace Spg.Spengershop.Infrastructure
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
+        
 
+        public SpengerShopContext(DbContextOptions options) : base(options)
+        {
+        }
 
-        public SpengerShopContext(DbContextOptions<SpengerShopContext> options) : base(options)
+        protected SpengerShopContext(): this(new DbContextOptions<DbContext>())
         {
         }
 
@@ -28,14 +32,14 @@ namespace Spg.Spengershop.Infrastructure
                 options.UseSqlite("Data Source=Spengershop.db");
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Customer>().ToTable("Customer");
-        //    modelBuilder.Entity<ShoppingCartItem>().ToTable("ShoppingCartItem");
-        //    modelBuilder.Entity<Catagory>().ToTable("Catagory");
-        //    modelBuilder.Entity<Product>().ToTable("Product");
-        //    modelBuilder.Entity<ShoppingCart>().ToTable("ShoppingCart");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<ShoppingCartItem>().ToTable("ShoppingCartItem");
+            modelBuilder.Entity<Catagory>().ToTable("Catagory");
+            modelBuilder.Entity<Product>().ToTable("Product");
+            modelBuilder.Entity<ShoppingCart>().ToTable("ShoppingCart");
 
-        //}
+        }
     }
 }

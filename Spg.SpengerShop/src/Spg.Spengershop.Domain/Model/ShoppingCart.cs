@@ -11,8 +11,7 @@ namespace Spg.Spengershop.Domain.Model
         public int Id { get; set; }
         public Guid guid { get; set; }
         private List<ShoppingCartItem> _shoppingCartItems = new();
-
-        
+               
 
         public IReadOnlyList<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems;
         public int CustomerId { get; set; }
@@ -21,6 +20,11 @@ namespace Spg.Spengershop.Domain.Model
         {
             Id = id;
             this.guid = guid;
+        }
+
+        public ShoppingCart()
+        {
+           
         }
 
         public void AddShoppingCartItem(ShoppingCartItem entity)
