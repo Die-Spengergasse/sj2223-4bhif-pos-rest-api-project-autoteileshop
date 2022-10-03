@@ -284,8 +284,6 @@ namespace Spg.AutoTeileShop.Test
             db.ShoppingCarts.Add(shoppingCart);
 
             
-
-
             db.SaveChanges();
 
             //Count Test
@@ -303,9 +301,25 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems.Count(), 2);
             Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems.First(), shoppingCartItem);
             Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems.Last(), shoppingCartItem2);
+        }
 
+        [Fact]
+        public void Create_Warehouse()
+        {
 
+            createDB();
 
+            Warehouse warehouse = new Warehouse()
+            {
+                Guid = Guid.NewGuid(),
+                Discount = 10,
+                Quality = QualityType.Gut,
+                Quantity = 10,
+                receive = DateTime.Now
+            };
+            db.Warehouses.Add(warehouse);
+            db.SaveChanges();
+            Assert.Equal(1, db.Warehouses.Count());
         }
     }
 }
