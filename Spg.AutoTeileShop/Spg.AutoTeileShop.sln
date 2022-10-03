@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.API", "src\Spg.AutoTeileShop.API\Spg.AutoTeileShop.API.csproj", "{5EC987F8-C50F-480E-B885-4EBF92B73EB9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DD9753F-D304-4C66-B427-C4B52055CB1F} = {2DD9753F-D304-4C66-B427-C4B52055CB1F}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Application", "src\Spg.AutoTeileShop.Application\Spg.AutoTeileShop.Application.csproj", "{BE4F5AD1-ED96-4943-A32E-EAD651434622}"
 EndProject

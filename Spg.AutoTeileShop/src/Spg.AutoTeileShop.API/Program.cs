@@ -1,4 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+//DB
+DbContextOptions options = new DbContextOptionsBuilder()
+    .UseSqlite("Data Source=AutoTeileShop.db")
+    .Options;
+
+AutoTeileShopContext db = new AutoTeileShopContext(options);
+db.Database.EnsureDeleted();
+db.Database.EnsureCreated();
+
+
 
 // Add services to the container.
 
