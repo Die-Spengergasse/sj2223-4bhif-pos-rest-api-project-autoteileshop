@@ -12,7 +12,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Guid Guid { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public Catagory catagory { get; set; }
+        public Catagory? catagory { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? Image { get; set; }
         
