@@ -18,7 +18,7 @@ namespace Spg.AutoTeileShop.Infrastructure
         public DbSet<Warehouse> Warehouses{ get; set; }
 
 
-    public AutoTeileShopContext(DbContextOptions options) : base(options)
+        public AutoTeileShopContext(DbContextOptions options) : base(options)
         {
         }
 
