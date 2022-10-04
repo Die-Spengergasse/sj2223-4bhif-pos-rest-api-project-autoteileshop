@@ -380,6 +380,138 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(1, db.Products.Count());
         }
 
+        [Fact]
+        public void DomainModel_Add_ShoppingCarItem_to_ShoppingCar_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 5
+            };
+            db.Products.Add(product);
+
+            ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 1,
+                ProductNav = product,
+            };
+            db.ShoppingCartItems.Add(shoppingCartItem);
+
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                guid = Guid.NewGuid(),
+            };
+            shoppingCart.AddShoppingCartItem(shoppingCartItem);
+            db.ShoppingCarts.Add(shoppingCart);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.ShoppingCarts.Count());
+            Assert.Equal(1, db.ShoppingCartItems.Count());
+            Assert.Equal(1, db.Products.Count());
+        }
+
+        [Fact]
+        public void DomainModel_Add_ShoppingCarItem_to_ShoppingCar_False_More_Pices_than_Stock_Test()
+        {
+            AutoTeileShopContext db = createDB();
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 1
+            };
+
+            db.Products.Add(product);
+
+            ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 2,
+                ProductNav = product,
+            };
+            db.ShoppingCartItems.Add(shoppingCartItem);
+
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                guid = Guid.NewGuid(),
+            };
+            try
+            {
+                bool worked = shoppingCart.AddShoppingCartItem(shoppingCartItem);
+                db.ShoppingCarts.Add(shoppingCart);
+   
+            }
+            catch (Exception e)
+            {
+                Assert.Equal("Not enough stock", e.Message);
+            }
+
+            db.SaveChanges();
+
+            Assert.Equal(0, db.ShoppingCarts.Count());
+            Assert.Equal(1, db.ShoppingCartItems.Count());
+            Assert.Equal(1, db.Products.Count());
+        }
+
+
+        [Fact]
+        public void DomainModel_Add_ShoppingCarItem_to_ShoppingCar_2_Items_of_the_same_Product_Test()
+        {
+            AutoTeileShopContext db = createDB();
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 4
+            };
+
+            db.Products.Add(product);
+
+            ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 1,
+                ProductNav = product,
+            };
+            db.ShoppingCartItems.Add(shoppingCartItem);
+
+            ShoppingCartItem shoppingCartItem2 = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 1,
+                ProductNav = product,
+            };
+            db.ShoppingCartItems.Add(shoppingCartItem);
+
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                guid = Guid.NewGuid(),
+            };
+           
+           bool worked = shoppingCart.AddShoppingCartItem(shoppingCartItem);
+           bool worked2 = shoppingCart.AddShoppingCartItem(shoppingCartItem);
+
+            db.ShoppingCarts.Add(shoppingCart);
+
+           db.SaveChanges();
+
+            Assert.Equal(1, db.ShoppingCarts.First().ShoppingCartItems.Count());
+            Assert.Equal(2, db.ShoppingCarts.First().ShoppingCartItems.First().Pieces);
+            
+            Assert.Equal(1, db.ShoppingCarts.Count());
+            Assert.Equal(1, db.ShoppingCartItems.Count());
+            Assert.Equal(1, db.Products.Count());
+        }
         //[Fact]
         //public void Create_Warehouse()
         //{

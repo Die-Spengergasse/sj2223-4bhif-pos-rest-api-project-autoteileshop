@@ -28,38 +28,42 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
-        public void AddShoppingCartItem(ShoppingCartItem entity)
+        public bool AddShoppingCartItem(ShoppingCartItem entity)
         {
-            if (entity is not null)
+            if (entity is not null) // Kann garnicht null sein
             {
                 if (entity.Pieces <= entity.ProductNav.Stock)
                 {
                     entity.ProductNav.Stock = entity.ProductNav.Stock - entity.Pieces;
                     try
                     {
-                        //ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Id == entity.ProductNav.Id);
                         ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Guid == entity.ProductNav.Guid);
                         if (exsitingShoppingCartItem is not null)
                         {
 
-                            exsitingShoppingCartItem.Pieces = entity.Pieces + entity.Pieces;
+                            exsitingShoppingCartItem.Pieces = exsitingShoppingCartItem.Pieces + entity.Pieces; //richtig gestellt
+                            return true;
                         }
                         else
                         {
                             _shoppingCartItems.Add(entity);
+                            return true;
                         }
                     }
                     catch (InvalidOperationException e)
                     {
                         Console.WriteLine(e);
                         //throw;
+                        return false;
                     }
                 }
                 else
                 {
-                    //throw new Exception("Not enough stock");
+                    throw new Exception("Not enough stock");
+                    //return false;
                 }
             }
+            return false;
         }
 
         public void RemoveShoppingCartItem(ShoppingCartItem entity)
