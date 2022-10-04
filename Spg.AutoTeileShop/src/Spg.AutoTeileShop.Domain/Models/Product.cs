@@ -19,7 +19,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Description { get; set; } = string.Empty;
         public string? Image { get; set; }
         public QualityType Quality { get; set; }
-        public int Quantity { get; set; }
+        public int Stock { get; set; }
         public int Discount { get; set; }
         public DateTime receive { get; set; }
 
