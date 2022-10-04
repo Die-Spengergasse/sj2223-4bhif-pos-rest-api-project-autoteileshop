@@ -21,10 +21,10 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_Catagory_Test()
+        public void DomainModel_Create_Catagory_Test()
         {
             //Arrange
-            
+
             AutoTeileShopContext db = createDB();
             Catagory catagory = new Catagory()
             {
@@ -32,23 +32,23 @@ namespace Spg.AutoTeileShop.Test
                 Description = "test",
                 Name = "test"
             };
-            
+
             //Act
-            
+
             db.Catagories.Add(catagory);
             db.SaveChanges();
-            
+
             //Assert
-            
+
             Assert.Equal(1, db.Catagories.Count());
 
         }
 
         [Fact]
-        public void Create_Catagory_with_TopCatagory_Test()
+        public void DomainModel_Create_Catagory_with_TopCatagory_Test()
         {
             AutoTeileShopContext db = createDB();
-            
+
 
             Catagory TopCatagory = new Catagory()
             {
@@ -77,7 +77,7 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_Product_with_Catagory_Test()
+        public void DomainModel_Create_Product_with_Catagory_Test()
         {
             AutoTeileShopContext db = createDB();
 
@@ -106,7 +106,7 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_Customer_Test()
+        public void DomainModel_Create_Customer_Test()
         {
             AutoTeileShopContext db = createDB();
 
@@ -125,14 +125,14 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_ShoppingCartItem()
+        public void DomainModel_Create_ShoppingCartItem()
         {
             AutoTeileShopContext db = createDB();
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
             {
                 guid = Guid.NewGuid(),
-                Quantity = 1,
+                Pieces = 1,
             };
             db.ShoppingCartItems.Add(shoppingCartItem);
             db.SaveChanges();
@@ -140,7 +140,7 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_ShoppingCart()
+        public void DomainModel_Create_ShoppingCart()
         {
             AutoTeileShopContext db = createDB();
 
@@ -156,7 +156,7 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartNav()
+        public void DomainModel_Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartNav()
         {
             //Arrange
 
@@ -193,7 +193,7 @@ namespace Spg.AutoTeileShop.Test
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
             {
                 guid = Guid.NewGuid(),
-                Quantity = 1,
+                Pieces = 1,
                 ProductNav = product,
                 ShoppingCartNav = shoppingCart,
 
@@ -203,7 +203,7 @@ namespace Spg.AutoTeileShop.Test
             ShoppingCartItem shoppingCartItem2 = new ShoppingCartItem()
             {
                 guid = Guid.NewGuid(),
-                Quantity = 6,
+                Pieces = 6,
                 ProductNav = product,
                 ShoppingCartNav = shoppingCart,
             };
@@ -213,7 +213,7 @@ namespace Spg.AutoTeileShop.Test
             db.SaveChanges();
 
             //Assert
-            
+
             //Count Test
             Assert.Equal(1, db.Customers.Count());
             Assert.Equal(1, db.Products.Count());
@@ -231,16 +231,34 @@ namespace Spg.AutoTeileShop.Test
         }
 
         [Fact]
-        public void Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartItemList()
+        public void DomainModel_Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartItemList()
         {
             AutoTeileShopContext db = createDB();
+
+            Catagory Catagory = new Catagory()
+            {
+                CategoryType = CategoryTypes.Fahrwerk,
+                Description = "test1",
+                Name = "test1",
+            };
+            db.Catagories.Add(Catagory);
+
+            Catagory Catagory2 = new Catagory()
+            {
+                CategoryType = CategoryTypes.Tuning,
+                Description = "test2",
+                Name = "test2",
+            };
+            db.Catagories.Add(Catagory2);
 
             Product product = new Product()
             {
                 Description = "Des Test",
                 Guid = Guid.NewGuid(),
                 Name = "Pro Test",
-                Price = 499.99M
+                Price = 499.99M,
+                Stock = 10,
+                catagory = Catagory
             };
             db.Products.Add(product);
 
@@ -249,7 +267,9 @@ namespace Spg.AutoTeileShop.Test
                 Description = "Des Test2",
                 Guid = Guid.NewGuid(),
                 Name = "Pro Test2",
-                Price = 499.99M
+                Price = 499.99M,
+                Stock = 10,
+                catagory = Catagory2
             };
             db.Products.Add(product2);
 
@@ -267,19 +287,19 @@ namespace Spg.AutoTeileShop.Test
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
             {
                 guid = Guid.NewGuid(),
-                Quantity = 1,
+                Pieces = 1,
                 ProductNav = product,
 
             };
-            //db.ShoppingCartItems.Add(shoppingCartItem);
+            db.ShoppingCartItems.Add(shoppingCartItem);
 
             ShoppingCartItem shoppingCartItem2 = new ShoppingCartItem()
             {
                 guid = Guid.NewGuid(),
-                Quantity = 6,
+                Pieces = 1,
                 ProductNav = product2,
             };
-            //db.ShoppingCartItems.Add(shoppingCartItem2);
+            db.ShoppingCartItems.Add(shoppingCartItem2);
 
             ShoppingCart shoppingCart = new ShoppingCart()
             {
@@ -288,6 +308,8 @@ namespace Spg.AutoTeileShop.Test
             };
             shoppingCart.AddShoppingCartItem(shoppingCartItem);
             shoppingCart.AddShoppingCartItem(shoppingCartItem2);
+
+            Console.WriteLine(shoppingCart.ShoppingCartItems.Count());
 
             db.ShoppingCarts.Add(shoppingCart);
 
@@ -306,35 +328,34 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ProductNav, product);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem2.Id).ProductNav, product2);
 
-            Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems.Count(), 2);
+            Assert.Equal(2, (db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems).Count());
             Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems.First(), shoppingCartItem);
             Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).ShoppingCartItems.Last(), shoppingCartItem2);
         }
 
         [Fact]
-        public void Create_Warehouse()
+        public void DomainModel_Create_Car_Test()
         {
-
             AutoTeileShopContext db = createDB();
 
-            Warehouse warehouse = new Warehouse()
+            Car car = new Car()
             {
-                Guid = Guid.NewGuid(),
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
             };
-
-            db.Warehouses.Add(warehouse);
-
+            db.Cars.Add(car);
             db.SaveChanges();
-            Assert.Equal(1, db.Warehouses.Count());
 
-
+            Assert.Equal(1, db.Cars.Count());
         }
 
         [Fact]
-        public void Create_Warehouse_with_Product()
+        public void DomainModel_Create_Car_With_Product_Test()
         {
-
             AutoTeileShopContext db = createDB();
+
+
 
             Product product = new Product()
             {
@@ -345,29 +366,78 @@ namespace Spg.AutoTeileShop.Test
             };
             db.Products.Add(product);
 
-            Product product2 = new Product()
+            Car car = new Car()
             {
-                Description = "Des Test2",
-                Guid = Guid.NewGuid(),
-                Name = "Pro Test2",
-                Price = 499.99M
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
             };
-            db.Products.Add(product2);
-
-            Warehouse warehouse = new Warehouse()
-            {
-                Guid = Guid.NewGuid(),
-            };
-            warehouse.AddProduct(product);
-            warehouse.AddProduct(product2);
-
-            db.Warehouses.Add(warehouse);
+            product.AddProductFitsForCar(car);
+            db.Cars.Add(car);
             db.SaveChanges();
-            
-            Assert.Equal(1, db.Warehouses.Count());
-            Assert.Equal(2, db.Products.Count());
-            Assert.Equal(product, db.Warehouses.Find(warehouse.Id).Products.First());
-            Assert.Equal(product2, db.Warehouses.Find(warehouse.Id).Products.Last());
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
         }
+
+        //[Fact]
+        //public void Create_Warehouse()
+        //{
+
+        //    AutoTeileShopContext db = createDB();
+
+        //    Warehouse warehouse = new Warehouse()
+        //    {
+        //        Guid = Guid.NewGuid(),
+        //    };
+
+        //    db.Warehouses.Add(warehouse);
+
+        //    db.SaveChanges();
+        //    Assert.Equal(1, db.Warehouses.Count());
+
+
+        //}
+
+        //[Fact]
+        //public void Create_Warehouse_with_Product()
+        //{
+
+        //    AutoTeileShopContext db = createDB();
+
+        //    Product product = new Product()
+        //    {
+        //        Description = "Des Test",
+        //        Guid = Guid.NewGuid(),
+        //        Name = "Pro Test",
+        //        Price = 499.99M
+        //    };
+        //    db.Products.Add(product);
+
+        //    Product product2 = new Product()
+        //    {
+        //        Description = "Des Test2",
+        //        Guid = Guid.NewGuid(),
+        //        Name = "Pro Test2",
+        //        Price = 499.99M
+        //    };
+        //    db.Products.Add(product2);
+
+        //    Warehouse warehouse = new Warehouse()
+        //    {
+        //        Guid = Guid.NewGuid(),
+        //    };
+        //    warehouse.AddProduct(product);
+        //    warehouse.AddProduct(product2);
+
+        //    db.Warehouses.Add(warehouse);
+        //    db.SaveChanges();
+
+        //    Assert.Equal(1, db.Warehouses.Count());
+        //    Assert.Equal(2, db.Products.Count());
+        //    Assert.Equal(product, db.Warehouses.Find(warehouse.Id).Products.First());
+        //    Assert.Equal(product2, db.Warehouses.Find(warehouse.Id).Products.Last());
+        //}
+
     }
 }

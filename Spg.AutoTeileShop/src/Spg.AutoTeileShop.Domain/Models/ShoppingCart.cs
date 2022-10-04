@@ -37,7 +37,8 @@ namespace Spg.AutoTeileShop.Domain.Models
                     entity.ProductNav.Stock = entity.ProductNav.Stock - entity.Pieces;
                     try
                     {
-                        ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Id == entity.ProductNav.Id);
+                        //ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Id == entity.ProductNav.Id);
+                        ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Guid == entity.ProductNav.Guid);
                         if (exsitingShoppingCartItem is not null)
                         {
 

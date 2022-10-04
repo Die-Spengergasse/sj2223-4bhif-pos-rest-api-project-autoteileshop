@@ -11,7 +11,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public long Id { get; set; }
         public string Marke { get; set; } = string.Empty;
         public string Modell { get; set; } = string.Empty;
-        public string Baujahr { get; set; } = string.Empty;
+        public DateTime Baujahr { get; set; }
         private List<Product> _fitsForProducts { get; set; } = new();
         public IReadOnlyList<Product> FitsForProductsNav => _fitsForProducts;
     }
