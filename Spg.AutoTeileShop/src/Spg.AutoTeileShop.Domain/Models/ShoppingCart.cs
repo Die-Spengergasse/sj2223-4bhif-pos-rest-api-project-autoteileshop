@@ -16,6 +16,8 @@ namespace Spg.AutoTeileShop.Domain.Models
         
         public int CustomerId { get; set; }
         public Customer? CustomerNav { get; set; }
+        
+        
         public ShoppingCart(int id, Guid guid)
         {
             Id = id;
@@ -37,7 +39,6 @@ namespace Spg.AutoTeileShop.Domain.Models
             if (entity is not null)
                 _shoppingCartItems.Remove(entity);
         }
-
     }
 }
 

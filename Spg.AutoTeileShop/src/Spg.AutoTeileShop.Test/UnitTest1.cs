@@ -357,7 +357,6 @@ namespace Spg.AutoTeileShop.Test
             Warehouse warehouse = new Warehouse()
             {
                 Guid = Guid.NewGuid(),
-
             };
             warehouse.AddProduct(product);
             warehouse.AddProduct(product2);
@@ -369,7 +368,6 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(2, db.Products.Count());
             Assert.Equal(product, db.Warehouses.Find(warehouse.Id).Products.First());
             Assert.Equal(product2, db.Warehouses.Find(warehouse.Id).Products.Last());
-
         }
     }
 }

@@ -23,6 +23,18 @@ namespace Spg.AutoTeileShop.Domain.Models
         public int Discount { get; set; }
         public DateTime receive { get; set; }
 
-
+        // n zu n Relation
+        private List<Car> _productFitsForCar = new();
+        public IReadOnlyList<Car> ProductFitsForCar => _productFitsForCar;
+        public void AddProductFitsForCar(Car entity)
+        {
+            if (entity is not null)
+                _productFitsForCar.Add(entity);
+        }
+        public void RemoveProductFitsForCar(Car entity)
+        {
+            if (entity is not null)
+                _productFitsForCar.Remove(entity);
+        }
     }
 }
