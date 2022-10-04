@@ -8,7 +8,7 @@ namespace Spg.AutoTeileShop.Test
     {
         public AutoTeileShopContext db;
 
-        private void createDB()
+        private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
                 .UseSqlite("Data Source=AutoTeileShop.db")
@@ -17,12 +17,13 @@ namespace Spg.AutoTeileShop.Test
             db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
+            return db;
         }
 
         [Fact]
         public void Create_Catagory_Test()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             Catagory catagory = new Catagory()
             {
@@ -43,7 +44,8 @@ namespace Spg.AutoTeileShop.Test
         [Fact]
         public void Create_Catagory_with_TopCatagory_Test()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
+            
 
             Catagory TopCatagory = new Catagory()
             {
@@ -74,7 +76,7 @@ namespace Spg.AutoTeileShop.Test
         [Fact]
         public void Create_Product_with_Catagory_Test()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             Catagory Catagory = new Catagory()
             {
@@ -103,7 +105,7 @@ namespace Spg.AutoTeileShop.Test
         [Fact]
         public void Create_Customer_Test()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             Customer customer = new Customer()
             {
@@ -122,13 +124,12 @@ namespace Spg.AutoTeileShop.Test
         [Fact]
         public void Create_ShoppingCartItem()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
             {
                 guid = Guid.NewGuid(),
                 Quantity = 1,
-                
             };
             db.ShoppingCartItems.Add(shoppingCartItem);
             db.SaveChanges();
@@ -138,12 +139,12 @@ namespace Spg.AutoTeileShop.Test
         [Fact]
         public void Create_ShoppingCart()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             ShoppingCart shoppingCart = new ShoppingCart()
             {
                 guid = Guid.NewGuid(),
-                
+
             };
 
             db.ShoppingCarts.Add(shoppingCart);
@@ -154,8 +155,8 @@ namespace Spg.AutoTeileShop.Test
         [Fact]
         public void Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartNav()
         {
-            createDB();
-            
+            AutoTeileShopContext db = createDB();
+
             Product product = new Product()
             {
                 Description = "Des Test",
@@ -190,7 +191,7 @@ namespace Spg.AutoTeileShop.Test
                 Quantity = 1,
                 ProductNav = product,
                 ShoppingCartNav = shoppingCart,
-                
+
             };
             db.ShoppingCartItems.Add(shoppingCartItem);
 
@@ -215,17 +216,17 @@ namespace Spg.AutoTeileShop.Test
 
             //Relationen Test
             Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).CustomerNav, customer);
-            Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ProductNav, product);            
+            Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ProductNav, product);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ShoppingCartNav, shoppingCart);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem2.Id).ProductNav, product);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem2.Id).ShoppingCartNav, shoppingCart);
-            
+
         }
 
         [Fact]
         public void Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartItemList()
         {
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             Product product = new Product()
             {
@@ -283,7 +284,7 @@ namespace Spg.AutoTeileShop.Test
 
             db.ShoppingCarts.Add(shoppingCart);
 
-            
+
             db.SaveChanges();
 
             //Count Test
@@ -307,22 +308,20 @@ namespace Spg.AutoTeileShop.Test
         public void Create_Warehouse()
         {
 
-            createDB();
-
-            
+            AutoTeileShopContext db = createDB();
 
             Warehouse warehouse = new Warehouse()
             {
-                Guid = Guid.NewGuid(),                
+                Guid = Guid.NewGuid(),
             };
-       
-            
+
+
             db.Warehouses.Add(warehouse);
 
-            
+
             db.SaveChanges();
             Assert.Equal(1, db.Warehouses.Count());
-           
+
 
         }
 
@@ -330,7 +329,7 @@ namespace Spg.AutoTeileShop.Test
         public void Create_Warehouse_with_Product()
         {
 
-            createDB();
+            AutoTeileShopContext db = createDB();
 
             Product product = new Product()
             {
@@ -353,7 +352,7 @@ namespace Spg.AutoTeileShop.Test
             Warehouse warehouse = new Warehouse()
             {
                 Guid = Guid.NewGuid(),
-           
+
             };
             warehouse.AddProduct(product);
             warehouse.AddProduct(product2);
