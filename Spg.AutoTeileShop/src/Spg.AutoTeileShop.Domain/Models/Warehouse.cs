@@ -6,17 +6,27 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public enum QualityType { SehrGut, Gut, Mittel, Schlecht, SehrSchlecht }
 
     public class Warehouse
     {
         public long Id { get; set; }
         public Guid Guid { get; set; }
-        public long  ProdcutId { get; set; }
-        public Product? Product { get; set; }
-        public QualityType Quality { get; set; }
-        public int Quantity { get; set; }
-        public int Discount { get; set; }
-        public DateTime receive { get; set; }        
+
+        private List<Product> _products = new();
+        public IReadOnlyList<Product> Products => _products;
+
+
+        public void AddProduct(Product entity)
+        {
+            if (entity is not null)
+                _products.Add(entity);
+        }
+
+        public void RemoveProduct(Product entity)
+        {
+            if (entity is not null)
+                _products.Remove(entity);
+        }
+
     }
 }

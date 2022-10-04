@@ -309,17 +309,62 @@ namespace Spg.AutoTeileShop.Test
 
             createDB();
 
+            
+
+            Warehouse warehouse = new Warehouse()
+            {
+                Guid = Guid.NewGuid(),                
+            };
+       
+            
+            db.Warehouses.Add(warehouse);
+
+            
+            db.SaveChanges();
+            Assert.Equal(1, db.Warehouses.Count());
+           
+
+        }
+
+        [Fact]
+        public void Create_Warehouse_with_Product()
+        {
+
+            createDB();
+
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M
+            };
+            db.Products.Add(product);
+
+            Product product2 = new Product()
+            {
+                Description = "Des Test2",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test2",
+                Price = 499.99M
+            };
+            db.Products.Add(product2);
+
             Warehouse warehouse = new Warehouse()
             {
                 Guid = Guid.NewGuid(),
-                Discount = 10,
-                Quality = QualityType.Gut,
-                Quantity = 10,
-                receive = DateTime.Now
+           
             };
+            warehouse.AddProduct(product);
+            warehouse.AddProduct(product2);
+
             db.Warehouses.Add(warehouse);
             db.SaveChanges();
             Assert.Equal(1, db.Warehouses.Count());
+            Assert.Equal(2, db.Products.Count());
+            Assert.Equal(product, db.Warehouses.Find(warehouse.Id).Products.First());
+            Assert.Equal(product2, db.Warehouses.Find(warehouse.Id).Products.Last());
+
         }
     }
 }

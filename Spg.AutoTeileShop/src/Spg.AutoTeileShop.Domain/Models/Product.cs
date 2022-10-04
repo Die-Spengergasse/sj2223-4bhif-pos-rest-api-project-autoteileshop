@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
+
 {
+    public enum QualityType { SehrGut, Gut, Mittel, Schlecht, SehrSchlecht }
+
     public class Product
     {
         public long Id { get; set; }
@@ -15,7 +18,11 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Catagory? catagory { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? Image { get; set; }
-        
+        public QualityType Quality { get; set; }
+        public int Quantity { get; set; }
+        public int Discount { get; set; }
+        public DateTime receive { get; set; }
+
 
     }
 }
