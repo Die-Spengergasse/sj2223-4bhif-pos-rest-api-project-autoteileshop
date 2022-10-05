@@ -728,6 +728,8 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(0, db.Cars.First().FitsForProducts.Count());
             Assert.Equal(0, db.Products.First().ProductFitsForCar.Count());
         }
+
+        
         //[Fact]
         //public void Create_Warehouse()
         //{
