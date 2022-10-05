@@ -6,7 +6,7 @@ namespace Spg.AutoTeileShop.Test
 {
     public class UnitTest1
     {
-        public AutoTeileShopContext db;
+        
 
         private AutoTeileShopContext createDB()
         {
@@ -14,7 +14,7 @@ namespace Spg.AutoTeileShop.Test
                 .UseSqlite("Data Source=AutoTeileShop.db")
                 .Options;
 
-            db = new AutoTeileShopContext(options);
+            AutoTeileShopContext db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
             return db;
