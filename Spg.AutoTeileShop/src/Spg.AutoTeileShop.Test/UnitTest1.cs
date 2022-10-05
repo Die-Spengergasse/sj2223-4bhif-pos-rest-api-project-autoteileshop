@@ -411,6 +411,7 @@ namespace Spg.AutoTeileShop.Test
             db.ShoppingCarts.Add(shoppingCart);
             db.SaveChanges();
 
+            Assert.Equal(shoppingCart, shoppingCartItem.ShoppingCartNav);
             Assert.Equal(1, db.ShoppingCarts.Count());
             Assert.Equal(1, db.ShoppingCartItems.Count());
             Assert.Equal(1, db.Products.Count());
@@ -511,6 +512,221 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(1, db.ShoppingCarts.Count());
             Assert.Equal(1, db.ShoppingCartItems.Count());
             Assert.Equal(1, db.Products.Count());
+        }
+
+        [Fact]
+        public void DomainModel_Add_Car_to_Product_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Product product = new Product()
+            {
+                Description = "Test Product",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 5,
+                Quality = QualityType.Mittel,
+                Image = "/src/img.jpg",
+                Discount = 0,
+                receive = DateTime.Now,
+
+            };
+            db.Products.Add(product);
+
+            Car car = new Car()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
+                
+            };
+            //db.Cars.Add(car);
+
+            product.AddProductFitsForCar(car);
+            db.SaveChanges();
+            
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(car, db.Products.First().ProductFitsForCar.First());
+            Assert.Equal(product, db.Cars.First().FitsForProducts.First());
+        }
+
+        [Fact]
+        public void DomainModel_Add_Product_to_Car_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Product product = new Product()
+            {
+                Description = "Test Product",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 5,
+                Quality = QualityType.Mittel,
+                Image = "/src/img.jpg",
+                Discount = 0,
+                receive = DateTime.Now,
+
+            };
+            //db.Products.Add(product);
+
+            Car car = new Car()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
+
+            };
+            db.Cars.Add(car);
+
+            car.AddFitsForProducts(product);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(car, db.Products.First().ProductFitsForCar.First());
+            Assert.Equal(product, db.Cars.First().FitsForProducts.First());
+        }
+
+        [Fact]
+        public void DomainModel_Remove_ShoppingCarItem_From_ShoppingCar() 
+        {            
+            AutoTeileShopContext db = createDB();
+            
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 4
+            };
+
+            db.Products.Add(product);
+
+            ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 1,
+                ProductNav = product,
+            };
+            //db.ShoppingCartItems.Add(shoppingCartItem);
+
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                guid = Guid.NewGuid(),
+            };
+            
+            shoppingCart.AddShoppingCartItem(shoppingCartItem);
+            db.ShoppingCarts.Add(shoppingCart);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.ShoppingCarts.First().ShoppingCartItems.Count());
+            Assert.Equal(shoppingCart, shoppingCartItem.ShoppingCartNav);
+
+            shoppingCart.RemoveShoppingCartItem(shoppingCartItem);
+            db.SaveChanges();
+
+            Assert.Equal(null, db.ShoppingCartItems.First().ShoppingCartNav);
+            Assert.Equal(0, db.ShoppingCarts.First().ShoppingCartItems.Count());
+            Assert.Equal(1, db.ShoppingCarts.Count());
+            Assert.Equal(1, db.ShoppingCartItems.Count());
+            Assert.Equal(1, db.Products.Count());
+        }
+
+        [Fact]
+        public void DomainModel_Remove_Product_From_CarList()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Product product = new Product()
+            {
+                Description = "Test Product",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 5,
+                Quality = QualityType.Mittel,
+                Image = "/src/img.jpg",
+                Discount = 0,
+                receive = DateTime.Now,
+
+            };
+            //db.Products.Add(product);
+
+            Car car = new Car()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
+
+            };
+            db.Cars.Add(car);
+
+            car.AddFitsForProducts(product);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(car, db.Products.First().ProductFitsForCar.First());
+            Assert.Equal(product, db.Cars.First().FitsForProducts.First());
+
+            car.RemoveFitsForProducts(product);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(0, db.Cars.First().FitsForProducts.Count());
+            Assert.Equal(0, db.Products.First().ProductFitsForCar.Count());
+        }
+
+
+        [Fact]
+        public void DomainModel_Remove_Car_From_ProductgList()
+        {
+            AutoTeileShopContext db = createDB();
+            
+            Car car = new Car()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
+
+            };
+            //db.Cars.Add(car);
+            Product product = new Product()
+            {
+                Description = "Test Product",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 5,
+                Quality = QualityType.Mittel,
+                Image = "/src/img.jpg",
+                Discount = 0,
+                receive = DateTime.Now,
+
+            };
+            db.Products.Add(product);
+
+
+            product.AddProductFitsForCar(car);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(car, db.Products.First().ProductFitsForCar.First());
+            Assert.Equal(product, db.Cars.First().FitsForProducts.First());
+
+            car.RemoveFitsForProducts(product);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(0, db.Cars.First().FitsForProducts.Count());
+            Assert.Equal(0, db.Products.First().ProductFitsForCar.Count());
         }
         //[Fact]
         //public void Create_Warehouse()

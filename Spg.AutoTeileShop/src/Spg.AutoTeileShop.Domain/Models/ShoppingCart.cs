@@ -69,7 +69,12 @@ namespace Spg.AutoTeileShop.Domain.Models
         public void RemoveShoppingCartItem(ShoppingCartItem entity)
         {
             if (entity is not null)
-                _shoppingCartItems.Remove(entity);
+            {
+                if (_shoppingCartItems.Count > 0)
+                {
+                    _shoppingCartItems.Remove(entity);
+                }
+            }
         }
     }
 }

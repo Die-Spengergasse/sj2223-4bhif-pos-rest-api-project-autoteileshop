@@ -29,12 +29,21 @@ namespace Spg.AutoTeileShop.Domain.Models
         public void AddProductFitsForCar(Car entity)
         {
             if (entity is not null)
+            {
                 _productFitsForCar.Add(entity);
+                if (!entity.FitsForProducts.Contains(this))
+                    entity.AddFitsForProducts(this);
+            }  
+                
         }
         public void RemoveProductFitsForCar(Car entity)
         {
             if (entity is not null)
+            {
                 _productFitsForCar.Remove(entity);
+                if (entity.FitsForProducts.Contains(this))
+                    entity.RemoveFitsForProducts(this);
+            }
         }
     }
 }
