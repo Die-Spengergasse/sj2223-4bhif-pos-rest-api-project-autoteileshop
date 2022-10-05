@@ -728,6 +728,45 @@ namespace Spg.AutoTeileShop.Test
             Assert.Equal(0, db.Cars.First().FitsForProducts.Count());
             Assert.Equal(0, db.Products.First().ProductFitsForCar.Count());
         }
+
+        [Fact]
+        public void DomainModel_Add_Product_To_CarList_With_Existing_Product() 
+        {
+            AutoTeileShopContext db = createDB();
+
+            Car car = new Car()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3",
+
+            };
+            db.Cars.Add(car);
+            Product product = new Product()
+            {
+                Description = "Test Product",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 5,
+                Quality = QualityType.Mittel,
+                Image = "/src/img.jpg",
+                Discount = 0,
+                receive = DateTime.Now,
+
+            };
+            db.Products.Add(product);
+
+
+
+            car.AddFitsForProducts(product);
+            db.SaveChanges();
+
+            Assert.Equal(1, db.Cars.Count());
+            Assert.Equal(1, db.Products.Count());
+            Assert.Equal(car, db.Products.First().ProductFitsForCar.First());
+            Assert.Equal(product, db.Cars.First().FitsForProducts.First());
+        }
         
 
     }
