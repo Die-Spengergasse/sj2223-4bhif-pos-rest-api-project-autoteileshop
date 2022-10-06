@@ -624,7 +624,7 @@ namespace Spg.AutoTeileShop.Test
             db.ShoppingCarts.Add(shoppingCart);
             db.SaveChanges();
 
-            Assert.Equal(1, db.ShoppingCarts.First().ShoppingCartItems.Count());
+            Assert.Single(db.ShoppingCarts.First().ShoppingCartItems);
             Assert.Equal(shoppingCart, shoppingCartItem.ShoppingCartNav);
 
             shoppingCart.RemoveShoppingCartItem(shoppingCartItem);
@@ -678,9 +678,9 @@ namespace Spg.AutoTeileShop.Test
             db.SaveChanges();
 
             Assert.Single(db.Cars);
-            Assert.Equal(1, db.Products.Count());
-            Assert.Equal(0, db.Cars.First().FitsForProducts.Count());
-            Assert.Equal(0, db.Products.First().ProductFitsForCar.Count());
+            Assert.Single(db.Products);
+            Assert.Empty(db.Cars.First().FitsForProducts);
+            Assert.Empty(db.Products.First().ProductFitsForCar);
         }
 
 
@@ -716,18 +716,18 @@ namespace Spg.AutoTeileShop.Test
             product.AddProductFitsForCar(car);
             db.SaveChanges();
 
-            Assert.Equal(1, db.Cars.Count());
-            Assert.Equal(1, db.Products.Count());
+            Assert.Single(db.Cars);
+            Assert.Single(db.Products);
             Assert.Equal(car, db.Products.First().ProductFitsForCar.First());
             Assert.Equal(product, db.Cars.First().FitsForProducts.First());
 
             car.RemoveFitsForProducts(product);
             db.SaveChanges();
 
-            Assert.Equal(1, db.Cars.Count());
-            Assert.Equal(1, db.Products.Count());
-            Assert.Equal(0, db.Cars.First().FitsForProducts.Count());
-            Assert.Equal(0, db.Products.First().ProductFitsForCar.Count());
+            Assert.Single(db.Cars);
+            Assert.Single(db.Products);
+            Assert.Empty(db.Cars.First().FitsForProducts);
+            Assert.Empty(db.Products.First().ProductFitsForCar);
         }
 
         [Fact]
