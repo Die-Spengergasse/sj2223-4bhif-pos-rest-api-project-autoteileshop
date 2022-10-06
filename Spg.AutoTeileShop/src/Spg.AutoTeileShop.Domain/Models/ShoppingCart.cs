@@ -42,18 +42,6 @@ namespace Spg.AutoTeileShop.Domain.Models
             }
             return false;
         }
-
-        public void RemoveShoppingCartItem(ShoppingCartItem item)
-        {
-            if (item is not null)
-            {
-                if (_shoppingCartItems.Exists(i => i.Id == item.Id))
-                {
-                    _shoppingCartItems.Remove(item);
-                }
-            }
-        }
-
         public bool Add_Item_to_List_or_increas_Pieces_in_Item(ShoppingCartItem item)
         {
             try
@@ -81,6 +69,19 @@ namespace Spg.AutoTeileShop.Domain.Models
                 return false;
             }
         }
+        
+        public void RemoveShoppingCartItem(ShoppingCartItem item)
+        {
+            if (item is not null)
+            {
+                if (_shoppingCartItems.Contains(item))
+                {
+                    _shoppingCartItems.Remove(item);
+                }
+            }
+        }
+
+        
     }
 }
 

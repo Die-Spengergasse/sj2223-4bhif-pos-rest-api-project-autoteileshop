@@ -30,6 +30,8 @@ namespace Spg.AutoTeileShop.Infrastructure
         {
             if (!options.IsConfigured)
                 options.UseSqlite("Data Source=AutoTeileShop.db");
+
+            
         }
     }
 }
