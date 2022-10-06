@@ -26,34 +26,13 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
-        public bool AddShoppingCartItem(ShoppingCartItem entity)
+        public bool AddShoppingCartItem(ShoppingCartItem item)
         {
-            if (entity is not null) // Kann garnicht null sein
+            if (item is not null) // Kann garnicht null sein
             {
-                if (entity.Pieces <= entity.ProductNav.Stock)
+                if (item.Pieces <= item.ProductNav.Stock)
                 {
-                    entity.ProductNav.Stock = entity.ProductNav.Stock - entity.Pieces;
-                    try
-                    {
-                        ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Guid == entity.ProductNav.Guid);
-                        if (exsitingShoppingCartItem is not null)
-                        {
-
-                            exsitingShoppingCartItem.Pieces = exsitingShoppingCartItem.Pieces + entity.Pieces; //richtig gestellt
-                            return true;
-                        }
-                        else
-                        {
-                            _shoppingCartItems.Add(entity);
-                            return true;
-                        }
-                    }
-                    catch (InvalidOperationException e)
-                    {
-                        Console.WriteLine(e);
-                        //throw;
-                        return false;
-                    }
+                    Add_Item_to_List_or_increas_Pieces_in_Item(item);
                 }
                 else
                 {
@@ -64,14 +43,42 @@ namespace Spg.AutoTeileShop.Domain.Models
             return false;
         }
 
-        public void RemoveShoppingCartItem(ShoppingCartItem entity)
+        public void RemoveShoppingCartItem(ShoppingCartItem item)
         {
-            if (entity is not null)
+            if (item is not null)
             {
-                if (_shoppingCartItems.Count > 0)
+                if (_shoppingCartItems.Exists(i => i.Id == item.Id))
                 {
-                    _shoppingCartItems.Remove(entity);
+                    _shoppingCartItems.Remove(item);
                 }
+            }
+        }
+
+        public bool Add_Item_to_List_or_increas_Pieces_in_Item(ShoppingCartItem item)
+        {
+            try
+            {
+                ShoppingCartItem? exsitingShoppingCartItem = _shoppingCartItems.SingleOrDefault(s => s.ProductNav.Guid == item.ProductNav.Guid);
+                if (exsitingShoppingCartItem is not null)
+                {
+
+                    exsitingShoppingCartItem.Pieces += item.Pieces; //richtig gestellt
+                    item.ProductNav.Stock = item.ProductNav.Stock - item.Pieces;
+                    return true;
+
+                }
+                else
+                {
+                    _shoppingCartItems.Add(item);
+                    item.ProductNav.Stock -= item.Pieces;
+                    return true;
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
+                //throw;
+                return false;
             }
         }
     }

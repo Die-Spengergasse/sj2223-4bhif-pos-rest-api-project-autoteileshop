@@ -14,7 +14,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Guid guid { get; set; }
         public int Pieces { get; set; }        
         public long? ProductId { get; set; }
-        public Product? ProductNav { get; set; }
+        public Product ProductNav { get; set; }
         public long? ShoppingCartId { get; set; }
         public ShoppingCart? ShoppingCartNav { get; set; }
     }
