@@ -807,13 +807,13 @@ namespace Spg.AutoTeileShop.Test
             db.SaveChanges();
 
             Assert.True(1 == db.ShoppingCarts.First().ShoppingCartItems.First().Pieces);
-            //Assert.True(4 == db.Products.First().Stock); gehört in eigenen unit_Test
 
             shoppingCart.AddShoppingCartItem(shoppingCartItem);
             db.SaveChanges();
 
             Assert.True(2 == db.ShoppingCarts.First().ShoppingCartItems.First().Pieces);
             Assert.True(1 == db.ShoppingCarts.First().ShoppingCartItems.Count());
+            Assert.True(1 == db.ShoppingCartItems.Count());
 
         }
 
