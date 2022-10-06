@@ -32,7 +32,7 @@ namespace Spg.AutoTeileShop.Domain.Models
             {
                 if (item.Pieces <= item.ProductNav.Stock)
                 {
-                    Add_Item_to_List_or_increas_Pieces_in_Item(item);
+                    return Add_Item_to_List_or_increas_Pieces_in_Item(item);
                 }
                 else
                 {
