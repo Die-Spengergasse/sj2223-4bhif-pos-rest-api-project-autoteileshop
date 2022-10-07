@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Infrastru
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repository", "src\Spg.AutoTeileShop.Repository\Spg.AutoTeileShop.Repository.csproj", "{58D8B97E-FD95-4A32-B4D0-A3ACD8F179D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DD9753F-D304-4C66-B427-C4B52055CB1F} = {2DD9753F-D304-4C66-B427-C4B52055CB1F}
+		{741ACB30-71B8-4FF1-97E2-8B719776F98E} = {741ACB30-71B8-4FF1-97E2-8B719776F98E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

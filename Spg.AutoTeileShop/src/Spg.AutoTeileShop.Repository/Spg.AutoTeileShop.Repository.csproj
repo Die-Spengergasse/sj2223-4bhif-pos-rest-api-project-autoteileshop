@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+<ItemGroup>
+		<ProjectReference Include="..\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
+	<ProjectReference Include="..\Spg.AutoTeileShop.Domain\Spg.AutoTeileShop.Domain.csproj" />
+	</ItemGroup>
+
 </Project>
