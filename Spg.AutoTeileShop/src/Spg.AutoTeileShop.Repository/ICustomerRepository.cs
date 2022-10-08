@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Spg.AutoTeileShop.Repository.Base;
 using Spg.AutoTeileShop.Domain.Models;
-{
 
-}
 
 namespace Spg.AutoTeileShop.Repository
 {
