@@ -3,12 +3,10 @@ using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository.Repos;
 
-namespace Spg.AutoTeileShop.Test
+namespace Spg.AutoTeileShop.Domain.Test
 {
     public class UnitTest1
     {
-
-
         private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
@@ -859,47 +857,6 @@ namespace Spg.AutoTeileShop.Test
         }
 
 
-        [Fact]
-        public async Task DomainModel_Servis_Add_Customer_TestAsync()
-        {
-            AutoTeileShopContext db = createDB();
-
-            Customer customer = new Customer()
-            {
-                Guid = Guid.NewGuid(),
-                Vorname = "Max",
-                Nachname = "Musterman",
-                Email = "Max.Musterman@gmx.at",
-                Strasse = "TestStaﬂe ",
-                Telefon = "0004514554"
-            };
-            Repository<Customer> customerRepo = new Repository<Customer>(db);
-            await customerRepo.AddAsync(customer);
-            //db.Customers.Add(customer);
-            //db.SaveChanges();            
-            Assert.Equal(customer, db.Customers.First());
-        }
-
-        [Fact]
-        public async Task DomainModel_Servis_Find_Customer_TestAsync()
-        {
-            AutoTeileShopContext db = createDB();
-
-            Customer customer = new Customer()
-            {
-                Guid = Guid.NewGuid(),
-                Vorname = "Max",
-                Nachname = "Musterman",
-                Email = "Max.Musterman@gmx.at",
-                Strasse = "TestStaﬂe ",
-                Telefon = "0004514554"
-            };
-            Repository<Customer> customerRepo = new Repository<Customer>(db);
-            await customerRepo.AddAsync(customer);
-            var customer2 = await customerRepo.GetByIdAsync(0);
-            //db.Customers.Add(customer);
-            //db.SaveChanges();            
-            Assert.Equal(await customerRepo.GetByIdAsync(1), db.Customers.First());
-        }
+        
     }
 }

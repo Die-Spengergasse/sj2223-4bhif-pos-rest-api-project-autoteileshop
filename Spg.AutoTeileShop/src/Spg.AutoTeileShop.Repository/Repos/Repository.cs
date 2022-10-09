@@ -39,7 +39,7 @@ namespace Spg.AutoTeileShop.Repository.Repos
 
              
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             throw new NotImplementedException();
         }
