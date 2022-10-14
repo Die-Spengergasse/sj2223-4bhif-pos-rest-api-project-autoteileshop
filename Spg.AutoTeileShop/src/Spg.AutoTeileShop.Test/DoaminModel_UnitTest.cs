@@ -7,7 +7,7 @@ namespace Spg.AutoTeileShop.Domain.Test
 {
     public class UnitTest1
     {
-        private AutoTeileShopContext createDB()
+        private AutoTeileShopContext createDB()  // You have to run the 2 Unit Test classes separately (successively) otherwise the database accesses get in the way
         {
             DbContextOptions options = new DbContextOptionsBuilder()
                 .UseSqlite("Data Source=AutoTeileShop.db")

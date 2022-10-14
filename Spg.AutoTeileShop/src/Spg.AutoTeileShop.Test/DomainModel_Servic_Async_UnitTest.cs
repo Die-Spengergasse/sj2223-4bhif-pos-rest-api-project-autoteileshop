@@ -10,7 +10,7 @@ using Spg.AutoTeileShop.Repository.Repos;
 using Xunit;
 namespace Spg.AutoTeileShop.Domain.Test
 {
-    public class Servic_AsyncUnitTest
+    public class DomainModel_Service_Async_UnitTest // You have to run the 2 Unit Test classes separately (successively) otherwise the database accesses get in the way
     {
         private AutoTeileShopContext createDB()
         {
@@ -25,7 +25,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
         
         [Fact]
-        public async Task DomainModel_Servis_Add_Customer_TestAsync()
+        public async Task DomainModel_Service_Add_Customer_TestAsync()
         {
             AutoTeileShopContext db = createDB();
 
@@ -46,7 +46,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public async Task DomainModel_Servis_Find_Customer_TestAsync()
+        public async Task DomainModel_Service_Find_Customer_TestAsync()
         {
             AutoTeileShopContext db = createDB();
 
