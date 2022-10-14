@@ -10,7 +10,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         private AutoTeileShopContext createDB()  // You have to run the 2 Unit Test classes separately (successively) otherwise the database accesses get in the way
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                .UseSqlite("Data Source=AutoTeileShop.db")
+                .UseSqlite("Data Source=AutoTeileShopTest.db")
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -856,7 +856,47 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(3 == db.ShoppingCarts.First().ShoppingCartItems.First().ProductNav.Stock);
         }
 
+        // Servis Async Tests
 
-        
+        [Fact]
+        public async void Async_DomainModel_Service_Add_Customer_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Customer customer = new Customer()
+            {
+                Guid = Guid.NewGuid(),
+                Vorname = "Max",
+                Nachname = "Musterman",
+                Email = "Max.Musterman@gmx.at",
+                Strasse = "TestStaﬂe ",
+                Telefon = "0004514554"
+            };
+
+            Repository<Customer> customerRepo = new Repository<Customer>(db);
+            await customerRepo.AddAsync(customer);
+
+            Assert.Equal(customer, await customerRepo.GetByIdAsync(customer.Id));
+        }
+
+        [Fact]
+        public async void Async_DomainModel_Service_Find_Customer_TestAsync()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Customer customer = new Customer()
+            {
+                Guid = Guid.NewGuid(),
+                Vorname = "Max",
+                Nachname = "Musterman",
+                Email = "Max.Musterman@gmx.at",
+                Strasse = "TestStaﬂe ",
+                Telefon = "0004514554"
+            };
+            Repository<Customer> customerRepo = new Repository<Customer>(db);
+            await customerRepo.AddAsync(customer);
+            Assert.Equal(await customerRepo.GetByIdAsync(customer.Id), customer);
+        }
+
     }
 }
