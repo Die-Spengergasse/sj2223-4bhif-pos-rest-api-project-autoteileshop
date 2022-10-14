@@ -44,7 +44,7 @@ namespace Spg.AutoTeileShop.Repository.Repos
             throw new NotImplementedException();
         }
 
-        public async Task<T> GetByIdAsync(long id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _autoTeileShopContext.Set<T>().FindAsync(id);
         }

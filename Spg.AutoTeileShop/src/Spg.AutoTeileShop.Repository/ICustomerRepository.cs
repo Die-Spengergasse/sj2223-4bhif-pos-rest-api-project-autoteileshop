@@ -11,7 +11,7 @@ namespace Spg.AutoTeileShop.Repository
 {
     public interface ICustomerRepository : IRepository<Customer>
     {
-        Task<IEnumerable<Customer>> GetCustomersByIdAsync(long id);
+        Task<IEnumerable<Customer>> GetCustomersByIdAsync(int id);
     }
     
     

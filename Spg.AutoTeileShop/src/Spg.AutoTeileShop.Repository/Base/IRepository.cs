@@ -12,6 +12,6 @@ namespace Spg.AutoTeileShop.Repository.Base
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
-        Task<T> GetByIdAsync(long id);
+        Task<T> GetByIdAsync(int id);
     }
 }

@@ -10,12 +10,27 @@ namespace Spg.AutoTeileShop.Domain.Models
     public class ShoppingCartItem
     {
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
         public Guid guid { get; set; }
         public int Pieces { get; set; }        
-        public long? ProductId { get; set; }
-        public Product ProductNav { get; set; }
-        public long? ShoppingCartId { get; set; }
+        public int? ProductId { get; set; }
+        public Product? ProductNav { get; set; }
+        public int? ShoppingCartId { get; set; }
         public ShoppingCart? ShoppingCartNav { get; set; }
+
+        public ShoppingCartItem()
+        {
+        }
+
+        public ShoppingCartItem(int id, Guid guid, int pieces, int? productId, Product productNav, int? shoppingCartId, ShoppingCart? shoppingCartNav)
+        {
+            Id = id;
+            this.guid = guid;
+            Pieces = pieces;
+            ProductId = productId;
+            ProductNav = productNav;
+            ShoppingCartId = shoppingCartId;
+            ShoppingCartNav = shoppingCartNav;
+        }
     }
 }

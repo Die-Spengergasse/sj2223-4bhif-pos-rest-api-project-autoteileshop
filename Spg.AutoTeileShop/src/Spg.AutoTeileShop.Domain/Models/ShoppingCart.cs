@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,10 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public class ShoppingCart
     {
-        public long Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public Guid guid { get; set; }        
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public Customer? CustomerNav { get; set; }
         private List<ShoppingCartItem> _shoppingCartItems = new();
         public IReadOnlyList<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems;
@@ -24,6 +26,13 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public ShoppingCart()
         {
+        }
+
+        public ShoppingCart(int id, Guid guid, int customerId, Customer? customerNav, List<ShoppingCartItem> shoppingCartItems) : this(id, guid)
+        {
+            CustomerId = customerId;
+            CustomerNav = customerNav;
+            _shoppingCartItems = shoppingCartItems;
         }
 
         public bool AddShoppingCartItem(ShoppingCartItem item)
