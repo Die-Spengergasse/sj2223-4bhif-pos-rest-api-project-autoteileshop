@@ -444,20 +444,14 @@ namespace Spg.AutoTeileShop.Domain.Test
             {
                 guid = Guid.NewGuid(),
             };
-            try
-            {
-                bool worked = shoppingCart.AddShoppingCartItem(shoppingCartItem);
-                db.ShoppingCarts.Add(shoppingCart);
-
-            }
-            catch (Exception e)
-            {
-                Assert.Equal("Not enough stock", e.Message);
-            }
-
+            Assert.Throws<Exception>(() => shoppingCart.AddShoppingCartItem(shoppingCartItem));
+            
+            
+            db.ShoppingCarts.Add(shoppingCart);
+            
             db.SaveChanges();
 
-            Assert.Equal(0, db.ShoppingCarts.Count());
+            Assert.Equal(1, db.ShoppingCarts.Count());
             Assert.Equal(1, db.ShoppingCartItems.Count());
             Assert.Equal(1, db.Products.Count());
         }

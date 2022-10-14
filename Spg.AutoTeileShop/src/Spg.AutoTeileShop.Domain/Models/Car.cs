@@ -48,6 +48,7 @@ namespace Spg.AutoTeileShop.Domain.Models
                 if (entity.ProductFitsForCar.Contains(this))
                     entity.RemoveProductFitsForCar(this);
             }
+            
         }
     }
 }
