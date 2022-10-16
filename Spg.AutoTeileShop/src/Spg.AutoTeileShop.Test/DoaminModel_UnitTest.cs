@@ -23,7 +23,6 @@ namespace Spg.AutoTeileShop.Domain.Test
         public void DomainModel_Create_Catagory_Test()
         {
             //Arrange
-
             AutoTeileShopContext db = createDB();
             Catagory catagory = new Catagory()
             {
@@ -33,12 +32,10 @@ namespace Spg.AutoTeileShop.Domain.Test
             };
 
             //Act
-
             db.Catagories.Add(catagory);
             db.SaveChanges();
 
             //Assert
-
             Assert.Equal(1, db.Catagories.Count());
             Assert.Equal(catagory, db.Catagories.First());
 

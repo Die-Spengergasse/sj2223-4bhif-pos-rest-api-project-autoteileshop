@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public enum CategoryTypes { MotorTeile, Bremssystem, Tuning, Optik, Fahrwerk, Elektrik, Verkleidung, Sonstiges }
+    public enum CategoryTypes
+    {
+        MotorTeile, Bremssystem, Tuning, Optik, Fahrwerk, Antrieb, Sonstiges,
+        //Sub
+        Auspuff, Bremsen, Getriebe, Kupplung, Motor, Reifen, Räder, Scheibenwischer, Scheinwerfer, Sitze, Stoßdämpfer, Elektrik, Verkleidung
+    }
     
     public class Catagory
     {
         [Key]
         public int Id { get; set; }
-        //public Guid Guid { get; set; }
         public Catagory? TopCatagory{ get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

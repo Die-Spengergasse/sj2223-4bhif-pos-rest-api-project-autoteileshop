@@ -20,12 +20,13 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Catagory? catagory { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? Image { get; set; }
+        public string Ean13 { get; set; } = string.Empty;
         public QualityType Quality { get; set; }
         public int Stock { get; set; }
         public int Discount { get; set; }
         public DateTime receive { get; set; }
 
-        // n zu n Relation
+        // n zu m Relation
         private List<Car> _productFitsForCar = new();
         public IReadOnlyList<Car> ProductFitsForCar => _productFitsForCar;
 
