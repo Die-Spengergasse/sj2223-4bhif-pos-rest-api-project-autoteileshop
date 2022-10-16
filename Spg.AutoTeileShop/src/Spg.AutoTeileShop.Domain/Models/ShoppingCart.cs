@@ -59,7 +59,7 @@ namespace Spg.AutoTeileShop.Domain.Models
                 if (exsitingShoppingCartItem is not null)
                 {
 
-                    exsitingShoppingCartItem.Pieces += item.Pieces; //richtig gestellt
+                    exsitingShoppingCartItem.Pieces += item.Pieces;
                     item.ProductNav.Stock = item.ProductNav.Stock - item.Pieces;
                     return true;
 
@@ -83,10 +83,20 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
             if (item is not null)
             {
-                if (_shoppingCartItems.Contains(item))
+                if (_shoppingCartItems.SingleOrDefault(s => s.guid == item.guid) != null)
                 {
-                    _shoppingCartItems.Remove(item);
+                    ShoppingCartItem? shc = _shoppingCartItems.Single(s => s.guid == item.guid);
+                    if (shc.Pieces - item.Pieces < 1)
+                    {
+                        _shoppingCartItems.Remove(item);
+                    }
+                    else
+                    {
+                        _shoppingCartItems.Single(s => s.guid == item.guid).Pieces -= item.Pieces;
+                    }
+                    
                 }
+                else { throw new Exception("ShoppingCart does not contains this ShoppingCarItem"); }
             }
         }
 

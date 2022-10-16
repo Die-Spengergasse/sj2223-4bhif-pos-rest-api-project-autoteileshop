@@ -628,6 +628,95 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
+        public void DomainModel_Remove_ShoppingCarItem_From_ShoppingCar_but_Item_does_not_exist_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                guid = Guid.NewGuid(),
+            };
+
+            db.ShoppingCarts.Add(shoppingCart);
+            db.SaveChanges();
+
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 4
+            };
+
+            db.Products.Add(product);
+
+            ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 1,
+                ProductNav = product,
+            };
+
+            Assert.Throws<Exception>(() => shoppingCart.RemoveShoppingCartItem(shoppingCartItem));
+            
+        }
+
+        [Fact]
+        public void DomainModel_Remove_ShoppingCarItem_From_ShoppingCar_decrease_Pieces_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            Product product = new Product()
+            {
+                Description = "Des Test",
+                Guid = Guid.NewGuid(),
+                Name = "Pro Test",
+                Price = 499.99M,
+                Stock = 4
+            };
+
+            db.Products.Add(product);
+
+            ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
+            {
+                guid = Guid.NewGuid(),
+                Pieces = 2,
+                ProductNav = product,
+            };
+            //db.ShoppingCartItems.Add(shoppingCartItem);
+
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                guid = Guid.NewGuid(),
+            };
+
+            shoppingCart.AddShoppingCartItem(shoppingCartItem);
+            db.ShoppingCarts.Add(shoppingCart);
+            db.SaveChanges();
+
+           
+            ShoppingCartItem shoppingCartItem2 =new ShoppingCartItem()
+            {
+                guid = shoppingCartItem.guid,
+                Pieces = 1,
+                ProductNav = product,
+            };
+            
+
+            shoppingCart.RemoveShoppingCartItem(shoppingCartItem2);
+            db.SaveChanges();
+            
+            Assert.Equal(1, db.ShoppingCarts.First().ShoppingCartItems.First().Pieces);
+            Assert.Equal(shoppingCartItem, db.ShoppingCartItems.First());
+            Assert.Equal(shoppingCartItem, db.ShoppingCarts.First().ShoppingCartItems.First());
+            Assert.Single(db.ShoppingCartItems);
+            
+
+        }
+
+        [Fact]
         public void DomainModel_Remove_Product_From_CarList_Test()
         {
             AutoTeileShopContext db = createDB();
