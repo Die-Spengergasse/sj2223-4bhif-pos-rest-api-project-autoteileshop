@@ -1,2 +1,1 @@
-# a new readme for David
-
+# This are Projects for the POS-1 lessons
