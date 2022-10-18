@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.API.RequestBodyModels;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 
@@ -23,15 +24,16 @@ namespace Spg.AutoTeileShop.API.Controllers
         //{
         //    return Ok(new string[] { "value1", "value2" });
         //}
+        private readonly AutoTeileShopContext _autoTeileShopContext;
 
-        private AutoTeileShopContext createDB()  // You have to run the 2 Unit Test classes separately (successively) otherwise the database accesses get in the way
+       public CarController(AutoTeileShopContext autoTeileShopContext)
         {
-            DbContextOptions options = new DbContextOptionsBuilder()
-                .UseSqlite("Data Source=AutoTeileShopTest.db")
-                .Options;
+            _autoTeileShopContext = autoTeileShopContext;
 
-            AutoTeileShopContext db = new AutoTeileShopContext(options);
-            return db;
+            //AutoTeileShopContext db = new AutoTeileShopContext(builder);
+            _autoTeileShopContext.Database.EnsureDeleted();
+            _autoTeileShopContext.Database.EnsureCreated();
+            _autoTeileShopContext.Seed();
         }
 
         [HttpGet("{id}")]
@@ -39,10 +41,10 @@ namespace Spg.AutoTeileShop.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string[]> GetMethod3(int id)
         {
-            AutoTeileShopContext db = createDB();
-            Car car = db.Cars.SingleOrDefault(c => c.Id == id);
+            Car car = _autoTeileShopContext.Cars.SingleOrDefault(c => c.Id == id);
             if (car == null) { return NotFound(); }
-            return Ok(car);
+            CarReqeustBodyModel carReqeustBodyModel = new CarReqeustBodyModel(car);
+            return Ok(carReqeustBodyModel);
         }
 
         // *************************************************************************************************
@@ -61,10 +63,10 @@ namespace Spg.AutoTeileShop.API.Controllers
         //    return Ok(result);
         //}
 
-        [HttpGet]                     // Darf nur 1x ohne Angabe von Parametern vorkommen!
-        public async Task<ActionResult<string[]>> GetMethod3Async()
-        {
-            return await Task.FromResult(Ok(new string[] { "value3", "value4" }));
-        }
+        //[HttpGet]                     // Darf nur 1x ohne Angabe von Parametern vorkommen!
+        //public async Task<ActionResult<string[]>> GetMethod3Async()
+        //{
+        //    return await Task.FromResult(Ok(new string[] { "value3", "value4" }));
+        //}
     }
 }
