@@ -7,7 +7,7 @@ namespace Spg.AutoTeileShop.Domain.Test
 {
     public class UnitTest1
     {
-        private AutoTeileShopContext createDB()  // You have to run the 2 Unit Test classes separately (successively) otherwise the database accesses get in the way
+        private AutoTeileShopContext createDB()  
         {
             DbContextOptions options = new DbContextOptionsBuilder()
                 .UseSqlite("Data Source=AutoTeileShopTest.db")
@@ -113,7 +113,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
-                Strasse = "TestStaﬂe ",
+                Addrese = "TestStaﬂe ",
                 Telefon = "0004514554"
             };
             db.Customers.Add(customer);
@@ -174,7 +174,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Muster@gmx.at",
-                Strasse = "TestStaﬂe ",
+                Addrese = "TestStaﬂe ",
                 Telefon = "0004514554"
             };
             db.Customers.Add(customer);
@@ -276,7 +276,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Muster@gmx.at",
-                Strasse = "TestStaﬂe ",
+                Addrese = "TestStaﬂe ",
                 Telefon = "0004514554"
             };
             db.Customers.Add(customer);
@@ -949,7 +949,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
-                Strasse = "TestStaﬂe ",
+                Addrese = "TestStaﬂe ",
                 Telefon = "0004514554"
             };
 
@@ -970,7 +970,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
-                Strasse = "TestStaﬂe ",
+                Addrese = "TestStaﬂe ",
                 Telefon = "0004514554"
             };
             Repository<Customer> customerRepo = new Repository<Customer>(db);

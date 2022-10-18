@@ -14,7 +14,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Guid Guid { get; set; }
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
-        public string Strasse { get; set; } = string.Empty;
+        public string Addrese { get; set; } = string.Empty;
         public string Telefon { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PW { get; set; } = string.Empty;
@@ -23,13 +23,13 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
-        public Customer(int id, Guid guid, string vorname, string nachname, string strasse, string telefon, string email, string pW)
+        public Customer(int id, Guid guid, string vorname, string nachname, string addrese, string telefon, string email, string pW)
         {
             Id = id;
             Guid = guid;
             Vorname = vorname;
             Nachname = nachname;
-            Strasse = strasse;
+            Addrese = addrese;
             Telefon = telefon;
             Email = email;
             PW = pW;

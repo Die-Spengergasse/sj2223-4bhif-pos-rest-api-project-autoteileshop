@@ -5,19 +5,24 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 //DB
-DbContextOptions options = new DbContextOptionsBuilder()
-    .UseSqlite("Data Source=AutoTeileShop.db")
-    .Options;
+//DbContextOptions options = new DbContextOptionsBuilder()
+//    .UseSqlite("Data Source=AutoTeileShop.db")
+//    .Options;
 
-AutoTeileShopContext db = new AutoTeileShopContext(options);
-db.Database.EnsureDeleted();
-db.Database.EnsureCreated();
+//AutoTeileShopContext db = new AutoTeileShopContext(options);
+//db.Database.EnsureDeleted();
+//db.Database.EnsureCreated();
+
 
 
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+//Add Db Servic
+
+builder.Services.AddDbContext<AutoTeileShopContext>(options =>
+                options.UseSqlite("Data Source=AutoTeileShop.db"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,3 +43,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+
