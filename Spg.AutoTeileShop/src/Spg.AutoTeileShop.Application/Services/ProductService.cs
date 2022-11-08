@@ -1,4 +1,5 @@
-﻿using Spg.AutoTeileShop.Domain.Models;
+﻿using Spg.AutoTeileShop.Domain.Interfaces;
+using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly ProductRepository _productRepository;
         public ProductService(ProductRepository productRepository)

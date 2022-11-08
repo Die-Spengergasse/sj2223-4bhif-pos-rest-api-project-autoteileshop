@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Spg.AutoTeileShop.Application\Spg.AutoTeileShop.Application.csproj" />
+    <ProjectReference Include="..\Spg.AutoTeileShop.Domain\Spg.AutoTeileShop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
