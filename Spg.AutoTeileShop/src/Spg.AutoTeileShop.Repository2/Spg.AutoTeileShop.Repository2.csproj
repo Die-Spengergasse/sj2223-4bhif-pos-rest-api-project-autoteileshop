@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Spg.AutoTeileShop.Domain\Spg.AutoTeileShop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

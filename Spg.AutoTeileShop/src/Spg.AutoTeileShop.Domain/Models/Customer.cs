@@ -10,7 +10,7 @@ namespace Spg.AutoTeileShop.Domain.Models
     public class Customer
     {
         public int Id { get; private set; }
-        public Guid Guid { get;  set; }
+        public Guid Guid { get; set; }
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
         public string Addrese { get; set; } = string.Empty;
