@@ -44,7 +44,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                     c.Guid = f.Random.Guid();
                     c.Vorname = f.Name.FirstName(Bogus.DataSets.Name.Gender.Female);
                     c.Nachname = f.Name.LastName();
-                    c.Email = f.Internet.Email();
+                    c.Email = f.Internet.Email(c.Vorname, c.Nachname);
                     c.Telefon = f.Person.Phone;
                     c.Addrese = f.Address.FullAddress();
                     c.PW = f.Internet.Password();
@@ -80,7 +80,6 @@ namespace Spg.AutoTeileShop.Infrastructure
                 Array values = Enum.GetValues(typeof(CategoryTypes));
                 Random random = new Random();                
                 ca.CategoryType = (CategoryTypes)values.GetValue(random.Next(values.Length));
-
                 ca.Name = ca.CategoryType.ToString();
                 
             })
@@ -93,18 +92,7 @@ namespace Spg.AutoTeileShop.Infrastructure
             List<Product> product = new Faker<Product>("de")
             .Rules((f, p) =>
             {
-                //Id = id;
-                //Guid = guid;
-                //Name = name;
-                //Price = price;
-                //this.catagory = catagory;
-                //Description = description;
-                //Image = image;
-                //Quality = quality;
-                //Stock = stock;
-                //Discount = discount;
-                //this.receive = receive;
-                //_productFitsForCar = productFitsForCar;
+                
                 p.Guid = f.Random.Guid();
                 p.Name = f.Commerce.ProductName();
                 p.Price = f.Random.Decimal(0, 1000);
@@ -116,7 +104,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                 Random random = new Random();
                 p.Quality= (QualityType)values.GetValue(random.Next(values.Length));
 
-                p.Stock = f.Random.Int(0, 1000);
+                p.Stock = f.Random.Int(11, 1000);
                 p.Discount = f.Random.Int(0, 100);
                 p.receive = f.Date.Past(10, DateTime.Now);
                 p.AddProductFitsForCar(f.PickRandom(cars));
@@ -132,7 +120,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                    .Rules((f, shI) =>
                    {
                        shI.guid = f.Random.Guid();
-                       shI.Pieces = f.Random.Int(0, 9);
+                       shI.Pieces = f.Random.Int(1, 9);
                        shI.ProductNav = f.PickRandom(product);
                    })
                    .Generate(100)

@@ -16,8 +16,11 @@ namespace Spg.AutoTeileShop.Domain.Test
             AutoTeileShopContext db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
+            //db.Seed();
             return db;
         }
+
+        
 
         [Fact]
         public void DomainModel_Create_Catagory_Test()
@@ -976,6 +979,13 @@ namespace Spg.AutoTeileShop.Domain.Test
             Repository<Customer> customerRepo = new Repository<Customer>(db);
             await customerRepo.AddAsync(customer);
             Assert.Equal(await customerRepo.GetByIdAsync(customer.Id), customer);
+        }
+        
+        [Fact]
+        public void XYZDomainModel_Create_DB_Seed()
+        {
+            AutoTeileShopContext db = createDB();
+            db.Seed();
         }
 
     }

@@ -10,3 +10,15 @@ D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Sp
 D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\refint\Spg.Spengershop.Domain.dll
 D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.pdb
 D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\ref\Spg.Spengershop.Domain.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\bin\Debug\net6.0\Spg.Spengershop.Domain.deps.json
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\bin\Debug\net6.0\Spg.Spengershop.Domain.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\bin\Debug\net6.0\Spg.Spengershop.Domain.pdb
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.csproj.AssemblyReference.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.GeneratedMSBuildEditorConfig.editorconfig
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.AssemblyInfoInputs.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.AssemblyInfo.cs
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.csproj.CoreCompileInputs.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\refint\Spg.Spengershop.Domain.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\Spg.Spengershop.Domain.pdb
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Domain\obj\Debug\net6.0\ref\Spg.Spengershop.Domain.dll

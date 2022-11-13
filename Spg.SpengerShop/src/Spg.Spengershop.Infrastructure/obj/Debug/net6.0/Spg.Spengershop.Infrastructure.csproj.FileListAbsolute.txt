@@ -15,3 +15,20 @@ D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Sp
 D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Domain.dll
 D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Domain.pdb
 D:\4 Klasse\Pos1 Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.csproj.CopyComplete
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Infrastructure.deps.json
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Infrastructure.runtimeconfig.json
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Infrastructure.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Infrastructure.pdb
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Domain.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\bin\Debug\net6.0\Spg.Spengershop.Domain.pdb
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.csproj.AssemblyReference.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.AssemblyInfoInputs.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.AssemblyInfo.cs
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.csproj.CoreCompileInputs.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.csproj.CopyComplete
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\refint\Spg.Spengershop.Infrastructure.dll
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.pdb
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\Spg.Spengershop.Infrastructure.genruntimeconfig.cache
+I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\git-github-fundamentals-David-vie21\Spg.SpengerShop\src\Spg.Spengershop.Infrastructure\obj\Debug\net6.0\ref\Spg.Spengershop.Infrastructure.dll

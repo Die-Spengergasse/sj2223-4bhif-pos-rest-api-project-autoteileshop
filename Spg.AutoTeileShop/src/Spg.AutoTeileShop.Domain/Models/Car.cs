@@ -9,7 +9,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public class Car
     {
-        public int Id { get; private set; }
+        public  int Id { get; private set; }
         public string Marke { get;  set; } = string.Empty;
         public string Modell { get; set; } = string.Empty;
         public DateTime Baujahr { get; set; }
