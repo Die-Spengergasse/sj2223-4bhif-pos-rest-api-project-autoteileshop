@@ -12,9 +12,8 @@ namespace Spg.AutoTeileShop.Domain.Models
 
     public class Product
     {
-        [Key]
-        public int Id { get; set; }
-        public Guid Guid { get; set; }
+        public int Id { get; private set; }
+        public Guid Guid { get;  set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public Catagory? catagory { get; set; }

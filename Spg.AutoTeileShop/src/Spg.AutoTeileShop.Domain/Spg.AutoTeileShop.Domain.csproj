@@ -10,4 +10,8 @@
     <Compile Remove="Models\Warehouse.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exeptions\" />
+  </ItemGroup>
+
 </Project>

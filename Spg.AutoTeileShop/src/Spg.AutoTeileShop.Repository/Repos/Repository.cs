@@ -20,7 +20,7 @@ namespace Spg.AutoTeileShop.Repository.Repos
 
         public async Task<T> AddAsync(T entity)
         {
-            await _autoTeileShopContext.Set<T>().AddAsync(entity);
+            _autoTeileShopContext.Set<T>().Add(entity);
             await _autoTeileShopContext.SaveChangesAsync();
             return entity;
         }
@@ -41,7 +41,9 @@ namespace Spg.AutoTeileShop.Repository.Repos
 
         public async Task<T> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _autoTeileShopContext.Set<T>().Update(entity);
+             await _autoTeileShopContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<T> GetByIdAsync(int id)

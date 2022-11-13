@@ -9,9 +9,9 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public class ShoppingCartItem
     {
-        [Key]
-        public int Id { get; set; }
-        public Guid guid { get; set; }
+
+        public int Id { get; private set; }
+        public Guid guid { get;  set; }
         public int Pieces { get; set; }        
         public int? ProductId { get; set; }
         public Product? ProductNav { get; set; }
