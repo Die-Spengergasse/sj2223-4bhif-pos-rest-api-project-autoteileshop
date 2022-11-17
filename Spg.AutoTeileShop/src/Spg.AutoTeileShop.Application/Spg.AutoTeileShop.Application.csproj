@@ -12,6 +12,7 @@
 		<ProjectReference Include="..\Spg.AutoTeileShop.Domain\Spg.AutoTeileShop.Domain.csproj" />
 		<ProjectReference Include="..\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
 		<ProjectReference Include="..\Spg.AutoTeileShop.Repository2\Spg.AutoTeileShop.Repository2.csproj" />
+		<ProjectReference Include="..\Spg.AutoTeileShop.DbExtentions\Spg.AutoTeileShop.DbExtentions.csproj" />
 	</ItemGroup>
 
 	

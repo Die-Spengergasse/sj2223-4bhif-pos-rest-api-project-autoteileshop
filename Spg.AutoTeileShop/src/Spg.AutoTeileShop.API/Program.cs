@@ -22,7 +22,7 @@ builder.Services.AddControllers();
 //Add Db Servic
 
 builder.Services.AddDbContext<AutoTeileShopContext>(options =>
-                options.UseSqlite("Data Source=AutoTeileShop.db"));
+                options.UseSqlite("Data Source = AutoTeileShop.db"));
 
 
 

@@ -10,5 +10,6 @@ namespace Spg.AutoTeileShop.Domain.Interfaces
     public interface IProductRepositroy
     {
         public IEnumerable<Product> GetAll();
+        public Product? GetByName(string name);
     }
 }
