@@ -31,9 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repositor
 		{741ACB30-71B8-4FF1-97E2-8B719776F98E} = {741ACB30-71B8-4FF1-97E2-8B719776F98E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.MVCFrontEnd", "src\Spg.AutoTeileShop.MVCFrontEnd\Spg.AutoTeileShop.MVCFrontEnd.csproj", "{2662AA85-0F91-4388-86AD-C48B27396F35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.MVCFrontEnd", "src\Spg.AutoTeileShop.MVCFrontEnd\Spg.AutoTeileShop.MVCFrontEnd.csproj", "{2662AA85-0F91-4388-86AD-C48B27396F35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.Repository2", "src\Spg.AutoTeileShop.Repository2\Spg.AutoTeileShop.Repository2.csproj", "{57781A64-5DF5-412A-AFA0-8BD0E066ABE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repository2", "src\Spg.AutoTeileShop.Repository2\Spg.AutoTeileShop.Repository2.csproj", "{57781A64-5DF5-412A-AFA0-8BD0E066ABE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.DbExtentions", "src\Spg.AutoTeileShop.DbExtentions\Spg.AutoTeileShop.DbExtentions.csproj", "{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{57781A64-5DF5-412A-AFA0-8BD0E066ABE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57781A64-5DF5-412A-AFA0-8BD0E066ABE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57781A64-5DF5-412A-AFA0-8BD0E066ABE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
