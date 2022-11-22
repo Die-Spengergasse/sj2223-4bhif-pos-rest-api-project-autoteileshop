@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces
 {
-    public interface IProductService
+    public interface IAddUpdateableProductService
     {
         IEnumerable<Product> GetAll();
         Product? GetByName(string name);
+        void Add(Product product);
+        void Update(Product product);
+
     }
 }

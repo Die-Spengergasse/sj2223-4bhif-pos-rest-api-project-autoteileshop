@@ -6,16 +6,19 @@ namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService _productService;
+        private readonly IAddUpdateableProductService _addUpdateproductService;
+        private readonly IReadOnlyProductService _readOnlyproductService;
 
-        public ProductController(IProductService productService)
+
+        public ProductController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService)
         {
-            _productService = productService;
+            _addUpdateproductService = addUpdateproductService;
+            _readOnlyproductService = readOnlyproductService;
         }
 
         public IActionResult Index()
         {
-            List<Product> model = _productService.GetAll().ToList();
+            List<Product> model = _readOnlyproductService.GetAll().ToList();
             return View(model);
         }
     }

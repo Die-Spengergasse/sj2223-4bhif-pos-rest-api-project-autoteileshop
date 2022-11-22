@@ -11,7 +11,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IProductRepositroy, ProductRepository>() ;
 builder.Services.ConfigureSQLite(connectionString);
 //builder.Services.AddDbContext<AutoTeileShopContext>(options =>

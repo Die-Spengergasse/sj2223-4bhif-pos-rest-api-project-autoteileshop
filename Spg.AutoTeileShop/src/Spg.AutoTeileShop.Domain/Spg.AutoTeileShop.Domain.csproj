@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Exeptions\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
 
 </Project>

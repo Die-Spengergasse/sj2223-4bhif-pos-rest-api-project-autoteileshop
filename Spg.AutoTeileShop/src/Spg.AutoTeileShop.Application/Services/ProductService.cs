@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : IAddUpdateableProductService, IReadOnlyProductService, IDeletableProductService
     {
         private readonly IProductRepositroy _productRepository;
         public ProductService(IProductRepositroy productRepository)
@@ -17,9 +17,24 @@ namespace Spg.AutoTeileShop.Application.Services
             _productRepository = productRepository;
         }
 
+        public void Add(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Product> GetAll()
         {
             return _productRepository.GetAll();
+        }
+
+        public Product? GetById(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Product? GetByName(string name)
@@ -27,5 +42,9 @@ namespace Spg.AutoTeileShop.Application.Services
             return _productRepository.GetByName(name);
         }
 
+        public void Update(Product product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
