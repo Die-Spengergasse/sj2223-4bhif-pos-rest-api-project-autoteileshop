@@ -10,8 +10,9 @@ namespace Spg.AutoTeileShop.Domain.Test
         private AutoTeileShopContext createDB()  
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                .UseSqlite("Data Source=AutoTeileShopTest.db")
-                .Options;
+                //.UseSqlite("Data Source=AutoTeileShopTest.db")
+                .UseSqlite("Data Source= D:/4 Klasse/Pos1 Repo/git-github-fundamentals-David-vie21/Spg.AutoTeileShop/src/Spg.AutoTeileShop.MVCFrontEnd/autoteile.db")
+                                .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
