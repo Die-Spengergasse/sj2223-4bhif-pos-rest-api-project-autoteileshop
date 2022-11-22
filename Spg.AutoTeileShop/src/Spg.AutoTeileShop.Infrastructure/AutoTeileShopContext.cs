@@ -47,9 +47,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                     c.Email = f.Internet.Email(c.Vorname, c.Nachname);
                     c.Telefon = f.Person.Phone;
                     c.Addrese = f.Address.FullAddress();
-                    c.PW = f.Internet.Password();
-                    
-
+                    c.PW = f.Internet.Password();                  
                 })
             .Generate(50)
             .ToList();
@@ -62,8 +60,7 @@ namespace Spg.AutoTeileShop.Infrastructure
             {
                 ca.Marke = f.Company.CompanyName();
                 ca.Modell = f.Commerce.ProductName();
-                ca.Baujahr = f.Date.Past(10, DateTime.Now);
-                
+                ca.Baujahr = f.Date.Past(10, DateTime.Now);                
             })
             .Generate(50)
             .ToList();

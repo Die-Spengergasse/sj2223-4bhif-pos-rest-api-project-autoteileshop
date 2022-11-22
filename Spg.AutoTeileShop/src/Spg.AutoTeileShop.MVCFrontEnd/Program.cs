@@ -3,6 +3,7 @@ using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Repository2.Repositories;
+using Spg.AutoTeileShop.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +13,20 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
+builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
+builder.Services.AddTransient<IDeletableProductService, ProductService>();
+
 builder.Services.AddTransient<IProductRepositroy, ProductRepository>() ;
 builder.Services.ConfigureSQLite(connectionString);
-//builder.Services.AddDbContext<AutoTeileShopContext>(options =>
-//              options.UseSqlite("Data Source = AutoTeileShop.db"));
+
+
+//IServiceProvider provider = builder.Services.BuildServiceProvider();
+//AutoTeileShopContext db = provider.GetRequiredService<AutoTeileShopContext>();
+//db.Database.EnsureDeleted();
+//db.Database.EnsureCreated();
+//db.Seed();
+
+
 
 var app = builder.Build();
 
