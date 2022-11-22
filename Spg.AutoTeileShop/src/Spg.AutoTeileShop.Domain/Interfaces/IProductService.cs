@@ -10,5 +10,6 @@ namespace Spg.AutoTeileShop.Domain.Interfaces
     public interface IProductService
     {
         IEnumerable<Product> GetAll();
+        Product? GetByName(string name);
     }
 }

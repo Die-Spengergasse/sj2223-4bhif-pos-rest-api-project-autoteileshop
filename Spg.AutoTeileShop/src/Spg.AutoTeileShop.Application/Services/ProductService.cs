@@ -11,8 +11,8 @@ namespace Spg.AutoTeileShop.Application.Services
 {
     public class ProductService : IProductService
     {
-        private readonly ProductRepository _productRepository;
-        public ProductService(ProductRepository productRepository)
+        private readonly IProductRepositroy _productRepository;
+        public ProductService(IProductRepositroy productRepository)
         {
             _productRepository = productRepository;
         }
@@ -21,6 +21,11 @@ namespace Spg.AutoTeileShop.Application.Services
         {
             return _productRepository.GetAll();
         }
-        
+
+        public Product? GetByName(string name)
+        {
+            return _productRepository.GetByName(name);
+        }
+
     }
 }
