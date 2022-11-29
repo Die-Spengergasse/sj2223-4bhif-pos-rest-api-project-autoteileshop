@@ -11,7 +11,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             DbContextOptions options = new DbContextOptionsBuilder()
                 //.UseSqlite("Data Source=AutoTeileShopTest.db")
-                .UseSqlite("Data Source= D:/4 Klasse/Pos1 Repo/git-github-fundamentals-David-vie21/Spg.AutoTeileShop/src/Spg.AutoTeileShop.MVCFrontEnd/autoteile.db")
+                .UseSqlite("Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/Spg.AutoTeileShop.API/autoteile.db")
                                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -983,7 +983,12 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
         
         [Fact]
-        public void XYZDomainModel_Create_DB_Seed()
+        public void XYZDomainModel_Create_DB_Seed_MVC()
+        {
+            AutoTeileShopContext db = createDB();
+            db.Seed();
+        }
+        public void XYZZDomainModel_Create_DB_Seed_API()
         {
             AutoTeileShopContext db = createDB();
             db.Seed();
