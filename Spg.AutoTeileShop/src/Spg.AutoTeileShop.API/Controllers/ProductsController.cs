@@ -8,13 +8,13 @@ namespace Spg.AutoTeileShop.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IAddUpdateableProductService _addUpdateproductService;
         private readonly IReadOnlyProductService _readOnlyproductService;
         private readonly IDeletableProductService _deletableProductService;
 
-        public ProductController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService)
+        public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService)
         {
             _addUpdateproductService = addUpdateproductService;
             _readOnlyproductService = readOnlyproductService;
