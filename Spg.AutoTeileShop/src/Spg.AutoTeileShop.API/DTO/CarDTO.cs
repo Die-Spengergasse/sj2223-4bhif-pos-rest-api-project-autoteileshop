@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Spg.AutoTeileShop.API.RequestBodyModels
 {
-    public class CarReqeustBodyModel
+    public class CarDTO
     {
         public int Id { get; set; }
         public string Marke { get; set; } = string.Empty;
         public string Modell { get; set; } = string.Empty;
         public DateTime Baujahr { get; set; }
 
-        public CarReqeustBodyModel(Car car)
+        public CarDTO(Car car)
         {
             this.Id = car.Id;
             this.Marke = car.Marke;

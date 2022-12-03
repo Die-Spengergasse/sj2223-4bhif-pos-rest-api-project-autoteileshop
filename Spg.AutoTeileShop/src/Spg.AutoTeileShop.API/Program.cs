@@ -1,18 +1,23 @@
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Application.Services;
+using Spg.AutoTeileShop.DbExtentions;
+using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.Infrastructure;
+using Spg.AutoTeileShop.Repository2.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 //DB
-//DbContextOptions options = new DbContextOptionsBuilder()
-//.UseSqlite("Data Source=AutoTeileShop.db")
-//.Options;
+builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
+builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
+builder.Services.AddTransient<IDeletableProductService, ProductService>();
 
-
-//AutoTeileShopContext db = new AutoTeileShopContext(builder);
-//db.Database.EnsureDeleted();
-//db.Database.EnsureCreated();
+builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
+builder.Services.ConfigureSQLite(connectionString);
 
 
 
@@ -30,6 +35,14 @@ builder.Services.AddDbContext<AutoTeileShopContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins("https://localhost:7058");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +55,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("myAllowSpecificOrigins");
 
 app.MapControllers();
 

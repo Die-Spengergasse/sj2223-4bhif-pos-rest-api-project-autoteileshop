@@ -1,5 +1,54 @@
 ﻿@using Spg.AutoTeileShop.Domain.Models
 @model List<Product>
+<h1>Product works!</h1>
 
-<h1>Hello World! Product</h1>
-<span>Anzahl: @Model.Count</span>
+
+
+<hr />
+
+
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>description</th>
+
+        </tr>
+    </thead>
+    <tbody id="productsContainer"></tbody>
+</table>
+
+
+
+<script type="text/javascript">
+
+    fetch('https://localhost:7083/Products/getAll', {
+        method: "GET",
+        mode: 'cors'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            const container = document.getElementById("productsContainer");
+            container.innerHTML = '';
+
+
+            for (let product of data) {
+                const tr = document.createElement("tr");
+                const htmlTable = `
+                <td>${product.name}</td>
+                <td>${product.description}</td>
+                <td>€ ${product.price}</td>`
+                tr.innerHTML = htmlTable;
+                container.appendChild(tr);
+            }
+        })
+        .catch(err => alert(err.message));
+
+
+
+</script>
+    

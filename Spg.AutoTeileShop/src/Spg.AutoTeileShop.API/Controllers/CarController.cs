@@ -26,14 +26,15 @@ namespace Spg.AutoTeileShop.API.Controllers
         //}
         private readonly AutoTeileShopContext _autoTeileShopContext;
 
-       public CarController(AutoTeileShopContext autoTeileShopContext)
-        {
-            _autoTeileShopContext = autoTeileShopContext;
 
-            //AutoTeileShopContext db = new AutoTeileShopContext(builder);
-            _autoTeileShopContext.Database.EnsureDeleted();
-            _autoTeileShopContext.Database.EnsureCreated();
-            _autoTeileShopContext.Seed();
+       public CarController()
+        {
+            //_autoTeileShopContext = autoTeileShopContext;
+
+            ////AutoTeileShopContext db = new AutoTeileShopContext(builder);
+            //_autoTeileShopContext.Database.EnsureDeleted();
+            //_autoTeileShopContext.Database.EnsureCreated();
+            //_autoTeileShopContext.Seed();
         }
 
         [HttpGet("{id}")]
@@ -43,7 +44,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         {
             Car car = _autoTeileShopContext.Cars.SingleOrDefault(c => c.Id == id);
             if (car == null) { return NotFound(); }
-            CarReqeustBodyModel carReqeustBodyModel = new CarReqeustBodyModel(car);
+            CarDTO carReqeustBodyModel = new CarDTO(car);
             return Ok(carReqeustBodyModel);
         }
 

@@ -12,11 +12,16 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+// Services for Product
 builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
 builder.Services.AddTransient<IDeletableProductService, ProductService>();
+builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
 
-builder.Services.AddTransient<IProductRepositroy, ProductRepository>() ;
+
+
+//Add Database connection
 builder.Services.ConfigureSQLite(connectionString);
 
 
