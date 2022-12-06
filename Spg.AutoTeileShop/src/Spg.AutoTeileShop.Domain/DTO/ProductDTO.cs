@@ -1,10 +1,10 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
 
-namespace Spg.AutoTeileShop.API.DTO
+namespace Spg.AutoTeileShop.Domain.DTO
 {
     public class ProductDTO
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public Guid Guid { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
@@ -18,17 +18,17 @@ namespace Spg.AutoTeileShop.API.DTO
 
         public ProductDTO(Product product)
         {
-            Id = product.Id;
-            Guid = product.Guid;
-            Name = product.Name;
-            Price = product.Price;
+            this.Id = product.Id;
+            this.Guid = product.Guid;
+            this.Name = product.Name;
+            this.Price = product.Price;
             this.catagory = product.catagory;
-            Description = product.Description;
-            Image = product.Image;
-            Ean13 = product.Ean13;
-            Quality = product.Quality;
-            Stock = product.Stock;
-            Discount = product.Discount;
+            this.Description = product.Description;
+            this.Image = product.Image;
+            this.Ean13 = product.Ean13;
+            this.Quality = product.Quality;
+            this.Stock = product.Stock;
+            this.Discount = product.Discount;
         }
     }
     

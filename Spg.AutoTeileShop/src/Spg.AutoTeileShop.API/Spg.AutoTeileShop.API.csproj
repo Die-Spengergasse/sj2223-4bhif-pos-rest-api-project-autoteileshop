@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DTO\" />
+	</ItemGroup>
+
 </Project>

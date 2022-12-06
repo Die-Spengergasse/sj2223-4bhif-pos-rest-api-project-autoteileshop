@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Spg.AutoTeileShop.API.DTO;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 
@@ -21,22 +21,25 @@ namespace Spg.AutoTeileShop.API.Controllers
             _deletableProductService = deletableProductService;
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("")]
         public IActionResult GetAllProduct()
         {
             try
             {
-                IEnumerable<Product> requestBody = _readOnlyproductService.GetAll();
-                IEnumerable<Product> requestBodyDTO = (IEnumerable<Product>)requestBody.Select(p => new ProductDTO(p));
-                if (requestBodyDTO == null) { return NotFound(); }
-                return Ok(requestBodyDTO);
+                List<Product> requestBody = _readOnlyproductService.GetAll().ToList();
+                //List<ProductDTO> requestBodyDTO = new List<ProductDTO>();
+                //foreach(Product p in requestBody)
+                //{
+                //    ProductDTO pDto = new ProductDTO(p);
+                //    requestBodyDTO.Add(pDto);
+                //}
+                if (requestBody.Count == 0) { return NotFound(); }
+                return Ok(requestBody);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message); // Test halber wird hier die Exception zurückgegeben
             }
-
-
         }
     }
 }
