@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.MVCFrontE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repository2", "src\Spg.AutoTeileShop.Repository2\Spg.AutoTeileShop.Repository2.csproj", "{57781A64-5DF5-412A-AFA0-8BD0E066ABE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.DbExtentions", "src\Spg.AutoTeileShop.DbExtentions\Spg.AutoTeileShop.DbExtentions.csproj", "{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.DbExtentions", "src\Spg.AutoTeileShop.DbExtentions\Spg.AutoTeileShop.DbExtentions.csproj", "{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
