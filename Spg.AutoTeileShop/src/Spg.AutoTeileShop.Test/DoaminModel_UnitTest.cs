@@ -11,8 +11,9 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             DbContextOptions options = new DbContextOptionsBuilder()
                 //.UseSqlite("Data Source=AutoTeileShopTest.db")
-                .UseSqlite("Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/Spg.AutoTeileShop.API/AutoTeileShop.db")
-                                .Options;
+                //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  .UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
+                .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
@@ -107,22 +108,23 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void DomainModel_Create_Customer_Test()
+        public void DomainModel_Create_User_Test()
         {
             AutoTeileShopContext db = createDB();
 
-            Customer customer = new Customer()
+            User User = new User()
             {
                 Guid = Guid.NewGuid(),
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
                 Addrese = "TestStaﬂe ",
-                Telefon = "0004514554"
+                Telefon = "0004514554",
+                Role = Roles.User
             };
-            db.Customers.Add(customer);
+            db.Users.Add(User);
             db.SaveChanges();
-            Assert.Equal(1, db.Customers.Count());
+            Assert.Equal(1, db.Users.Count());
         }
 
         [Fact]
@@ -157,7 +159,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void DomainModel_Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartNav_Test()
+        public void DomainModel_Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_User___over_ShoppingCartNav_Test()
         {
             //Arrange
 
@@ -172,21 +174,22 @@ namespace Spg.AutoTeileShop.Domain.Test
             };
             db.Products.Add(product);
 
-            Customer customer = new Customer()
+            User User = new User()
             {
                 Guid = Guid.NewGuid(),
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Muster@gmx.at",
                 Addrese = "TestStaﬂe ",
-                Telefon = "0004514554"
+                Telefon = "0004514554",
+                Role = Roles.User
             };
-            db.Customers.Add(customer);
+            db.Users.Add(User);
 
             ShoppingCart shoppingCart = new ShoppingCart()
             {
                 guid = Guid.NewGuid(),
-                CustomerNav = customer
+                UserNav = User
 
             };
             db.ShoppingCarts.Add(shoppingCart);
@@ -216,14 +219,14 @@ namespace Spg.AutoTeileShop.Domain.Test
             //Assert
 
             //Count Test
-            Assert.Equal(1, db.Customers.Count());
+            Assert.Equal(1, db.Users.Count());
             Assert.Equal(1, db.Products.Count());
             Assert.Equal(1, db.ShoppingCarts.Count());
             Assert.Equal(2, db.ShoppingCartItems.Count());
             Assert.Equal(1, db.Products.Count());
 
             //Relationen Test
-            Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).CustomerNav, customer);
+            Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).UserNav, User);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ProductNav, product);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ShoppingCartNav, shoppingCart);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem2.Id).ProductNav, product);
@@ -232,7 +235,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void DomainModel_Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_Customer___over_ShoppingCartItemList_Test()
+        public void DomainModel_Create_ShoppingCart_with_ShoppingCartItem_with_Product_and_with_User___over_ShoppingCartItemList_Test()
         {
             AutoTeileShopContext db = createDB();
 
@@ -274,16 +277,17 @@ namespace Spg.AutoTeileShop.Domain.Test
             };
             db.Products.Add(product2);
 
-            Customer customer = new Customer()
+            User User = new User()
             {
                 Guid = Guid.NewGuid(),
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Muster@gmx.at",
                 Addrese = "TestStaﬂe ",
-                Telefon = "0004514554"
+                Telefon = "0004514554",
+                Role = Roles.User
             };
-            db.Customers.Add(customer);
+            db.Users.Add(User);
 
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem()
             {
@@ -305,7 +309,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             ShoppingCart shoppingCart = new ShoppingCart()
             {
                 guid = Guid.NewGuid(),
-                CustomerNav = customer
+                UserNav = User
             };
             shoppingCart.AddShoppingCartItem(shoppingCartItem);
             shoppingCart.AddShoppingCartItem(shoppingCartItem2);
@@ -318,14 +322,14 @@ namespace Spg.AutoTeileShop.Domain.Test
             db.SaveChanges();
 
             //Count Test
-            Assert.Equal(1, db.Customers.Count());
+            Assert.Equal(1, db.Users.Count());
             Assert.Equal(2, db.Products.Count());
             Assert.Equal(1, db.ShoppingCarts.Count());
             Assert.Equal(2, db.ShoppingCartItems.Count());
             Assert.Equal(2, db.Products.Count());
 
             //Relationen Test
-            Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).CustomerNav, customer);
+            Assert.Equal(db.ShoppingCarts.Find(shoppingCart.Id).UserNav, User);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem.Id).ProductNav, product);
             Assert.Equal(db.ShoppingCartItems.Find(shoppingCartItem2.Id).ProductNav, product2);
 
@@ -943,43 +947,46 @@ namespace Spg.AutoTeileShop.Domain.Test
         // Servis Async Tests
 
         [Fact]
-        public async void Async_DomainModel_Service_Add_Customer_Test()
+        public async void Async_DomainModel_Service_Add_User_Test()
         {
             AutoTeileShopContext db = createDB();
 
-            Customer customer = new Customer()
+            User User = new User()
             {
                 Guid = Guid.NewGuid(),
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
                 Addrese = "TestStaﬂe ",
-                Telefon = "0004514554"
+                Telefon = "0004514554",
+                Role = Roles.User
+
             };
 
-            Repository<Customer> customerRepo = new Repository<Customer>(db);
-            await customerRepo.AddAsync(customer);
+            Repository<User> UserRepo = new Repository<User>(db);
+            await UserRepo.AddAsync(User);
 
-            Assert.Equal(customer, await customerRepo.GetByIdAsync(customer.Id));
+            Assert.Equal(User, await UserRepo.GetByIdAsync(User.Id));
         }
 
         [Fact]
-        public async void Async_DomainModel_Service_Find_Customer_TestAsync()
+        public async void Async_DomainModel_Service_Find_User_TestAsync()
         {
             AutoTeileShopContext db = createDB();
 
-            Customer customer = new Customer()
+            User User = new User()
             {
                 Guid = Guid.NewGuid(),
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
                 Addrese = "TestStaﬂe ",
-                Telefon = "0004514554"
+                Telefon = "0004514554",
+                Role = Roles.User
             };
-            Repository<Customer> customerRepo = new Repository<Customer>(db);
-            await customerRepo.AddAsync(customer);
-            Assert.Equal(await customerRepo.GetByIdAsync(customer.Id), customer);
+            Repository<User> UserRepo = new Repository<User>(db);
+            await UserRepo.AddAsync(User);
+            Assert.Equal(await UserRepo.GetByIdAsync(User.Id), User);
         }
         
         [Fact]

@@ -11,7 +11,7 @@ namespace Spg.AutoTeileShop.Infrastructure
 {
     public class AutoTeileShopContext : DbContext
     {
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Catagory> Catagories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
@@ -30,7 +30,9 @@ namespace Spg.AutoTeileShop.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
-                options.UseSqlite("Data Source=AutoTeileShop.db");
+                options.UseSqlite("Data Source= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db"); //Home PC
+                            //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
+
             
         }
 
@@ -38,7 +40,7 @@ namespace Spg.AutoTeileShop.Infrastructure
         {
             Randomizer.Seed = new Random(1017);
 
-            List<Customer> customers = new Faker<Customer>("de")
+            List<User> users = new Faker<User>("de")
                 .Rules((f, c) =>
                 {
                     c.Guid = f.Random.Guid();
@@ -51,7 +53,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                 })
             .Generate(50)
             .ToList();
-            Customers.AddRange(customers);
+            Users.AddRange(users);
             SaveChanges();
 
 
@@ -130,7 +132,7 @@ namespace Spg.AutoTeileShop.Infrastructure
            .Rules((f, sh) =>
            {
                sh.guid = f.Random.Guid();
-               sh.CustomerNav = f.PickRandom(customers);
+               //sh.UserNav = f.PickRandom(Users);
                for(int i = 0; i < 2; i++)
                {
                    sh.AddShoppingCartItem(f.PickRandom(shoppingCartItems));

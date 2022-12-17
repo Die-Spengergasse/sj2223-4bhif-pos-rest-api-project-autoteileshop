@@ -11,8 +11,8 @@ namespace Spg.AutoTeileShop.Domain.Models
     {
         public int Id { get; private set; }
         public Guid guid { get;  set; }        
-        public int? CustomerId { get; set; }
-        public Customer? CustomerNav { get; set; }
+        public int? UserId { get; set; }
+        public User? UserNav { get; set; }
         private List<ShoppingCartItem> _shoppingCartItems = new();
         public IReadOnlyList<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems;
 
@@ -27,10 +27,10 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
-        public ShoppingCart(int id, Guid guid, int customerId, Customer? customerNav, List<ShoppingCartItem> shoppingCartItems) : this(id, guid)
+        public ShoppingCart(int id, Guid guid, int UserId, User? UserNav, List<ShoppingCartItem> shoppingCartItems) : this(id, guid)
         {
-            CustomerId = customerId;
-            CustomerNav = customerNav;
+            UserId = UserId;
+            UserNav = UserNav;
             _shoppingCartItems = shoppingCartItems;
         }
 

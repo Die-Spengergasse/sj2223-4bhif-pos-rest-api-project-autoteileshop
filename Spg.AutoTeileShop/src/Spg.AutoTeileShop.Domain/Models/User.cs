@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public class Customer // rename to User and add Roles (User, Admin, Salesman)
+    public enum Roles 
+    { User, Admin, Salesman }
+    public class User // rename to User and add Roles (User, Admin, Salesman)
     {
         public int Id { get; private set; }
         public Guid Guid { get; set; }
@@ -17,12 +19,15 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Telefon { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PW { get; set; } = string.Empty;
+        public Roles Role { get; set; }
 
-        public Customer()
+        public User()
         {
         }
 
-        public Customer(int id, Guid guid, string vorname, string nachname, string addrese, string telefon, string email, string pW)
+        public User
+        (int id, Guid guid, string vorname, string nachname,
+        string addrese,string telefon, string email, string pW, Roles role)
         {
             Id = id;
             Guid = guid;
@@ -32,6 +37,7 @@ namespace Spg.AutoTeileShop.Domain.Models
             Telefon = telefon;
             Email = email;
             PW = pW;
+            Role = role;
         }
     }
 }

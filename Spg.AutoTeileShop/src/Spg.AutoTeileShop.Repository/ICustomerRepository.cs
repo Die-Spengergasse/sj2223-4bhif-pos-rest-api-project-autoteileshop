@@ -9,9 +9,9 @@ using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.Repository
 {
-    public interface ICustomerRepository : IRepository<Customer>
+    public interface IUserRepository : IRepository<User>
     {
-        Task<IEnumerable<Customer>> GetCustomersByIdAsync(int id);
+        Task<IEnumerable<User>> GetUsersByIdAsync(int id);
     }
     
     
