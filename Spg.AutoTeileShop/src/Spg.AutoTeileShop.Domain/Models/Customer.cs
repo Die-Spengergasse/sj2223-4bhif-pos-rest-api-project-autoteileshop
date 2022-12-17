@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public class Customer
+    public class Customer // rename to User and add Roles (User, Admin, Salesman)
     {
         public int Id { get; private set; }
         public Guid Guid { get; set; }
