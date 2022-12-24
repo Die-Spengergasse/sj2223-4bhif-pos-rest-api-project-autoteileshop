@@ -11,12 +11,14 @@ namespace Spg.AutoTeileShop.Domain.Models
     { User, Admin, Salesman }
     public class User // rename to User and add Roles (User, Admin, Salesman)
     {
+        [Key]
         public int Id { get; private set; }
         public Guid Guid { get; set; }
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
         public string Addrese { get; set; } = string.Empty;
         public string Telefon { get; set; } = string.Empty;
+        //[Index(IsUnique = true)]
         public string Email { get; set; } = string.Empty;
         public string PW { get; set; } = string.Empty;
         public Roles Role { get; set; }

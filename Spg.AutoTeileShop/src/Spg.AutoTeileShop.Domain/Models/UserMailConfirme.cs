@@ -21,6 +21,13 @@ namespace Spg.AutoTeileShop.Domain.Models
             Code = code;
         }
 
+        public UserMailConfirme(int userId, User user, string code)
+        {
+            UserId = userId;
+            User = user;
+            Code = code;
+        }
+
         public UserMailConfirme()
         {
         }

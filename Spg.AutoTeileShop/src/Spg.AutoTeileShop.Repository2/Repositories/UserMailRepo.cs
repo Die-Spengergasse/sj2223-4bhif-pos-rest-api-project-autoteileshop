@@ -30,7 +30,9 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public UserMailConfirme? SetUserMailConfirme(UserMailConfirme userMailConfirme)
         {
-            return _db.UserMailConfirms.Add(entity: userMailConfirme);
+            _db.UserMailConfirms.Add(userMailConfirme);
+            _db.SaveChanges();
+            return userMailConfirme;
         }
     }
 }
