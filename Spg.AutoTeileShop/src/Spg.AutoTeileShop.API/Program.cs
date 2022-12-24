@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.DbExtentions;
-using Spg.AutoTeileShop.Domain.Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
 

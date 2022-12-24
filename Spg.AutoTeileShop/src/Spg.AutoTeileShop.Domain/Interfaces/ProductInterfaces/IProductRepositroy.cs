@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spg.AutoTeileShop.Domain.Interfaces
+namespace Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces
 {
     public interface IProductRepositroy
     {

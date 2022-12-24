@@ -20,6 +20,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Email { get; set; } = string.Empty;
         public string PW { get; set; } = string.Empty;
         public Roles Role { get; set; }
+        public bool Confirmed { get; set; }
 
         public User()
         {
@@ -27,7 +28,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public User
         (int id, Guid guid, string vorname, string nachname,
-        string addrese,string telefon, string email, string pW, Roles role)
+        string addrese,string telefon, string email, string pW, Roles role, bool confirmed)
         {
             Id = id;
             Guid = guid;
@@ -38,6 +39,7 @@ namespace Spg.AutoTeileShop.Domain.Models
             Email = email;
             PW = pW;
             Role = role;
+            Confirmed = confirmed;
         }
     }
 }

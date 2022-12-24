@@ -1,4 +1,4 @@
-﻿using Spg.AutoTeileShop.Domain.Interfaces;
+﻿using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using System;

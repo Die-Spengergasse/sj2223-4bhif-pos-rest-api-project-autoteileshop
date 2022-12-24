@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spg.AutoTeileShop.Domain.Interfaces
+namespace Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces
 {
-    public interface IAddUpdateableProductService
+    public interface IReadOnlyProductService
     {
         IEnumerable<Product> GetAll();
         Product? GetByName(string name);
-        void Add(Product product);
-        void Update(Product product);
+        Product? GetById(int id);
 
     }
 }

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
-using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.Infrastructure;
+using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

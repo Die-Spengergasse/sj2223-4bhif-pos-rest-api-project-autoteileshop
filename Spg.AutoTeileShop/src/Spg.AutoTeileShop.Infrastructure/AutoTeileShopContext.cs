@@ -17,6 +17,7 @@ namespace Spg.AutoTeileShop.Infrastructure
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Car> Cars{ get; set; }
+        public DbSet<UserMailConfirme> UserMailConfirms { get; set; }
 
 
         public AutoTeileShopContext(DbContextOptions options) : base(options)
@@ -142,10 +143,23 @@ namespace Spg.AutoTeileShop.Infrastructure
            .ToList();
             ShoppingCarts.AddRange(shoppingCart);
             SaveChanges();
+
+
+            List<UserMailConfirme> userMailConfirmes = new Faker<UserMailConfirme>("de")
+           .Rules((f, u) =>
+           {
+               u.User = f.PickRandom(users);
+               u.Code = Guid.NewGuid().ToString().Substring(0, 8);
+               u.UserId = u.User.Id;
+           })
+           .Generate(50)
+           .ToList();
         }
 
-
        
-        
+
+
+
+
     }
 }

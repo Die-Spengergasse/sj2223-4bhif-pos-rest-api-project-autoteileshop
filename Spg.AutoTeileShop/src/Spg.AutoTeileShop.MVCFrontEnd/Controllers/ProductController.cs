@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Spg.AutoTeileShop.Domain.Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
