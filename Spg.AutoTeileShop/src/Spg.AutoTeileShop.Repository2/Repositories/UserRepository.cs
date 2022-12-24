@@ -36,7 +36,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public User? SetUser(User user)
         {
-            _db.Add(user);
+            _db.Users.Add(user);
             _db.SaveChanges();
             return user;
         }
