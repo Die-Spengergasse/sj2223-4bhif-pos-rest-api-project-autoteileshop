@@ -9,7 +9,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public enum Roles 
     { User, Admin, Salesman }
-    public class User // rename to User and add Roles (User, Admin, Salesman)
+    public class User 
     {
         [Key]
         public int Id { get; private set; }
@@ -18,8 +18,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Nachname { get; set; } = string.Empty;
         public string Addrese { get; set; } = string.Empty;
         public string Telefon { get; set; } = string.Empty;
-        //[Index(IsUnique = true)]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;         //IsUnique
         public string PW { get; set; } = string.Empty;
         public Roles Role { get; set; }
         public bool Confirmed { get; set; }

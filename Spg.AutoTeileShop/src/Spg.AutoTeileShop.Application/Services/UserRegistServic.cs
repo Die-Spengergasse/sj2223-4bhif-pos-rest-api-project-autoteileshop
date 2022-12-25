@@ -60,8 +60,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public bool CheckCode(string Mail,string code)
         {
-         
-            
+            return true;            
         }
     }
 }

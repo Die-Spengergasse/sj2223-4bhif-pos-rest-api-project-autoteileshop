@@ -128,6 +128,89 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
+        public void DomainModel_Create_User_2_times_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            User User = new User()
+            {
+                Guid = Guid.NewGuid(),
+                Vorname = "Max",
+                Nachname = "Musterman",
+                Email = "Max.Musterman@gmx.at",
+                Addrese = "TestStaﬂe ",
+                Telefon = "0004514554",
+                Role = Roles.User
+            };
+            db.Users.Add(User);            
+            db.SaveChanges();
+
+            try
+            {
+                User User2 = new User()
+                {
+                    Guid = Guid.NewGuid(),
+                    Vorname = "Max",
+                    Nachname = "Musterman",
+                    Email = "Max.Musterman@gmx.at",
+                    Addrese = "safasfasf ",
+                    Telefon = "14561454",
+                    Role = Roles.User
+                };
+                db.Users.Add(User2);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Assert.True(true);
+            }
+            Assert.Equal(1, db.Users.Count());
+        }
+
+
+        [Fact]
+        public void DomainModel_Create_User_2_times_withoutMail_Test()
+        {
+            AutoTeileShopContext db = createDB();
+
+            User User = new User()
+            {
+                Guid = Guid.NewGuid(),
+                Vorname = "Max",
+                Nachname = "Musterman",
+                Addrese = "TestStaﬂe ",
+                Telefon = "0004514554",
+                Role = Roles.User
+            };
+            db.Users.Add(User);
+            db.SaveChanges();
+
+            try
+            {
+                User User2 = new User()
+                {
+                    Guid = Guid.NewGuid(),
+                    Vorname = "Max",
+                    Nachname = "Musterman",
+                    Addrese = "safasfasf ",
+                    Telefon = "14561454",
+                    Role = Roles.User
+                };
+                db.Users.Add(User2);
+                db.SaveChanges();
+
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Assert.True(true);
+            }
+            Assert.Equal(1, db.Users.Count());
+        }
+
+        [Fact]
         public void DomainModel_Create_ShoppingCartItem_Test()
         {
             AutoTeileShopContext db = createDB();
