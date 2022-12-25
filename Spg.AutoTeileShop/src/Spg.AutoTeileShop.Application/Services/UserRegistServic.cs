@@ -20,22 +20,28 @@ namespace Spg.AutoTeileShop.Application.Services
             _userMailRepository = userMailRepository;
         }
 
-        public User regist(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW)
+        public List<Object> regist(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW, string FromMail)
         {
-            User user = createUser(Vorname, Nachname, Addrese, Telefon, Email, PW);
-            _userReopop.SetUser(user);
+            User user = _userReopop.SetUser(createUser(Vorname, Nachname, Addrese, Telefon, Email, PW));
             
             SendMail sm = new();
-            string code = sm.Send(Email, "", "", "", "");
+            string code = sm.Send(Email, FromMail, Email, "", "");
 
             UserMailService _userMailService = new(_userMailRepository);
             UserMailConfirme userMailConfirmes = new(user.Id, user, sha256_hash(code));
             _userMailService.SetUserMailConfirme(userMailConfirmes);
 
-            return user;
+            List<Object> obj = new();
+            obj.Add(user);
+            obj.Add(sha256_hash(code));
+            foreach (var item in obj)
+            {
+                Console.WriteLine(item);
+            }
+            return obj;
             
         }
-        public User createUser(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW)
+        private User createUser(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW)
         {
             User user = new User();
             user.Vorname = Vorname;
@@ -48,7 +54,7 @@ namespace Spg.AutoTeileShop.Application.Services
             return user;
         }
 
-        public static String sha256_hash(String value)
+        private static String sha256_hash(String value)
         {
             using (SHA256 hash = SHA256Managed.Create())
             {
@@ -60,7 +66,16 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public bool CheckCode(string Mail,string code)
         {
-            return true;            
+            UserMailConfirme checkUserMailConf = _userMailRepository.GetByMail(Mail);
+            if (checkUserMailConf != null)
+            {
+                if (checkUserMailConf.Code == sha256_hash(code))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
     }
 }

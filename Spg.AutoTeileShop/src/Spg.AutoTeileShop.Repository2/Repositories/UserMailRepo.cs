@@ -25,7 +25,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public UserMailConfirme? GetByMail(string mail)
         {
-            throw new NotImplementedException();
+           return _db.UserMailConfirms.Where(u => u.User.Email== mail).SingleOrDefault();
         }
 
         public UserMailConfirme? SetUserMailConfirme(UserMailConfirme userMailConfirme)
