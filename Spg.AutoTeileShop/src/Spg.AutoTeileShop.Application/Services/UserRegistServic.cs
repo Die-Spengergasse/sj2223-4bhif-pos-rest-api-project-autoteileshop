@@ -20,7 +20,7 @@ namespace Spg.AutoTeileShop.Application.Services
             _userMailRepository = userMailRepository;
         }
 
-        public List<Object> Register_sendMail_Create_User(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW, string FromMail)
+        public List<Object> Register_sendMail_Create_User(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW, string FromMail) //List<Object> 
         {
             User user = _userReopop.SetUser(createUser(Vorname, Nachname, Addrese, Telefon, Email, PW));
             
@@ -31,13 +31,11 @@ namespace Spg.AutoTeileShop.Application.Services
             UserMailConfirme userMailConfirmes = new(user.Id, user, sha256_hash(code));
             _userMailService.SetUserMailConfirme(userMailConfirmes);
 
+
             List<Object> obj = new();
             obj.Add(user);
-            obj.Add(sha256_hash(code));
-            foreach (var item in obj)
-            {
-                Console.WriteLine(item);
-            }
+            obj.Add(sha256_hash(code)); //for Tests
+
             return obj;
             
         }
