@@ -20,7 +20,7 @@ namespace Spg.AutoTeileShop.Application.Services
             _userMailRepository = userMailRepository;
         }
 
-        public List<Object> regist(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW, string FromMail)
+        public List<Object> Register_sendMail_Create_User(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW, string FromMail)
         {
             User user = _userReopop.SetUser(createUser(Vorname, Nachname, Addrese, Telefon, Email, PW));
             
@@ -63,14 +63,16 @@ namespace Spg.AutoTeileShop.Application.Services
                   .Select(item => item.ToString("x2")));
             }
         }
-
-        public bool CheckCode(string Mail,string code)
+        
+        
+        public bool CheckCode_and_verify(string Mail,string code)
         {
             UserMailConfirme checkUserMailConf = _userMailRepository.GetByMail(Mail);
             if (checkUserMailConf != null)
             {
                 if (checkUserMailConf.Code == sha256_hash(code))
                 {
+                    checkUserMailConf.User.Confirmed = true;
                     return true;
                 }
                 return false;

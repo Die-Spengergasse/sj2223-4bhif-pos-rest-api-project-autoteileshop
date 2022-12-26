@@ -48,7 +48,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             AutoTeileShopContext db = createDB();
             UserRegistServic userRegist = Get_Service_UserRegist(db);
 
-            User user =  (User)userRegist.regist("TestVorname", "TestNachname", "TestAdresse","06762656646" , "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com")[0];
+            User user =  (User)userRegist.Register_sendMail_Create_User("TestVorname", "TestNachname", "TestAdresse","06762656646" , "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com")[0];
 
         }
 
@@ -58,7 +58,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             AutoTeileShopContext db = createDB();
             UserRegistServic userRegist = Get_Service_UserRegist(db);
 
-            var obj = userRegist.regist("TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com");
+            var obj = userRegist.Register_sendMail_Create_User("TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com");
 
             UserMailService userMailService = Get_Service_UserMail(db);
 
