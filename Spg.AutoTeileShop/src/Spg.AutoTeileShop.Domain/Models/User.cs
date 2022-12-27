@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Spg.AutoTeileShop.Domain.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +43,32 @@ namespace Spg.AutoTeileShop.Domain.Models
             PW = pW;
             Role = role;
             Confirmed = confirmed;
+        }
+
+
+        public User
+        ( Guid guid, string vorname, string nachname,
+        string addrese, string telefon, string email, string pW, Roles role, bool confirmed)
+        {
+            Guid = guid;
+            Vorname = vorname;
+            Nachname = nachname;
+            Addrese = addrese;
+            Telefon = telefon;
+            Email = email;
+            PW = pW;
+            Role = role;
+            Confirmed = confirmed;
+        }
+
+        public User(UserRegistDTO urDTO)
+        {
+            Vorname = urDTO.Vorname;
+            Nachname = urDTO.Nachname;
+            Addrese = urDTO.Addrese;
+            Telefon = urDTO.Telefon;
+            Email = urDTO.Email;
+            PW = urDTO.PW;
         }
     }
 }

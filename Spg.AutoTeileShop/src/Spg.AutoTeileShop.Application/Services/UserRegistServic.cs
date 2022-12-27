@@ -21,12 +21,16 @@ namespace Spg.AutoTeileShop.Application.Services
             _userMailRepository = userMailRepository;
         }
 
-        public List<Object> Register_sendMail_Create_User(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW, string FromMail) //List<Object> 
+        public List<Object> Register_sendMail_Create_User(User postUser, string fromMail) //List<Object> 
         {
-            User user = _userReopop.SetUser(createUser(Vorname, Nachname, Addrese, Telefon, Email, PW));
+            if (fromMail.Count() == 0) { fromMail = "mailtestdavid01@gmail.com"; }
+            
+            postUser.Confirmed = false;
+            postUser.Role = Roles.User;
+            User user = _userReopop.SetUser(postUser);
             
             SendMail sm = new();
-            string code = sm.Send(Email, FromMail, Email, "", "");
+            string code = sm.Send(user.Email, fromMail, user.Email, "", "");
 
             UserMailService _userMailService = new(_userMailRepository);
             UserMailConfirme userMailConfirmes = new(user.Id, user, sha256_hash(code));
@@ -36,7 +40,7 @@ namespace Spg.AutoTeileShop.Application.Services
             List<Object> obj = new();
             obj.Add(user);
             obj.Add(code); //for Tests
-
+            
             return obj;
             
         }

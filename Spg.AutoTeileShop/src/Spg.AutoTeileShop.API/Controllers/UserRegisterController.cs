@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Application.Services;
+using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
@@ -11,11 +15,11 @@ namespace Spg.AutoTeileShop.API.Controllers
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        private readonly IUserMailService _userMailService;
+        private readonly IUserRegistrationService _userRegistService;
 
-        public RegisterController(IUserMailService userMailService)
+        public RegisterController(IUserRegistrationService userRegistService)
         {
-            _userMailService = userMailService;
+            _userRegistService = userRegistService;
         }
 
         //User user = new User();
@@ -26,9 +30,22 @@ namespace Spg.AutoTeileShop.API.Controllers
         //    user.Email = Email;
         //    user.PW = PW;
         
-        [HttpPost("")]
-        public IActionResult Regist()
+        [HttpPost()]
+        [Produces("application/json")]
+        public IActionResult Regist([FromBody()] UserRegistDTO userDTO)
         {
+            try
+            {
+               // UserRegistDTO userDTO = JsonSerializer.Deserialize<UserRegistDTO>(userDTOJSON);
+                User user = new(userDTO);
+                _userRegistService.Register_sendMail_Create_User(user, "");
+                return Created("/api/User/" + user.Id, user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
         }
     }
 }
+    

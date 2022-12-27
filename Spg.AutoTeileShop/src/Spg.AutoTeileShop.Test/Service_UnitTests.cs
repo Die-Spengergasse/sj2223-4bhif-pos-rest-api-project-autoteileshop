@@ -47,8 +47,9 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             AutoTeileShopContext db = createDB();
             UserRegistServic userRegist = Get_Service_UserRegist(db);
+            User userPost = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false);
 
-            User user =  (User)userRegist.Register_sendMail_Create_User("TestVorname", "TestNachname", "TestAdresse","06762656646" , "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com")[0];
+            User user =  (User)userRegist.Register_sendMail_Create_User(userPost, "mailtestdavid01@gmail.com")[0];
 
         }
 
@@ -57,15 +58,16 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             AutoTeileShopContext db = createDB();
             UserRegistServic userRegist = Get_Service_UserRegist(db);
-
-            var obj = userRegist.Register_sendMail_Create_User("TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com");
+            // Guid guid, string vorname, string nachname,string addrese, string telefon, string email, string pW, Roles role, bool confirmed
+            User userPost = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false) ;
+            var obj = userRegist.Register_sendMail_Create_User(userPost, "mailtestdavid01@gmail.com");
 
             UserMailService userMailService = Get_Service_UserMail(db);
 
             User user = (User)obj.First();
             UserMailConfirme userMailConfirme = userMailService.GetUserMailConfirmeByMail(user.Email);
 
-            Assert.Equal(userMailConfirme.Code, obj.Last());
+            Assert.Equal(userMailConfirme.Code, userRegist.sha256_hash(obj.Last().ToString()));
         }
 
         [Fact]
@@ -74,8 +76,9 @@ namespace Spg.AutoTeileShop.Domain.Test
             AutoTeileShopContext db = createDB();
             UserRegistServic userRegistService = Get_Service_UserRegist(db);
 
+            User userPost = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false);
 
-            var UserCodeStore = userRegistService.Register_sendMail_Create_User("TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com");
+            var UserCodeStore = userRegistService.Register_sendMail_Create_User(userPost, "mailtestdavid01@gmail.com");
 
             UserMailService userMailService = Get_Service_UserMail(db);
 

@@ -3,6 +3,8 @@ using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
 
@@ -12,12 +14,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-//DB
+//Product Controller
 builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
 builder.Services.AddTransient<IDeletableProductService, ProductService>();
 
+//Register Controller
+builder.Services.AddTransient<IUserRegistrationService, UserRegistServic>();
+builder.Services.AddTransient<IUserMailRepo, UserMailRepo>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+
 builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
+
+//DB
 builder.Services.ConfigureSQLite(connectionString);
 
 

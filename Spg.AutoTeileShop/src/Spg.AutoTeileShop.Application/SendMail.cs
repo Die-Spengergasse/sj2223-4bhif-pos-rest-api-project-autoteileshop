@@ -10,7 +10,7 @@ namespace Spg.AutoTeileShop.Application
 {
     public class SendMail
     {
-
+        //"mailtestdavid01@gmail.com" Test Mail Addrese zum versenden von Mails
         public string Send(string Acc, string emailFrom, string emailTo, string emailSubject, string emailBody)
         {
             string guidString = Guid.NewGuid().ToString().Substring(0, 8);
