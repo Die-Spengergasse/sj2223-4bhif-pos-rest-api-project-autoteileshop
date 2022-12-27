@@ -1,4 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using System;
@@ -12,9 +13,9 @@ namespace Spg.AutoTeileShop.Application.Services
 {
     public class UserRegistServic : IUserRegistrationService
     {
-        UserRepository _userReopop;
-        UserMailRepo _userMailRepository;
-        public UserRegistServic(UserRepository userRepo, UserMailRepo userMailRepository)
+        IUserRepository _userReopop;
+        IUserMailRepo _userMailRepository;
+        public UserRegistServic(IUserRepository userRepo, IUserMailRepo userMailRepository)
         {
             _userReopop = userRepo;
             _userMailRepository = userMailRepository;
