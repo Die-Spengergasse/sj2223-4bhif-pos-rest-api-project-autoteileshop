@@ -68,5 +68,27 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(userMailConfirme.Code, obj.Last());
         }
 
+        [Fact]
+        public void Service_SendMail_and_Check_Code_and_Check_User_Status_Test()
+        {
+            AutoTeileShopContext db = createDB();
+            UserRegistServic userRegistService = Get_Service_UserRegist(db);
+
+
+            var UserCodeStore = userRegistService.Register_sendMail_Create_User("TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", "mailtestdavid01@gmail.com");
+
+            UserMailService userMailService = Get_Service_UserMail(db);
+
+            User user = (User)UserCodeStore.First();
+            UserMailConfirme userMailConfirme = userMailService.GetUserMailConfirmeByMail(user.Email);
+
+
+            Assert.True(!user.Confirmed);
+            Assert.True(userRegistService.CheckCode_and_verify(user.Email, (string)UserCodeStore.Last()));
+            Assert.True(user.Confirmed);
+
+            Assert.Equal(userMailConfirme.Code, userRegistService.sha256_hash(UserCodeStore.Last().ToString()));
+        }
+
     }
 }

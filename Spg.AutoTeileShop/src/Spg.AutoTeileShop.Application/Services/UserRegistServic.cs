@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
             List<Object> obj = new();
             obj.Add(user);
-            obj.Add(sha256_hash(code)); //for Tests
+            obj.Add(code); //for Tests
 
             return obj;
             
@@ -52,7 +52,7 @@ namespace Spg.AutoTeileShop.Application.Services
             return user;
         }
 
-        private static String sha256_hash(String value)
+        public String sha256_hash(String value)
         {
             using (SHA256 hash = SHA256Managed.Create())
             {
