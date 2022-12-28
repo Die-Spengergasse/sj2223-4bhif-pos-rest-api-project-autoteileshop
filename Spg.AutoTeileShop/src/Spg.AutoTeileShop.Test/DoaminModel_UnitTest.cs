@@ -1,17 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository.Repos;
+using System.Text.Json;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
     public class UnitTest1
     {
-        private AutoTeileShopContext createDB()  
+        private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                //.UseSqlite("Data Source=AutoTeileShopTest.db")
-                //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  //.UseSqlite("Data Source=AutoTeileShopTest.db")
+                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
                   .UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
                 .Options;
 
@@ -22,7 +24,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             return db;
         }
 
-        
+
 
         [Fact]
         public void DomainModel_Create_Catagory_Test()
@@ -142,7 +144,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Telefon = "0004514554",
                 Role = Roles.User
             };
-            db.Users.Add(User);            
+            db.Users.Add(User);
             db.SaveChanges();
 
             try
@@ -533,10 +535,10 @@ namespace Spg.AutoTeileShop.Domain.Test
                 guid = Guid.NewGuid(),
             };
             Assert.Throws<Exception>(() => shoppingCart.AddShoppingCartItem(shoppingCartItem));
-            
-            
+
+
             db.ShoppingCarts.Add(shoppingCart);
-            
+
             db.SaveChanges();
 
             Assert.Equal(1, db.ShoppingCarts.Count());
@@ -723,7 +725,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             AutoTeileShopContext db = createDB();
 
-            
+
             ShoppingCart shoppingCart = new ShoppingCart()
             {
                 guid = Guid.NewGuid(),
@@ -751,7 +753,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             };
 
             Assert.Throws<Exception>(() => shoppingCart.RemoveShoppingCartItem(shoppingCartItem));
-            
+
         }
 
         [Fact]
@@ -787,23 +789,23 @@ namespace Spg.AutoTeileShop.Domain.Test
             db.ShoppingCarts.Add(shoppingCart);
             db.SaveChanges();
 
-           
-            ShoppingCartItem shoppingCartItem2 =new ShoppingCartItem()
+
+            ShoppingCartItem shoppingCartItem2 = new ShoppingCartItem()
             {
                 guid = shoppingCartItem.guid,
                 Pieces = 1,
                 ProductNav = product,
             };
-            
+
 
             shoppingCart.RemoveShoppingCartItem(shoppingCartItem2);
             db.SaveChanges();
-            
+
             Assert.Equal(1, db.ShoppingCarts.First().ShoppingCartItems.First().Pieces);
             Assert.Equal(shoppingCartItem, db.ShoppingCartItems.First());
             Assert.Equal(shoppingCartItem, db.ShoppingCarts.First().ShoppingCartItems.First());
             Assert.Single(db.ShoppingCartItems);
-            
+
 
         }
 
@@ -940,7 +942,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void DomainModel_Add_ShoppingCartItem_to_ShoppingCart_Check_for_Pices_in_ShoppingCartItem_Test() 
+        public void DomainModel_Add_ShoppingCartItem_to_ShoppingCart_Check_for_Pices_in_ShoppingCartItem_Test()
         {
             AutoTeileShopContext db = createDB();
 
@@ -970,7 +972,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             {
                 guid = Guid.NewGuid(),
             };
-            
+
             shoppingCart.AddShoppingCartItem(shoppingCartItem);
             db.ShoppingCarts.Add(shoppingCart);
 
@@ -984,7 +986,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(2 == db.ShoppingCarts.First().ShoppingCartItems.First().Pieces);
             Assert.True(1 == db.ShoppingCarts.First().ShoppingCartItems.Count());
             Assert.True(1 == db.ShoppingCartItems.Count());
-            
+
         }
 
         [Fact]
@@ -1071,21 +1073,23 @@ namespace Spg.AutoTeileShop.Domain.Test
             await UserRepo.AddAsync(User);
             Assert.Equal(await UserRepo.GetByIdAsync(User.Id), User);
         }
-        
+
         [Fact]
         public void XYZDomainModel_Create_DB_Seed_MVC()
         {
             AutoTeileShopContext db = createDB();
             db.Seed();
         }
-        public void XYZZDomainModel_Create_DB_Seed_API()
+        [Fact]
+        public void XYZDomainModel_Create_DB_API()
         {
             AutoTeileShopContext db = createDB();
-            db.Seed();
+            //db.Seed();
+            //UserRegistDTO userDTO = new() { Addrese = "test", Email = "davidMailEmpfangTestSPG@web.de", Nachname = "etst", PW = "wrfas", Telefon = "1650", Vorname = "test" };
+
+            //string strJson = JsonSerializer.Serialize<UserRegistDTO>(userDTO);
+            //Console.WriteLine(strJson);
+
         }
-
-
-
-
     }
 }

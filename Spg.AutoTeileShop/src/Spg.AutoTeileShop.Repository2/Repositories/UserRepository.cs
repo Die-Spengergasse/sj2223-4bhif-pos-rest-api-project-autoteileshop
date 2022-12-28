@@ -11,12 +11,11 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AutoTeileShopContext _db;
+        private AutoTeileShopContext _db;
 
         public UserRepository(AutoTeileShopContext db)
         {
             _db = db;
-
         }
 
         public User? GetByEMail(string email)

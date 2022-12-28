@@ -32,14 +32,15 @@ namespace Spg.AutoTeileShop.API.Controllers
         
         [HttpPost()]
         [Produces("application/json")]
-        public IActionResult Regist([FromBody()] UserRegistDTO userDTO)
+        public IActionResult Regist([FromBody()] JsonElement userDTOJSON)
         {
             try
             {
-               // UserRegistDTO userDTO = JsonSerializer.Deserialize<UserRegistDTO>(userDTOJSON);
-                User user = new(userDTO);
-                _userRegistService.Register_sendMail_Create_User(user, "");
+                UserRegistDTO userDTO = JsonSerializer.Deserialize<UserRegistDTO>(userDTOJSON);
+                  User user = new(userDTO);
+                  _userRegistService.Register_sendMail_Create_User(user, "");
                 return Created("/api/User/" + user.Id, user);
+                return Ok();
             }
             catch (Exception ex)
             {

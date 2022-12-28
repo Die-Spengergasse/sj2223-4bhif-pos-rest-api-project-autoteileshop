@@ -13,11 +13,11 @@ namespace Spg.AutoTeileShop.Application.Services
 {
     public class UserRegistServic : IUserRegistrationService
     {
-        IUserRepository _userReopop;
+        IUserRepository _userRepo;
         IUserMailRepo _userMailRepository;
         public UserRegistServic(IUserRepository userRepo, IUserMailRepo userMailRepository)
         {
-            _userReopop = userRepo;
+            _userRepo = userRepo;
             _userMailRepository = userMailRepository;
         }
 
@@ -27,7 +27,7 @@ namespace Spg.AutoTeileShop.Application.Services
             
             postUser.Confirmed = false;
             postUser.Role = Roles.User;
-            User user = _userReopop.SetUser(postUser);
+            User user = _userRepo.SetUser(postUser);
             
             SendMail sm = new();
             string code = sm.Send(user.Email, fromMail, user.Email, "", "");

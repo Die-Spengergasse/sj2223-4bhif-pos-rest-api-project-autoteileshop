@@ -25,6 +25,10 @@ namespace Spg.AutoTeileShop.Domain.DTO
             Email = user.Email;
             PW = user.PW;
         }
+
+        public UserRegistDTO()
+        {
+        }
     }
     
 }
