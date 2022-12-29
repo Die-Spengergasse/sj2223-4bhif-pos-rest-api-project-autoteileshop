@@ -12,6 +12,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface
         UserMailConfirme? GetById(int Id);
         UserMailConfirme? GetByMail(string mail);
         UserMailConfirme? SetUserMailConfirme(UserMailConfirme userMailConfirme);
-        bool DeletUserMailbyId(int Id); 
+        bool DeletUserMailbyId(int Id);
+        bool DeletAllUserMailbyMail(string mail);
     }
 }

@@ -15,10 +15,12 @@ namespace Spg.AutoTeileShop.Application.Services
     {
         IUserRepository _userRepo;
         IUserMailRepo _userMailRepository;
-        public UserRegistServic(IUserRepository userRepo, IUserMailRepo userMailRepository)
+        IUserMailService _userMailService;
+        public UserRegistServic(IUserRepository userRepo, IUserMailRepo userMailRepository, IUserMailService userMailService)
         {
             _userRepo = userRepo;
             _userMailRepository = userMailRepository;
+            _userMailService = userMailService;
         }
 
         public List<Object> Register_sendMail_Create_User(User postUser, string fromMail) //List<Object> 
@@ -34,7 +36,8 @@ namespace Spg.AutoTeileShop.Application.Services
             SendMail sm = new();
             string code = sm.Send(user.Email, fromMail, user.Email, "", "");
 
-            UserMailService _userMailService = new(_userMailRepository);
+            //UserMailService _userMailService = new(_userMailRepository);
+            _userMailRepository.DeletAllUserMailbyMail(user.Email);
             UserMailConfirme userMailConfirmes = new(user, sha256_hash(code));
             _userMailService.SetUserMailConfirme(userMailConfirmes);
 

@@ -19,6 +19,13 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db = db;
         }
 
+        public bool DeletAllUserMailbyMail(string mail)
+        {
+            _db.UserMailConfirms.RemoveRange(_db.UserMailConfirms.Where(x => x.User.Email == mail));
+            _db.SaveChanges();
+            return true;
+        }
+
         public bool DeletUserMailbyId(int Id)
         {
             _db.UserMailConfirms.Remove(_db.UserMailConfirms.Find(Id));

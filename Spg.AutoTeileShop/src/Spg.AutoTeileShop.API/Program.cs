@@ -23,6 +23,7 @@ builder.Services.AddTransient<IDeletableProductService, ProductService>();
 builder.Services.AddTransient<IUserRegistrationService, UserRegistServic>();
 builder.Services.AddTransient<IUserMailRepo, UserMailRepo>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserMailService, UserMailService>();
 
 
 builder.Services.AddTransient<IProductRepositroy, ProductRepository>();

@@ -26,9 +26,8 @@ namespace Spg.AutoTeileShop.Domain.Test
         private UserRegistServic _userRegistServic;
         private RegisterController _registerController;
 
-        private RegisterController getController()
+        private RegisterController getController(AutoTeileShopContext db)
         {
-            var db = createDB();
             _userRepo = new(db);
             _userMailRepository = new(db);
             _userRegistServic = new(_userRepo, _userMailRepository);
@@ -56,11 +55,13 @@ namespace Spg.AutoTeileShop.Domain.Test
             UserRegistDTO userDTOInput = new() { Addrese = "TestAddrese", Email = "davidMailEmpfangTestSPG@web.de", Nachname = "TestNachname", PW = "testPW", Telefon = "133", Vorname = "testVorname" };
             JsonElement userDTOJson = JsonSerializer.SerializeToElement<UserRegistDTO>(userDTOInput);
 
-            var controller = getController();
+            var db = createDB();
+
+            var controller = getController(db);
             IActionResult Result = controller.Regist(userDTOJson);
 
             Assert.IsType<CreatedResult>(Result as CreatedResult);
-          //  Assert.Equal(Result, CreatedResult);
+            Assert.Equal(Result, new CreatedResult("/api/User/" + db.Users.FirstOrDefault().Id, db.Users.FirstOrDefault()));
 
 
         }
