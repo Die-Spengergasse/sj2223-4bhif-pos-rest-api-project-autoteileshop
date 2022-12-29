@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
-    public class UnitTest1
+    public class DoaminModel_UnitTest
     {
         private AutoTeileShopContext createDB()
         {

@@ -9,21 +9,21 @@ namespace Spg.AutoTeileShop.Domain.Models
     public class UserMailConfirme
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         public User User { get; set; }
         public string Code { get; set; }
 
-        public UserMailConfirme(int id, int userId, User user, string code)
+        public UserMailConfirme(int id, User user, string code)
         {
             Id = id;
-            UserId = userId;
+           // UserId = userId;
             User = user;
             Code = code;
         }
 
-        public UserMailConfirme(int userId, User user, string code)
+        public UserMailConfirme( User user, string code)
         {
-            UserId = userId;
+          //  UserId = userId;
             User = user;
             Code = code;
         }

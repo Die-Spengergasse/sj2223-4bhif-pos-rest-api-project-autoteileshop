@@ -27,13 +27,15 @@ namespace Spg.AutoTeileShop.Application.Services
             
             postUser.Confirmed = false;
             postUser.Role = Roles.User;
+            postUser.Guid = Guid.NewGuid();
+            postUser.PW = sha256_hash(postUser.PW);
             User user = _userRepo.SetUser(postUser);
             
             SendMail sm = new();
             string code = sm.Send(user.Email, fromMail, user.Email, "", "");
 
             UserMailService _userMailService = new(_userMailRepository);
-            UserMailConfirme userMailConfirmes = new(user.Id, user, sha256_hash(code));
+            UserMailConfirme userMailConfirmes = new(user, sha256_hash(code));
             _userMailService.SetUserMailConfirme(userMailConfirmes);
 
 
@@ -76,6 +78,8 @@ namespace Spg.AutoTeileShop.Application.Services
                 if (checkUserMailConf.Code == sha256_hash(code))
                 {
                     checkUserMailConf.User.Confirmed = true;
+                    _userRepo.UpdateUser(checkUserMailConf.User);
+                    _userMailRepository.DeletUserMailbyId(checkUserMailConf.Id);
                     return true;
                 }
                 return false;

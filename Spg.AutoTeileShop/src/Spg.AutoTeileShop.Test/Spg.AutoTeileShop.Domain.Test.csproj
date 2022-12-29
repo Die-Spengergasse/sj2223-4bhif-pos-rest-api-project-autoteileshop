@@ -26,6 +26,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Spg.AutoTeileShop.API\Spg.AutoTeileShop.API.csproj" />
 		<ProjectReference Include="..\Spg.AutoTeileShop.Application\Spg.AutoTeileShop.Application.csproj" />
 		<ProjectReference Include="..\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
 	    <ProjectReference Include="..\Spg.AutoTeileShop.Domain\Spg.AutoTeileShop.Domain.csproj" />

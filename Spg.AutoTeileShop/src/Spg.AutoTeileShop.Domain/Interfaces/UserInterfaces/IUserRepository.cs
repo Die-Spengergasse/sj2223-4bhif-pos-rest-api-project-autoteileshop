@@ -13,6 +13,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
         public User? GetByEMail(string email);
         public User? GetByEMailAndPassword(string email, string password);
         public User? SetUser(User user);
+        public User? UpdateUser(User user);
         
         
     }

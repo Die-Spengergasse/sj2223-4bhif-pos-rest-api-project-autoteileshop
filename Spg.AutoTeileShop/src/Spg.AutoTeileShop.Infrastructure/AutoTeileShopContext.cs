@@ -155,7 +155,7 @@ namespace Spg.AutoTeileShop.Infrastructure
            {
                u.User = f.PickRandom(users);
                u.Code = Guid.NewGuid().ToString().Substring(0, 8);
-               u.UserId = u.User.Id;
+               //u.UserId = u.User.Id;
            })
            .Generate(50)
            .ToList();

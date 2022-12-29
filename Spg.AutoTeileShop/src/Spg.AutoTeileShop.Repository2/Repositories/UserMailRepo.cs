@@ -1,4 +1,5 @@
-﻿using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
+﻿using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using System;
@@ -18,6 +19,12 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db = db;
         }
 
+        public bool DeletUserMailbyId(int Id)
+        {
+            _db.UserMailConfirms.Remove(_db.UserMailConfirms.Find(Id));
+            return true;
+        }
+
         public UserMailConfirme? GetById(int Id)
         {
             return _db.UserMailConfirms.Where(u => u.Id == Id).SingleOrDefault();// ?? throw Exception.("User mit der Id: " + Id + " wurd nicht gefunde");
@@ -25,7 +32,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public UserMailConfirme? GetByMail(string mail)
         {
-           return _db.UserMailConfirms.Where(u => u.User.Email== mail).SingleOrDefault();
+           return _db.UserMailConfirms.Include("User").Where(u => u.User.Email== mail).SingleOrDefault();
         }
 
         public UserMailConfirme? SetUserMailConfirme(UserMailConfirme userMailConfirme)

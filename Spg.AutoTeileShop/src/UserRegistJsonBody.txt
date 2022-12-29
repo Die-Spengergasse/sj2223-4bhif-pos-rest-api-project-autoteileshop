@@ -1,20 +1,10 @@
 {
-  "Vorname": "David",
-  "Nachname": "Test",
-  "Addrese": "Testgasse 8",
-  "Telefon": "0646388925",
-  "Email": "davidMailEmpfangTestSPG@web.de",
-  "PW": "admin"
-}
-
-
-{
 "Vorname":"test",
 "Nachname":"etst",
 "Addrese":"test",
-"Telefon":"1650",
+"Telefon":"0686 2542202",
 "Email":"davidMailEmpfangTestSPG@web.de",
-"PW":"wrfas"
+"PW":"admin"
 }
 
 

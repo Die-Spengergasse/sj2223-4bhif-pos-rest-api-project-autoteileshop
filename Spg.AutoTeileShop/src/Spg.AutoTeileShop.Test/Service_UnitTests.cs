@@ -11,6 +11,7 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
+
     public class Service_UnitTests
     {
         private AutoTeileShopContext createDB()
@@ -91,6 +92,19 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(user.Confirmed);
 
             Assert.Equal(userMailConfirme.Code, userRegistService.sha256_hash(UserCodeStore.Last().ToString()));
+        }
+
+        [Fact]
+        public void Repo_CreateUser_Test() 
+        {
+            AutoTeileShopContext db = createDB();
+            UserRepository userRepository = new(db);
+            User user = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false);
+            User ur = userRepository.SetUser(user);
+
+            Assert.Equal(user, ur);
+
+            Assert.True(db.Users.Count() == 1); ;
         }
 
     }

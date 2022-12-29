@@ -39,5 +39,12 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db.SaveChanges();
             return user;
         }
+
+        public User? UpdateUser(User user)
+        {
+            _db.Users.Update(user);
+            _db.SaveChanges();
+            return user;
+        }
     }
 }

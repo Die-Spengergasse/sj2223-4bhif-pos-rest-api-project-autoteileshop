@@ -40,11 +40,25 @@ namespace Spg.AutoTeileShop.API.Controllers
                   User user = new(userDTO);
                   _userRegistService.Register_sendMail_Create_User(user, "");
                 return Created("/api/User/" + user.Id, user);
-                return Ok();
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+                if (ex.InnerException.Message.Contains("SQLite Error 19: 'UNIQUE constraint failed: Users.Email")) return BadRequest("Email already exists");
+                return StatusCode(StatusCodes.Status400BadRequest, ex.InnerException);
+            }
+        }
+        [HttpGet("CheckCode/{mail}/{code}")]
+        public IActionResult CheckCode(string mail, string code)
+        {
+            try
+            {
+                bool isChecked = _userRegistService.CheckCode_and_verify(mail, code);
+                if(isChecked) return Ok();
+                return BadRequest("Code konnte nicht gefunden werden");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }
