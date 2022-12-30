@@ -25,12 +25,14 @@ namespace Spg.AutoTeileShop.Domain.Test
         private UserMailRepo _userMailRepository;
         private UserRegistServic _userRegistServic;
         private RegisterController _registerController;
+        private UserMailService _userMailService;
 
         private RegisterController getController(AutoTeileShopContext db)
         {
             _userRepo = new(db);
             _userMailRepository = new(db);
-            _userRegistServic = new(_userRepo, _userMailRepository);
+            _userMailService = new(_userMailRepository);
+            _userRegistServic = new(_userRepo, _userMailRepository, _userMailService);
             return _registerController = new(_userRegistServic);
         }
 
@@ -61,7 +63,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             IActionResult Result = controller.Regist(userDTOJson);
 
             Assert.IsType<CreatedResult>(Result as CreatedResult);
-            Assert.Equal(Result, new CreatedResult("/api/User/" + db.Users.FirstOrDefault().Id, db.Users.FirstOrDefault()));
+            Assert.Equal(Result.ToString(), new CreatedResult("/api/User/" + db.Users.FirstOrDefault().Id, db.Users.FirstOrDefault()).ToString());
 
 
         }

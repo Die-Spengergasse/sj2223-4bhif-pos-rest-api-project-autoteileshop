@@ -12,20 +12,22 @@ namespace Spg.AutoTeileShop.Domain.Models
         //public int UserId { get; set; }
         public User User { get; set; }
         public string Code { get; set; }
-
-        public UserMailConfirme(int id, User user, string code)
+        public DateTime date { get; set; }
+        public UserMailConfirme(int id, User user, string code, DateTime date)
         {
             Id = id;
-           // UserId = userId;
+            // UserId = userId;
             User = user;
             Code = code;
+            this.date = date;
         }
 
-        public UserMailConfirme( User user, string code)
+        public UserMailConfirme(User user, string code, DateTime date)
         {
-          //  UserId = userId;
+            //  UserId = userId;
             User = user;
             Code = code;
+            this.date = date;
         }
 
         public UserMailConfirme()

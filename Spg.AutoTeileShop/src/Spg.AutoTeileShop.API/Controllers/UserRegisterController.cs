@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Spg.AutoTeileShop.Application.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
-using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Infrastructure;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
@@ -22,29 +18,22 @@ namespace Spg.AutoTeileShop.API.Controllers
             _userRegistService = userRegistService;
         }
 
-        //User user = new User();
-        //user.Vorname = Vorname;
-        //    user.Nachname = Nachname;
-        //    user.Addrese = Addrese;
-        //    user.Telefon = Telefon;
-        //    user.Email = Email;
-        //    user.PW = PW;
-        
         [HttpPost()]
         [Produces("application/json")]
         public IActionResult Regist([FromBody()] JsonElement userDTOJSON)
         {
             try
             {
-                UserRegistDTO userDTO = JsonSerializer.Deserialize<UserRegistDTO>(userDTOJSON);
-                  User user = new(userDTO);
-                  _userRegistService.Register_sendMail_Create_User(user, "");
+                 UserRegistDTO userDTO = JsonSerializer.Deserialize<UserRegistDTO>(userDTOJSON);
+                User user = new(userDTO);
+                _userRegistService.Register_sendMail_Create_User(user, "");
                 return Created("/api/User/" + user.Id, user);
             }
-            catch (Exception ex)
+            catch (SqliteException ex)
             {
                 if (ex.InnerException.Message.Contains("SQLite Error 19: 'UNIQUE constraint failed: Users.Email")) return BadRequest("Email already exists");
-                return StatusCode(StatusCodes.Status400BadRequest, ex.InnerException);
+
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet("CheckCode/{mail}/{code}")]
@@ -53,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             try
             {
                 bool isChecked = _userRegistService.CheckCode_and_verify(mail, code);
-                if(isChecked) return Ok();
+                if (isChecked) return Ok();
                 return BadRequest("Code konnte nicht gefunden werden");
             }
             catch (Exception ex)
@@ -62,7 +51,6 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        
+
     }
 }
-    

@@ -26,29 +26,52 @@ namespace Spg.AutoTeileShop.Application.Services
         public List<Object> Register_sendMail_Create_User(User postUser, string fromMail) //List<Object> 
         {
             if (fromMail.Count() == 0) { fromMail = "mailtestdavid01@gmail.com"; }
-            
+
             postUser.Confirmed = false;
             postUser.Role = Roles.User;
             postUser.Guid = Guid.NewGuid();
             postUser.PW = sha256_hash(postUser.PW);
             User user = _userRepo.SetUser(postUser);
-            
+
             SendMail sm = new();
             string code = sm.Send(user.Email, fromMail, user.Email, "", "");
 
             //UserMailService _userMailService = new(_userMailRepository);
             _userMailRepository.DeletAllUserMailbyMail(user.Email);
-            UserMailConfirme userMailConfirmes = new(user, sha256_hash(code));
+            UserMailConfirme userMailConfirmes = new(user, sha256_hash(code), DateTime.Now);
             _userMailService.SetUserMailConfirme(userMailConfirmes);
 
 
             List<Object> obj = new();
             obj.Add(user);
             obj.Add(code); //for Tests
-            
+
             return obj;
-            
+
         }
+
+
+        public bool CheckCode_and_verify(string Mail, string code)
+        {
+            UserMailConfirme checkUserMailConf = _userMailRepository.GetByMail(Mail);
+            if (checkUserMailConf != null)
+            {
+                if (checkUserMailConf.date.AddMinutes(15) <= DateTime.Now) 
+                {
+                    throw new Exception("Code ist abgelaufen");
+                }
+                if (checkUserMailConf.Code == sha256_hash(code))
+                {
+                    checkUserMailConf.User.Confirmed = true;
+                    _userRepo.UpdateUser(checkUserMailConf.User);
+                    _userMailRepository.DeletUserMailbyId(checkUserMailConf.Id);
+                    return true;
+                }
+                throw new Exception("Falscher Code");
+            }
+            throw new Exception("Es wurde keine passende Mail gefunden");
+        }
+
         private User createUser(string Vorname, string Nachname, string Addrese, string Telefon, string Email, string PW)
         {
             User user = new User();
@@ -70,24 +93,6 @@ namespace Spg.AutoTeileShop.Application.Services
                   .ComputeHash(Encoding.UTF8.GetBytes(value))
                   .Select(item => item.ToString("x2")));
             }
-        }
-        
-        
-        public bool CheckCode_and_verify(string Mail,string code)
-        {
-            UserMailConfirme checkUserMailConf = _userMailRepository.GetByMail(Mail);
-            if (checkUserMailConf != null)
-            {
-                if (checkUserMailConf.Code == sha256_hash(code))
-                {
-                    checkUserMailConf.User.Confirmed = true;
-                    _userRepo.UpdateUser(checkUserMailConf.User);
-                    _userMailRepository.DeletUserMailbyId(checkUserMailConf.Id);
-                    return true;
-                }
-                return false;
-            }
-            return false;
         }
     }
 }

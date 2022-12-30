@@ -39,7 +39,9 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             UserRepository userRepo = new(_db);
             UserMailRepo userMailRepo = new(_db);
-            return new UserRegistServic(userRepo, userMailRepo);
+            UserMailService _userMailService = new(userMailRepo); 
+
+            return new UserRegistServic(userRepo, userMailRepo, _userMailService);
             
         }
 

@@ -26,8 +26,8 @@ namespace Spg.AutoTeileShop.Application
                 emailSubject = "Anmelde Bestätigung SpengerCars";
             }
             if (emailBody.Count() == 0)
-            { emailBody = "Dies ist die Bestätigung für die Anmeldung des Accounts " + Acc + " ,\r\nBitte geben sie diesen Code: " + guidString + " zur Bestätigung ein"; }
-            client.Send(emailFrom, emailTo, emailSubject, emailBody);
+            { emailBody = "Dies ist die Bestätigung für die Anmeldung des Accounts " + Acc + " ,\r\nBitte geben sie diesen Code: " + guidString + " zur Bestätigung ein. \r\n Dieser Code läuft nach 15 Minuten ab"; }
+            //client.Send(emailFrom, emailTo, emailSubject, emailBody);
             return guidString;
         }
     }
