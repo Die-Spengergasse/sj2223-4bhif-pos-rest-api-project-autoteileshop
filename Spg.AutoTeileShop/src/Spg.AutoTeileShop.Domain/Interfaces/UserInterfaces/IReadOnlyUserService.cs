@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces
+namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
 {
-    public interface IDeletableProductService
+    internal interface IReadOnlyUserService
     {
-        Product? Delete(Product product);
-
+        User? GetById
     }
 }

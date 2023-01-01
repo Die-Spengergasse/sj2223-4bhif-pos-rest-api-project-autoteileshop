@@ -10,9 +10,8 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces
     public interface IAddUpdateableProductService
     {
         IEnumerable<Product> GetAll();
-        Product? GetByName(string name);
-        void Add(Product product);
-        void Update(Product product);
+        Product? Add(Product product);
+        Product? Update(Product product);
 
     }
 }

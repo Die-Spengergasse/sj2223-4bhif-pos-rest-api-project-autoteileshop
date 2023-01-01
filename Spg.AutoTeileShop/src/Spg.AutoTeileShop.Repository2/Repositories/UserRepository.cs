@@ -18,19 +18,29 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db = db;
         }
 
+        public IReadOnlyList<User> GetAll()
+        {
+            return _db.Users.ToList();
+        }
+
         public User? GetByEMail(string email)
         {
-            throw new NotImplementedException();
+            return _db.Users.Where(u => u.Email == email).SingleOrDefault();
         }
 
         public User? GetByEMailAndPassword(string email, string password)
         {
-            throw new NotImplementedException();
+            return _db.Users.Where(u => u.Email == email && u.PW == password).SingleOrDefault();
+        }
+
+        public User? GetByID(int Id)
+        {
+            return _db.Users.Find(Id);
         }
 
         public User? GetByName(string name)
         {
-            throw new NotImplementedException();
+            return _db.Users.Where(u => u.Nachname == name).SingleOrDefault();
         }
 
         public User? SetUser(User user)

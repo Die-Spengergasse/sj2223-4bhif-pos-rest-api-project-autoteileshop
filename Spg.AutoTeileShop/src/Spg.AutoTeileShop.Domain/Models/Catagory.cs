@@ -22,7 +22,8 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Description { get; set; } = string.Empty;
         public CategoryTypes CategoryType { get; set; }
 
-        public Catagory(int id, Catagory? topCatagory, string name, string description, CategoryTypes categoryType)
+        public Catagory(int id, Catagory? topCatagory, string name, string description, CategoryTypes categoryType
+            )
         {
             Id = id;
             TopCatagory = topCatagory;

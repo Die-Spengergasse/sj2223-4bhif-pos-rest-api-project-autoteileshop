@@ -17,14 +17,14 @@ namespace Spg.AutoTeileShop.Application.Services
             _productRepository = productRepository;
         }
 
-        public void Add(Product product)
+        public Product? Add(Product product)
         {
-            throw new NotImplementedException();
+            return _productRepository.Add(product);
         }
 
-        public void Delete(Product product)
+        public Product? Delete(Product product)
         {
-            throw new NotImplementedException();
+            return _productRepository.Delete(product);
         }
 
         public IEnumerable<Product> GetAll()
@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public Product? GetById(int id)
         {
-            throw new NotImplementedException();
+            return _productRepository.GetById(id);
         }
 
         public Product? GetByName(string name)
@@ -42,9 +42,9 @@ namespace Spg.AutoTeileShop.Application.Services
             return _productRepository.GetByName(name);
         }
 
-        public void Update(Product product)
+        public Product? Update(Product product)
         {
-            throw new NotImplementedException();
+            return _productRepository.Update(product);
         }
     }
 }
