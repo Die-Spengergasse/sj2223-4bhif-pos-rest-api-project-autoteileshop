@@ -15,7 +15,8 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
         User? GetByEMail(string email);
         User? GetByEMailAndPassword(string email, string password);
         User? SetUser(User user);
-        User? UpdateUser(User user); 
+        User? UpdateUser(User user);
+        User? Delet(User user);
         
     }
 }

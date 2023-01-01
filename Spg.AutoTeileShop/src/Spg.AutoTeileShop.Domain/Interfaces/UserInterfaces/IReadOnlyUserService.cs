@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
 {
-    internal interface IReadOnlyUserService
+    public interface IReadOnlyUserService
     {
-        User? GetById
+        User? GetById(int Id);
     }
 }

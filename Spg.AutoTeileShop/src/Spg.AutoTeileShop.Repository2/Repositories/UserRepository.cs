@@ -18,6 +18,12 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db = db;
         }
 
+        public User? Delet(User user)
+        {
+            _db.Users.Remove(user);
+            return user;
+        }
+
         public IReadOnlyList<User> GetAll()
         {
             return _db.Users.ToList();
@@ -33,7 +39,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return _db.Users.Where(u => u.Email == email && u.PW == password).SingleOrDefault();
         }
 
-        public User? GetByID(int Id)
+        public User? GetById(int Id)
         {
             return _db.Users.Find(Id);
         }
