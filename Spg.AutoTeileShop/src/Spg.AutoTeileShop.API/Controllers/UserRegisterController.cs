@@ -20,7 +20,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPost()]
         [Produces("application/json")]
-        public IActionResult Regist([FromBody()] UserRegistDTO userDTOJSON)
+        public IActionResult Register([FromBody()] UserRegistDTO userDTOJSON)
         {
             try
             {            
