@@ -10,6 +10,6 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
 {
     public interface IDeletableUserService
     {
-        User? Delet(User user); 
+        User? Delete(User user); 
     }
 }

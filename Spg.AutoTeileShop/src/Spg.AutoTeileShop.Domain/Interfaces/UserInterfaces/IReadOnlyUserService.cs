@@ -10,5 +10,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
     public interface IReadOnlyUserService
     {
         User? GetById(int Id);
+        IReadOnlyList<User> GetAll();
+        User? GetByGuid(Guid guid);
     }
 }

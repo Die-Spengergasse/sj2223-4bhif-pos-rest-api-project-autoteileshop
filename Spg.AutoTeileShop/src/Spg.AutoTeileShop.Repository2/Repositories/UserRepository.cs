@@ -4,6 +4,7 @@ using Spg.AutoTeileShop.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,9 +19,10 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db = db;
         }
 
-        public User? Delet(User user)
+        public User? Delete(User user)
         {
             _db.Users.Remove(user);
+            _db.SaveChanges();
             return user;
         }
 
@@ -61,6 +63,21 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db.Users.Update(user);
             _db.SaveChanges();
             return user;
+        }
+
+        public String sha256_hash(String value)
+        {
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                return String.Concat(hash
+                  .ComputeHash(Encoding.UTF8.GetBytes(value))
+                  .Select(item => item.ToString("x2")));
+            }
+        }
+
+        public User? GetByGuid(Guid guid)
+        {
+            return _db.Users.Where(u => u.Guid == guid).SingleOrDefault();
         }
     }
 }

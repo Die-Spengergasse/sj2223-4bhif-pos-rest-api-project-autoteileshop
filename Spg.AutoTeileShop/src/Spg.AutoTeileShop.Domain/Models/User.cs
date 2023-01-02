@@ -70,5 +70,17 @@ namespace Spg.AutoTeileShop.Domain.Models
             Email = urDTO.Email;
             PW = urDTO.PW;
         }
+
+        public User (UserUpdateDTO uuDTO)
+        {
+            Vorname = uuDTO.Vorname;
+            Nachname = uuDTO.Nachname;
+            Addrese = uuDTO.Addrese;
+            Telefon = uuDTO.Telefon;
+            Email = uuDTO.Email;
+            PW = uuDTO.PW;
+            Role = uuDTO.Role;
+            Confirmed = uuDTO.Confirmed;
+        }
     }
 }

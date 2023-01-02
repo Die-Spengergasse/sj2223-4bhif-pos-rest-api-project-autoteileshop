@@ -26,6 +26,12 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserMailService, UserMailService>();
 
 
+//User Controller:
+builder.Services.AddTransient<IAddUpdateableUserService, UserService>();
+builder.Services.AddTransient<IReadOnlyUserService, UserService>();
+builder.Services.AddTransient<IDeletableUserService, UserService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
 builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
 
 //DB
