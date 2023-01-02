@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +71,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             User user = (User)obj.First();
             UserMailConfirme userMailConfirme = userMailService.GetUserMailConfirmeByMail(user.Email);
 
-            Assert.Equal(userMailConfirme.Code, userRegist.sha256_hash(obj.Last().ToString()));
+            Assert.Equal(userMailConfirme.Code, sha256_hash(obj.Last().ToString()));
         }
 
         [Fact]
@@ -93,7 +94,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(userRegistService.CheckCode_and_verify(user.Email, (string)UserCodeStore.Last()));
             Assert.True(user.Confirmed);
 
-            Assert.Equal(userMailConfirme.Code, userRegistService.sha256_hash(UserCodeStore.Last().ToString()));
+            Assert.Equal(userMailConfirme.Code, sha256_hash(UserCodeStore.Last().ToString()));
         }
 
         [Fact]
@@ -109,5 +110,14 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(db.Users.Count() == 1); ;
         }
 
+        private String sha256_hash(String value)
+        {
+            using (SHA256 hash = SHA256Managed.Create())
+            {
+                return String.Concat(hash
+                  .ComputeHash(Encoding.UTF8.GetBytes(value))
+                  .Select(item => item.ToString("x2")));
+            }
+        }
     }
 }

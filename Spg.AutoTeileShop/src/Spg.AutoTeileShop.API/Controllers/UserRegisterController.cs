@@ -28,7 +28,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 
                 User user = new(userDTO);
                 _userRegistService.Register_sendMail_Create_User(user, "");
-                return Created("/api/User/" + user.Id, user);
+                return Created("/api/User/" + user.Guid, user);
             }
             catch (SqliteException ex)
             {

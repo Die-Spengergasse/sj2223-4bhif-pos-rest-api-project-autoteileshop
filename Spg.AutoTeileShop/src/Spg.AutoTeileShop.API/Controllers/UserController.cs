@@ -32,7 +32,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")] //fürs Tests, wird noch gelöcht
         public IActionResult GetUserById(int id)
         {
             User response = _readOnlyUserService.GetById(id);
