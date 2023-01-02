@@ -61,9 +61,8 @@ namespace Spg.AutoTeileShop.Application.Services
                 user2.PW = user.PW;
                 user2.Confirmed = user.Confirmed;
                 user2.Role = user.Role;
-                
+                return _userRepository.UpdateUser(user2);
             }
-            return _userRepository.UpdateUser(user2);
             return null;
         }
     }    

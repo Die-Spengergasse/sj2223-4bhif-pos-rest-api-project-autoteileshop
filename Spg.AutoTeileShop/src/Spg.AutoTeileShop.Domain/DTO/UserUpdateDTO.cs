@@ -9,7 +9,6 @@ namespace Spg.AutoTeileShop.Domain.DTO
 {
     public class UserUpdateDTO
     {
-
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
         public string Addrese { get; set; } = string.Empty;
