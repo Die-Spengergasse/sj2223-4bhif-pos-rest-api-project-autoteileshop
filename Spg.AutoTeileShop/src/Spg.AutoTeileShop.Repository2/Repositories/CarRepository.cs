@@ -49,13 +49,13 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return null;
         }
 
-        public Car? Update2(Car car3)
+        public Car? Update2(Car car)
         {
-            if (car3 is not null)
+            if (car is not null)
             {
-                _db.Cars.Update(car3);
+                _db.Cars.Update(car);
                 _db.SaveChanges();
-                return car3;
+                return car;
             }
             return null;
         }
