@@ -41,7 +41,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public User? GetByGuid(Guid guid)
         {
-            return _userRepository.GetByGuid(guid);
+            return _userRepository.GetByGuid(guid) ?? throw new Exception($"No User Found with Guid: {guid}");
         }
 
         public User? GetById(int id)

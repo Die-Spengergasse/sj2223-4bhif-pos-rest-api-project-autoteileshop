@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Newtonsoft.Json;
 using Spg.AutoTeileShop.API.Controllers;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
@@ -12,6 +13,8 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -55,17 +58,17 @@ namespace Spg.AutoTeileShop.Domain.Test
         public void Controller_Register_Test()
         {
             UserRegistDTO userDTOInput = new() { Addrese = "TestAddrese", Email = "davidMailEmpfangTestSPG@web.de", Nachname = "TestNachname", PW = "testPW", Telefon = "133", Vorname = "testVorname" };
-            JsonElement userDTOJson = JsonSerializer.SerializeToElement<UserRegistDTO>(userDTOInput);
 
             var db = createDB();
 
-            var controller = getController(db);
-            IActionResult Result = controller.Regist(userDTOJson);
+            RegisterController controller = getController(db);
+            IActionResult Result = controller.Register(userDTOInput);
 
             Assert.IsType<CreatedResult>(Result as CreatedResult);
             Assert.Equal(Result.ToString(), new CreatedResult("/api/User/" + db.Users.FirstOrDefault().Id, db.Users.FirstOrDefault()).ToString());
 
 
         }
+
     }
 }
