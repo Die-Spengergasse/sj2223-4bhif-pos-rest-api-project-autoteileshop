@@ -73,26 +73,27 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void Repository_Car_Update2_with_Tracking_Off_Test()
+        public void Repository_Car_Update2_with_Tracking_Off_Test() //should not work
         {
             var _db = createDB();
             _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            _db.ChangeTracker.AutoDetectChangesEnabled = false;
+            _db.ChangeTracker.LazyLoadingEnabled = false;
             var cRepo = createCartRepository(_db);
             var car = new Car()
             {
                 Marke = "VW",
                 Modell = "Golf",
-                //Baujahr = DateTime.Now,
+                Baujahr = new DateTime(2021, 1, 1),
             };
 
             cRepo.Add(car);
 
-            car.Marke = "Audi";
-            car.Modell = "A3";
-            cRepo.Update2(car);
+            var carChanges = new Car(car.Id, "Audi", "A3", new DateTime(2021, 1, 1), new List<Product>());
+            var car2 = cRepo.Update2(carChanges);
 
-            Assert.Equal(1, _db.Cars.Count());
-            Assert.Equal(car, _db.Cars.First()) ;
+            Assert.Equal(1, _db.Cars.Count()); 
+            Assert.Equal(car2, _db.Cars.First()) ;
         }
 
         [Fact]
