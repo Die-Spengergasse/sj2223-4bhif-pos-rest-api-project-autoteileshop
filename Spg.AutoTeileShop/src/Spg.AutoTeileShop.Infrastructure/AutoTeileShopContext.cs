@@ -67,10 +67,10 @@ namespace Spg.AutoTeileShop.Infrastructure
             .Rules((f, ca) =>
             {
                 ca.Marke = f.Vehicle.Manufacturer();
-                ca.Modell = f.Vehicle.     ();
+                ca.Modell = f.Vehicle.Model();
                 ca.Baujahr = f.Date.Past(15, DateTime.Now);                
             })
-            .Generate(70)
+            .Generate(60)
             .ToList();
             Cars.AddRange(cars);
             SaveChanges();
