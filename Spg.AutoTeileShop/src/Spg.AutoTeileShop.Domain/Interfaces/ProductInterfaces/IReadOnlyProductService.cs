@@ -10,6 +10,8 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces
     public interface IReadOnlyProductService
     {
         IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetByCatagory(Catagory catagory);
+
         Product? GetByName(string name);
         Product? GetById(int id);
 

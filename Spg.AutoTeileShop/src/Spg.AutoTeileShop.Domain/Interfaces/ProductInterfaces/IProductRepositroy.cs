@@ -9,12 +9,12 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces
 {
     public interface IProductRepositroy
     {
-        public IEnumerable<Product> GetAll();
-        public IEnumerable<Product> GetByCatagory(Catagory catagory);
-        public Product? GetById(int Id);
-        public Product? GetByName(string name);
-        public Product? Delete(Product product);
-        public Product? Add(Product product);
-        public Product? Update(Product product);
+        IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetByCatagory(Catagory catagory);
+        Product? GetById(int Id);
+        Product? GetByName(string name);
+        Product? Delete(Product product);
+        Product? Add(Product product);
+        Product? Update(Product product);
     }
 }
