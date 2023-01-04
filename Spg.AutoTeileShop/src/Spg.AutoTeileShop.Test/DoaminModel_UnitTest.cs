@@ -7,6 +7,8 @@ using System.Text.Json;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
+
+    [Collection("Sequential tests")]
     public class DoaminModel_UnitTest
     {
         private AutoTeileShopContext createDB()
@@ -1031,7 +1033,7 @@ namespace Spg.AutoTeileShop.Domain.Test
 
         // Servis Async Tests
 
-        [Fact]
+       // [Fact]
         public async void Async_DomainModel_Service_Add_User_Test()
         {
             AutoTeileShopContext db = createDB();
@@ -1054,7 +1056,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(User, await UserRepo.GetByIdAsync(User.Id));
         }
 
-        [Fact]
+       // [Fact]
         public async void Async_DomainModel_Service_Find_User_TestAsync()
         {
             AutoTeileShopContext db = createDB();

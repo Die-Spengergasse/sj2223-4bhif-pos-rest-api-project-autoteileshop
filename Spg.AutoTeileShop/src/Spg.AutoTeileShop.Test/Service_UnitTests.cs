@@ -12,7 +12,7 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
-
+    [Collection("Sequential tests")]
     public class Service_UnitTests
     {
         private AutoTeileShopContext createDB()

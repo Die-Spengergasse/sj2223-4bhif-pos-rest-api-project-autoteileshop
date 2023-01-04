@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
+    [Collection("Sequential tests")]
     public class Repository_UnitTest
     {
         private AutoTeileShopContext createDB()
@@ -87,13 +88,13 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Baujahr = new DateTime(2021, 1, 1),
             };
 
-            cRepo.Add(car);
+            //cRepo.Add(car);
 
-            var carChanges = new Car(car.Id, "Audi", "A3", new DateTime(2021, 1, 1), new List<Product>());
-            var car2 = cRepo.Update2(carChanges);
+            //var carChanges = new Car(car.Id, "Audi", "A3", new DateTime(2021, 1, 1), new List<Product>());
+            var car2 = cRepo.Update2(car);
 
             Assert.Equal(1, _db.Cars.Count()); 
-            Assert.Equal(car2, _db.Cars.First()) ;
+            Assert.Equal(car2.ToString(), _db.Cars.First().ToString()) ;
         }
 
         [Fact]

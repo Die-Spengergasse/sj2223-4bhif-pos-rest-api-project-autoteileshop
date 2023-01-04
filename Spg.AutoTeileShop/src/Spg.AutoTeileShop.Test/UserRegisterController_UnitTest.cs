@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
+    [Collection("Sequential tests")]
     public class UserRegisterController_UnitTest
     {
         
