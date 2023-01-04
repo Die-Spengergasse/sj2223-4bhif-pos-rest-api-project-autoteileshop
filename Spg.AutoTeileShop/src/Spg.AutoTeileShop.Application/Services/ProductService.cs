@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public IEnumerable<Product> GetByCatagory(Catagory catagory)
         {
-            throw new NotImplementedException();
+            return _productRepository.GetByCatagory(catagory);
         }
 
         public Product? GetById(int id)
