@@ -41,5 +41,6 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest(ex.Message); // Test halber wird hier die Exception zurückgegeben
             }
         }
+        public ActionResult<Product> GetProductById(int id)
     }
 }
