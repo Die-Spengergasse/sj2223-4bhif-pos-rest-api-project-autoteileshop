@@ -79,7 +79,17 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public Product? Update(Product product)
         {
-            return _productRepository.Update(product);
+            var product1 = _productRepository.GetById(product.Id);
+            product1.Name = product.Name;
+            product1.Price = product.Price;
+            product1.Stock = product.Stock;
+            product1.receive = product.receive;
+            product1.Discount = product.Discount;
+            product1.Ean13 = product.Ean13;
+            product1.Image = product.Image;
+            product1.catagory = product.catagory;
+            
+            return _productRepository.Update(product1);
         }
     }
 }

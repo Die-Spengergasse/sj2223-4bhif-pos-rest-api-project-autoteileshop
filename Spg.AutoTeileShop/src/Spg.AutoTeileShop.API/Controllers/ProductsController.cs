@@ -31,9 +31,9 @@ namespace Spg.AutoTeileShop.API.Controllers
                 if (requestBody.Count == 0) { return NotFound(); }
                 return Ok(requestBody);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(e.Message); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
@@ -45,9 +45,9 @@ namespace Spg.AutoTeileShop.API.Controllers
                 Product? product = _readOnlyproductService.GetById(id);
                 return Ok(product);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(e); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
@@ -59,9 +59,9 @@ namespace Spg.AutoTeileShop.API.Controllers
                 Product? product = _readOnlyproductService.GetByName(name);
                 return Ok(product);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(e); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
@@ -73,12 +73,38 @@ namespace Spg.AutoTeileShop.API.Controllers
                 List<Product> products = _readOnlyproductService.GetByCatagory(catagory).ToList();
                 return Ok(products);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(e); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
+        [HttpPost("")]
+        [Produces("application/json")]
+        public ActionResult<Product> AddProduct(ProductDTO pDto)
+        {
+            try
+            {
+                return _addUpdateproductService.Add(new Product(pDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
 
+        [HttpPut("")]
+        [Produces("application/json")]
+        public ActionResult<Product> UpdateProduct(ProductDTO pDto)
+        {
+            try
+            {
+                return _addUpdateproductService.Update(new Product(pDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

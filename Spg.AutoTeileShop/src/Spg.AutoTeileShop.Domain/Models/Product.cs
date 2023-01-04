@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spg.AutoTeileShop.Domain.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -48,6 +49,20 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Product()
         {
         }
+
+        public Product(ProductDTO pDTO)
+        {
+            this.Name = pDTO.Name;
+            this.Price = pDTO.Price;
+            this.catagory = pDTO.catagory;
+            this.Description = pDTO.Description;
+            this.Image = pDTO.Image;
+            this.Ean13 = pDTO.Ean13;
+            this.Quality = pDTO.Quality;
+            this.Stock = pDTO.Stock;
+            this.Discount = pDTO.Discount;
+        }
+
 
         public void AddProductFitsForCar(Car entity)
         {
