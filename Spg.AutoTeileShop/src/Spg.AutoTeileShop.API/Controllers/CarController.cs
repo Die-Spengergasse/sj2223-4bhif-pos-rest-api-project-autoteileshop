@@ -25,6 +25,13 @@ namespace Spg.AutoTeileShop.API.Controllers
             _addUpdateableCarService = addUpdateableCarService;
         }
 
+        [HttpGet("")]
+        public ActionResult<List<Car>> GetAll()
+        {
+            return Ok(_readOnlycarService.GetAll());
+        }
+
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
