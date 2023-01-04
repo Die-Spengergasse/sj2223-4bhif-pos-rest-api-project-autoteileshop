@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 
@@ -10,26 +12,37 @@ namespace Spg.AutoTeileShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
-    {
+    public class CarController : ControllerBase    {
 
-        private readonly AutoTeileShopContext _autoTeileShopContext;
+        private readonly IReadOnlyCarService _readOnlycarService;
+        private readonly IDeletableCarService _deletableCarService;
+        private readonly IAddUpdateableCarService _addUpdateableCarService;
 
-
-        public CarController(AutoTeileShopContext autoTeileShopContext)
+        public CarController(IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService, IAddUpdateableCarService addUpdateableCarService)
         {
-            _autoTeileShopContext = autoTeileShopContext;
+            _readOnlycarService = readOnlycarService;
+            _deletableCarService = deletableCarService;
+            _addUpdateableCarService = addUpdateableCarService;
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string[]> CarbyId(int id)
+        public ActionResult<Car> GetCarbyId(int id)
         {
-            Car car = _autoTeileShopContext.Cars.SingleOrDefault(c => c.Id == id);
-            if (car == null) { return NotFound(); }
-            CarDTO carReqeustBodyModel = new CarDTO(car);
-            return Ok(carReqeustBodyModel);
+            try
+            {            
+                Car? car = _readOnlycarService.GetById(id);
+                if (car == null)
+                {
+                    return NotFound();
+                }
+                return Ok(car);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
 
