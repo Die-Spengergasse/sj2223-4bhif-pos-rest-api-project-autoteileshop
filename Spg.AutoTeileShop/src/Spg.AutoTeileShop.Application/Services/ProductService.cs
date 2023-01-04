@@ -47,6 +47,36 @@ namespace Spg.AutoTeileShop.Application.Services
             return _productRepository.GetByName(name);
         }
 
+        public int GetDiscountById(int id)
+        {
+            return _productRepository.GetById(id).Discount;
+        }
+
+        public string GetEan13ById(int id)
+        {
+            return _productRepository.GetById(id).Ean13;
+        }
+
+        public string GetImageById(int id)
+        {
+            return _productRepository.GetById(id).Image;
+        }
+
+        public decimal GetPriceById(int id)
+        {
+            return _productRepository.GetById(id).Price;
+        }
+
+        public DateTime GetReceiveById(int id)
+        {
+            return _productRepository.GetById(id).receive;
+        }
+
+        public int GetStockById(int id)
+        {
+            return _productRepository.GetById(id).Stock;
+        }
+
         public Product? Update(Product product)
         {
             return _productRepository.Update(product);
