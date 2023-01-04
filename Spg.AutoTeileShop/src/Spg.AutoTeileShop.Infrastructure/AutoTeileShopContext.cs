@@ -62,15 +62,15 @@ namespace Spg.AutoTeileShop.Infrastructure
             Users.AddRange(users);
             SaveChanges();
 
-
+            
             List<Car> cars = new Faker<Car>("de")
             .Rules((f, ca) =>
             {
-                ca.Marke = f.Company.CompanyName();
-                ca.Modell = f.Commerce.ProductName();
-                ca.Baujahr = f.Date.Past(10, DateTime.Now);                
+                ca.Marke = f.Vehicle.Manufacturer();
+                ca.Modell = f.Vehicle.     ();
+                ca.Baujahr = f.Date.Past(15, DateTime.Now);                
             })
-            .Generate(50)
+            .Generate(70)
             .ToList();
             Cars.AddRange(cars);
             SaveChanges();
