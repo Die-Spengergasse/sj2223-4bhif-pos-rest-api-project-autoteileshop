@@ -33,6 +33,11 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return _db.Products.ToList();
         }
 
+        public IEnumerable<Product> GetByCatagory(Catagory catagory)
+        {
+            return _db.Products.Where(p => p.catagory == catagory).ToList();
+        }
+
         public Product? GetById(int Id)
         {
             return _db.Products.Find(Id) ?? throw new KeyNotFoundException($"Product: {Id} not found"); ;
