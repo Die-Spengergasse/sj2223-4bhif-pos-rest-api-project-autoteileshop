@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.DbExtentions;
+using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
@@ -18,6 +19,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
 builder.Services.AddTransient<IDeletableProductService, ProductService>();
+builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
 
 //Register Controller
 builder.Services.AddTransient<IUserRegistrationService, UserRegistServic>();
@@ -32,7 +34,11 @@ builder.Services.AddTransient<IReadOnlyUserService, UserService>();
 builder.Services.AddTransient<IDeletableUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
-builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
+//Car Controller
+builder.Services.AddTransient<IAddUpdateableCarService, CarService>();
+builder.Services.AddTransient<IReadOnlyCarService, CarService>();
+builder.Services.AddTransient<IDeletableCarService, CarService>();
+builder.Services.AddTransient<ICarRepository, CarRepository>();
 
 //DB
 builder.Services.ConfigureSQLite(connectionString);
