@@ -116,5 +116,51 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Car> DeleteCar(int id)
+        {
+            try
+            {
+                _deletableCarService.Delete(_readOnlycarService.GetById(id));
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost("")]
+        [Produces("application/json")]
+        public ActionResult<Car> AddCar(CarDTO carDTO)
+        {
+            try
+            {
+                Car car = new Car(carDTO);
+                _addUpdateableCarService.Add(car);
+                return Created("/api/Car/" + car.Id , car);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPut()]
+        [Produces("application/json")]
+        public ActionResult<Car> UpdateCar(CarDTO carDTO)
+        {
+            try
+            {
+                Car car = new Car(carDTO);
+                _addUpdateableCarService.Update(car);
+                return Ok(car);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

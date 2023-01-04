@@ -22,17 +22,12 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult GetAllProduct()
+        public ActionResult<List<Product>> GetAllProduct()
         {
             try
             {
                 List<Product> requestBody = _readOnlyproductService.GetAll().ToList();
-                //List<ProductDTO> requestBodyDTO = new List<ProductDTO>();
-                //foreach(Product p in requestBody)
-                //{
-                //    ProductDTO pDto = new ProductDTO(p);
-                //    requestBodyDTO.Add(pDto);
-                //}
+                
                 if (requestBody.Count == 0) { return NotFound(); }
                 return Ok(requestBody);
             }
@@ -41,6 +36,49 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest(ex.Message); // Test halber wird hier die Exception zurückgegeben
             }
         }
+
+        [HttpGet("{id}")]
         public ActionResult<Product> GetProductById(int id)
+        {
+            try
+            {
+                Product? product = _readOnlyproductService.GetById(id);
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex); // Test halber wird hier die Exception zurückgegeben
+            }
+        }
+
+        [HttpGet("GetByName/{name}")]
+        public ActionResult<Product> GetProductByName(string name)
+        {
+            try
+            {
+                Product? product = _readOnlyproductService.GetByName(name);
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex); // Test halber wird hier die Exception zurückgegeben
+            }
+        }
+
+        [HttpGet("GetByCatagory/{catagory}")]
+        public ActionResult<List<Product>> GetProductByCatagory(Catagory catagory)
+        {
+            try
+            {
+                List<Product> products = _readOnlyproductService.GetByCatagory(catagory).ToList();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex); // Test halber wird hier die Exception zurückgegeben
+            }
+        }
+
+
     }
 }
