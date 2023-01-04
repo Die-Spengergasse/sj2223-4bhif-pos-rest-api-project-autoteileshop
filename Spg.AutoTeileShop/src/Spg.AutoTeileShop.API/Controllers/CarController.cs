@@ -53,5 +53,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
 
+        public ActionResult<List<Car>> GetByModell(string model)
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr(string merke, string model, int baujahr)
     }
 }
