@@ -456,4 +456,7 @@ $RECYCLE.BIN/
 
 # DB
 *.db
+*.db-shm
+*.db-wal
+
 AutoTeileShop.db

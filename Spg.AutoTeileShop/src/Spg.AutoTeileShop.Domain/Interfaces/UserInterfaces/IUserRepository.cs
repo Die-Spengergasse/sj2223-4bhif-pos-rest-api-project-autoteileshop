@@ -9,7 +9,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
 {
     public interface IUserRepository
     {
-        IReadOnlyList<User> GetAll();
+        IEnumerable<User> GetAll();
         User? GetById (int Id);
         User? GetByGuid(Guid guid);
 

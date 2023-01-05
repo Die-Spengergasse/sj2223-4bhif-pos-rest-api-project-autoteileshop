@@ -26,7 +26,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return user;
         }
 
-        public IReadOnlyList<User> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return _db.Users.ToList();
         }

@@ -26,8 +26,8 @@ namespace Spg.AutoTeileShop.API.Controllers
         [HttpGet("")]
         public IActionResult GetAllUser()
         {
-            IReadOnlyList<User> response = _readOnlyUserService.GetAll();
-            if (response.Count == 0) { return NotFound(); }
+            IEnumerable<User> response = _readOnlyUserService.GetAll();
+            if (response.ToList().Count == 0) { return NotFound(); }
             if (response == null) { return NotFound(); }
             return Ok(response);
         }

@@ -53,7 +53,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             UserRegistServic userRegist = Get_Service_UserRegist(db);
             User userPost = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false);
 
-            User user =  (User)userRegist.Register_sendMail_Create_User(userPost, "mailtestdavid01@gmail.com")[0];
+            User user = (User)userRegist.Register_sendMail_Create_User(userPost, "mailtestdavid01@gmail.com").First();
 
         }
 

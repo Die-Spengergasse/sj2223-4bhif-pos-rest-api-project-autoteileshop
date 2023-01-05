@@ -23,7 +23,7 @@ namespace Spg.AutoTeileShop.Application.Services
             _userMailService = userMailService;
         }
 
-        public List<Object> Register_sendMail_Create_User(User postUser, string fromMail) //List<Object> 
+        public IEnumerable<Object> Register_sendMail_Create_User(User postUser, string fromMail) //List<Object> 
         {
             if (fromMail.Count() == 0) { fromMail = "mailtestdavid01@gmail.com"; }
 

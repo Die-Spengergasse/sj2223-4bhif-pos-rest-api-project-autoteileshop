@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.Application.Services
             return user;
         }
 
-        public IReadOnlyList<User> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return _userRepository.GetAll();
         }
