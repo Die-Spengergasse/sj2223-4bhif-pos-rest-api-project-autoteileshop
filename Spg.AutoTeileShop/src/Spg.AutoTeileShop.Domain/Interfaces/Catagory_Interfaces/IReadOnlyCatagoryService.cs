@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces
 {
-    public interface ICatagoryRepository
+    public interface IReadOnlyCatagoryService
     {
         Catagory GetCatagoryById(int id);
         Catagory GetCatagoryByName(string name);
@@ -15,8 +15,5 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces
         IEnumerable<Catagory> GetAllCatagories();
         IEnumerable<Catagory> GetCatagoriesByType(CategoryTypes categoryType);
         IEnumerable<Catagory> GetCatagoriesByTopCatagory(Catagory topCatagory);
-        Catagory AddCatagory(Catagory catagory);
-        Catagory UpdateCatagory(Catagory catagory);
-        void DeleteCatagory(Catagory catagory);
     }
 }
