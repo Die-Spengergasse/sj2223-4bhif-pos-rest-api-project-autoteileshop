@@ -75,21 +75,44 @@ namespace Spg.AutoTeileShop.Infrastructure
             Cars.AddRange(cars);
             SaveChanges();
 
+            Random random = new Random();
 
             List<Catagory> catagory = new Faker<Catagory>("de")
             .Rules((f, ca) =>
             {
 
                 ca.Description = f.Name.JobDescriptor();
-
-                Array values = Enum.GetValues(typeof(CategoryTypes));
-                Random random = new Random();                
+                Array values = Enum.GetValues(typeof(CategoryTypes));                              
                 ca.CategoryType = (CategoryTypes)values.GetValue(random.Next(values.Length));
                 ca.Name = ca.CategoryType.ToString();
                 
             })
             .Generate(50)
             .ToList();
+            
+
+
+            foreach (Catagory c in catagory)
+            {
+                if (c.CategoryType == CategoryTypes.MotorTeile || c.CategoryType == CategoryTypes.Bremssystem || c.CategoryType == CategoryTypes.Tuning || c.CategoryType == CategoryTypes.Optik || c.CategoryType == CategoryTypes.Fahrwerk || c.CategoryType == CategoryTypes.Antrieb || c.CategoryType == CategoryTypes.Sonstiges)
+                {
+                    c.TopCatagory = null;
+                }
+                else
+                {
+                    while (c.TopCatagory == null)
+                    {
+                        Catagory topCatagory = catagory[random.Next(catagory.Count)];
+                        if (topCatagory.CategoryType == CategoryTypes.MotorTeile || topCatagory.CategoryType == CategoryTypes.Bremssystem || topCatagory.CategoryType == CategoryTypes.Tuning || topCatagory.CategoryType == CategoryTypes.Optik || topCatagory.CategoryType == CategoryTypes.Fahrwerk || topCatagory.CategoryType == CategoryTypes.Antrieb || topCatagory.CategoryType == CategoryTypes.Sonstiges)
+                        {
+                            c.TopCatagory = topCatagory;
+                        }
+                    }
+
+                }
+
+            }
+
             Catagories.AddRange(catagory);
             SaveChanges();
 
