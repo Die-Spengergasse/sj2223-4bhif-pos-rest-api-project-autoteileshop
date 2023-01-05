@@ -8,6 +8,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
+using Spg.AutoTeileShop.ServiceExtentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,30 +16,34 @@ var builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Add Transient for Services and Repos
+builder.Services.AddAllTransient();
+
+
 //Product Controller
-builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
-builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
-builder.Services.AddTransient<IDeletableProductService, ProductService>();
-builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
+//builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
+//builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
+//builder.Services.AddTransient<IDeletableProductService, ProductService>();
+//builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
 
-//Register Controller
-builder.Services.AddTransient<IUserRegistrationService, UserRegistServic>();
-builder.Services.AddTransient<IUserMailRepo, UserMailRepo>();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IUserMailService, UserMailService>();
+////Register Controller
+//builder.Services.AddTransient<IUserRegistrationService, UserRegistServic>();
+//builder.Services.AddTransient<IUserMailRepo, UserMailRepo>();
+//builder.Services.AddTransient<IUserRepository, UserRepository>();
+//builder.Services.AddTransient<IUserMailService, UserMailService>();
 
 
-//User Controller:
-builder.Services.AddTransient<IAddUpdateableUserService, UserService>();
-builder.Services.AddTransient<IReadOnlyUserService, UserService>();
-builder.Services.AddTransient<IDeletableUserService, UserService>();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
+////User Controller:
+//builder.Services.AddTransient<IAddUpdateableUserService, UserService>();
+//builder.Services.AddTransient<IReadOnlyUserService, UserService>();
+//builder.Services.AddTransient<IDeletableUserService, UserService>();
+//builder.Services.AddTransient<IUserRepository, UserRepository>();
 
-//Car Controller
-builder.Services.AddTransient<IAddUpdateableCarService, CarService>();
-builder.Services.AddTransient<IReadOnlyCarService, CarService>();
-builder.Services.AddTransient<IDeletableCarService, CarService>();
-builder.Services.AddTransient<ICarRepository, CarRepository>();
+////Car Controller
+//builder.Services.AddTransient<IAddUpdateableCarService, CarService>();
+//builder.Services.AddTransient<IReadOnlyCarService, CarService>();
+//builder.Services.AddTransient<IDeletableCarService, CarService>();
+//builder.Services.AddTransient<ICarRepository, CarRepository>();
 
 //DB
 builder.Services.ConfigureSQLite(connectionString);

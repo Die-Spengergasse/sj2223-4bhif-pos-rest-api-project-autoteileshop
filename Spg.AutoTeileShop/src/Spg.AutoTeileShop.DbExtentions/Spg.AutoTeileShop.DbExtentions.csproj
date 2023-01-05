@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
+	  <ProjectReference Include="..\Spg.AutoTeileShop.Repository2\Spg.AutoTeileShop.Repository2.csproj" />
+
+
   </ItemGroup>
 
 </Project>

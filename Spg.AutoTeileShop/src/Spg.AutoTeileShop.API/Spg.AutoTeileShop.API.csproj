@@ -14,6 +14,8 @@
 		<ProjectReference Include="..\Spg.AutoTeileShop.Application\Spg.AutoTeileShop.Application.csproj" />
 		<ProjectReference Include="..\Spg.AutoTeileShop.Domain\Spg.AutoTeileShop.Domain.csproj" />
 		<ProjectReference Include="..\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
+		<ProjectReference Include="..\Spg.AutoTeileShop.ServiceExtentions\Spg.AutoTeileShop.ServiceExtentions.csproj" />
+
 	</ItemGroup>
 
 </Project>
