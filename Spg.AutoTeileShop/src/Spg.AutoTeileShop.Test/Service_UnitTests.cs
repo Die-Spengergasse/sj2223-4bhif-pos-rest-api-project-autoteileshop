@@ -110,15 +110,6 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(db.Users.Count() == 1); ;
         }
 
-        private String sha256_hash(String value)
-        {
-            using (SHA256 hash = SHA256Managed.Create())
-            {
-                return String.Concat(hash
-                  .ComputeHash(Encoding.UTF8.GetBytes(value))
-                  .Select(item => item.ToString("x2")));
-            }
-        }
 
         public string ComputeSha256Hash(string value) // from ChatGPT supported
         {
