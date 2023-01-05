@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository.Repos;
-using System.Text.Json;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
@@ -15,9 +12,9 @@ namespace Spg.AutoTeileShop.Domain.Test
         private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                  //.UseSqlite("Data Source=AutoTeileShopTest.db")
-                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
-                  .UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
+                //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                //.UseSqlite(@"Data Source = ..\src\AutoTeileShop.db")     //Home PC relativ       
+                .UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -1034,7 +1031,7 @@ namespace Spg.AutoTeileShop.Domain.Test
 
         // Servis Async Tests
 
-       // [Fact]
+        // [Fact]
         public async void Async_DomainModel_Service_Add_User_Test()
         {
             AutoTeileShopContext db = createDB();
@@ -1057,7 +1054,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(User, await UserRepo.GetByIdAsync(User.Id));
         }
 
-       // [Fact]
+        // [Fact]
         public async void Async_DomainModel_Service_Find_User_TestAsync()
         {
             AutoTeileShopContext db = createDB();
@@ -1078,21 +1075,15 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void XYZDomainModel_Create_DB_Seed_MVC()
+        public void Z_DomainModel_Create_DB_Seed()
         {
             AutoTeileShopContext db = createDB();
             db.Seed();
         }
         [Fact]
-        public void XYZDomainModel_Create_DB_API()
+        public void Z_DomainModel_Create_DB()
         {
-            AutoTeileShopContext db = createDB();
-            //db.Seed();
-            //UserRegistDTO userDTO = new() { Addrese = "test", Email = "davidMailEmpfangTestSPG@web.de", Nachname = "etst", PW = "wrfas", Telefon = "1650", Vorname = "test" };
-
-            //string strJson = JsonSerializer.Serialize<UserRegistDTO>(userDTO);
-            //Console.WriteLine(strJson);
-
+            AutoTeileShopContext db = createDB();           
         }
     }
 }

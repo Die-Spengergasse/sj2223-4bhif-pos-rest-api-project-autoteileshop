@@ -108,9 +108,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                             c.TopCatagory = topCatagory;
                         }
                     }
-
                 }
-
             }
 
             Catagories.AddRange(catagory);
