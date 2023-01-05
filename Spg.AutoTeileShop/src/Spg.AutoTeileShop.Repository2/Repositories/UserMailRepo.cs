@@ -5,6 +5,7 @@ using Spg.AutoTeileShop.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,6 +48,15 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db.UserMailConfirms.Add(userMailConfirme);
             _db.SaveChanges();
             return userMailConfirme;
+        }
+
+        public string ComputeSha256Hash(string value) // from ChatGPT supported
+        {
+            using (SHA256 hash = SHA256.Create())
+            {
+                byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+                return BitConverter.ToString(hashBytes).Replace("-", "");
+            }
         }
     }
 }

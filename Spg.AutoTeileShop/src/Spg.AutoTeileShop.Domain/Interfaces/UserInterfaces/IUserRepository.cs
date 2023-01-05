@@ -19,7 +19,8 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
         User? SetUser(User user);
         User? UpdateUser(User user);
         User? Delete(User user);
-        String sha256_hash(String value);
+        string sha256_hash(String value);
+        string ComputeSha256Hash(string value);
 
 
     }

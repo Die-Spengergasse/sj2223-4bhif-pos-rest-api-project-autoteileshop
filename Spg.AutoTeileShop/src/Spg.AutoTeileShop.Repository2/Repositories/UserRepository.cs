@@ -65,13 +65,22 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return user;
         }
 
-        public String sha256_hash(String value)
+        public string sha256_hash(string value) // veraltet
         {
-            using (SHA256 hash = SHA256Managed.Create())
+            using (SHA256 hash = SHA256.Create())
             {
                 return String.Concat(hash
                   .ComputeHash(Encoding.UTF8.GetBytes(value))
                   .Select(item => item.ToString("x2")));
+            }
+        }
+
+        public string ComputeSha256Hash(string value) // from ChatGPT supported
+        {
+            using (SHA256 hash = SHA256.Create())
+            {
+                byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+                return BitConverter.ToString(hashBytes).Replace("-", "");
             }
         }
 

@@ -71,7 +71,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             User user = (User)obj.First();
             UserMailConfirme userMailConfirme = userMailService.GetUserMailConfirmeByMail(user.Email);
 
-            Assert.Equal(userMailConfirme.Code, sha256_hash(obj.Last().ToString()));
+            Assert.Equal(userMailConfirme.Code, ComputeSha256Hash(obj.Last().ToString()));
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(userRegistService.CheckCode_and_verify(user.Email, (string)UserCodeStore.Last()));
             Assert.True(user.Confirmed);
 
-            Assert.Equal(userMailConfirme.Code, sha256_hash(UserCodeStore.Last().ToString()));
+            Assert.Equal(userMailConfirme.Code, ComputeSha256Hash(UserCodeStore.Last().ToString()));
         }
 
         [Fact]
@@ -117,6 +117,15 @@ namespace Spg.AutoTeileShop.Domain.Test
                 return String.Concat(hash
                   .ComputeHash(Encoding.UTF8.GetBytes(value))
                   .Select(item => item.ToString("x2")));
+            }
+        }
+
+        public string ComputeSha256Hash(string value) // from ChatGPT supported
+        {
+            using (SHA256 hash = SHA256.Create())
+            {
+                byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+                return BitConverter.ToString(hashBytes).Replace("-", "");
             }
         }
     }

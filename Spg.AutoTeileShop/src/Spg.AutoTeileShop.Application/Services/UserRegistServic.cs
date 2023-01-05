@@ -30,14 +30,14 @@ namespace Spg.AutoTeileShop.Application.Services
             postUser.Confirmed = false;
             postUser.Role = Roles.User;
             postUser.Guid = Guid.NewGuid();
-            postUser.PW = _userRepo.sha256_hash(postUser.PW);
+            postUser.PW = _userRepo.ComputeSha256Hash(postUser.PW);
             User user = _userRepo.SetUser(postUser);
 
             SendMail sm = new();
             string code = sm.Send(user.Email, fromMail, user.Email, "", "");
 
             _userMailRepository.DeletAllUserMailbyMail(user.Email);
-            UserMailConfirme userMailConfirmes = new(user, _userRepo.sha256_hash(code), DateTime.Now);
+            UserMailConfirme userMailConfirmes = new(user, _userRepo.ComputeSha256Hash(code), DateTime.Now);
             _userMailService.SetUserMailConfirme(userMailConfirmes);
 
 
@@ -59,7 +59,7 @@ namespace Spg.AutoTeileShop.Application.Services
                 {
                     throw new Exception("Code ist abgelaufen");
                 }
-                if (checkUserMailConf.Code == _userRepo.sha256_hash(code))
+                if (checkUserMailConf.Code == _userRepo.ComputeSha256Hash(code))
                 {
                     checkUserMailConf.User.Confirmed = true;
                     _userRepo.UpdateUser(checkUserMailConf.User);
