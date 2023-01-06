@@ -6,6 +6,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Repository2.Repositories;
+using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -37,6 +38,13 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IReadOnlyCarService, CarService>();
             serviceCollection.AddTransient<IDeletableCarService, CarService>();
             serviceCollection.AddTransient<ICarRepository, CarRepository>();
+
+            //Catagory Controller
+            serviceCollection.AddTransient<IAddUpdateableCatagoryService, CatagoryService>();
+            serviceCollection.AddTransient<IReadOnlyCatagoryService, CatagoryService>();
+            serviceCollection.AddTransient<IDeletableCatagoryService, CatagoryService>();
+            serviceCollection.AddTransient<ICatagoryRepository, CatagoryRepository>();
+            
         }
     }
 }
