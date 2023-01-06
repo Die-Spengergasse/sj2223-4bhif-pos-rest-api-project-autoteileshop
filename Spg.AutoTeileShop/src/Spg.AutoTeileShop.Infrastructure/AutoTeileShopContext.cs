@@ -4,6 +4,7 @@ using Spg.AutoTeileShop.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -87,7 +88,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                 ca.Name = ca.CategoryType.ToString();
                 
             })
-            .Generate(50)
+            .Generate(20)
             .ToList();
             
 
@@ -175,15 +176,25 @@ namespace Spg.AutoTeileShop.Infrastructure
            .Rules((f, u) =>
            {
                u.User = f.PickRandom(users);
-               u.Code = Guid.NewGuid().ToString().Substring(0, 8);
+               u.Code = ComputeSha256Hash(Guid.NewGuid().ToString().Substring(0, 8));
                //u.UserId = u.User.Id;
            })
            .Generate(50)
            .ToList();
+            UserMailConfirms.AddRange(userMailConfirmes);
+            SaveChanges();
+
         }
 
-       
 
+        public string ComputeSha256Hash(string value) // from ChatGPT supported
+        {
+            using (SHA256 hash = SHA256.Create())
+            {
+                byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+                return BitConverter.ToString(hashBytes).Replace("-", "");
+            }
+        }
 
 
 

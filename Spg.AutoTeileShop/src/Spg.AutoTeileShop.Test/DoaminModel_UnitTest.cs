@@ -1079,6 +1079,15 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             AutoTeileShopContext db = createDB();
             db.Seed();
+            Assert.Equal(db.Users.Count(), 50);
+            Assert.Equal(db.Cars.Count(), 60);
+            Assert.Equal(db.Catagories.Count(), 20);
+            Assert.Equal(db.Products.Count(), 500);
+            Assert.Equal(db.ShoppingCartItems.Count(), 100);
+            Assert.Equal(db.ShoppingCarts.Count(), 50);
+            Assert.Equal(db.UserMailConfirms.Count(), 50);
+
+
         }
         [Fact]
         public void Z_DomainModel_Create_DB()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 
@@ -41,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/{name}")]
+        [HttpGet("/name/{name}")]
         public ActionResult<Catagory> GetByName(string name)
         {
             try
@@ -107,11 +108,12 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPost()]
         [Produces("application/json")]
-        public ActionResult<Catagory> AddCatagory(Catagory catagory)
+        public ActionResult<Catagory> AddCatagory(CatagoryPostDTO catagoryDTO)
         {
             try
             {
-                Catagory c = _addUpdateableCatagoryService.AddCatagory(catagory);
+                Catagory c = new Catagory(catagoryDTO, _readOnlyCatagoryService.GetCatagoryById(catagoryDTO.TopCatagoryId));
+                    _addUpdateableCatagoryService.AddCatagory(c);
                 return Created("/api/Catagory/" + c.Id, c);
             }
             catch (Exception e)
@@ -134,7 +136,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("/{id}")] //nicht nach HTTP Standart, gibt fehler wenn Id not found
         public ActionResult DeleteCatagory(int id)
         {
             try

@@ -23,8 +23,8 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             //Register Controller
             serviceCollection.AddTransient<IUserRegistrationService, UserRegistServic>();
             serviceCollection.AddTransient<IUserMailRepo, UserMailRepo>();
-            serviceCollection.AddTransient<IUserRepository, UserRepository>();
             serviceCollection.AddTransient<IUserMailService, UserMailService>();
+            serviceCollection.AddTransient<IUserRepository, UserRepository>();
 
 
             //User Controller:

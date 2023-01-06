@@ -21,12 +21,14 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
         public Catagory AddCatagory(Catagory catagory)
         {
             _db.Catagories.Add(catagory);
+            _db.SaveChanges();
             return catagory;
         }
 
         public void DeleteCatagory(Catagory catagory)
         {
             _db.Catagories.Remove(catagory);
+            _db.SaveChanges();
         }
 
         public IEnumerable<Catagory> GetAllCatagories()
@@ -63,6 +65,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
         public Catagory UpdateCatagory(Catagory catagory)
         {
             _db.Catagories.Update(catagory);
+            _db.SaveChanges();
             return catagory;
         }
     }

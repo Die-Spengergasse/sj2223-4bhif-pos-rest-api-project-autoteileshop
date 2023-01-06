@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spg.AutoTeileShop.Domain.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,6 +34,14 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public Catagory()
         {
+        }
+
+        public Catagory(CatagoryPostDTO catagoryPostDTO, Catagory topCatagory)
+        {
+            Name = catagoryPostDTO.Name;
+            Description = catagoryPostDTO.Description;
+            CategoryType = catagoryPostDTO.CategoryType;
+            TopCatagory = topCatagory;
         }
     }
 }
