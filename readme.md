@@ -1,2 +1,2 @@
-# This are Projects for the POS-1 lessons
+# This is a Project for the POS-1 lesson
 
