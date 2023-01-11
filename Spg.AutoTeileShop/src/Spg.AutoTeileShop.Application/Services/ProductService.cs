@@ -106,9 +106,9 @@ namespace Spg.AutoTeileShop.Application.Services
                 }
             }
 
-            foreach (Car c in product.ProductFitsForCar)
+            foreach (Car c in product1.ProductFitsForCar)
             {
-                if (!product.ProductFitsForCar.Contains(c))
+                if (product1.ProductFitsForCar.Contains(c))
                 {
                     product1.RemoveProductFitsForCar(c);
                 }
