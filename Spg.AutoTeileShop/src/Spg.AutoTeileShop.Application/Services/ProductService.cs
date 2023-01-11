@@ -4,6 +4,7 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,14 @@ namespace Spg.AutoTeileShop.Application.Services
         {
             return _productRepository.GetAll();
         }
+
+        public IEnumerable<Product> GetByFitCar(Car car)
+        {
+            var products = _productRepository.GetAll();
+            var result = products.Where(p => p.ProductFitsForCar.Contains(car));
+            return result;
+        }
+
 
         public IEnumerable<Product> GetByCatagory(Catagory catagory)
         {
@@ -88,7 +97,24 @@ namespace Spg.AutoTeileShop.Application.Services
             product1.Ean13 = product.Ean13;
             product1.Image = product.Image;
             product1.catagory = product.catagory;
-            
+
+            foreach (Car c in product.ProductFitsForCar)
+            {
+                if (!product1.ProductFitsForCar.Contains(c))
+                {
+                    product1.AddProductFitsForCar(c);
+                }
+            }
+
+            foreach (Car c in product.ProductFitsForCar)
+            {
+                if (!product.ProductFitsForCar.Contains(c))
+                {
+                    product1.RemoveProductFitsForCar(c);
+                }
+            }
+
+
             return _productRepository.Update(product1);
         }
     }

@@ -62,6 +62,13 @@ namespace Spg.AutoTeileShop.Application.Services
             return _carRepository.GetByModell(model);
         }
 
+        public IEnumerable<Product> GetByFitProduct(Product product)
+        {
+            var cars = _carRepository.GetAll();
+            var result = cars.Where(c => c.FitsForProducts.Contains(product));
+            return result;
+        }
+
         public Car? Update(Car car)
         {
             var car2 = _carRepository.GetById(car.Id);
