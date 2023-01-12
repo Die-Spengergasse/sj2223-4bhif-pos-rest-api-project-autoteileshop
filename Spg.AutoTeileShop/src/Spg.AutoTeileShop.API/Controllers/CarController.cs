@@ -52,8 +52,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("GetByBaujahr/{year}")]
-        public ActionResult<List<Car>> GetByBaujahr(int year)
+        [HttpGet("byBaujahr")]
+        public ActionResult<List<Car>> GetByBaujahr([FromQuery]int year)
         {
             try
             {
@@ -65,8 +65,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("GetByMarke/{marke}")]
-        public ActionResult<List<Car>> GetByMarke(string marke)
+        [HttpGet("ByMarke")]
+        public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)
         {
             try
             {
@@ -78,8 +78,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("GetByModell/{model}")]
-        public ActionResult<List<Car>> GetByModell(string model)
+        [HttpGet("ByModel")]
+        public ActionResult<List<Car>> GetByModell([FromQuery] string model)
         {
             try
             {
@@ -91,8 +91,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("GetByMarkeAndModell/{marke}/{model}")]
-        public ActionResult<List<Car>> GetByMarkeAndModell(string marke, string model)
+        [HttpGet("ByMarkeAndModell")]
+        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
         {
             try
             {
@@ -104,8 +104,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("GetByMarkeAndModellAndBaujahr/{merke}/{model}/{baujahr}")]
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr(string merke, string model, int baujahr)
+        [HttpGet("ByMarkeAndModellAndBaujahr")]
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
         {
             try
             {

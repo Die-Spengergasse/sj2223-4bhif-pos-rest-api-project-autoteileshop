@@ -72,8 +72,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/ByType/{categoryType}")]
-        public ActionResult<List<Catagory>> GetByType(CategoryTypes categoryType)
+        [HttpGet("/ByType")]
+        public ActionResult<List<Catagory>> GetByType([FromQuery] CategoryTypes categoryType)
         {
             try
             {
@@ -89,8 +89,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/ByTopCatagory/{topCatagory}")]
-        public ActionResult<List<Catagory>> GetByTopCatagory(Catagory topCatagory)
+        [HttpGet("/ByTopCatagory")]
+        public ActionResult<List<Catagory>> GetByTopCatagory([FromQuery] Catagory topCatagory)
         {
             try
             {

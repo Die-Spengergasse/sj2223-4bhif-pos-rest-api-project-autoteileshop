@@ -65,8 +65,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("GetByCatagory/{catagory}")]
-        public ActionResult<List<Product>> GetProductByCatagory(Catagory catagory)
+        [HttpGet("GetByCatagory")]
+        public ActionResult<List<Product>> GetProductByCatagory([FromQuery] Catagory catagory)
         {
             try
             {
