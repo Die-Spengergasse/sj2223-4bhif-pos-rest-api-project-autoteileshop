@@ -38,7 +38,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         public ActionResult<Car> GetCarbyId(int id)
         {
             try
-            {            
+            {
                 Car? car = _readOnlycarService.GetById(id);
                 if (car == null)
                 {
@@ -46,9 +46,10 @@ namespace Spg.AutoTeileShop.API.Controllers
                 }
                 return Ok(car);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex);
+                if (ex.Message.Contains($"No Car found with Id: {id}")) { return BadRequest(ex.Message); }
+                return BadRequest();
             }
         }
 
@@ -61,7 +62,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -74,7 +75,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -87,7 +88,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -100,7 +101,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -113,7 +114,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -127,7 +128,9 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                if (e.Message.Contains("Car is null")) { return BadRequest(e.Message); }
+
+                return BadRequest();
             }
         }
 
@@ -143,7 +146,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                if (e.Message.Contains("Car is null")) { return BadRequest(e.Message); }
+                return BadRequest();
             }
         }
 
@@ -159,7 +163,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
     }

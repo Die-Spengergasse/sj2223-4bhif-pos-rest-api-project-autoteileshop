@@ -20,19 +20,23 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPost()]
         [Produces("application/json")]
-        public IActionResult Register([FromBody()] UserRegistDTO userDTOJSON)
+        public ActionResult<User> Register([FromBody()] UserRegistDTO userDTOJSON)
         {
             try
             {            
                 User user = new(userDTOJSON);
                 _userRegistService.Register_sendMail_Create_User(user, "");
+                user.PW = null;
                 return Created("/api/User/" + user.Guid, user);
             }
             catch (SqliteException ex)
             {
                 if (ex.InnerException.Message.Contains("SQLite Error 19: 'UNIQUE constraint failed: Users.Email")) return BadRequest("Email already exists");
-
-                return BadRequest(ex.Message);
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
             }
         }
         [HttpGet("CheckCode/{mail}/{code}")]
@@ -46,7 +50,10 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                if (ex.Message.Contains("Code ist abgelaufen")) return BadRequest(ex);
+                if (ex.Message.Contains("Falscher Code")) return BadRequest(ex);
+                if (ex.Message.Contains("Es wurde keine passende Mail gefunden")) return BadRequest(ex);
+                return BadRequest();
             }
         }
 

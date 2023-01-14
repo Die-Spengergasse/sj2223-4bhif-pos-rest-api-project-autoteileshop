@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
+using System.Linq;
 using System.Text.Json;
 
 namespace Spg.AutoTeileShop.API.Controllers
@@ -24,50 +25,68 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         //Add Methode für User ist in UserRegisterController da sie sonst nicht gebraucht wird
         [HttpGet("")]
-        public IActionResult GetAllUser()
+        public ActionResult<List<UserGetDTO>> GetAllUser()
         {
-            IEnumerable<User> response = _readOnlyUserService.GetAll();
+            IEnumerable<UserGetDTO> response = (IEnumerable<UserGetDTO>)_readOnlyUserService.GetAll();
             if (response.ToList().Count == 0) { return NotFound(); }
             if (response == null) { return NotFound(); }
             return Ok(response);
         }
 
-        [HttpGet("id/{id}")] //fürs Tests, wird noch gelöcht
-        public IActionResult GetUserById(int id)
-        {
-            User response = _readOnlyUserService.GetById(id);
-            if (response == null) { return NotFound(); }
-            return Ok(response);
-        }
+        //[HttpGet("id/{id}")] //fürs Tests, wird noch gelöcht
+        //public IActionResult GetUserById(int id)
+        //{
+        //    User response = _readOnlyUserService.GetById(id);
+        //    if (response == null) { return NotFound(); }
+        //    return Ok(response);
+        //}
 
         [HttpGet("{guid}")]
-        public IActionResult GetUserByGuid(Guid guid)
+        public ActionResult<User> GetUserByGuid(Guid guid)
         {
-            User response = _readOnlyUserService.GetByGuid(guid);
-            if (response == null) { return NotFound(); }
+            User response = null;
+            try
+            {
+                response = _readOnlyUserService.GetByGuid(guid);
+                if (response == null) { return NotFound(); }
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("No User Found with Guid:"))
+                {
+                    return NotFound(e);
+                }
+                return BadRequest();
+                
+            }
             return Ok(response);
         }
 
         [HttpDelete("{guid}")]
-        public IActionResult DeleteUserByGuid(Guid guid)
+        public ActionResult<User> DeleteUserByGuid(Guid guid)
         {
             try
             {
                 User response = _readOnlyUserService.GetByGuid(guid);
                 if (response is not null)
                 {
-                    _deletableUserService.Delete(response);
+                    try
+                    {
+                        _deletableUserService.Delete(response);
+                    }
+                    catch (Exception e)
+                    { }
                 }
                 return Ok();
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
         [HttpPut("{guid}")]
-        public IActionResult UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
+        public ActionResult<User> UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
         {
             try
             {
@@ -76,7 +95,11 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                if (e.Message.Contains("no User found"))
+                {
+                    return NotFound(e);
+                }
+                return BadRequest();
             }
         }
          

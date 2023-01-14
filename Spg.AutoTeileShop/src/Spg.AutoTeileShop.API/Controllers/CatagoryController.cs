@@ -38,11 +38,11 @@ namespace Spg.AutoTeileShop.API.Controllers
             {
                 if (e.Message.Contains($"Catagory with Id: {id} not found"))
                     return NotFound(e.Message);
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
-        [HttpGet("/name/{name}")]
+        [HttpGet("/name/{name}")] // no query form because it returns only one catagory
         public ActionResult<Catagory> GetByName(string name)
         {
             try
@@ -53,7 +53,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             {
                 if (e.Message.Contains($"Catagory with Name: {name} not found"))
                     return NotFound(e.Message);
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -68,7 +68,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             {
                 if (e.Message.Contains($"Catagory with Id: {id} not found"))
                     return NotFound(e.Message);
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -85,7 +85,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -102,7 +102,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -118,7 +118,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
@@ -132,22 +132,24 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
         }
 
-        [HttpDelete("/{id}")] //nicht nach HTTP Standart, gibt fehler wenn Id not found
+        [HttpDelete("/{id}")]
         public ActionResult DeleteCatagory(int id)
         {
+            Catagory catagory = null;
             try
             {
-                Catagory catagory = _readOnlyCatagoryService.GetCatagoryById(id);
+                catagory = _readOnlyCatagoryService.GetCatagoryById(id);
                 _deletableCatagoryService.DeleteCatagory(catagory);
-                return NoContent();
+                return Ok(catagory);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                if (e.Message.Contains($"Catagory with Id: {id} not found")) return Ok(catagory);
+                return BadRequest();
             }
         }
     }

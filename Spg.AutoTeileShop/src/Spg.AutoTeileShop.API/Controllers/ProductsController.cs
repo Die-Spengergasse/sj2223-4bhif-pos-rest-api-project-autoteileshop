@@ -33,7 +33,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
@@ -45,13 +45,17 @@ namespace Spg.AutoTeileShop.API.Controllers
                 Product? product = _readOnlyproductService.GetById(id);
                 return Ok(product);
             }
+            catch (KeyNotFoundException kE)
+            {
+                return NotFound(kE.Message);
+            }
             catch (Exception e)
             {
-                return BadRequest(e); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
-        [HttpGet("GetByName/{name}")]
+        [HttpGet("ByName/{name}")]
         public ActionResult<Product> GetProductByName(string name)
         {
             try
@@ -59,13 +63,17 @@ namespace Spg.AutoTeileShop.API.Controllers
                 Product? product = _readOnlyproductService.GetByName(name);
                 return Ok(product);
             }
+            catch (KeyNotFoundException kE)
+            {
+                return NotFound(kE.Message);
+            }
             catch (Exception e)
             {
-                return BadRequest(e); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
-        [HttpGet("GetByCatagory")]
+        [HttpGet("ByCatagory")]
         public ActionResult<List<Product>> GetProductByCatagory([FromQuery] Catagory catagory)
         {
             try
@@ -75,7 +83,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(); // Test halber wird hier die Exception zurückgegeben
             }
         }
 
@@ -85,11 +93,13 @@ namespace Spg.AutoTeileShop.API.Controllers
         {
             try
             {
-                return _addUpdateproductService.Add(new Product(pDto));
+                var product = _addUpdateproductService.Add(new Product(pDto));
+                return Created("/api/Product/" + product.Guid, product);
+
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
 
@@ -103,7 +113,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest();
             }
         }
     }
