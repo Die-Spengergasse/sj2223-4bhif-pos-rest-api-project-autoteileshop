@@ -26,12 +26,17 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public IEnumerable<ShoppingCartItem> GetAll()
         {
-            return _shoppingCartRepository.GetAll();
+            return _shoppingCartRepository.GetAll_includeItems();
         }
 
         public ShoppingCart GetById(int Id)
         {
             return _shoppingCartRepository.GetById(Id);
+        }
+
+        public ShoppingCart GetByGuid(Guid guid)
+        {
+            return _shoppingCartRepository.GetByGuid(guid);
         }
 
         public ShoppingCart? GetByUserNav(User user)

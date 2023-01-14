@@ -24,7 +24,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         public ActionResult<List<ShoppingCartItem>> GetAll()
         {
             var items = _readOnlyShoppingCartItemService.GetAll();
-            if (items.Count() == 0 && items is null)
+            if (items.Count() == 0 || items is null)
                 return NotFound();
             return Ok(items);
         }
@@ -55,7 +55,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             try
             {
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
-                if (items.Count() == 0 && items is null)
+                if (items.Count() == 0 || items is null)
                     return NotFound();
                 return Ok(items);
             }

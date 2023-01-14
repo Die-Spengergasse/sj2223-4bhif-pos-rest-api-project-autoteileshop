@@ -11,10 +11,11 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces
     {
         ShoppingCart GetById(int Id);
         ShoppingCart? GetByUserNav(User user);
-        IEnumerable<ShoppingCartItem> GetAll();
+        IEnumerable<ShoppingCartItem> GetAll_includeItems();
         ShoppingCart AddShoppingCart(ShoppingCart shoppingCart);
         ShoppingCart Remove(ShoppingCart shoppingCart);
         ShoppingCart UpdateShoppingCart(ShoppingCart item);
+        ShoppingCart GetByGuid(Guid guid);
         //bool Clear_List(ShoppingCart shoppingCart);
         //bool Add_Item_to_List_or_increas_Pieces_in_Item(ShoppingCart shoppingCart, ShoppingCartItem item);
         //bool RemoveShoppingCartItem(ShoppingCart shoppingCart, ShoppingCartItem item);
