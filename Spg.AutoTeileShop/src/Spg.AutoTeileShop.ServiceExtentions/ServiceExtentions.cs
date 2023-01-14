@@ -44,6 +44,8 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IReadOnlyCatagoryService, CatagoryService>();
             serviceCollection.AddTransient<IDeletableCatagoryService, CatagoryService>();
             serviceCollection.AddTransient<ICatagoryRepository, CatagoryRepository>();
+
+
             
         }
     }
