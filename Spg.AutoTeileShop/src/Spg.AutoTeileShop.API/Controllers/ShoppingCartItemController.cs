@@ -11,19 +11,19 @@ namespace Spg.AutoTeileShop.API.Controllers
     {
         private readonly IDeleteAbleShoppingCartItemService _deleteAbleShoppingCartItemService;
         private readonly IAddUpdateableShoppingCartItemService _addUpdateableShoppingCartItemService;
-        private readonly IReadOnlyShoppingCartService _readOnlyShoppingCartService;
+        private readonly IReadOnlyShoppingCartItemService _readOnlyShoppingCartItemService;
 
-        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartService readOnlyShoppingCartService)
+        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartService)
         {
             _deleteAbleShoppingCartItemService = deleteAbleShoppingCartItemService;
             _addUpdateableShoppingCartItemService = addUpdateableShoppingCartItemService;
-            _readOnlyShoppingCartService = readOnlyShoppingCartService;
+            _readOnlyShoppingCartItemService = readOnlyShoppingCartService;
         }
 
         [HttpGet("")]
         public ActionResult<List<ShoppingCartItem>> GetAll()
         {
-            var items = _readOnlyShoppingCartService.GetAll();
+            var items = _readOnlyShoppingCartItemService.GetAll();
             if (items.Count() == 0 && items is null)
                 return NotFound();
             return Ok(items);
@@ -34,10 +34,30 @@ namespace Spg.AutoTeileShop.API.Controllers
         {
             try
             {
-                var item = _readOnlyShoppingCartService.GetByGuid(guid);
+                var item = _readOnlyShoppingCartItemService.GetByGuid(guid);
                 if (item is null)
                     return NotFound();
                 return Ok(item);
+            }
+            catch (KeyNotFoundException knfe)
+            {
+                return NotFound(knfe.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("ShoppingCart}")]
+        public ActionResult<List<ShoppingCartItem>> GetByShoppingCart([FromQuery]ShoppingCart shoppingCart)
+        {
+            try
+            {
+                var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
+                if (items.Count() == 0 && items is null)
+                    return NotFound();
+                return Ok(items);
             }
             catch (KeyNotFoundException knfe)
             {
@@ -85,7 +105,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         {
             try
             {
-                var item = _deleteAbleShoppingCartItemService.Delete(_readOnlyShoppingCartService.GetByGuid(guid));
+                var item = _deleteAbleShoppingCartItemService.Delete(_readOnlyShoppingCartItemService.GetByGuid(guid));
                 return Ok(item);
             }
             catch (KeyNotFoundException kE) { return Ok(); }

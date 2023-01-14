@@ -1,4 +1,5 @@
-﻿using NUnit.Framework.Constraints;
+﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework.Constraints;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
@@ -53,6 +54,11 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db.ShoppingCartItems.Update(shoppingCartItem);
             _db.SaveChanges();
             return shoppingCartItem;
+        }
+
+        public IEnumerable<ShoppingCartItem> GetAllIncludeShoppingCartNav()
+        {
+            return _db.ShoppingCartItems.Include(s => s.ShoppingCartNav).ToList();
         }
     }
 }

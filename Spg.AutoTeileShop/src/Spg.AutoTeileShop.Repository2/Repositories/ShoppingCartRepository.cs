@@ -50,5 +50,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             _db.ShoppingCarts.Update(item);
             return item;
         }
+
+        public IEnumerable<>
     }
 }

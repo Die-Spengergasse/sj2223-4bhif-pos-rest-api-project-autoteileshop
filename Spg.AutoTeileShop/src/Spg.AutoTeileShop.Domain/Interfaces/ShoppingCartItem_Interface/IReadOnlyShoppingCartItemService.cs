@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface
 {
-    public interface IReadOnlyShoppingCartService
+    public interface IReadOnlyShoppingCartItemService
     {
         IEnumerable<ShoppingCartItem> GetAll();
         ShoppingCartItem GetByGuid(Guid guid);
         ShoppingCartItem GetById(int Id);
+        IEnumerable<ShoppingCartItem> GetByShoppingCart(ShoppingCart shoppingCart);
     }
 }

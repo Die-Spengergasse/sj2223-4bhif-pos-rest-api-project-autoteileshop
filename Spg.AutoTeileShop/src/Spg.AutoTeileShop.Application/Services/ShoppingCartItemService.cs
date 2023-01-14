@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
-    public class ShoppingCartItemService : IDeleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService, IReadOnlyShoppingCartService
+    public class ShoppingCartItemService : IDeleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService
     {
         private readonly IShoppingCartItemRepository _shoppingCartItemRepository;
 
@@ -42,6 +42,13 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartItemRepository.GetById(Id);
         }
 
+        public IEnumerable<ShoppingCartItem> GetByShoppingCart(ShoppingCart shoppingCart)
+        {
+            var items = _shoppingCartItemRepository.GetAllIncludeShoppingCartNav();
+            return items.Where(s => s.ShoppingCartNav == shoppingCart);
+
+        }
+
         public ShoppingCartItem Update(ShoppingCartItem shoppingCartItem)
         {
             var sCI = _shoppingCartItemRepository.GetByGuid(shoppingCartItem.guid) ?? throw new KeyNotFoundException($"No Item found with guid: {shoppingCartItem.guid}");
@@ -55,5 +62,6 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartItemRepository.Update(sCI);
 
         }
+        
     }
 }
