@@ -1,4 +1,5 @@
-﻿using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
+﻿using NUnit.Framework.Constraints;
+using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using System;
@@ -32,14 +33,19 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return shoppingCartItem;
         }
 
+        public IEnumerable<ShoppingCartItem> GetAll()
+        {
+            return _db.ShoppingCartItems.ToList();
+        }
+
         public ShoppingCartItem GetByGuid(Guid guid)
         {
-            return _db.ShoppingCartItems.Where(s => s.guid == guid).SingleOrDefault();
+            return (ShoppingCartItem)(_db.ShoppingCartItems.Where(s => s.guid == guid) ?? throw new KeyNotFoundException($"No Item found with Guid {guid}"));
         }
 
         public ShoppingCartItem GetById(int Id)
         {
-            return _db.ShoppingCartItems.Find(Id);
+            return _db.ShoppingCartItems.Find(Id) ?? throw new KeyNotFoundException($"No Item found with Guid {Id}");
         }
 
         public ShoppingCartItem Update(ShoppingCartItem shoppingCartItem)

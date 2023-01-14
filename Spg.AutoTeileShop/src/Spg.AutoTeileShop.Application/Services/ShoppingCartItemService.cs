@@ -19,12 +19,17 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public ShoppingCartItem Add(ShoppingCartItem shoppingCartItem)
         {
-            return _shoppingCartItemRepository.Add(shoppingCartItem); 
+            return _shoppingCartItemRepository.Add(shoppingCartItem);
         }
 
         public ShoppingCartItem Delete(ShoppingCartItem shoppingCartItem)
         {
             return _shoppingCartItemRepository.Delete(shoppingCartItem);
+        }
+
+        public IEnumerable<ShoppingCartItem> GetAll()
+        {
+            return _shoppingCartItemRepository.GetAll();
         }
 
         public ShoppingCartItem GetByGuid(Guid guid)
@@ -39,7 +44,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public ShoppingCartItem Update(ShoppingCartItem shoppingCartItem)
         {
-            var sCI = _shoppingCartItemRepository.GetById(shoppingCartItem.Id);
+            var sCI = _shoppingCartItemRepository.GetByGuid(shoppingCartItem.guid) ?? throw new KeyNotFoundException($"No Item found with guid: {shoppingCartItem.guid}");
             sCI.guid = shoppingCartItem.guid;
             sCI.Pieces = shoppingCartItem.Pieces;
             sCI.ShoppingCartId = shoppingCartItem.ShoppingCartId;

@@ -9,6 +9,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface
 {
     public interface IReadOnlyShoppingCartService
     {
+        IEnumerable<ShoppingCartItem> GetAll();
         ShoppingCartItem GetByGuid(Guid guid);
         ShoppingCartItem GetById(int Id);
     }
