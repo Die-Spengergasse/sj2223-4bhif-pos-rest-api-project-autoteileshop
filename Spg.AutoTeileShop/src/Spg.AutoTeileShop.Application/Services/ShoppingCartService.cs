@@ -39,9 +39,9 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartRepository.GetByGuid(guid);
         }
 
-        public ShoppingCart? GetByUserNav(User user)
+        public ShoppingCart? GetByUserNav(Guid userGuid)
         {
-            return _shoppingCartRepository.GetByUserNav(user);
+            return _shoppingCartRepository.GetByUserNav(userGuid);
         }
 
         public ShoppingCart Remove(ShoppingCart shoppingCart)

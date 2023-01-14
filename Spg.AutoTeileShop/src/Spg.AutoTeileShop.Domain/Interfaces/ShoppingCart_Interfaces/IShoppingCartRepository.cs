@@ -10,7 +10,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces
     public interface IShoppingCartRepository
     {
         ShoppingCart GetById(int Id);
-        ShoppingCart? GetByUserNav(User user);
+        ShoppingCart? GetByUserNav(Guid userGuid);
         IEnumerable<ShoppingCartItem> GetAll_includeItems();
         ShoppingCart AddShoppingCart(ShoppingCart shoppingCart);
         ShoppingCart Remove(ShoppingCart shoppingCart);

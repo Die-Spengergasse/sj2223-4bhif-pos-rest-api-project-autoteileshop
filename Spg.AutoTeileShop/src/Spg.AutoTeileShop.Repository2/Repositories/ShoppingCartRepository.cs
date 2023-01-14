@@ -40,9 +40,9 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return _db.ShoppingCarts.Where(s => s.guid == guid).SingleOrDefault() ?? throw new KeyNotFoundException("ShoppingCart with guid " + guid + " not found");
         }
 
-        public ShoppingCart? GetByUserNav(User user)
+        public ShoppingCart? GetByUserNav(Guid userGuid)
         {
-            return _db.ShoppingCarts.Where(c => c.UserNav == user).SingleOrDefault();
+            return _db.ShoppingCarts.Where(c => c.UserNav.Guid == userGuid).SingleOrDefault() ?? throw new Exception("No Cart found with UserNav: " + userGuid);
         }
 
         public ShoppingCart Remove(ShoppingCart shoppingCart)

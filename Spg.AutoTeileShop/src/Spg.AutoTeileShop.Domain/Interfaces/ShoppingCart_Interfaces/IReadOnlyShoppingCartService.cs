@@ -11,7 +11,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces
     {
         ShoppingCart GetById(int Id);
         ShoppingCart GetByGuid(Guid guid);
-        ShoppingCart? GetByUserNav(User user);
+        ShoppingCart? GetByUserNav(Guid userGuid);
         IEnumerable<ShoppingCartItem> GetAll();
     }
 }
