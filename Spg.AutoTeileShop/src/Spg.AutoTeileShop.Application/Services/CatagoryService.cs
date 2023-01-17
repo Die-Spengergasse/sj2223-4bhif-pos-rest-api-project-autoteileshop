@@ -57,9 +57,9 @@ namespace Spg.AutoTeileShop.Application.Services
             return _catagoryRepository.GetCatagoryDescriptionById(id);
         }
 
-        public Catagory UpdateCatagory(Catagory catagory)
+        public Catagory UpdateCatagory(int Id,Catagory catagory)
         {
-            Catagory updateCatagory = _catagoryRepository.GetCatagoryById(catagory.Id);
+            Catagory updateCatagory = _catagoryRepository.GetCatagoryById(Id);
             
             updateCatagory.TopCatagory = catagory.TopCatagory;
             updateCatagory.Name = catagory.Name;
@@ -67,6 +67,11 @@ namespace Spg.AutoTeileShop.Application.Services
             updateCatagory.CategoryType = catagory.CategoryType;
             
             return _catagoryRepository.UpdateCatagory(catagory);
+        }
+
+        public IEnumerable<Catagory> GetCatagoriesByTopCatagoryandByType(Catagory topCatagory, CategoryTypes categoryType)
+        {
+            return _catagoryRepository.GetCatagoriesByTopCatagory(topCatagory).Where(c => c.CategoryType == categoryType);
         }
     }
     

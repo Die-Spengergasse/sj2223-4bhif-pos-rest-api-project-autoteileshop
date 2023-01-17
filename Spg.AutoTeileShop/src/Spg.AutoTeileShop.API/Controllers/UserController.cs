@@ -41,7 +41,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         //    return Ok(response);
         //}
 
-        [HttpGet("{guid}")]
+        [HttpGet("/{guid}")]
         public ActionResult<User> GetUserByGuid(Guid guid)
         {
             User response = null;
@@ -62,7 +62,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{guid}")]
+        [HttpDelete("/{guid}")]
         public ActionResult<User> DeleteUserByGuid(Guid guid)
         {
             try
@@ -85,7 +85,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpPut("{guid}")]
+        [HttpPut("/{guid}")]
         public ActionResult<User> UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
         {
             try

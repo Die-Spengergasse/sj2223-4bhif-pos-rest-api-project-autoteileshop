@@ -18,7 +18,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             _userRegistService = userRegistService;
         }
 
-        [HttpPost()]
+        [HttpPost("")]
         [Produces("application/json")]
         public ActionResult<User> Register([FromBody()] UserRegistDTO userDTOJSON)
         {

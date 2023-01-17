@@ -57,7 +57,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/Description/{id}")]
+        [HttpGet("/{id}/Description")]
         public ActionResult<string> GetDescriptionById(int id)
         {
             try
@@ -72,41 +72,78 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/ByType")]
-        public ActionResult<List<Catagory>> GetByType([FromQuery] CategoryTypes categoryType)
+        [HttpGet("")]
+        public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] Catagory? topCatagory)
         {
-            try
+            if (categoryType != null)
             {
-                List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByType(categoryType);
-                if (catagorys.Count == 0)
-                    return NotFound($"No Catagorys with Type: {categoryType} found");
-                return Ok(catagorys);
+                try
+                {
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByType((CategoryTypes)categoryType);
+                    if (catagorys.Count == 0)
+                        return NotFound($"No Catagorys with Type: {categoryType} found");
+                    return Ok(catagorys);
 
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
             }
-            catch (Exception e)
+            else if (topCatagory != null)
             {
-                return BadRequest();
+                try
+                {
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
+                    if (catagorys.Count == 0)
+                        return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+                    return Ok(catagorys);
+
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
             }
+
+            else if (topCatagory != null && categoryType != null)
+            {
+                try
+                {
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagoryandByType(topCatagory, (CategoryTypes)categoryType);
+                    if (catagorys.Count == 0)
+                        return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+                    return Ok(catagorys);
+
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
+            }
+
+            return BadRequest();
+                
         }
 
-        [HttpGet("/ByTopCatagory")]
-        public ActionResult<List<Catagory>> GetByTopCatagory([FromQuery] Catagory topCatagory)
-        {
-            try
-            {
-                List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
-                if (catagorys.Count == 0)
-                    return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
-                return Ok(catagorys);
+        //[HttpGet("/ByTopCatagory")]
+        //public ActionResult<List<Catagory>> GetByTopCatagory([FromQuery] Catagory topCatagory)
+        //{
+        //    try
+        //    {
+        //        List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
+        //        if (catagorys.Count == 0)
+        //            return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+        //        return Ok(catagorys);
 
-            }
-            catch (Exception e)
-            {
-                return BadRequest();
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
 
-        [HttpPost()]
+        [HttpPost("")]
         [Produces("application/json")]
         public ActionResult<Catagory> AddCatagory(CatagoryPostDTO catagoryDTO)
         {
@@ -122,13 +159,13 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpPut()]
+        [HttpPut("/{Id}")]
         [Produces("application/json")]
-        public ActionResult<Catagory> UpdateCatagory(Catagory catagory)
+        public ActionResult<Catagory> UpdateCatagory(int Id,Catagory catagory)
         {
             try
             {
-                return Ok(_addUpdateableCatagoryService.UpdateCatagory(catagory));
+                return Ok(_addUpdateableCatagoryService.UpdateCatagory(Id ,catagory));
             }
             catch (Exception e)
             {
