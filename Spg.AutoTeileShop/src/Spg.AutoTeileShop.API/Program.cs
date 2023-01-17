@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
@@ -20,30 +21,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddAllTransient();
 
 
-//Product Controller
-//builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
-//builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
-//builder.Services.AddTransient<IDeletableProductService, ProductService>();
-//builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
 
-////Register Controller
-//builder.Services.AddTransient<IUserRegistrationService, UserRegistServic>();
-//builder.Services.AddTransient<IUserMailRepo, UserMailRepo>();
-//builder.Services.AddTransient<IUserRepository, UserRepository>();
-//builder.Services.AddTransient<IUserMailService, UserMailService>();
-
-
-////User Controller:
-//builder.Services.AddTransient<IAddUpdateableUserService, UserService>();
-//builder.Services.AddTransient<IReadOnlyUserService, UserService>();
-//builder.Services.AddTransient<IDeletableUserService, UserService>();
-//builder.Services.AddTransient<IUserRepository, UserRepository>();
-
-////Car Controller
-//builder.Services.AddTransient<IAddUpdateableCarService, CarService>();
-//builder.Services.AddTransient<IReadOnlyCarService, CarService>();
-//builder.Services.AddTransient<IDeletableCarService, CarService>();
-//builder.Services.AddTransient<ICarRepository, CarRepository>();
 
 //DB
 builder.Services.ConfigureSQLite(connectionString);
@@ -88,6 +66,25 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("https://localhost:7058");
     });
 });
+
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
+
 
 var app = builder.Build();
 

@@ -42,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/name/{name}")] // no query form because it returns only one catagory
+        [HttpGet("/Name/{name}")] // no query form because it returns only one catagory
         public ActionResult<Catagory> GetByName(string name)
         {
             try

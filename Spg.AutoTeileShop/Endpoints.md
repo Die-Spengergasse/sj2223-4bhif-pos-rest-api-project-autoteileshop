@@ -1,8 +1,10 @@
-#User Register:
+# AutoTeile Shop Routen
+
+## User Register:
 Post ("")
 [HttpGet("CheckCode/{mail}/{code}")]
 
-#Product
+## Product
 HttpGet("")
 HttpGet("/{id}")]
 HttpGet("/ByName/{name}")
@@ -10,7 +12,7 @@ HttpGet("/ByName/{name}")
 HttpPost("")
 HttpPut("")
 
-Catagory
+## Catagory
 HttpGet("")
 HttpGet("/{id}")
 HttpGet("/ByName/{name}")
@@ -21,19 +23,19 @@ HttpPost("")
 HttpPut("")
 HttpDelete("/{id}")
 
-#User
+## User
 HttpPut("/{guid}")
 HttpDelete("/{guid}")
 HttpGet("/{guid}")
 [HttpGet("")
 
-#ShoppingCart:
+## ShoppingCart:
 HttpGet("")
 HttpGet("/{guid}")
 HttpGet("/ByUser") ? User
 HttpPost("")
 
-#ShoppingCartItem
+## ShoppingCartItem
 HttpGet("")
 HttpGet("/{guid}")
 HttpGet("/ShoppingCart") ? ShoppingCart
@@ -41,7 +43,7 @@ HttpPost("")
 HttpPut("")
 HttpDelete("")
 
-#Car
+## Car
 
 Route("api/[controller]"
 HttpGet("")
