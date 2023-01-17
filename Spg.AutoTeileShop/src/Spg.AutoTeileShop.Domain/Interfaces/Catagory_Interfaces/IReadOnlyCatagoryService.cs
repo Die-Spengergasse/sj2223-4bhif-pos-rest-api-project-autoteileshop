@@ -15,5 +15,6 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces
         IEnumerable<Catagory> GetAllCatagories();
         IEnumerable<Catagory> GetCatagoriesByType(CategoryTypes categoryType);
         IEnumerable<Catagory> GetCatagoriesByTopCatagory(Catagory topCatagory);
+        IEnumerable<Catagory> GetCatagoriesByTopCatagoryandByType(Catagory topCatagory, CategoryTypes categoryType);
     }
 }

@@ -37,7 +37,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/{id}")]
         public ActionResult<Product> GetProductById(int id)
         {
             try
@@ -55,7 +55,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("ByName/{name}")]
+        [HttpGet("/ByName/{name}")]
         public ActionResult<Product> GetProductByName(string name)
         {
             try
@@ -73,7 +73,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("ByCatagory")]
+        [HttpGet("/ByCatagory")]
         public ActionResult<List<Product>> GetProductByCatagory([FromQuery] Catagory catagory)
         {
             try

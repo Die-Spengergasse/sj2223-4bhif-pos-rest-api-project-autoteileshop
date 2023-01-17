@@ -10,6 +10,6 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces
     public interface IAddUpdateableCatagoryService
     {
         Catagory AddCatagory(Catagory catagory);
-        Catagory UpdateCatagory(Catagory catagory);
+        Catagory UpdateCatagory(int Id, Catagory catagory);
     }
 }
