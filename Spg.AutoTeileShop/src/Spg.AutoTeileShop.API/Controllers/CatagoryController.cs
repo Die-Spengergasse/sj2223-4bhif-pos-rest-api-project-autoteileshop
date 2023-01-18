@@ -72,7 +72,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/filter")]
+        [HttpGet("")] //in this fromat it donst shine of in the Swagger interface
         public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] Catagory? topCatagory)
         {
             if (categoryType != null)
