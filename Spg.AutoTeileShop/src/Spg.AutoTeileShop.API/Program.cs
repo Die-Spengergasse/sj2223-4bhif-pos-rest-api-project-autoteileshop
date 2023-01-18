@@ -63,6 +63,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s =>
+    s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
+    );
+
+builder.Services.AddSwaggerGen(s =>
     s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
         Title = "AutoTeile Shop - v1",
@@ -73,14 +77,16 @@ builder.Services.AddSwaggerGen(s =>
             Email = "ank19415@spengergasse.at",
             Url = new Uri("http://www.spengergasse.at")
         },
-        
+
         License = new OpenApiLicense()
         {
             Name = "Spenger-Licence",
             Url = new Uri("http://www.spengergasse.at/licence")
         },
         Version = "v1"
-    }));
+    })
+    );
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
