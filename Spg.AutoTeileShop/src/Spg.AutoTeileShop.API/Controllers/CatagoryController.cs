@@ -72,7 +72,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("")]
+        [HttpGet("/filter")]
         public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] Catagory? topCatagory)
         {
             if (categoryType != null)
@@ -126,22 +126,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 
         }
 
-        //[HttpGet("/ByTopCatagory")]
-        //public ActionResult<List<Catagory>> GetByTopCatagory([FromQuery] Catagory topCatagory)
-        //{
-        //    try
-        //    {
-        //        List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
-        //        if (catagorys.Count == 0)
-        //            return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
-        //        return Ok(catagorys);
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
+      
 
         [HttpPost("")]
         [Produces("application/json")]
