@@ -19,19 +19,11 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 // Add Transient for Services and Repos
 builder.Services.AddAllTransient();
 
-
-
-
 //DB
 builder.Services.ConfigureSQLite(connectionString);
-
-
-
 // Add services to the container.
 
 builder.Services.AddControllers();
-//Add Db Servic
-
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
