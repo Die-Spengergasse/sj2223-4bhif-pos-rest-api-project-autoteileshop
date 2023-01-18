@@ -26,7 +26,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         //Add Methode für User ist in UserRegisterController da sie sonst nicht gebraucht wird
         [HttpGet("")]
-        public ActionResult<List<UserGetDTO>> GetAllUser() //testhalber- no private
+        public ActionResult<List<UserGetDTO>> GetAllUser() //testhalber
         {
             IEnumerable<User> responseUser = _readOnlyUserService.GetAll();
             
