@@ -42,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
 
         [HttpGet("/{guid}")]
-        public ActionResult<User> GetUserByGuid(Guid guid)
+        public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
             User response = null;
             try
@@ -59,7 +59,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest();
                 
             }
-            return Ok(response);
+            return Ok(new UserGetDTO(response));
         }
 
         [HttpDelete("/{guid}")]
