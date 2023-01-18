@@ -55,8 +55,8 @@ builder.Services.ConfigureSQLite(connectionString);
 builder.Services.AddControllers();
 //Add Db Servic
 
-builder.Services.AddDbContext<AutoTeileShopContext>(options =>
-                options.UseSqlite("Data Source = AutoTeileShop.db"));
+//builder.Services.AddDbContext<AutoTeileShopContext>(options =>
+//                options.UseSqlite("Data Source = AutoTeileShop.db"));
 
 
 
