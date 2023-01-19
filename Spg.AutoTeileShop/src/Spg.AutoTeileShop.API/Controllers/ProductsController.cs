@@ -55,6 +55,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
+        
+
         [HttpGet("/ByName/{name}")]
         public ActionResult<Product> GetProductByName(string name)
         {
@@ -69,7 +71,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest(); 
             }
         }
 
@@ -83,7 +85,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(); // Test halber wird hier die Exception zurückgegeben
+                return BadRequest();
             }
         }
 
