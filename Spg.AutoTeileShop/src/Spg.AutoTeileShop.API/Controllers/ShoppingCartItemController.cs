@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
 
@@ -12,12 +14,14 @@ namespace Spg.AutoTeileShop.API.Controllers
         private readonly IDeleteAbleShoppingCartItemService _deleteAbleShoppingCartItemService;
         private readonly IAddUpdateableShoppingCartItemService _addUpdateableShoppingCartItemService;
         private readonly IReadOnlyShoppingCartItemService _readOnlyShoppingCartItemService;
+        private readonly IReadOnlyShoppingCartService _readOnlyShoppingCartService;
 
-        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartService)
+        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartItemService , IReadOnlyShoppingCartService readOnlyShoppingCartService)
         {
             _deleteAbleShoppingCartItemService = deleteAbleShoppingCartItemService;
             _addUpdateableShoppingCartItemService = addUpdateableShoppingCartItemService;
-            _readOnlyShoppingCartItemService = readOnlyShoppingCartService;
+            _readOnlyShoppingCartItemService = readOnlyShoppingCartItemService;
+            _readOnlyShoppingCartService = readOnlyShoppingCartService;
         }
 
         [HttpGet("")]
@@ -50,10 +54,12 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/ShoppingCart")]
-        public ActionResult<List<ShoppingCartItem>> GetByShoppingCart([FromQuery]ShoppingCart shoppingCart)
+        public ActionResult<List<ShoppingCartItem>> GetByShoppingCart([FromQuery]int shoppingCartId)
         {
             try
             {
+                if (shoppingCartId == 0) return BadRequest();
+                var shoppingCart = _readOnlyShoppingCartService.GetById(shoppingCartId);
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
