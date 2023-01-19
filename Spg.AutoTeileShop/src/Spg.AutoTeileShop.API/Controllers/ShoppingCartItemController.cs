@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
@@ -54,7 +55,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/ShoppingCart")]
-        public ActionResult<List<ShoppingCartItem>> GetByShoppingCart([FromQuery]int shoppingCartId)
+        public ActionResult<List<ShoppingCartItemDTOGet>> GetByShoppingCart([FromQuery]int shoppingCartId)
         {
             try
             {
@@ -63,7 +64,13 @@ namespace Spg.AutoTeileShop.API.Controllers
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
-                return Ok(items);
+
+                List<ShoppingCartItemDTOGet> itemsDTO = new();
+                foreach (ShoppingCartItem item in items)
+                {
+                    itemsDTO.Add(new ShoppingCartItemDTOGet(item));
+                }
+                return Ok(itemsDTO);
             }
             catch (KeyNotFoundException knfe)
             {

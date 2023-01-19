@@ -155,15 +155,19 @@ namespace Spg.AutoTeileShop.Infrastructure
             ShoppingCartItems.AddRange(shoppingCartItems);
             SaveChanges();
 
+            List<ShoppingCartItem> items2 = new();
+            items2.AddRange(shoppingCartItems);
 
             List<ShoppingCart> shoppingCart = new Faker<ShoppingCart>("de")
            .Rules((f, sh) =>
            {
                sh.guid = f.Random.Guid();
-               //sh.UserNav = f.PickRandom(Users);
+               sh.UserNav = f.PickRandom(users);
                for(int i = 0; i < 2; i++)
                {
-                   sh.AddShoppingCartItem(f.PickRandom(shoppingCartItems));
+                   var item = f.PickRandom(items2);
+                   sh.AddShoppingCartItem(item);
+                   items2.Remove(item);
                }
            })
            .Generate(50)
