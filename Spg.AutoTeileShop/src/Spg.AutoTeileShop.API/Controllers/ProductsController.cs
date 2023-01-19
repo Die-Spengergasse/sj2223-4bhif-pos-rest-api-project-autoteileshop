@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
@@ -13,12 +15,14 @@ namespace Spg.AutoTeileShop.API.Controllers
         private readonly IAddUpdateableProductService _addUpdateproductService;
         private readonly IReadOnlyProductService _readOnlyproductService;
         private readonly IDeletableProductService _deletableProductService;
+        private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
 
-        public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService)
+        public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService, IReadOnlyCatagoryService readOnlyCatagoryService)
         {
             _addUpdateproductService = addUpdateproductService;
             _readOnlyproductService = readOnlyproductService;
             _deletableProductService = deletableProductService;
+            _readOnlyCatagoryService = readOnlyCatagoryService;
         }
 
         [HttpGet("")]
@@ -55,39 +59,99 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        
-
-        [HttpGet("/ByName/{name}")]
-        public ActionResult<Product> GetProductByName(string name)
+        [HttpGet("/filter")]
+        public ActionResult<List<ProductDTOFilter>> GetByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
         {
             try
             {
-                Product? product = _readOnlyproductService.GetByName(name);
-                return Ok(product);
-            }
-            catch (KeyNotFoundException kE)
-            {
-                return NotFound(kE.Message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(); 
-            }
-        }
+                Catagory? catagory = null;
+                if (catagoryId != 0)
+                {
+                     _readOnlyCatagoryService.GetCatagoryById(catagoryId);
+                }
+                if ((name is null ||name.Count() == 0 ) && catagory is null) { return BadRequest(); }
+                if ((name is null || name.Count() == 0) && catagory is not null)
+                {
+                    var productsCat = _readOnlyproductService.GetByCatagory(catagory);
+                    if (productsCat.Count() == 0) { return NotFound(); }
+                    {
+                        var ProductCatDTOs = new List<ProductDTOFilter>();
+                        foreach (var item in productsCat)
+                        {
+                            ProductDTOFilter productDTO = new ProductDTOFilter(item);
+                            ProductCatDTOs.Add(productDTO);
+                        }
+                        return Ok(ProductCatDTOs);
+                    }
+                }
+                if ((name.Count() != 0 || name is not null) && catagory is null)
+                {
+                    List<ProductDTOFilter> productsName = new()
+                    {
+                        new ProductDTOFilter(_readOnlyproductService.GetByName(name))
+                    };
+                    if (productsName.Count == 0) return NotFound();
+                    return Ok(productsName);
 
-        [HttpGet("/ByCatagory")]
-        public ActionResult<List<Product>> GetProductByCatagory([FromQuery] Catagory catagory)
-        {
-            try
-            {
-                List<Product> products = _readOnlyproductService.GetByCatagory(catagory).ToList();
-                return Ok(products);
+                }
+                if ((name.Count() != 0 || name is not null) && catagory is not null)
+                {
+                    var productsName = _readOnlyproductService.GetByName(name);
+                    var ProductsCat = _readOnlyproductService.GetByCatagory(catagory);
+                    if (ProductsCat.Count() == 0 || productsName is not null) { return Ok(productsName); }
+                    if (ProductsCat.Count() == 0 || productsName is null) { return NotFound(); }
+                    if (ProductsCat.Count() != 0 && productsName is not null)
+                    {
+                        foreach (Product item in ProductsCat)
+                        {
+                            if (item.Name == name)
+                            {
+                                return Ok(new ProductDTOFilter(item));
+                            }
+                        }
+                    }
+                }
+                return NotFound();
+
             }
             catch (Exception e)
             {
                 return BadRequest();
             }
         }
+
+
+        //[HttpGet("/ByName/{name}")]
+        //public ActionResult<Product> GetProductByName(string name)
+        //{
+        //    try
+        //    {
+        //        Product? product = _readOnlyproductService.GetByName(name);
+        //        return Ok(product);
+        //    }
+        //    catch (KeyNotFoundException kE)
+        //    {
+        //        return NotFound(kE.Message);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest(); 
+        //    }
+        //}
+
+        //[HttpGet("/ByCatagory")]
+        //public ActionResult<List<Product>> GetProductByCatagory([FromQuery] Catagory catagory)
+        //{
+        //    try
+        //    {
+        //        List<Product> products = _readOnlyproductService.GetByCatagory(catagory).ToList();
+        //        return Ok(products);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
 
         [HttpPost("")]
         [Produces("application/json")]
