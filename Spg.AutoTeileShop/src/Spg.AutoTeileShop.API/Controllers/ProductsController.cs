@@ -60,7 +60,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/filter")]
-        public ActionResult<List<ProductDTOFilter>> GetByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
+        public ActionResult<List<ProductDTOFilter>> GetProductByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
         {
             try
             {
@@ -120,38 +120,6 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-
-        //[HttpGet("/ByName/{name}")]
-        //public ActionResult<Product> GetProductByName(string name)
-        //{
-        //    try
-        //    {
-        //        Product? product = _readOnlyproductService.GetByName(name);
-        //        return Ok(product);
-        //    }
-        //    catch (KeyNotFoundException kE)
-        //    {
-        //        return NotFound(kE.Message);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(); 
-        //    }
-        //}
-
-        //[HttpGet("/ByCatagory")]
-        //public ActionResult<List<Product>> GetProductByCatagory([FromQuery] Catagory catagory)
-        //{
-        //    try
-        //    {
-        //        List<Product> products = _readOnlyproductService.GetByCatagory(catagory).ToList();
-        //        return Ok(products);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
 
         [HttpPost("")]
         [Produces("application/json")]

@@ -26,7 +26,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("")]
-        public ActionResult<List<ShoppingCartItem>> GetAll()
+        public ActionResult<List<ShoppingCartItem>> GetAllShoppingCartItems()
         {
             var items = _readOnlyShoppingCartItemService.GetAll();
             if (items.Count() == 0 || items is null)
@@ -35,7 +35,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/{guid}")]
-        public ActionResult<ShoppingCartItem> GetByGuid(Guid guid)
+        public ActionResult<ShoppingCartItem> GetShoppingCartItemByGuid(Guid guid)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/ShoppingCart")]
-        public ActionResult<List<ShoppingCartItemDTOGet>> GetByShoppingCart([FromQuery]int shoppingCartId)
+        public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery]int shoppingCartId)
         {
             try
             {
@@ -84,12 +84,12 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPost("")]
         [Produces("application/json")]
-        public ActionResult<ShoppingCartItem> Add(ShoppingCartItem shoppingCartItem)
+        public ActionResult<ShoppingCartItem> AddShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             try
             {
                 var item = _addUpdateableShoppingCartItemService.Add(shoppingCartItem);
-                return CreatedAtAction(nameof(GetByGuid), new { guid = item.guid }, item);
+                return CreatedAtAction(nameof(GetShoppingCartItemByGuid), new { guid = item.guid }, item);
             }
             catch (Exception e)
             {
@@ -99,7 +99,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPut("")]
         [Produces("application/json")]
-        public ActionResult<ShoppingCartItem> Update(ShoppingCartItem shoppingCartItem)
+        public ActionResult<ShoppingCartItem> UpdateShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpDelete("")]
-        public ActionResult<ShoppingCartItem> Delete(Guid guid)
+        public ActionResult<ShoppingCartItem> DeleteShoppingCartItem(Guid guid)
         {
             try
             {

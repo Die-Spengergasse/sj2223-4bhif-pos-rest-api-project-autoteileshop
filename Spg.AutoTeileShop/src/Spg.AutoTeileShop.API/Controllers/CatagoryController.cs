@@ -22,13 +22,13 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("")]
-        public ActionResult<List<Catagory>> GetAll()
+        public ActionResult<List<Catagory>> GetAllCatagorys()
         {
             return Ok(_readOnlyCatagoryService.GetAllCatagories());
         }
 
         [HttpGet("/{id}")]
-        public ActionResult<Catagory> GetById(int id)
+        public ActionResult<Catagory> GetCatagoryById(int id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/name/{name}")] // no query form because it returns only one catagory
-        public ActionResult<Catagory> GetByName(string name)
+        public ActionResult<Catagory> GetCatagoryByName(string name)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/{id}/Description")]
-        public ActionResult<string> GetDescriptionById(int id)
+        public ActionResult<string> GetCatagoryDescriptionById(int id)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/filter")] //in this fromat it donst shine of in the Swagger interface
-        public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
+        public ActionResult<List<Catagory>> GetCatagoryByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
         {
             if (categoryType != null)
             {

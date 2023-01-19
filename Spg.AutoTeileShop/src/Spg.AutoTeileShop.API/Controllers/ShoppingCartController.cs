@@ -27,7 +27,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("")]
-        public ActionResult<List<ShoppingCart>> GetAll()
+        public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()
         {
             var carts = _redOnlyShoppingCartService.GetAll();
             if (carts.Count() == 0 || carts == null)
@@ -39,7 +39,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
 
         [HttpGet("/{guid}")]
-        public ActionResult<ShoppingCart> GetByGuid(Guid guid)
+        public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/ByUser")]
-        public ActionResult<ShoppingCart> GetByUserNav([FromQuery]Guid userGuid)
+        public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery]Guid userGuid)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPost("")]
         [Produces("application/json")]
-        public ActionResult<ShoppingCart> Add(ShoppingCartPostDTO cartDTO)
+        public ActionResult<ShoppingCart> AddShoppingCart(ShoppingCartPostDTO cartDTO)
         {
             try
             {

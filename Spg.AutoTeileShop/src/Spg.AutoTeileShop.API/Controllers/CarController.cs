@@ -26,7 +26,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("")]
-        public ActionResult<List<Car>> GetAll()
+        public ActionResult<List<Car>> GetAllCars()
         {
             return Ok(_readOnlycarService.GetAll());
         }
@@ -54,7 +54,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("byBaujahr")]
-        public ActionResult<List<Car>> GetByBaujahr([FromQuery]int year)
+        public ActionResult<List<Car>> GetCarByBaujahr([FromQuery]int year)
         {
             try
             {
