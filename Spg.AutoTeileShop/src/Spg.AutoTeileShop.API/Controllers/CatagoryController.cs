@@ -73,7 +73,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/filter")] //in this fromat it donst shine of in the Swagger interface
-        public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] Catagory? topCatagory)
+        public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
         {
             if (categoryType != null)
             {
@@ -90,13 +90,13 @@ namespace Spg.AutoTeileShop.API.Controllers
                     return BadRequest();
                 }
             }
-            else if (topCatagory != null)
+            else if (topCatagoryId != 0)
             {
                 try
                 {
-                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));
                     if (catagorys.Count == 0)
-                        return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+                        return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
                     return Ok(catagorys);
 
                 }
@@ -106,13 +106,13 @@ namespace Spg.AutoTeileShop.API.Controllers
                 }
             }
 
-            else if (topCatagory != null && categoryType != null)
+            else if (topCatagoryId != 0 && categoryType != null)
             {
                 try
                 {
-                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagoryandByType(topCatagory, (CategoryTypes)categoryType);
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagoryandByType(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId), (CategoryTypes)categoryType);
                     if (catagorys.Count == 0)
-                        return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+                        return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
                     return Ok(catagorys);
 
                 }

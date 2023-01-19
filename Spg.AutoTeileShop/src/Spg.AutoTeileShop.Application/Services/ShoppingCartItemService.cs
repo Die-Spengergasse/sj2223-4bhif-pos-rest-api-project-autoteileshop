@@ -45,7 +45,7 @@ namespace Spg.AutoTeileShop.Application.Services
         public IEnumerable<ShoppingCartItem> GetByShoppingCart(ShoppingCart shoppingCart)
         {
             var items = _shoppingCartItemRepository.GetAllIncludeShoppingCartNav();
-            return items.Where(s => s.ShoppingCartNav == shoppingCart);
+            return items.Where(s => s.ShoppingCartNav.Id.Equals(shoppingCart.Id));
 
         }
 
