@@ -13,7 +13,6 @@ using Spg.AutoTeileShop.ServiceExtentions;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add Transient for Services and Repos
