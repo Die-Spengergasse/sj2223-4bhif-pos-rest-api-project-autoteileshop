@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="GemBox.Document" Version="35.0.1238" />
+    <PackageReference Include="GemBox.Email" Version="17.0.1056" />
+  </ItemGroup>
+
 
 
 	<ItemGroup>

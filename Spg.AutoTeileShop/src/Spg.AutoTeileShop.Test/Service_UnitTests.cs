@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Application;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
@@ -108,6 +109,16 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(user, ur);
 
             Assert.True(db.Users.Count() == 1); ;
+        }
+
+        [Fact]
+        public void Service_Mail_Check_Test() 
+        {
+            SendMail sm = new();
+            Assert.True(sm.ValidateMail("david.ankenbrand98@gmail.com"));
+           // Assert.True(sm.ValidateMail("david.ankenbrand@gmx.at"));
+            Assert.False(sm.ValidateMail("test425236551safasfasf@gmail.com"));
+            Assert.False(sm.ValidateMail("david.ankenbrand@testXY.com"));
         }
 
 
