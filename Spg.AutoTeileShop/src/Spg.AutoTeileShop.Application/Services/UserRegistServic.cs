@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.Application.Services
             User user = _userRepo.SetUser(postUser);
 
             SendMail sm = new();
-            if (!sm.ValidateMail(user.Email)) throw new Exception("Mail is not valid");
+            //if (!sm.ValidateMail(user.Email)) throw new Exception("Mail is not valid");
             string code = sm.Send(user.Email, fromMail, user.Email, "", "");
 
             _userMailRepository.DeletAllUserMailbyMail(user.Email);
