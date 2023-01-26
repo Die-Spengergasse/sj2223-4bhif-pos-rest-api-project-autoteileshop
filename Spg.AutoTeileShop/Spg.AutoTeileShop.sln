@@ -27,12 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Infrastru
 		{741ACB30-71B8-4FF1-97E2-8B719776F98E} = {741ACB30-71B8-4FF1-97E2-8B719776F98E}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repository", "src\Spg.AutoTeileShop.Repository\Spg.AutoTeileShop.Repository.csproj", "{58D8B97E-FD95-4A32-B4D0-A3ACD8F179D2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2DD9753F-D304-4C66-B427-C4B52055CB1F} = {2DD9753F-D304-4C66-B427-C4B52055CB1F}
-		{741ACB30-71B8-4FF1-97E2-8B719776F98E} = {741ACB30-71B8-4FF1-97E2-8B719776F98E}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.MVCFrontEnd", "src\Spg.AutoTeileShop.MVCFrontEnd\Spg.AutoTeileShop.MVCFrontEnd.csproj", "{2662AA85-0F91-4388-86AD-C48B27396F35}"
 	ProjectSection(ProjectDependencies) = postProject
 		{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327} = {53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}
@@ -42,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repositor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.DbExtentions", "src\Spg.AutoTeileShop.DbExtentions\Spg.AutoTeileShop.DbExtentions.csproj", "{53D6B9C5-E7BE-4F00-A8DF-0B016C1DA327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.ServiceExtentions", "src\Spg.AutoTeileShop.ServiceExtentions\Spg.AutoTeileShop.ServiceExtentions.csproj", "{5AB037ED-4934-4EB0-A900-0BFD84172F56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.ServiceExtentions", "src\Spg.AutoTeileShop.ServiceExtentions\Spg.AutoTeileShop.ServiceExtentions.csproj", "{5AB037ED-4934-4EB0-A900-0BFD84172F56}"
 	ProjectSection(ProjectDependencies) = postProject
 		{57781A64-5DF5-412A-AFA0-8BD0E066ABE2} = {57781A64-5DF5-412A-AFA0-8BD0E066ABE2}
 		{BE4F5AD1-ED96-4943-A32E-EAD651434622} = {BE4F5AD1-ED96-4943-A32E-EAD651434622}
@@ -74,10 +68,6 @@ Global
 		{2DD9753F-D304-4C66-B427-C4B52055CB1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD9753F-D304-4C66-B427-C4B52055CB1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD9753F-D304-4C66-B427-C4B52055CB1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58D8B97E-FD95-4A32-B4D0-A3ACD8F179D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58D8B97E-FD95-4A32-B4D0-A3ACD8F179D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58D8B97E-FD95-4A32-B4D0-A3ACD8F179D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58D8B97E-FD95-4A32-B4D0-A3ACD8F179D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2662AA85-0F91-4388-86AD-C48B27396F35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2662AA85-0F91-4388-86AD-C48B27396F35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2662AA85-0F91-4388-86AD-C48B27396F35}.Release|Any CPU.ActiveCfg = Release|Any CPU
