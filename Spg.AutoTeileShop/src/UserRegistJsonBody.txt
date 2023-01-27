@@ -8,3 +8,5 @@
 }
 
 "ad0a0996"
+
+docker run -it -p 5000:80 --name AutoTeileShopTest06 --mount type=volume,src=AutoTeileShopDB,target=/src/Spg.AutoTeileShop.API/db d45c64e9a7f65cb33f83fd4a2db0ff972fdb4d7735b53556faf01f8664bb2145
