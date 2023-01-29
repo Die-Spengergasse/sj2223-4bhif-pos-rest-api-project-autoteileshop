@@ -24,5 +24,19 @@ namespace Spg.AutoTeileShop.API.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
+        //[HttpGet()]
+        //public IActionResult Get()
+        //{
+        //    try 
+        //    {
+        //        _context.Cars.Add(null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex);
+        //    }
+        //    return Ok(_context.Database.GetDbConnection().ConnectionString);
+        //}
     }
-}
+} 
