@@ -125,6 +125,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         [Produces("application/json")]
         public ActionResult<Product> AddProduct(ProductDTO pDto)
         {
+            if (!ModelState.IsValid) return BadRequest();
             try
             {
                 var product = _addUpdateproductService.Add(new Product(pDto));

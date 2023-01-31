@@ -1,4 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Spg.AutoTeileShop.Domain.DTO
 {
@@ -6,6 +7,8 @@ namespace Spg.AutoTeileShop.Domain.DTO
     {
         public int Id { get; set; }
         public Guid Guid { get; set; }
+        [Required()]
+        [MaxLength(20, ErrorMessage = "Name darf nicht länger als 20 Zeichen sein")]
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public Catagory? catagory { get; set; }
@@ -15,6 +18,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
         public QualityType Quality { get; set; }
         public int Stock { get; set; }
         public int Discount { get; set; }
+        
 
         public ProductDTO(Product product)
         {

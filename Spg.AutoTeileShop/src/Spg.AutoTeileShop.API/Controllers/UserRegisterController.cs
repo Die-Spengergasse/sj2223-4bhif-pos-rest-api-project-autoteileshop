@@ -22,6 +22,10 @@ namespace Spg.AutoTeileShop.API.Controllers
         [Produces("application/json")]
         public ActionResult<User> Register([FromBody()] UserRegistDTO userDTOJSON)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {            
                 User user = new(userDTOJSON);
@@ -36,6 +40,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
+                if (e.InnerException.Message.Contains("UNIQUE constraint failed: Users.Email")) return BadRequest("Email already exists");
+
                 return BadRequest();
             }
         }
