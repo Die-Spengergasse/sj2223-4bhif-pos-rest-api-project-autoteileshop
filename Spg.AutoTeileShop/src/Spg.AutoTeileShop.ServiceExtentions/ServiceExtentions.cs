@@ -11,6 +11,9 @@ using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Microsoft.AspNetCore.Mvc.Filters;
+using FluentValidation;
+using Spg.AutoTeileShop.Application.Validators;
+using Spg.AutoTeileShop.Domain.DTO;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -63,6 +66,9 @@ namespace Spg.AutoTeileShop.ServiceExtentions
 
             //Filter User
             serviceCollection.AddTransient<IActionFilter, HasRoleFilterAttribute>();
+            //Fluent Validation
+            serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
+
         }
     }
 }

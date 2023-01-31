@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Validators\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Validators\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Models\Warehouse.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Exeptions\" />
     <Folder Include="Filter\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>

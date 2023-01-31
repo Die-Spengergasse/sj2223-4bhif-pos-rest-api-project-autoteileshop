@@ -1,7 +1,10 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
+using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.DbExtentions;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
@@ -9,6 +12,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.ServiceExtentions;
+using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +56,8 @@ builder.Services.AddSwaggerGen(s =>
     })
     );
 
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
@@ -59,6 +65,8 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("https://localhost:7058");
     });
 });
+
+
 
 var app = builder.Build();
 

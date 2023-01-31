@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
@@ -16,13 +18,16 @@ namespace Spg.AutoTeileShop.API.Controllers
         private readonly IReadOnlyProductService _readOnlyproductService;
         private readonly IDeletableProductService _deletableProductService;
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
+        
+        private readonly IValidator<ProductDTO> _validator;
 
-        public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService, IReadOnlyCatagoryService readOnlyCatagoryService)
+        public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService, IReadOnlyCatagoryService readOnlyCatagoryService, IValidator<ProductDTO> validator)
         {
             _addUpdateproductService = addUpdateproductService;
             _readOnlyproductService = readOnlyproductService;
             _deletableProductService = deletableProductService;
             _readOnlyCatagoryService = readOnlyCatagoryService;
+            _validator = validator;
         }
 
         [HttpGet("")]
@@ -125,6 +130,12 @@ namespace Spg.AutoTeileShop.API.Controllers
         [Produces("application/json")]
         public ActionResult<Product> AddProduct(ProductDTO pDto)
         {
+            ValidationResult result = _validator.Validate(pDto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
             if (!ModelState.IsValid) return BadRequest();
             try
             {
