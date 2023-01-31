@@ -4,6 +4,7 @@ using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System.Text.Json;
+using Spg.AutoTeileShop.Application.Filter;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
@@ -19,6 +20,9 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpPost("")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HasRole()]
         [Produces("application/json")]
         public ActionResult<User> Register([FromBody()] UserRegistDTO userDTOJSON)
         {

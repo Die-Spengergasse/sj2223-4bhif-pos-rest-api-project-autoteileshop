@@ -19,7 +19,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         public string Nachname { get; set; } = string.Empty;
         public string Addrese { get; set; } = string.Empty;
-        [PhoneAttribute(ErrorMessage = "Use nummbers only please")]
+        [PhoneAttribute(ErrorMessage = "Das ist keine gültige Telefon Nummer!")]
         public string Telefon { get; set; } = string.Empty;
         //[RegularExpression("^[A-Za-z0-9,@,.]")]
         [EmailAddress(ErrorMessage ="Das ist keine gültige E-mail Adresse!")]

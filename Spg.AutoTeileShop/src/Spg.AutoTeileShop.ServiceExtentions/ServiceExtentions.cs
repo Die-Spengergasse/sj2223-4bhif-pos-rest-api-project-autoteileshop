@@ -1,5 +1,6 @@
 ﻿using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Application.Services;
+using Spg.AutoTeileShop.Application.Filter;
 using Microsoft.Extensions.DependencyInjection;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
@@ -9,6 +10,7 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -59,7 +61,8 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IDeleteAbleShoppingCartItemService, ShoppingCartItemService>();
             serviceCollection.AddTransient<IShoppingCartItemRepository, ShoppingCartItemRepository>();
 
-
+            //Filter User
+            serviceCollection.AddTransient<IActionFilter, HasRoleFilterAttribute>();
         }
     }
 }
