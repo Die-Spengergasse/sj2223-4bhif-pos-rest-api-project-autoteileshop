@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using FluentValidation;
 using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.Domain.DTO;
+using FluentValidation.AspNetCore;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -67,6 +68,7 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             //Filter User
             serviceCollection.AddTransient<IActionFilter, HasRoleFilterAttribute>();
             //Fluent Validation
+            serviceCollection.AddFluentValidationAutoValidation();
             serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
 
         }

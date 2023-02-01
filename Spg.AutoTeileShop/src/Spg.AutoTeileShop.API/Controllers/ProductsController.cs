@@ -11,8 +11,9 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
     public class ProductsController : ControllerBase
     {
         private readonly IAddUpdateableProductService _addUpdateproductService;
@@ -53,7 +54,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         public ActionResult<Product> GetProductById(int id)
         {
@@ -72,7 +73,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/filter")]
+        [HttpGet("filter")]
         [AllowAnonymous]
         public ActionResult<List<ProductDTOFilter>> GetProductByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
         {
@@ -172,7 +173,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public ActionResult<Product> DeleteProduct(int id)
         {
             try

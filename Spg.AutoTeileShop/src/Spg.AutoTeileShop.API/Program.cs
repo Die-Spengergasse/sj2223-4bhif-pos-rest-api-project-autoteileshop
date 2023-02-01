@@ -1,4 +1,6 @@
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
@@ -9,18 +11,25 @@ using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
+using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.ServiceExtentions;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(args);
+//product get del -id
+//ShoppingCart del put guid
+//ShoppingCartItem get ShoppingCar
+//var builder = WebApplication.CreateBuilder(args);
 
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add Transient for Services and Repos
 builder.Services.AddAllTransient();
+
+builder.Services.AddFluentValidationAutoValidation();
 
 //DB
 builder.Services.ConfigureSQLite(connectionString);
@@ -35,6 +44,23 @@ builder.Services.AddSwaggerGen(s =>
     s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
     );
 
+// NuGet: Microsoft.AspNetCore.Mvc.Versioning
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 
 builder.Services.AddSwaggerGen(s =>

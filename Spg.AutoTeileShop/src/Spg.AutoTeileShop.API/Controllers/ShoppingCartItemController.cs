@@ -8,8 +8,9 @@ using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class ShoppingCartItemController : ControllerBase
     {
         private readonly IDeleteAbleShoppingCartItemService _deleteAbleShoppingCartItemService;

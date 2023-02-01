@@ -4,8 +4,9 @@ using Spg.AutoTeileShop.Infrastructure;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class SeedController : ControllerBase
     {
         private AutoTeileShopContext _context;

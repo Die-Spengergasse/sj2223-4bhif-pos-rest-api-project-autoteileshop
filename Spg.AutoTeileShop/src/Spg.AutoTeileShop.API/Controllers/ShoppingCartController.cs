@@ -10,8 +10,9 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class ShoppingCartController : ControllerBase
     {
         private readonly IReadOnlyShoppingCartService _redOnlyShoppingCartService;
@@ -41,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
 
-        [HttpGet("/{guid}")]
+        [HttpGet("{guid}")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
             try

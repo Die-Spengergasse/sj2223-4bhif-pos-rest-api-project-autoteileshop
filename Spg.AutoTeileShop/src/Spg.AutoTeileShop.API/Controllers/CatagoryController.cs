@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
@@ -7,8 +7,9 @@ using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class CatagoryController : ControllerBase
     {
         private readonly IDeletableCatagoryService _deletableCatagoryService;
@@ -33,7 +34,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(_readOnlyCatagoryService.GetAllCatagories());
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         public ActionResult<Catagory> GetCatagoryById(int id)
         {
@@ -49,7 +50,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/name/{name}")] // no query form because it returns only one catagory
+        [HttpGet("name/{name}")] // no query form because it returns only one catagory
         [AllowAnonymous]
         public ActionResult<Catagory> GetCatagoryByName(string name)
         {
@@ -65,7 +66,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/{id}/Description")]
+        [HttpGet("{id}/Description")]
         [AllowAnonymous]
         public ActionResult<string> GetCatagoryDescriptionById(int id)
         {
@@ -81,7 +82,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/filter")] //in this fromat it donst shine of in the Swagger interface
+        [HttpGet("filter")] //in this fromat it donst shine of in the Swagger interface
         [AllowAnonymous]
         public ActionResult<List<Catagory>> GetCatagoryByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
         {
@@ -154,7 +155,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpPut("/{Id}")]
+        [HttpPut("{Id}")]
         [Produces("application/json")]
         public ActionResult<Catagory> UpdateCatagory(int Id,Catagory catagory)
         {
@@ -168,7 +169,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteCatagory(int id)
         {
             Catagory catagory = null;
