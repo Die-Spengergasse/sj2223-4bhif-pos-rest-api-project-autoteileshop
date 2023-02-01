@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] 
     [ApiController]
     public class RegisterController : ControllerBase
     {
@@ -36,8 +36,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             {            
                 User user = new(userDTOJSON);
                 _userRegistService.Register_sendMail_Create_User(user, "");
-                user.PW = null;
-                return Created("/api/User/" + user.Guid, user);
+                return Created("/api/User/" + user.Guid, new UserRegisterResponsDTO(user));
             }
             catch (SqliteException ex)
             {
