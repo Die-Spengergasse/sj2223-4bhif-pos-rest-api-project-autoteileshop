@@ -21,7 +21,7 @@ using System.Reflection;
 //product get del -id
 //ShoppingCart del put guid
 //ShoppingCartItem get ShoppingCar
-//var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
