@@ -24,6 +24,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             _readOnlyUserService = readOnlyUserService;
         }
 
+        // All - Authorization
+
         //Add Methode für User ist in UserRegisterController da sie sonst nicht gebraucht wird
         [HttpGet("")]
         public ActionResult<List<UserGetDTO>> GetAllUser() //testhalber

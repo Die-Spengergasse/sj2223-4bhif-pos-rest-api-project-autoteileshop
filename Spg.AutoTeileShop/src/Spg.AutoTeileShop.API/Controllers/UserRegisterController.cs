@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
@@ -19,10 +20,11 @@ namespace Spg.AutoTeileShop.API.Controllers
             _userRegistService = userRegistService;
         }
 
+        // Register - Authorization
+
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[HasRole()]
         [Produces("application/json")]
         public ActionResult<User> Register([FromBody()] UserRegistDTO userDTOJSON)
         {
@@ -50,6 +52,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
         [HttpGet("CheckCode/{mail}/{code}")]
+        [AllowAnonymous]
         public IActionResult CheckCode(string mail, string code)
         {
             try

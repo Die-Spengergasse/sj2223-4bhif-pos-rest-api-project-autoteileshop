@@ -35,7 +35,10 @@ builder.Services.AddSwaggerGen(s =>
     s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
     );
 
+
+
 builder.Services.AddSwaggerGen(s =>
+{
     s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
         Title = "AutoTeile Shop - v1",
@@ -53,8 +56,31 @@ builder.Services.AddSwaggerGen(s =>
             Url = new Uri("http://www.spengergasse.at/licence")
         },
         Version = "v1"
-    })
-    );
+    });
+    s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT Token here"
+    });
+    s.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference=new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 
 
 

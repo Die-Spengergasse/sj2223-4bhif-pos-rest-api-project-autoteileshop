@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
@@ -21,13 +22,19 @@ namespace Spg.AutoTeileShop.API.Controllers
             _readOnlyCatagoryService = readOnlyCatagoryService;
         }
 
+        // Add Catagory - Authorization
+        // Delete Catagory - Authorization
+        // Update Catagory - Authorization
+
         [HttpGet("")]
+        [AllowAnonymous]
         public ActionResult<List<Catagory>> GetAllCatagorys()
         {
             return Ok(_readOnlyCatagoryService.GetAllCatagories());
         }
 
         [HttpGet("/{id}")]
+        [AllowAnonymous]
         public ActionResult<Catagory> GetCatagoryById(int id)
         {
             try
@@ -43,6 +50,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/name/{name}")] // no query form because it returns only one catagory
+        [AllowAnonymous]
         public ActionResult<Catagory> GetCatagoryByName(string name)
         {
             try
@@ -58,6 +66,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/{id}/Description")]
+        [AllowAnonymous]
         public ActionResult<string> GetCatagoryDescriptionById(int id)
         {
             try
@@ -73,6 +82,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/filter")] //in this fromat it donst shine of in the Swagger interface
+        [AllowAnonymous]
         public ActionResult<List<Catagory>> GetCatagoryByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
         {
             if (categoryType != null)

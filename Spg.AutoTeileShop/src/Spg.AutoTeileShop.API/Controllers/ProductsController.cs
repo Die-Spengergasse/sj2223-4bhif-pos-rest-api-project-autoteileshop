@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
@@ -30,7 +31,13 @@ namespace Spg.AutoTeileShop.API.Controllers
             _validator = validator;
         }
 
+        // Add Product - Authorization
+        // Delete Product - Authorization
+        // Update Product - Authorization
+       
+
         [HttpGet("")]
+        [AllowAnonymous]
         public ActionResult<List<Product>> GetAllProduct()
         {
             try
@@ -47,6 +54,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/{id}")]
+        [AllowAnonymous]
         public ActionResult<Product> GetProductById(int id)
         {
             try
@@ -65,6 +73,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/filter")]
+        [AllowAnonymous]
         public ActionResult<List<ProductDTOFilter>> GetProductByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
         {
             try
@@ -156,6 +165,19 @@ namespace Spg.AutoTeileShop.API.Controllers
             try
             {
                 return _addUpdateproductService.Update(new Product(pDto));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("/{id}")]
+        public ActionResult<Product> DeleteProduct(int id)
+        {
+            try
+            {
+                return _deletableProductService.Delete(_readOnlyproductService.GetById(id));
             }
             catch (Exception e)
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
@@ -25,6 +26,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             _addUpdatableShoppingCartService = updatableShoppingCartService;
             _readOnlyUserService = readOnlyUserService;
         }
+
+        // All - Authorization
 
         [HttpGet("")]
         public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()

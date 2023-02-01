@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
@@ -25,6 +26,10 @@ namespace Spg.AutoTeileShop.API.Controllers
             _addUpdateableCarService = addUpdateableCarService;
         }
 
+        // AddCar - Authorization
+        // DeleteCar - Authorization
+        // UpdateCar - Authorization
+
         [HttpGet("")]
         public ActionResult<List<Car>> GetAllCars()
         {
@@ -35,6 +40,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public ActionResult<Car> GetCarbyId(int id)
         {
             try
@@ -54,6 +60,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("byBaujahr")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetCarByBaujahr([FromQuery]int year)
         {
             try
@@ -66,7 +73,9 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
+
         [HttpGet("ByMarke")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)
         {
             try
@@ -80,6 +89,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("ByModel")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByModell([FromQuery] string model)
         {
             try
@@ -93,6 +103,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("ByMarkeAndModell")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
         {
             try
@@ -106,6 +117,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("ByMarkeAndModellAndBaujahr")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
         {
             try

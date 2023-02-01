@@ -25,6 +25,8 @@ namespace Spg.AutoTeileShop.API.Controllers
             _readOnlyShoppingCartService = readOnlyShoppingCartService;
         }
 
+        // All - Authorization
+
         [HttpGet("")]
         public ActionResult<List<ShoppingCartItem>> GetAllShoppingCartItems()
         {
