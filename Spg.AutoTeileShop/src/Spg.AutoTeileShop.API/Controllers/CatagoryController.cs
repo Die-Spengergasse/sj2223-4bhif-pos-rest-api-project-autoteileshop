@@ -21,11 +21,11 @@ namespace Spg.AutoTeileShop.API.Controllers
             _readOnlyCatagoryService = readOnlyCatagoryService;
         }
 
-        [HttpGet("")]
-        public ActionResult<List<Catagory>> GetAll()
-        {
-            return Ok(_readOnlyCatagoryService.GetAllCatagories());
-        }
+       // [HttpGet("")]
+        //public ActionResult<List<Catagory>> GetAll()
+        //{
+        //    return Ok(_readOnlyCatagoryService.GetAllCatagories());
+        //}
 
         [HttpGet("/{id}")]
         public ActionResult<Catagory> GetById(int id)
@@ -57,7 +57,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/{id}/Description")]
+        [HttpGet("/Description/{id}")]
         public ActionResult<string> GetDescriptionById(int id)
         {
             try
@@ -122,8 +122,12 @@ namespace Spg.AutoTeileShop.API.Controllers
                 }
             }
 
-            return BadRequest();
-                
+            else if (topCatagory == null && categoryType == null)
+            {
+                return Ok(_readOnlyCatagoryService.GetAllCatagories());
+            }
+            return BadRequest("No Query Parameters given");
+
         }
 
         //[HttpGet("/ByTopCatagory")]

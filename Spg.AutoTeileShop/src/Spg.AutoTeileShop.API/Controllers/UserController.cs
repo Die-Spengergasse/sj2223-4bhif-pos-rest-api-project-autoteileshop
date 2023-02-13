@@ -24,7 +24,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         //Add Methode für User ist in UserRegisterController da sie sonst nicht gebraucht wird
-        [HttpGet("")]
+        [HttpGet]
         public ActionResult<List<UserGetDTO>> GetAllUser()
         {
             IEnumerable<UserGetDTO> response = (IEnumerable<UserGetDTO>)_readOnlyUserService.GetAll();
@@ -33,13 +33,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(response);
         }
 
-        //[HttpGet("id/{id}")] //fürs Tests, wird noch gelöcht
-        //public IActionResult GetUserById(int id)
-        //{
-        //    User response = _readOnlyUserService.GetById(id);
-        //    if (response == null) { return NotFound(); }
-        //    return Ok(response);
-        //}
+
 
         [HttpGet("/{guid}")]
         public ActionResult<User> GetUserByGuid(Guid guid)

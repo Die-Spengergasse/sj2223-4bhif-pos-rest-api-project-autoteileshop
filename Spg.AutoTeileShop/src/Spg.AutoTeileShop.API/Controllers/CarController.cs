@@ -32,7 +32,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
                
-        [HttpGet("{id}")]
+        [HttpGet("/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Car> GetCarbyId(int id)
@@ -53,7 +53,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("byBaujahr")]
+        [HttpGet("/byBaujahr")]
         public ActionResult<List<Car>> GetByBaujahr([FromQuery]int year)
         {
             try
@@ -66,7 +66,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("ByMarke")]
+        [HttpGet("/ByMarke")]
         public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)
         {
             try
@@ -79,7 +79,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("ByModel")]
+        [HttpGet("/ByModel")]
         public ActionResult<List<Car>> GetByModell([FromQuery] string model)
         {
             try
@@ -92,7 +92,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("ByMarkeAndModell")]
+        [HttpGet("/ByMarkeAndModell")]
         public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
         {
             try
@@ -105,7 +105,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("ByMarkeAndModellAndBaujahr")]
+        [HttpGet("/ByMarkeAndModellAndBaujahr")]
         public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
         {
             try
@@ -118,7 +118,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("/{id}")]
         public ActionResult<Car> DeleteCar(int id)
         {
             try
@@ -151,7 +151,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpPut()]
+        [HttpPut("")]
         [Produces("application/json")]
         public ActionResult<Car> UpdateCar(CarDTO carDTO)
         {
