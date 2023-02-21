@@ -125,7 +125,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 }
             }
 
-            else if (topCatagory == null && categoryType == null)
+            else if (topCatagoryId == null && categoryType == null)
             {
                 return Ok(_readOnlyCatagoryService.GetAllCatagories());
             }
