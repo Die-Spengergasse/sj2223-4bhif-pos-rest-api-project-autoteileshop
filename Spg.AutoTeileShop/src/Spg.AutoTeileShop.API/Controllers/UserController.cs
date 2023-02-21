@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
@@ -23,20 +24,28 @@ namespace Spg.AutoTeileShop.API.Controllers
             _readOnlyUserService = readOnlyUserService;
         }
 
+        // All - Authorization
+
         //Add Methode für User ist in UserRegisterController da sie sonst nicht gebraucht wird
         [HttpGet]
         public ActionResult<List<UserGetDTO>> GetAllUser()
         {
-            IEnumerable<UserGetDTO> response = (IEnumerable<UserGetDTO>)_readOnlyUserService.GetAll();
-            if (response.ToList().Count == 0) { return NotFound(); }
-            if (response == null) { return NotFound(); }
+            IEnumerable<User> responseUser = _readOnlyUserService.GetAll();
+            
+            if (responseUser.ToList().Count == 0) { return NotFound(); }
+            if (responseUser == null) { return NotFound(); }
+            List<UserGetDTO> response = new List<UserGetDTO>();
+            foreach (var user in responseUser)
+            {
+                response.Add(new UserGetDTO(user));
+            }
             return Ok(response);
         }
 
 
 
         [HttpGet("/{guid}")]
-        public ActionResult<User> GetUserByGuid(Guid guid)
+        public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
             User response = null;
             try
@@ -53,7 +62,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest();
                 
             }
-            return Ok(response);
+            return Ok(new UserGetDTO(response));
         }
 
         [HttpDelete("/{guid}")]

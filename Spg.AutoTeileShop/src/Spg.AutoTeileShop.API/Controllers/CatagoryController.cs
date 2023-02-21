@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
@@ -21,14 +22,15 @@ namespace Spg.AutoTeileShop.API.Controllers
             _readOnlyCatagoryService = readOnlyCatagoryService;
         }
 
-       // [HttpGet("")]
-        //public ActionResult<List<Catagory>> GetAll()
-        //{
-        //    return Ok(_readOnlyCatagoryService.GetAllCatagories());
-        //}
+        [HttpGet("")]
+        public ActionResult<List<Catagory>> GetAll()
+        {
+            return Ok(_readOnlyCatagoryService.GetAllCatagories());
+        }
 
         [HttpGet("/{id}")]
-        public ActionResult<Catagory> GetById(int id)
+        [AllowAnonymous]
+        public ActionResult<Catagory> GetCatagoryById(int id)
         {
             try
             {
@@ -42,7 +44,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/Name/{name}")] // no query form because it returns only one catagory
+        [HttpGet("/name/{name}")] // no query form because it returns only one catagory
         public ActionResult<Catagory> GetByName(string name)
         {
             try
@@ -57,7 +59,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/Description/{id}")]
+        [HttpGet("/{id}/Description")]
         public ActionResult<string> GetDescriptionById(int id)
         {
             try
@@ -72,8 +74,9 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("")]
-        public ActionResult<List<Catagory>> GetByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] Catagory? topCatagory)
+        [HttpGet("/filter")] //in this fromat it donst shine of in the Swagger interface
+        [AllowAnonymous]
+        public ActionResult<List<Catagory>> GetCatagoryByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
         {
             if (categoryType != null)
             {
@@ -90,13 +93,13 @@ namespace Spg.AutoTeileShop.API.Controllers
                     return BadRequest();
                 }
             }
-            else if (topCatagory != null)
+            else if (topCatagoryId != 0)
             {
                 try
                 {
-                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));
                     if (catagorys.Count == 0)
-                        return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+                        return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
                     return Ok(catagorys);
 
                 }
@@ -106,13 +109,13 @@ namespace Spg.AutoTeileShop.API.Controllers
                 }
             }
 
-            else if (topCatagory != null && categoryType != null)
+            else if (topCatagoryId != 0 && categoryType != null)
             {
                 try
                 {
-                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagoryandByType(topCatagory, (CategoryTypes)categoryType);
+                    List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagoryandByType(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId), (CategoryTypes)categoryType);
                     if (catagorys.Count == 0)
-                        return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
+                        return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
                     return Ok(catagorys);
 
                 }
@@ -130,22 +133,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         }
 
-        //[HttpGet("/ByTopCatagory")]
-        //public ActionResult<List<Catagory>> GetByTopCatagory([FromQuery] Catagory topCatagory)
-        //{
-        //    try
-        //    {
-        //        List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(topCatagory);
-        //        if (catagorys.Count == 0)
-        //            return NotFound($"No Catagorys with TopCatagory: {topCatagory} found");
-        //        return Ok(catagorys);
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
+      
 
         [HttpPost("")]
         [Produces("application/json")]

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
 
@@ -12,16 +15,20 @@ namespace Spg.AutoTeileShop.API.Controllers
         private readonly IDeleteAbleShoppingCartItemService _deleteAbleShoppingCartItemService;
         private readonly IAddUpdateableShoppingCartItemService _addUpdateableShoppingCartItemService;
         private readonly IReadOnlyShoppingCartItemService _readOnlyShoppingCartItemService;
+        private readonly IReadOnlyShoppingCartService _readOnlyShoppingCartService;
 
-        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartService)
+        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartItemService , IReadOnlyShoppingCartService readOnlyShoppingCartService)
         {
             _deleteAbleShoppingCartItemService = deleteAbleShoppingCartItemService;
             _addUpdateableShoppingCartItemService = addUpdateableShoppingCartItemService;
-            _readOnlyShoppingCartItemService = readOnlyShoppingCartService;
+            _readOnlyShoppingCartItemService = readOnlyShoppingCartItemService;
+            _readOnlyShoppingCartService = readOnlyShoppingCartService;
         }
 
+        // All - Authorization
+
         [HttpGet("")]
-        public ActionResult<List<ShoppingCartItem>> GetAll()
+        public ActionResult<List<ShoppingCartItem>> GetAllShoppingCartItems()
         {
             var items = _readOnlyShoppingCartItemService.GetAll();
             if (items.Count() == 0 || items is null)
@@ -30,7 +37,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/{guid}")]
-        public ActionResult<ShoppingCartItem> GetByGuid(Guid guid)
+        public ActionResult<ShoppingCartItem> GetShoppingCartItemByGuid(Guid guid)
         {
             try
             {
@@ -50,14 +57,22 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("/ShoppingCart")]
-        public ActionResult<List<ShoppingCartItem>> GetByShoppingCart([FromQuery]ShoppingCart shoppingCart)
+        public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery]int shoppingCartId)
         {
             try
             {
+                if (shoppingCartId == 0) return BadRequest();
+                var shoppingCart = _readOnlyShoppingCartService.GetById(shoppingCartId);
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
-                return Ok(items);
+
+                List<ShoppingCartItemDTOGet> itemsDTO = new();
+                foreach (ShoppingCartItem item in items)
+                {
+                    itemsDTO.Add(new ShoppingCartItemDTOGet(item));
+                }
+                return Ok(itemsDTO);
             }
             catch (KeyNotFoundException knfe)
             {
@@ -71,12 +86,12 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPost("")]
         [Produces("application/json")]
-        public ActionResult<ShoppingCartItem> Add(ShoppingCartItem shoppingCartItem)
+        public ActionResult<ShoppingCartItem> AddShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             try
             {
                 var item = _addUpdateableShoppingCartItemService.Add(shoppingCartItem);
-                return CreatedAtAction(nameof(GetByGuid), new { guid = item.guid }, item);
+                return CreatedAtAction(nameof(GetShoppingCartItemByGuid), new { guid = item.guid }, item);
             }
             catch (Exception e)
             {
@@ -86,7 +101,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPut("")]
         [Produces("application/json")]
-        public ActionResult<ShoppingCartItem> Update(ShoppingCartItem shoppingCartItem)
+        public ActionResult<ShoppingCartItem> UpdateShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             try
             {
@@ -101,7 +116,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpDelete("")]
-        public ActionResult<ShoppingCartItem> Delete(Guid guid)
+        public ActionResult<ShoppingCartItem> DeleteShoppingCartItem(Guid guid)
         {
             try
             {

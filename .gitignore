@@ -460,3 +460,6 @@ $RECYCLE.BIN/
 *.db-wal
 
 AutoTeileShop.db
+
+bin/
+obj/

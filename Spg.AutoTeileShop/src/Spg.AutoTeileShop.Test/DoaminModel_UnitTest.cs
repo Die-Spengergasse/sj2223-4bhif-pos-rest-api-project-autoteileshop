@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using Spg.AutoTeileShop.Repository.Repos;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
@@ -13,9 +12,9 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             DbContextOptions options = new DbContextOptionsBuilder()
             //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
-            //.UseSqlite(@"Data Source = ..\src\AutoTeileShop.db")     //Home PC relativ       
+            .UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC relativ       
             //.UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
-            .UseSqlite("DataSource=C:\\Users\\User\\source\\repos\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")
+            //.UseSqlite("DataSource=C:\\Users\\User\\source\\repos\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -1030,50 +1029,50 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.True(3 == db.ShoppingCarts.First().ShoppingCartItems.First().ProductNav.Stock);
         }
 
-        // Servis Async Tests
+        // Servis Async Tests -- Repository 1 Test
 
-        // [Fact]
-        public async void Async_DomainModel_Service_Add_User_Test()
-        {
-            AutoTeileShopContext db = createDB();
+        // [Fact] 
+        //public async void Async_DomainModel_Service_Add_User_Test()
+        //{
+        //    AutoTeileShopContext db = createDB();
 
-            User User = new User()
-            {
-                Guid = Guid.NewGuid(),
-                Vorname = "Max",
-                Nachname = "Musterman",
-                Email = "Max.Musterman@gmx.at",
-                Addrese = "TestStaﬂe ",
-                Telefon = "0004514554",
-                Role = Roles.User
+        //    User User = new User()
+        //    {
+        //        Guid = Guid.NewGuid(),
+        //        Vorname = "Max",
+        //        Nachname = "Musterman",
+        //        Email = "Max.Musterman@gmx.at",
+        //        Addrese = "TestStaﬂe ",
+        //        Telefon = "0004514554",
+        //        Role = Roles.User
 
-            };
+        //    };
 
-            Repository<User> UserRepo = new Repository<User>(db);
-            await UserRepo.AddAsync(User);
+        //    Repository<User> UserRepo = new Repository<User>(db);
+        //    await UserRepo.AddAsync(User);
 
-            Assert.Equal(User, await UserRepo.GetByIdAsync(User.Id));
-        }
+        //    Assert.Equal(User, await UserRepo.GetByIdAsync(User.Id));
+        //}
 
-        // [Fact]
-        public async void Async_DomainModel_Service_Find_User_TestAsync()
-        {
-            AutoTeileShopContext db = createDB();
+        //// [Fact]
+        //public async void Async_DomainModel_Service_Find_User_TestAsync()
+        //{
+        //    AutoTeileShopContext db = createDB();
 
-            User User = new User()
-            {
-                Guid = Guid.NewGuid(),
-                Vorname = "Max",
-                Nachname = "Musterman",
-                Email = "Max.Musterman@gmx.at",
-                Addrese = "TestStaﬂe ",
-                Telefon = "0004514554",
-                Role = Roles.User
-            };
-            Repository<User> UserRepo = new Repository<User>(db);
-            await UserRepo.AddAsync(User);
-            Assert.Equal(await UserRepo.GetByIdAsync(User.Id), User);
-        }
+        //    User User = new User()
+        //    {
+        //        Guid = Guid.NewGuid(),
+        //        Vorname = "Max",
+        //        Nachname = "Musterman",
+        //        Email = "Max.Musterman@gmx.at",
+        //        Addrese = "TestStaﬂe ",
+        //        Telefon = "0004514554",
+        //        Role = Roles.User
+        //    };
+        //    Repository<User> UserRepo = new Repository<User>(db);
+        //    await UserRepo.AddAsync(User);
+        //    Assert.Equal(await UserRepo.GetByIdAsync(User.Id), User);
+        //}
 
         [Fact]
         public void Z_DomainModel_Create_DB_Seed()

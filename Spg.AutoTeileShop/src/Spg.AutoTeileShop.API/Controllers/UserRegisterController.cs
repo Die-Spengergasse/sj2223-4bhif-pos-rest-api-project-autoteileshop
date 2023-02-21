@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System.Text.Json;
+//using Spg.AutoTeileShop.Application.Filter;
 
 namespace Spg.AutoTeileShop.API.Controllers
 {
@@ -18,10 +20,18 @@ namespace Spg.AutoTeileShop.API.Controllers
             _userRegistService = userRegistService;
         }
 
+        // Register - Authorization
+
         [HttpPost("")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
         public ActionResult<User> Register([FromBody()] UserRegistDTO userDTOJSON)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {            
                 User user = new(userDTOJSON);
@@ -36,10 +46,13 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
             catch (Exception e)
             {
+                if (e.InnerException.Message.Contains("UNIQUE constraint failed: Users.Email")) return BadRequest("Email already exists");
+
                 return BadRequest();
             }
         }
         [HttpGet("CheckCode/{mail}/{code}")]
+        [AllowAnonymous]
         public IActionResult CheckCode(string mail, string code)
         {
             try

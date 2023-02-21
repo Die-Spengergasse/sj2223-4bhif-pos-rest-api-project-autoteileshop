@@ -27,7 +27,7 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartItemRepository.Delete(shoppingCartItem);
         }
 
-        public IEnumerable<ShoppingCartItem> GetAll()
+        public List<ShoppingCartItem> GetAll()
         {
             return _shoppingCartItemRepository.GetAll();
         }
@@ -42,10 +42,10 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartItemRepository.GetById(Id);
         }
 
-        public IEnumerable<ShoppingCartItem> GetByShoppingCart(ShoppingCart shoppingCart)
+        public List<ShoppingCartItem> GetByShoppingCart(ShoppingCart shoppingCart)
         {
             var items = _shoppingCartItemRepository.GetAllIncludeShoppingCartNav();
-            return items.Where(s => s.ShoppingCartNav == shoppingCart);
+            return items.Where(s => s.ShoppingCartNav.Id.Equals(shoppingCart.Id)).ToList();
 
         }
 

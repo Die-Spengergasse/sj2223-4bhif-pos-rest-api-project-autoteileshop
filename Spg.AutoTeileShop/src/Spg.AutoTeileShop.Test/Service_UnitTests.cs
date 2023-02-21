@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Application;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
@@ -20,7 +21,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             DbContextOptions options = new DbContextOptionsBuilder()
                   //.UseSqlite("Data Source=AutoTeileShopTest.db")
                   //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
-                  .UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
+                  .UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\db\\AutoTeileShop.db")     //Home PC       
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -108,6 +109,16 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(user, ur);
 
             Assert.True(db.Users.Count() == 1); ;
+        }
+
+        [Fact]
+        public void Service_Mail_Check_Test() 
+        {
+            SendMail sm = new();
+            Assert.True(sm.ValidateMail("david.ankenbrand98@gmail.com"));
+           // Assert.True(sm.ValidateMail("david.ankenbrand@gmx.at"));
+            Assert.False(sm.ValidateMail("test425236551safasfasf@gmail.com"));
+            Assert.False(sm.ValidateMail("david.ankenbrand@testXY.com"));
         }
 
 

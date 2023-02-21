@@ -15,9 +15,7 @@ COPY ["src/Spg.AutoTeileShop.Infrastructure/Spg.AutoTeileShop.Infrastructure.csp
 COPY ["src/Spg.AutoTeileShop.Repository2/Spg.AutoTeileShop.Repository2.csproj", "/Spg.AutoTeileShop.Repository2/"]
 COPY ["src/Spg.AutoTeileShop.DbExtentions/Spg.AutoTeileShop.DbExtentions.csproj", "/Spg.AutoTeileShop.DbExtentions/"]
 COPY ["src/Spg.AutoTeileShop.ServiceExtentions/Spg.AutoTeileShop.ServiceExtentions.csproj", "/Spg.AutoTeileShop.ServiceExtentions/"]
-RUN mkdir -p /src/Spg.AutoTeileShop.API/db/
 COPY ["src/Spg.AutoTeileShop.API/db/AutoTeileShop.db", "/Spg.AutoTeileShop.API/db/"]
-
 RUN dotnet restore "/Spg.AutoTeileShop.API/Spg.AutoTeileShop.API.csproj"
 COPY . .
 WORKDIR "src/Spg.AutoTeileShop.API"
@@ -30,6 +28,8 @@ FROM alpine:3.12 AS db
 RUN apk update && apk upgrade
 RUN apk add --no-cache sqlite~=3.32.1-r0
 
+#FROM openjdk:8u131-jdk-alpine
+#VOLUME AutoTeileDB
 
 FROM base AS final
 WORKDIR /app

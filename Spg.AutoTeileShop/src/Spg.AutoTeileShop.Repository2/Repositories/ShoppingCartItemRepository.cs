@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return shoppingCartItem;
         }
 
-        public IEnumerable<ShoppingCartItem> GetAll()
+        public List<ShoppingCartItem> GetAll()
         {
             return _db.ShoppingCartItems.ToList();
         }
@@ -56,7 +56,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return shoppingCartItem;
         }
 
-        public IEnumerable<ShoppingCartItem> GetAllIncludeShoppingCartNav()
+        public List<ShoppingCartItem> GetAllIncludeShoppingCartNav()
         {
             return _db.ShoppingCartItems.Include(s => s.ShoppingCartNav).ToList();
         }
