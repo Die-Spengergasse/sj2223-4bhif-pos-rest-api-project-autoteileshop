@@ -42,6 +42,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.ServiceEx
 		{BE4F5AD1-ED96-4943-A32E-EAD651434622} = {BE4F5AD1-ED96-4943-A32E-EAD651434622}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.ApplicationTest", "tests\Spg.AutoTeileShop.ApplicationTest\Spg.AutoTeileShop.ApplicationTest.csproj", "{10322EB8-F247-4505-A128-AC554951D477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.RepositoryTest", "tests\Spg.AutoTeileShop.RepositoryTest\Spg.AutoTeileShop.RepositoryTest.csproj", "{AF7D1CAB-7213-4119-B1C9-27188F0C8285}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +88,14 @@ Global
 		{5AB037ED-4934-4EB0-A900-0BFD84172F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AB037ED-4934-4EB0-A900-0BFD84172F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AB037ED-4934-4EB0-A900-0BFD84172F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10322EB8-F247-4505-A128-AC554951D477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10322EB8-F247-4505-A128-AC554951D477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10322EB8-F247-4505-A128-AC554951D477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10322EB8-F247-4505-A128-AC554951D477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
