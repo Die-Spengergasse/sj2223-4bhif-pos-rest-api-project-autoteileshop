@@ -45,7 +45,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
 
 
-        [HttpGet("/{guid}")]
+        [HttpGet("{guid}")]
         public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
             User response = null;

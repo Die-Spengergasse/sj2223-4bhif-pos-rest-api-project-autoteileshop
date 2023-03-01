@@ -61,7 +61,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/{id}/Description")]
+        [HttpGet("{id}/Description")]
         [AllowAnonymous]
         public ActionResult<string> GetCatagoryDescriptionById(int id)
         {
@@ -128,7 +128,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 }
             }
 
-            else if (topCatagory == null && categoryType == null)
+            else if (topCatagoryId == null && categoryType == null)
             {
                 return Ok(_readOnlyCatagoryService.GetAllCatagories());
             }

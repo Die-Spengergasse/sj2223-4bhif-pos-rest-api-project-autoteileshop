@@ -38,7 +38,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
                
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
@@ -126,7 +126,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public ActionResult<Car> DeleteCar(int id)
         {
             try

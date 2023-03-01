@@ -37,7 +37,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(items);
         }
 
-        [HttpGet("/{guid}")]
+        [HttpGet("{guid}")]
         public ActionResult<ShoppingCartItem> GetShoppingCartItemByGuid(Guid guid)
         {
             try
@@ -57,7 +57,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/ShoppingCart")]
+        [HttpGet("ShoppingCart")]
         public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery]int shoppingCartId)
         {
             try

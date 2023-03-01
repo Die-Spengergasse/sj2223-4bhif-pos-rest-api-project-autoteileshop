@@ -64,7 +64,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpGet("/ByUser")]
+        [HttpGet("ByUser")]
         public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery]Guid userGuid)
         {
             try
