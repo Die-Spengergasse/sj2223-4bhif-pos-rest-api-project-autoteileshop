@@ -106,6 +106,6 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest();
             }
         }
-
+         
     }
 }
