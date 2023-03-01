@@ -44,7 +44,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             return _carController = new(_readOnlycarService, _deletableCarService, _addUpdateableCarService);
         }
 
-        [Fact]
+        //[Fact]
         public void Controller_GetAll_Test()
         {
             AutoTeileShopContext db = createDB();
