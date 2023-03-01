@@ -65,9 +65,9 @@ builder.Services.AddVersionedApiExplorer(
 
 builder.Services.AddSwaggerGen(s =>
 {
-    s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
-        Title = "AutoTeile Shop - v1",
+        Title = "AutoTeile Shop - v2",
         Description = "Description about AutoTeileShop",
         Contact = new OpenApiContact()
         {
@@ -81,7 +81,7 @@ builder.Services.AddSwaggerGen(s =>
             Name = "Spenger-Licence",
             Url = new Uri("http://www.spengergasse.at/licence")
         },
-        Version = "v1"
+        Version = "v2"
     });
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
