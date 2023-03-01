@@ -66,7 +66,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(new UserGetDTO(response));
         }
 
-        [HttpDelete("/{guid}")]
+        [HttpDelete("{guid}")]
         public ActionResult<User> DeleteUserByGuid(Guid guid)
         {
             try
@@ -89,7 +89,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             }
         }
 
-        [HttpPut("/{guid}")]
+        [HttpPut("{guid}")]
         public ActionResult<User> UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
         {
             try
