@@ -48,7 +48,7 @@ builder.Services.AddSwaggerGen(s =>
 builder.Services.AddApiVersioning(o =>
 {
     o.AssumeDefaultVersionWhenUnspecified = true;
-    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
     o.ReportApiVersions = true;
     o.ApiVersionReader = ApiVersionReader.Combine(
         new QueryStringApiVersionReader("api-version"),
@@ -65,6 +65,7 @@ builder.Services.AddVersionedApiExplorer(
 
 builder.Services.AddSwaggerGen(s =>
 {
+    
     s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
         Title = "AutoTeile Shop - v2",
@@ -83,6 +84,26 @@ builder.Services.AddSwaggerGen(s =>
         },
         Version = "v2"
     });
+
+    s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "AutoTeile Shop - v1",
+        Description = "Description about AutoTeileShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "David Ankenbrand and Johannes Scholz",
+            Email = "ank19415@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v1"
+    });
+
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
