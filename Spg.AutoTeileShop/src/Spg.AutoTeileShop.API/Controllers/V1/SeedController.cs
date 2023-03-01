@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Infrastructure;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -40,4 +40,4 @@ namespace Spg.AutoTeileShop.API.Controllers
         //    return Ok(_context.Database.GetDbConnection().ConnectionString);
         //}
     }
-} 
+}

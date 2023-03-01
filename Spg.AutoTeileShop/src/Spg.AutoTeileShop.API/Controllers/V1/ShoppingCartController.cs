@@ -8,7 +8,7 @@ using Spg.AutoTeileShop.Domain.Models;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection.Metadata.Ecma335;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -65,7 +65,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("ByUser")]
-        public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery]Guid userGuid)
+        public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery] Guid userGuid)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             {
                 ShoppingCart cart = new(cartDTO);
                 if (cartDTO is null) return BadRequest("User Navigation is null");
-                cart.UserNav = _readOnlyUserService.GetById((int)cartDTO.UserId); 
+                cart.UserNav = _readOnlyUserService.GetById((int)cartDTO.UserId);
                 var newCart = _addUpdatableShoppingCartService.AddShoppingCart(cart);
                 return Created($"/api/ShoppingCart/{newCart.guid}", newCart);
             }
@@ -106,6 +106,6 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest();
             }
         }
-         
+
     }
 }

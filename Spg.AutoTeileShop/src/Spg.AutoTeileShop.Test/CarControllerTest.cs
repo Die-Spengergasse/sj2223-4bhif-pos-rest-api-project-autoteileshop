@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Spg.AutoTeileShop.API.Controllers;
+using Spg.AutoTeileShop.API.Controllers.V1;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Infrastructure;

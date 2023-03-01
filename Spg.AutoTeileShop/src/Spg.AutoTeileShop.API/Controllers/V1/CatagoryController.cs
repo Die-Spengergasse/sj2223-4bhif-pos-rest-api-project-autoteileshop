@@ -5,7 +5,7 @@ using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -136,7 +136,7 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         }
 
-      
+
 
         [HttpPost("")]
         [Produces("application/json")]
@@ -145,7 +145,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             try
             {
                 Catagory c = new Catagory(catagoryDTO, _readOnlyCatagoryService.GetCatagoryById(catagoryDTO.TopCatagoryId));
-                    _addUpdateableCatagoryService.AddCatagory(c);
+                _addUpdateableCatagoryService.AddCatagory(c);
                 return Created("/api/Catagory/" + c.Id, c);
             }
             catch (Exception e)
@@ -156,11 +156,11 @@ namespace Spg.AutoTeileShop.API.Controllers
 
         [HttpPut("{Id}")]
         [Produces("application/json")]
-        public ActionResult<Catagory> UpdateCatagory(int Id,Catagory catagory)
+        public ActionResult<Catagory> UpdateCatagory(int Id, Catagory catagory)
         {
             try
             {
-                return Ok(_addUpdateableCatagoryService.UpdateCatagory(Id ,catagory));
+                return Ok(_addUpdateableCatagoryService.UpdateCatagory(Id, catagory));
             }
             catch (Exception e)
             {

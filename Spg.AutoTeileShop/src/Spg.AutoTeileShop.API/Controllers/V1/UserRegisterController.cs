@@ -7,9 +7,9 @@ using Spg.AutoTeileShop.Domain.Models;
 using System.Text.Json;
 //using Spg.AutoTeileShop.Application.Filter;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
-    [Route("api/v{version:apiVersion}/[controller]")] 
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     public class RegisterController : ControllerBase
@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest(ModelState);
             }
             try
-            {            
+            {
                 User user = new(userDTOJSON);
                 _userRegistService.Register_sendMail_Create_User(user, "");
                 return Created("/api/User/" + user.Guid, new UserRegisterResponsDTO(user));

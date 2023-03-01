@@ -9,12 +9,13 @@ using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    public class CarController : ControllerBase    {
+    public class CarController : ControllerBase
+    {
 
         private readonly IReadOnlyCarService _readOnlycarService;
         private readonly IDeletableCarService _deletableCarService;
@@ -37,7 +38,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             return Ok(_readOnlycarService.GetAll());
         }
 
-               
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,7 +62,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("byBaujahr")]
-        public ActionResult<List<Car>> GetByBaujahr([FromQuery]int year)
+        public ActionResult<List<Car>> GetByBaujahr([FromQuery] int year)
         {
             try
             {
@@ -150,7 +151,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             {
                 Car car = new Car(carDTO);
                 _addUpdateableCarService.Add(car);
-                return Created("/api/Car/" + car.Id , car);
+                return Created("/api/Car/" + car.Id, car);
             }
             catch (Exception e)
             {

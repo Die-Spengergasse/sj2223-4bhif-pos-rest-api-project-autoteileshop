@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -32,7 +32,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         public ActionResult<List<UserGetDTO>> GetAllUser()
         {
             IEnumerable<User> responseUser = _readOnlyUserService.GetAll();
-            
+
             if (responseUser.ToList().Count == 0) { return NotFound(); }
             if (responseUser == null) { return NotFound(); }
             List<UserGetDTO> response = new List<UserGetDTO>();
@@ -61,7 +61,7 @@ namespace Spg.AutoTeileShop.API.Controllers
                     return NotFound(e);
                 }
                 return BadRequest();
-                
+
             }
             return Ok(new UserGetDTO(response));
         }
@@ -106,6 +106,6 @@ namespace Spg.AutoTeileShop.API.Controllers
                 return BadRequest();
             }
         }
-         
+
     }
 }

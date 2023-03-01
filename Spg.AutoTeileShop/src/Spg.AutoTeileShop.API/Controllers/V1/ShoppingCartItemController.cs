@@ -6,7 +6,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -18,7 +18,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         private readonly IReadOnlyShoppingCartItemService _readOnlyShoppingCartItemService;
         private readonly IReadOnlyShoppingCartService _readOnlyShoppingCartService;
 
-        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartItemService , IReadOnlyShoppingCartService readOnlyShoppingCartService)
+        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartItemService, IReadOnlyShoppingCartService readOnlyShoppingCartService)
         {
             _deleteAbleShoppingCartItemService = deleteAbleShoppingCartItemService;
             _addUpdateableShoppingCartItemService = addUpdateableShoppingCartItemService;
@@ -58,7 +58,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         }
 
         [HttpGet("ShoppingCart")]
-        public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery]int shoppingCartId)
+        public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery] int shoppingCartId)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             try
             {
                 var item = _addUpdateableShoppingCartItemService.Add(shoppingCartItem);
-                return CreatedAtAction(nameof(GetShoppingCartItemByGuid), new { guid = item.guid }, item);
+                return CreatedAtAction(nameof(GetShoppingCartItemByGuid), new { item.guid }, item);
             }
             catch (Exception e)
             {

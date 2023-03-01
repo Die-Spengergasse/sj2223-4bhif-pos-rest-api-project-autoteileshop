@@ -9,7 +9,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System.Reflection.Metadata.Ecma335;
 
-namespace Spg.AutoTeileShop.API.Controllers
+namespace Spg.AutoTeileShop.API.Controllers.V1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -20,7 +20,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         private readonly IReadOnlyProductService _readOnlyproductService;
         private readonly IDeletableProductService _deletableProductService;
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
-        
+
         private readonly IValidator<ProductDTO> _validator;
 
         public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService, IReadOnlyCatagoryService readOnlyCatagoryService, IValidator<ProductDTO> validator)
@@ -35,7 +35,7 @@ namespace Spg.AutoTeileShop.API.Controllers
         // Add Product - Authorization
         // Delete Product - Authorization
         // Update Product - Authorization
-       
+
 
         [HttpGet("")]
         [AllowAnonymous]
@@ -44,7 +44,7 @@ namespace Spg.AutoTeileShop.API.Controllers
             try
             {
                 List<Product> requestBody = _readOnlyproductService.GetAll().ToList();
-                
+
                 if (requestBody.Count == 0) { return NotFound(); }
                 return Ok(requestBody);
             }
@@ -82,9 +82,9 @@ namespace Spg.AutoTeileShop.API.Controllers
                 Catagory? catagory = null;
                 if (catagoryId != 0)
                 {
-                     _readOnlyCatagoryService.GetCatagoryById(catagoryId);
+                    _readOnlyCatagoryService.GetCatagoryById(catagoryId);
                 }
-                if ((name is null ||name.Count() == 0 ) && catagory is null) { return BadRequest(); }
+                if ((name is null || name.Count() == 0) && catagory is null) { return BadRequest(); }
                 if ((name is null || name.Count() == 0) && catagory is not null)
                 {
                     var productsCat = _readOnlyproductService.GetByCatagory(catagory);
