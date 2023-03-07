@@ -1,4 +1,7 @@
-﻿//using System;
+﻿//using Microsoft.Data.Sqlite;
+//using Microsoft.EntityFrameworkCore;
+//using Spg.AutoTeileShop.Infrastructure;
+//using System;
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Text;
@@ -30,12 +33,12 @@
 
 
 
-//            db.Shops.AddRange(GetSeedingShops());
-//            db.SaveChanges();
+//            //db.Shops.AddRange(GetSeedingShops());
+//            //db.SaveChanges();
 
 
 
-//            db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 1)));
+//            db.Catagories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 1)));
 //            db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 2)));
 //            db.SaveChanges();
 
