@@ -37,6 +37,13 @@ namespace Spg.AutoTeileShop.Domain.Models
             _fitsForProducts = fitsForProducts;
         }
 
+        public Car(string marke, string modell, DateTime baujahr)
+        {
+            Marke = marke;
+            Modell = modell;
+            Baujahr = baujahr;
+        }
+
         public void AddFitsForProducts(Product entity)
         {
             if (entity is not null)
