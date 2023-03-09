@@ -31,5 +31,15 @@ namespace Spg.AutoTeileShop.Domain.Models
             ShoppingCartId = shoppingCartId;
             ShoppingCartNav = shoppingCartNav;
         }
+
+        public ShoppingCartItem(Guid guid, int pieces, int? productId, Product productNav, int? shoppingCartId, ShoppingCart? shoppingCartNav)
+        {
+            this.guid = guid;
+            Pieces = pieces;
+            ProductId = productId;
+            ProductNav = productNav;
+            ShoppingCartId = shoppingCartId;
+            ShoppingCartNav = shoppingCartNav;
+        }
     }
 }

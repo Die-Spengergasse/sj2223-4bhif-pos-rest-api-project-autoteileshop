@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 //using Spg.AutoTeileShop.
@@ -33,32 +34,31 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
         {
             db.Database.EnsureCreated();
 
+            db.Catagories.AddRange(GetSeedingCategories());
+            db.SaveChanges();
+            
+            db.Users.AddRange(GetSeedingUser());
+            db.SaveChanges();
 
 
-            //db.Shops.AddRange(GetSeedingShops());
-            //db.SaveChanges();
+            db.Cars.AddRange(GetSeedingCars_without_Product());
+            db.SaveChanges();
+
+            db.Products.AddRange(GetSeedingProducts_with_Cars(db.Catagories.First(), db));
+            db.SaveChanges();
+            Set_Products_to_Cars(db);
+            db.SaveChanges();
+
+            db.ShoppingCartItems.AddRange(GetSeedingShoppingCartItems(db));
+            db.SaveChanges();
 
 
+            db.ShoppingCarts.AddRange(GetSeedingShoppingCart(db));
+            db.SaveChanges();
+            
+            db.UserMailConfirms.AddRange(GetSeedingUserMailConfirme(db));
+            db.SaveChanges();
 
-            //db.Catagories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 1)));
-            //db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 2)));
-            //db.SaveChanges();
-
-
-
-            //db.Customers.AddRange(GetSeedingCustomers());
-            //db.SaveChanges();
-
-
-
-            //// Seed Products
-            //db.Products.AddRange(GetSeedingProducts(db.Categories.Single(s => s.Id == 1)));
-            //db.SaveChanges();
-
-
-
-            // Seed ...
-            // db.SaveChanges();
         }
 
 
@@ -112,7 +112,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             };
         }
 
-        private static List<Product> GetSeedingProducts(Catagory category, AutoTeileShopContext db)
+        private static List<Product> GetSeedingProducts_with_Cars(Catagory category, AutoTeileShopContext db)
         {
             return new List<Product>()
             {
@@ -128,12 +128,103 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
                     10,
                     DateTime.Now.AddDays(-14),
                     db.Cars.ToList()),
-                
+               
+                new Product(
+                    Guid.NewGuid(),
+                    "Another Test Product",
+                    29.99m,
+                    category,
+                    "This is another test product.",
+                    "another-test-image.jpg",
+                    QualityType.Gut,
+                    200,
+                    5,
+                    DateTime.Now.AddDays(-7),
+                    db.Cars.ToList())
             };
 
 
         }
 
+        private static void Set_Products_to_Cars(AutoTeileShopContext db)
+        {
+            db.Cars.First().FitsForProducts.Append(db.Products.First());
+            db.Cars.First().FitsForProducts.Append(db.Products.Last());
+            
+            db.Cars.Last().FitsForProducts.Append(db.Products.First());
+            db.Cars.Last().FitsForProducts.Append(db.Products.Last());
+        }
+
+        private static List<ShoppingCartItem> GetSeedingShoppingCartItems(AutoTeileShopContext db)
+        {
+            return new List<ShoppingCartItem>()
+            {
+                new ShoppingCartItem(                
+                    new Guid("da7de159-0d7d-4416-b7e0-9c6723fd333f"),
+                    2,
+                    db.Products.First().Id,
+                    db.Products.First(),
+                    null,
+                    null
+                ),
+                
+                 new ShoppingCartItem(
+                    new Guid("5b4c4bbf-e458-46a7-8827-d02b934cba78"),
+                    2,
+                    db.Products.First().Id,
+                    db.Products.First(),
+                    null,
+                    null
+                )
+
+            };
+        }
+
+        private static List<ShoppingCart> GetSeedingShoppingCart(AutoTeileShopContext db)
+        {
+            return new List<ShoppingCart>()
+            {
+                new ShoppingCart(
+                    new Guid("bb9b715c-a3f6-4246-84f9-1a1bd6beb211"),
+                    db.Users.First().Id,
+                    db.Users.First(),
+                    db.ShoppingCartItems.ToList()
+                    ),
+                new ShoppingCart(
+                    new Guid("47529ac2-9b86-4405-9e5e-5bcf55dc4bb3"),
+                    db.Users.Last().Id,
+                    db.Users.Last(),
+                    new List<ShoppingCartItem>{db.ShoppingCartItems.First()}
+                    )
+            };
+        }
+
+        private static List<UserMailConfirme> GetSeedingUserMailConfirme(AutoTeileShopContext db)
+        {
+            return new List<UserMailConfirme>()
+            {
+                new UserMailConfirme(
+                    db.Users.First(),
+                     ComputeSha256Hash(Guid.NewGuid().ToString().Substring(0, 8)),
+                     DateTime.Now
+                    ),
+                 new UserMailConfirme(
+                    db.Users.Last(),
+                     ComputeSha256Hash(Guid.NewGuid().ToString().Substring(0, 8)),
+                     DateTime.Now.AddDays(-2)
+                    )
+            };
+        }
+
+
+        public static string ComputeSha256Hash(string value) // from ChatGPT supported
+        {
+            using (SHA256 hash = SHA256.Create())
+            {
+                byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+                return BitConverter.ToString(hashBytes).Replace("-", "");
+            }
+        }
 
     }
 }
