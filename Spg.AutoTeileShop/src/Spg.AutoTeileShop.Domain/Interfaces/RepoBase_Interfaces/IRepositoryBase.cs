@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces.RepoBase_Interfaces
 {
-    internal interface IRepositoryBasey<TEntity> where TEntity : class
+    public interface IRepositoryBase<TEntity>
     {
         TEntity? Create(TEntity entity);
         TEntity? Update(TEntity entity);
