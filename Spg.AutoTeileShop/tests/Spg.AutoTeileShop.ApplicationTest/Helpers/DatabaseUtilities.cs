@@ -63,17 +63,6 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
 
 
-        //private static List<Shop> GetSeedingShops()
-        //{
-        //    return new List<Shop>()
-        //    {
-        //        new Shop("GMBH", "Test Shop 1", "Test Location 1", "IDontKnow 1", "Bs 1", new Address("Spengergasse", "20", "1050", "Wien"), new Guid("0c03ceb5-e2a2-4faf-b273-63839505f573")),
-        //        new Shop("GMBH", "Test Shop 2", "Test Location 2", "IDontKnow 2", "Bs 2", new Address("Spengergasse", "21", "1051", "Wien"), new Guid("a0a6b711-fd27-4193-8595-325a62d82c5c")),
-        //    };
-        //}
-
-
-
         private static List<Catagory> GetSeedingCategories()
         {
             var cat1 = new Catagory(null, "MotorKopf", "Test Description", CategoryTypes.MotorTeile);
