@@ -4,7 +4,7 @@ using Spg.AutoTeileShop.Domain.Exeptions;
 
 namespace Spg.AutoTeileShop.Repository
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
         protected readonly AutoTeileShopContext _db;
 

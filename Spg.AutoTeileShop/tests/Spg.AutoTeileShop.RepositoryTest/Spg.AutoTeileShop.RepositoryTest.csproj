@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Spg.AutoTeileShop.Infrastructure\Spg.AutoTeileShop.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Spg.AutoTeileShop.Repository2\Spg.AutoTeileShop.Repository2.csproj" />
+    <ProjectReference Include="..\..\src\Spg.AutoTeileShop.Repository\Spg.AutoTeileShop.Repository.csproj" />
   </ItemGroup>
 
 </Project>
