@@ -6,10 +6,11 @@ using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
 
-namespace Spg.AutoTeileShop.ApplicationTest
+namespace Spg.AutoTeileShop.ApplicationTest.Mock
 {
     public class Product_ServiceTestMock
     {
+        //private readonly Mock<Product> 
         private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
@@ -29,7 +30,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
         public void Create_Succes_Test()
         {
             //Arrange
-            //Datenbank
+                //Datenbank
             AutoTeileShopContext db = createDB();
             
             ProductService productService = new(new ProductRepository(db));

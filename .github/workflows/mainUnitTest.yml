@@ -26,5 +26,9 @@ jobs:
       run: dotnet restore Spg.AutoTeileShop/src/Spg.AutoTeileShop.API/Spg.AutoTeileShop.API.csproj
     - name: Build
       run: dotnet build Spg.AutoTeileShop/src/Spg.AutoTeileShop.API/Spg.AutoTeileShop.API.csproj --no-restore
-    - name: Test
+    - name: Test_Domain
       run: dotnet test Spg.AutoTeileShop/src/Spg.AutoTeileShop.Test/Spg.AutoTeileShop.Domain.Test.csproj
+    - name: Test_Repo
+      run: dotnet test Spg.AutoTeileShop/tests/Spg.AutoTeileShop.Spg.AutoTeileShop.RepositoryTest/Spg.AutoTeileShop.RepositoryTest.csproj
+    - name: Test_Apllication
+      run: dotnet test Spg.AutoTeileShop/tests/Spg.AutoTeileShop.ApplicationTest/Spg.AutoTeileShop.ApplicationTest.csproj
