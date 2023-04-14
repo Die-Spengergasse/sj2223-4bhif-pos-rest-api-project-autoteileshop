@@ -182,56 +182,16 @@ app.UseAuthorization();
 
 app.UseCors("myAllowSpecificOrigins");
 app.MapControllers();
-//LinkGenerator linkGenerator = app.Services.GetRequiredService<LinkGenerator>();
-//string? url = linkGenerator.GetUriByAction(HttpContext, action: nameof(GetDetails), values: new { name = newId });
-// Json json = new Json();
 
-
+//HATEOAS
 var linksv1 = new List<string>();
-//var controllerNameList = new List<string>();
-
-//var endpoints = app.Services.GetService<EndpointDataSource>();
-//foreach (var endpoint in endpoints.Endpoints)
-//{
-//    var controllerEndpoint = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
-//    if (controllerEndpoint != null)
-//    {
-//        var controllerName = controllerEndpoint.ControllerName;
-//        controllerNameList.Add(controllerName);
-//    }
-//}
-//links.Add(builder.Services.);
-
-
-//var asm = Assembly.GetAssembly(typeof(Program));
-//var controlleractionlist = asm.GetTypes()
-//    .Where(type => typeof(Controllerv1).IsAssignableFrom(type))
-//    .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
-//    .Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
-//    .Select(x => new
-//    {
-//        Controllerv1 = x.DeclaringType.Name,
-//        Action = x.Name,
-//        ReturnType = x.ReturnType.Name,
-//        Attributes = String.Join(",", x.GetCustomAttributes().Select(a => a.GetType().Name.Replace("Attribute", "")))
-//    })
-//    .OrderBy(x => x.Controllerv1).ThenBy(x => x.Action).ToList();
-
-//var list = new List<String>();
-//foreach (var item in controlleractionlist)
-//{
-//    list.Add(item.Controllerv1);
-//}
-
-
-//var asm = Assembly.GetAssembly(typeof(Program));
-//var controllerTypes = asm.GetTypes().Where(type => typeof(Controllerv1).IsAssignableFrom(type));
-//var controllerNames = controllerTypes.Select(type => type.Name);
+// Get Controller names
 var assembly = typeof(Program).Assembly;
 var controllerTypes = assembly.GetTypes().Where(type => typeof(ControllerBase).IsAssignableFrom(type) && !type.IsAbstract);
 
 var controllerNames = controllerTypes.Select(x => x.Name.Replace("Controller", "")).ToList();
 
+// Build Links
 for (int i = 0; i <= (controllerNames.Count / 2) - 1; i++)
 {
     linksv1.Add("https://localhost:7083/api/v1/" + controllerNames[i]);
@@ -243,12 +203,8 @@ for (int i = 0; i <= (controllerNames.Count / 2) - 1; i++)
 {
     linksv2.Add("https://localhost:7083/api/v2/" + controllerNames[i]);
 }
-//links.Add();
-//foreach (string item in controllerNames)
-//{
-//    links.Add("https://localhost:7083/api/" + item);
-//}
 
+// links to Json
 var Controllerv1 = new { Controller = linksv1 };
 var Controllerv2 = new { Controller = linksv2 };
 
@@ -257,17 +213,17 @@ var jsonsConv1 = JsonConvert.SerializeObject(Controllerv1, Formatting.Indented);
 var jsonsConv2 = JsonConvert.SerializeObject(Controllerv2, Formatting.Indented);
 
 
-
+// Version Links
 var versionList = new List<string>
 {
     "https://localhost:7083/api/v1",
     "https://localhost:7083/api/v2"
 };
 
-
+// Version to Json
 var jsonsVersion = JsonConvert.SerializeObject(versionList, Formatting.Indented);
 
-
+// Minimal API
 app.MapGet("/api/", () => jsonsVersion);
 app.MapGet("/api/v1", () => jsonsConv1);
 app.MapGet("/api/v2", () => jsonsConv2);
