@@ -28,7 +28,6 @@ using System.Web.Helpers;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-
 //product get del -id
 //ShoppingCart del put guid
 //ShoppingCartItem get ShoppingCar
@@ -204,7 +203,7 @@ var jsonsConv2 = JsonConvert.SerializeObject(Controllerv2, Formatting.Indented);
 // Version Links
 var versionList = new List<string>
 {
-    "https://localhost:7083/api/v1",
+    https://localhost:7083/api/v1,
     "https://localhost:7083/api/v2"
 };
 
@@ -212,6 +211,9 @@ var versionList = new List<string>
 var jsonsVersion = JsonConvert.SerializeObject(versionList, Formatting.Indented);
 
 // Minimal API
+
+
+
 app.MapGet("/api/", () => jsonsVersion);
 app.MapGet("/api/v1", () => jsonsConv1);
 app.MapGet("/api/v2", () => jsonsConv2);
