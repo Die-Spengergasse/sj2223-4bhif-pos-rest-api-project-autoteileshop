@@ -48,18 +48,6 @@ builder.Services.ConfigureSQLite(connectionString);
 
 builder.Services.AddControllers();
 
-// Link Generator
-//builder.Services.AddSingleton<LinkGenerator>(new LinkGenerator(
-//    new ActionContext 
-//    {
-//        HttpContext = new DefaultHttpContext(),
-//        RouteData = new RouteData(),
-//        ActionDescriptor = new ActionDescriptor(),
-
-//    },
-//    new List<IEndpointRouteBuilder>(),
-//    new OptionsManager<RouteOptions>(Enumerable.Empty<IConfigureOptions<RouteOptions>>())
-//    ));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
