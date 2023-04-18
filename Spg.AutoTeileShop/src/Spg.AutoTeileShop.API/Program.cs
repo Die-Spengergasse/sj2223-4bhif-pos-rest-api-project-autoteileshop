@@ -203,7 +203,7 @@ var jsonsConv2 = JsonConvert.SerializeObject(Controllerv2, Formatting.Indented);
 // Version Links
 var versionList = new List<string>
 {
-    https://localhost:7083/api/v1,
+    "https://localhost:7083/api/v1",
     "https://localhost:7083/api/v2"
 };
 
