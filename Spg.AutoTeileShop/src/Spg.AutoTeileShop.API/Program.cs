@@ -78,6 +78,25 @@ builder.Services.AddSwaggerGen(s =>
         Version = "v1"
     });
 
+    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "AutoTeile Shop - v2",
+        Description = "Description about AutoTeileShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "David Ankenbrand and Johannes Scholz",
+            Email = "ank19415@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v2"
+    });
+
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -141,7 +160,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(x => {
+        x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
+    });
 }
 
 app.UseHttpsRedirection();
