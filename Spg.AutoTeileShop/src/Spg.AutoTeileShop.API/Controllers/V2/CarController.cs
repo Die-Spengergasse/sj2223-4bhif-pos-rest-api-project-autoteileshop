@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-
+using System.Runtime.CompilerServices;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {
@@ -20,12 +22,17 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyCarService _readOnlycarService;
         private readonly IDeletableCarService _deletableCarService;
         private readonly IAddUpdateableCarService _addUpdateableCarService;
+        private readonly EndpointDataSource _endpointDataSource;
 
-        public CarController(IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService, IAddUpdateableCarService addUpdateableCarService)
+
+        public CarController(IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService, IAddUpdateableCarService addUpdateableCarService, EndpointDataSource endpointDataSource)
         {
             _readOnlycarService = readOnlycarService;
             _deletableCarService = deletableCarService;
             _addUpdateableCarService = addUpdateableCarService;
+            _endpointDataSource = endpointDataSource;
+
+            getRouteNames();
         }
 
         // AddCar - Authorization
@@ -174,6 +181,25 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("/test")]
+        public IActionResult GetAllEndpoints()
+        {
+            var endpoints = _endpointDataSource.Endpoints;
+            var routes2 = endpoints.Where(e => e.DisplayName.Contains("V2") && e.DisplayName.Contains("Cars"));
+            var routes = endpoints.Select(e => e.Metadata.GetMetadata<IRouteNameMetadata>()?.RouteName)
+                                  .Where(r => !string.IsNullOrEmpty(r))
+                                  .Distinct()
+                                  .OrderBy(r => r)
+                                  .ToList();
+            return Ok(routes);
+        }
+
+        private void getRouteNames()
+        {
+            var methodes = this.GetType().GetMethods();
+            var routes = methodes.SelectMany(m => m.GetCustomAttributes(typeof(RouteAttribute), true).Cast<RouteAttribute>());
         }
     }
 }
