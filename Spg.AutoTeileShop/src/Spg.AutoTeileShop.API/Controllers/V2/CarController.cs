@@ -142,6 +142,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
                 if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
                 else if((marke.IsEmpty() || marke == null) && baujahr == null) return Ok(_readOnlycarService.GetByModell(model));
+                else if ((model.IsEmpty() || model == null) && baujahr == null) return Ok(_readOnlycarService.GetByMarke(marke));
+                else if (baujahr == null) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
+                else if ((marke.IsEmpty() || marke == null) && baujahr == null && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
+                else
                 return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)));
             }
             catch (Exception e)
