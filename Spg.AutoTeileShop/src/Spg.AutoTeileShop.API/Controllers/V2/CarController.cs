@@ -10,6 +10,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using System.Runtime.CompilerServices;
+using System.Web.WebPages;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {
@@ -134,6 +135,21 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
+        [HttpGet("ByMarkeAndModellAndBaujahrFilter")]
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string marke, [FromQuery] string model, [FromQuery] int baujahr)
+        {
+            try
+            {
+                if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
+                else if((marke.IsEmpty() || marke == null) && baujahr == null) return Ok(_readOnlycarService.GetByModell(model));
+                return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpDelete("{id}")]
         public ActionResult<Car> DeleteCar(int id)
         {
@@ -183,7 +199,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpGet("/test")]
+        [HttpGet("test")]
         public IActionResult GetAllEndpoints()
         {
             var endpoints = _endpointDataSource.Endpoints;
