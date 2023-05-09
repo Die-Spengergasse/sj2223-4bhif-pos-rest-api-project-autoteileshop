@@ -41,7 +41,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         // UpdateCar - Authorization
 
         [HttpGet("")]
-        public ActionResult<List<Car>> GetAllCars()
+        public ActionResult<List<Car>> GetAllCars() // Auslaufend
         {
             return Ok(_readOnlycarService.GetAll());
         }
@@ -51,7 +51,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<Car> GetCarbyId(int id)
+        public ActionResult<Car> GetCarbyId(int id) 
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("byBaujahr")]
-        public ActionResult<List<Car>> GetByBaujahr([FromQuery] int year)
+        public ActionResult<List<Car>> GetByBaujahr([FromQuery] int year)  // Auslaufend
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpGet("ByMarke")]
         [AllowAnonymous]
-        public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)
+        public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)  // Auslaufend
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByModel")]
-        public ActionResult<List<Car>> GetByModell([FromQuery] string model)
+        public ActionResult<List<Car>> GetByModell([FromQuery] string model)  // Auslaufend
         {
             try
             {
@@ -110,7 +110,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModell")]
-        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
+        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model) // Auslaufend
         {
             try
             {
@@ -123,7 +123,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModellAndBaujahr")]
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr) // Auslaufend
         {
             try
             {
@@ -135,7 +135,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpGet("ByMarkeAndModellAndBaujahrFilter")]
+        [HttpGet("ByMarkeAndModellAndBaujahrFilter")] // new
         public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string marke, [FromQuery] string model, [FromQuery] int baujahr)
         {
             try
