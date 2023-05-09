@@ -203,23 +203,21 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpGet("test")]
-        public IActionResult GetAllEndpoints()
+        //[HttpGet("test")]
+        //public IActionResult GetAllEndpoints()
+        //{
+        //    var endpoints = _endpointDataSource.Endpoints;
+        //    var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
+            
+        //    return Ok(routes);
+        //}
+
+        private IEnumerable<Endpoint> getRouteNames()
         {
             var endpoints = _endpointDataSource.Endpoints;
-            var routes2 = endpoints.Where(e => e.DisplayName.Contains("V2") && e.DisplayName.Contains("Cars"));
-            var routes = endpoints.Select(e => e.Metadata.GetMetadata<IRouteNameMetadata>()?.RouteName)
-                                  .Where(r => !string.IsNullOrEmpty(r))
-                                  .Distinct()
-                                  .OrderBy(r => r)
-                                  .ToList();
-            return Ok(routes);
-        }
+            var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
 
-        private void getRouteNames()
-        {
-            var methodes = this.GetType().GetMethods();
-            var routes = methodes.SelectMany(m => m.GetCustomAttributes(typeof(RouteAttribute), true).Cast<RouteAttribute>());
+            return routes;
         }
     }
 }
