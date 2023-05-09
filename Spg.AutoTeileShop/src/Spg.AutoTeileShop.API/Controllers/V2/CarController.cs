@@ -136,15 +136,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModellAndBaujahrFilter")] // new
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string marke, [FromQuery] string model, [FromQuery] int baujahr)
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] int baujahr)
         {
             try
             {
                 if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
-                else if((marke.IsEmpty() || marke == null) && baujahr == null) return Ok(_readOnlycarService.GetByModell(model));
-                else if ((model.IsEmpty() || model == null) && baujahr == null) return Ok(_readOnlycarService.GetByMarke(marke));
-                else if (baujahr == null) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
-                else if ((marke.IsEmpty() || marke == null) && baujahr == null && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
+                else if((marke.IsEmpty() || marke == null) && (baujahr == null || baujahr <= 0)) return Ok(_readOnlycarService.GetByModell(model));
+                else if ((model.IsEmpty() || model == null) && (baujahr == null || baujahr <= 0)) return Ok(_readOnlycarService.GetByMarke(marke));
+                else if (baujahr == null || baujahr <= 0) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
+                else if ((marke.IsEmpty() || marke == null) && (baujahr == null || baujahr <= 0) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
                 else
                 return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)));
             }
