@@ -9,6 +9,7 @@ namespace Spg.AutoTeileShop.Domain.DTO_MVC
 {
     public class LoginDTO
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
+        // ReadOnlySpan<char> pw;
     }
 }
