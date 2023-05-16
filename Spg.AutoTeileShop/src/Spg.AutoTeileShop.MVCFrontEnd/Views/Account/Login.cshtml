@@ -1,11 +1,11 @@
-﻿@using using Spg.AutoTeileShop.Domain.DTO_MVC;
+﻿@using Spg.AutoTeileShop.Domain.DTO_MVC;
 @model LoginDTO
 
 <form method="post">
     <label for="UserName">Username:</label>
 @*    <input type="text" name="UserName" value="@Model.UserName"/>
 *@ 
-    <input type="text" asp-for="@Model.UserName" />
+    <input type="text" asp-for="@Model.Email" />
 
     <button type="submit">Login</button>
 </form>

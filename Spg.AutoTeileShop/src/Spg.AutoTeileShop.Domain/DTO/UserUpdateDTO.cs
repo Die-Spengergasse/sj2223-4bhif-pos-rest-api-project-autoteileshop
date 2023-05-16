@@ -17,6 +17,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
         public string PW { get; set; } = string.Empty;
         public Roles Role { get; set; }
         public bool Confirmed { get; set; }
+        public string? Signature { get; set; }
 
         public UserUpdateDTO()
         {

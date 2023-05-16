@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.MVCFrontEnd.Models;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Web.Helpers;
 
 namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
 {
@@ -20,13 +24,28 @@ namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            string? userInfoJson = HttpContext.Request.Cookies["4bhif_login"];
+            if (string.IsNullOrEmpty(userInfoJson))
+            {
+                return RedirectToAction("Unauthorized", "Home");
+            }
+            UserUpdateDTO userInfo = JsonSerializer.Deserialize<UserUpdateDTO>(HttpContext.Request.Cookies["4bhif_login"]);
+            if (userInfo is not null)
+            {
+                return RedirectToAction("Unauthorized", "Home");
+            }
+            return View("Privacy" , userInfoJson);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Unauthorized()
+        {
+            return View();
         }
     }
 }

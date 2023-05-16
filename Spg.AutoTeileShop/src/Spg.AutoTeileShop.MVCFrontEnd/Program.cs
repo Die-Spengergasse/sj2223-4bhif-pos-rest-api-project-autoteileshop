@@ -4,6 +4,7 @@ using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
 builder.Services.AddTransient<IDeletableProductService, ProductService>();
 builder.Services.AddTransient<IProductRepositroy, ProductRepository>();
+builder.Services.AddTransient<IDbAuthService, DbAuthService>();
 
 
 

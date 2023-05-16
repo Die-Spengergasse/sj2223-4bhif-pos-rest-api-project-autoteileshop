@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.DTO_MVC;
 using Spg.AutoTeileShop.Domain.Interfaces.Authentication;
+using System.Text.Json;
 
 namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
 {
@@ -25,11 +27,13 @@ namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
         {
             (UserUpdateDTO? user, bool b1) = _dbAuthService.CheckCredentials(dto.Email, "testPW");
             if (b1)
-            { 
-                HttpContext.Response.Cookies.Append("4bhif_login", dto.Email);
+            {
+                user.Signature = HashHelpers.CalculateHash($"{user.Email}{user.Role}", "gI976UUn3/m59A==");
+                string json = JsonSerializer.Serialize(user);
+                HttpContext.Response.Cookies.Append("4bhif_login", json);
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            return View("Login", new LoginDTO() { Email = ""});
         }
 
         [HttpGet]
