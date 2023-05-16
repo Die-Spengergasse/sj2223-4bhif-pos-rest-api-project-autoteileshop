@@ -9,6 +9,7 @@ using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Web.WebPages;
 
@@ -214,10 +215,24 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         private IEnumerable<Endpoint> getRouteNames()
         {
-            var endpoints = _endpointDataSource.Endpoints;
+            IEnumerable<Endpoint> endpoints = _endpointDataSource.Endpoints;
+            EndpointMetadataCollection c = endpoints.ElementAt(0).Metadata;
+
             var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
+            List<string> routeNames = new List<string>();
+      
 
             return routes;
         }
+
+        //private List<string> getRoutes(IEnumerable<Endpoint> routes)
+        //{
+        //    List<string> routeNames = new List<string>();
+        //    foreach (var e in routes)
+        //    {
+        //        string routeName = e.RoutePattern.RawText;
+        //    }
+        //    return null;
+        //}
     }
 }
