@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -30,6 +32,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly EndpointDataSource _endpointDataSource;
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
 
+        //requert for HATEOAS, List of Routes and Methodes
         private string controllerName;
         private string apiVersion;
 
@@ -47,14 +50,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
             this.controllerName = GetType().Name;
 
+            //requert for HATEOAS, List of Routes and Methodes
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
             this.apiVersion = apiVersionAttribute?.Versions.FirstOrDefault()?.ToString();
 
-            //.OfType<ApiVersionAttribute>()
-            //.FirstOrDefault()
-            //?.ApiVersion.ToString();
-
-            getRouteNames();
         }
 
 
@@ -244,36 +243,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        //[HttpGet("test")]
-        //public IActionResult GetAllEndpoints()
-        //{
-        //    var endpoints = _endpointDataSource.Endpoints;
-        //    var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
-            
-        //    return Ok(routes);
-        //}
 
-        private IEnumerable<Endpoint> getRouteNames()
-        {
-            IEnumerable<Endpoint> endpoints = _endpointDataSource.Endpoints;
-            EndpointMetadataCollection c = endpoints.ElementAt(0).Metadata;
-
-            var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
-            List<string> routeNames = new List<string>();
-            //routeNames.Add(routes.ElementAtOrDefault(1).RoutePattern);
-
-            return routes;
-        }
-
-        //private List<string> getRoutes(IEnumerable<Endpoint> routes)
-        //{
-        //    List<string> routeNames = new List<string>();
-        //    foreach (var e in routes)
-        //    {
-        //        string routeName = e.RoutePattern.RawText;
-        //    }
-        //    return null;
-        //}
         [HttpGet("endpoints")]
         public string ListAllEndpoints()
         {
@@ -289,32 +259,48 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                     var action = controller != null
                         ? $"{controller.ControllerName}.{controller.ActionName}"
                         : null;
-                    //var controllerMethod = controller != null
-                    //    ? $"{controller.ControllerTypeInfo.FullName}:{controller.MethodInfo.Name}"
-                    //    : null;
+
                     return new
                     {
                         Method = e.Metadata.OfType<HttpMethodMetadata>().FirstOrDefault()?.HttpMethods?[0],
                         Route = $"/{e.RoutePattern.RawText.TrimStart('/')}",
                         Action = action,
-                        //ControllerMethod = controllerMethod
                     };
                 }
             );
             var routen2 = endpoints
                 .Where(e => e.DisplayName.Contains($"{apiVersion.Split(".")[0]}.{controllerName}"))
                 .Select(e => e.RoutePattern);
-
-            List<Microsoft.AspNetCore.Routing.Patterns.RoutePattern> routenForThisController = new List<Microsoft.AspNetCore.Routing.Patterns.RoutePattern>(); ;
-            List<string> routenOutput = new List<string>();
+            
+            List<BuildRoutePattern> buildRoutePatterns = new List<BuildRoutePattern>();
             foreach (Microsoft.AspNetCore.Routing.Patterns.RoutePattern r in routen2)
             {
-                routenOutput.Add(r.RawText.Replace("{version:apiVersion}", apiVersion.Split(".")[0]));
-                routenForThisController.Add(r);
+                Microsoft.AspNetCore.Routing.Patterns.RoutePattern routePattern = r;
+
+                var methode = output.Where(a => a.Route.Equals("/" + r.RawText)).Select(o => o.Method);
+
+                //Filter if more than 1 Methode
+                if (methode.Count() == 2)
+                {
+                    BuildRoutePattern brP = new(r.RawText.Replace("{version:apiVersion}", apiVersion.Split(".")[0]), methode.FirstOrDefault());
+                    if(!buildRoutePatterns.Contains(brP)) buildRoutePatterns.Add(brP);
+                }
+                else
+                {
+                    List<string> methodeHalved = new();
+                    for (int i = 0; i <= (methode.Count() / 2) - 1; i++)
+                    {
+                        BuildRoutePattern brP = new(r.RawText.Replace("{version:apiVersion}", apiVersion.Split(".")[0]), methode.ElementAtOrDefault(i));
+                        if (!buildRoutePatterns.Contains(brP)) buildRoutePatterns.Add(brP);
+                    }
+                }                    
             }
 
-            return JsonSerializer.Serialize(routenOutput);
+            return JsonSerializer.Serialize(buildRoutePatterns);
         }
+
+    
+
 
     }
 }
