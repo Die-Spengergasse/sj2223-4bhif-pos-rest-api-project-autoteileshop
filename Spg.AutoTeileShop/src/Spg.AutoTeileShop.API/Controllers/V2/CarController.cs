@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
+using System.Web.WebPages;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {
@@ -20,12 +24,17 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyCarService _readOnlycarService;
         private readonly IDeletableCarService _deletableCarService;
         private readonly IAddUpdateableCarService _addUpdateableCarService;
+        private readonly EndpointDataSource _endpointDataSource;
 
-        public CarController(IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService, IAddUpdateableCarService addUpdateableCarService)
+
+        public CarController(IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService, IAddUpdateableCarService addUpdateableCarService, EndpointDataSource endpointDataSource)
         {
             _readOnlycarService = readOnlycarService;
             _deletableCarService = deletableCarService;
             _addUpdateableCarService = addUpdateableCarService;
+            _endpointDataSource = endpointDataSource;
+
+            getRouteNames();
         }
 
         // AddCar - Authorization
@@ -33,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         // UpdateCar - Authorization
 
         [HttpGet("")]
-        public ActionResult<List<Car>> GetAllCars()
+        public ActionResult<List<Car>> GetAllCars() // Auslaufend
         {
             return Ok(_readOnlycarService.GetAll());
         }
@@ -43,7 +52,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
-        public ActionResult<Car> GetCarbyId(int id)
+        public ActionResult<Car> GetCarbyId(int id) 
         {
             try
             {
@@ -62,7 +71,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("byBaujahr")]
-        public ActionResult<List<Car>> GetByBaujahr([FromQuery] int year)
+        public ActionResult<List<Car>> GetByBaujahr([FromQuery] int year)  // Auslaufend
         {
             try
             {
@@ -76,7 +85,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpGet("ByMarke")]
         [AllowAnonymous]
-        public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)
+        public ActionResult<List<Car>> GetByMarke([FromQuery] string marke)  // Auslaufend
         {
             try
             {
@@ -89,7 +98,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByModel")]
-        public ActionResult<List<Car>> GetByModell([FromQuery] string model)
+        public ActionResult<List<Car>> GetByModell([FromQuery] string model)  // Auslaufend
         {
             try
             {
@@ -102,7 +111,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModell")]
-        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
+        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model) // Auslaufend
         {
             try
             {
@@ -115,11 +124,30 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModellAndBaujahr")]
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr) // Auslaufend
         {
             try
             {
                 return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(merke, model, new DateTime(baujahr, 1, 1)));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("ByMarkeAndModellAndBaujahrFilter")] // new
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] int baujahr)
+        {
+            try
+            {
+                if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
+                else if((marke.IsEmpty() || marke == null) && (baujahr == null || baujahr <= 0)) return Ok(_readOnlycarService.GetByModell(model));
+                else if ((model.IsEmpty() || model == null) && (baujahr == null || baujahr <= 0)) return Ok(_readOnlycarService.GetByMarke(marke));
+                else if (baujahr == null || baujahr <= 0) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
+                else if ((marke.IsEmpty() || marke == null) && (baujahr == null || baujahr <= 0) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
+                else
+                return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)));
             }
             catch (Exception e)
             {
@@ -175,5 +203,36 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 return BadRequest();
             }
         }
+
+        //[HttpGet("test")]
+        //public IActionResult GetAllEndpoints()
+        //{
+        //    var endpoints = _endpointDataSource.Endpoints;
+        //    var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
+            
+        //    return Ok(routes);
+        //}
+
+        private IEnumerable<Endpoint> getRouteNames()
+        {
+            IEnumerable<Endpoint> endpoints = _endpointDataSource.Endpoints;
+            EndpointMetadataCollection c = endpoints.ElementAt(0).Metadata;
+
+            var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
+            List<string> routeNames = new List<string>();
+      
+
+            return routes;
+        }
+
+        //private List<string> getRoutes(IEnumerable<Endpoint> routes)
+        //{
+        //    List<string> routeNames = new List<string>();
+        //    foreach (var e in routes)
+        //    {
+        //        string routeName = e.RoutePattern.RawText;
+        //    }
+        //    return null;
+        //}
     }
 }

@@ -59,25 +59,6 @@ builder.Services.AddSwaggerGen(s =>
 builder.Services.AddSwaggerGen(s =>
 {
 
-    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
-    {
-        Title = "AutoTeile Shop - v2",
-        Description = "Description about AutoTeileShop",
-        Contact = new OpenApiContact()
-        {
-            Name = "David Ankenbrand and Johannes Scholz",
-            Email = "ank19415@spengergasse.at",
-            Url = new Uri("http://www.spengergasse.at")
-        },
-
-        License = new OpenApiLicense()
-        {
-            Name = "Spenger-Licence",
-            Url = new Uri("http://www.spengergasse.at/licence")
-        },
-        Version = "v2"
-    });
-
     s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
         Title = "AutoTeile Shop - v1",
@@ -95,6 +76,25 @@ builder.Services.AddSwaggerGen(s =>
             Url = new Uri("http://www.spengergasse.at/licence")
         },
         Version = "v1"
+    });
+
+    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "AutoTeile Shop - v2",
+        Description = "Description about AutoTeileShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "David Ankenbrand and Johannes Scholz",
+            Email = "ank19415@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v2"
     });
 
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -160,7 +160,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(x => {
+        x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
+    });
 }
 
 app.UseHttpsRedirection();
@@ -203,7 +206,7 @@ var jsonsConv2 = JsonConvert.SerializeObject(Controllerv2, Formatting.Indented);
 // Version Links
 var versionList = new List<string>
 {
-    https://localhost:7083/api/v1,
+    "https://localhost:7083/api/v1",
     "https://localhost:7083/api/v2"
 };
 
