@@ -245,7 +245,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
         [HttpGet("endpoints")]
-        public string ListAllEndpoints()
+        public List<BuildRoutePattern> ListAllEndpoints()
         {
             var endpoints = _endpointSources
                 .SelectMany(es => es.Endpoints)
@@ -295,8 +295,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                     }
                 }                    
             }
-
-            return JsonSerializer.Serialize(buildRoutePatterns);
+            return buildRoutePatterns;
+            //return JsonSerializer.Serialize(buildRoutePatterns);
         }
 
     
