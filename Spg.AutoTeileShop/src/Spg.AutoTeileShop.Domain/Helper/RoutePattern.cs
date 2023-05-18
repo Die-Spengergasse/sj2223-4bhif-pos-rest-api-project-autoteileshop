@@ -13,7 +13,7 @@ namespace Spg.AutoTeileShop.Domain.Helper
 
         public string Methode { get; set; }
 
-        public BuildRoutePattern( string methode, string routenPatternString)
+        public BuildRoutePattern(string routenPatternString, string methode)
         {
             Methode = methode;
             RoutenPatternString = routenPatternString;

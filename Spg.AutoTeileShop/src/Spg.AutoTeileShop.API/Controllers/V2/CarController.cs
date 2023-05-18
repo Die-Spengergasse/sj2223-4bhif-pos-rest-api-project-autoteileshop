@@ -62,7 +62,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [HttpGet("Old")]
         public ActionResult<List<Car>> GetAllCars() // Auslaufend
         {
-            return Ok(_readOnlycarService.GetAll());
+            var cars = _readOnlycarService.GetAll();
+            HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+            
+            return Ok(hb.buildHateoas(cars.ToList(), cars.Select(c => c.Id).ToList(), _routes));
         }
 
 
@@ -224,4 +227,5 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
     }
+
 }
