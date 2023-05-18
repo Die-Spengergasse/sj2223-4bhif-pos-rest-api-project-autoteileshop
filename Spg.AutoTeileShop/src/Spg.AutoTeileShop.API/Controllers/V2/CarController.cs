@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Web.Helpers;
 using System.Web.WebPages;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
@@ -25,16 +28,53 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IDeletableCarService _deletableCarService;
         private readonly IAddUpdateableCarService _addUpdateableCarService;
         private readonly EndpointDataSource _endpointDataSource;
+        private readonly IEnumerable<EndpointDataSource> _endpointSources;
+
+        private string controllerName;
+        private string apiVersion;
 
 
-        public CarController(IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService, IAddUpdateableCarService addUpdateableCarService, EndpointDataSource endpointDataSource)
+        public CarController
+            (IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
+            IAddUpdateableCarService addUpdateableCarService, EndpointDataSource endpointDataSource,
+            IEnumerable<EndpointDataSource> endpointSources)
         {
             _readOnlycarService = readOnlycarService;
             _deletableCarService = deletableCarService;
             _addUpdateableCarService = addUpdateableCarService;
             _endpointDataSource = endpointDataSource;
+            _endpointSources = endpointSources;
+
+            this.controllerName = GetType().Name;
+
+            var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+            this.apiVersion = apiVersionAttribute?.Versions.FirstOrDefault()?.ToString();
+
+            //.OfType<ApiVersionAttribute>()
+            //.FirstOrDefault()
+            //?.ApiVersion.ToString();
 
             getRouteNames();
+        }
+
+
+        private string GetApiVersion()
+        {
+            var routeAttribute = GetType()
+                .GetCustomAttributes(typeof(RouteAttribute), true)
+                .OfType<RouteAttribute>()
+                .FirstOrDefault();
+
+            if (routeAttribute != null && routeAttribute.Template.Contains("{version:apiVersion}"))
+            {
+                var templateParts = routeAttribute.Template.Split('/');
+                if (templateParts.Length >= 3)
+                {
+                    return templateParts[1].Substring(1); // Ignoriere das 'v'-Präfix
+                }
+            }
+
+            return null; // Fallback-Wert, wenn die API-Version nicht gefunden werden kann
         }
 
         // AddCar - Authorization
@@ -220,7 +260,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
             var routes = endpoints.Where(e => e.DisplayName.Contains("V2.CarController")); // e.DisplayName.Contains("V2") &&
             List<string> routeNames = new List<string>();
-      
+            //routeNames.Add(routes.ElementAtOrDefault(1).RoutePattern);
 
             return routes;
         }
@@ -234,5 +274,47 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         //    }
         //    return null;
         //}
+        [HttpGet("endpoints")]
+        public string ListAllEndpoints()
+        {
+            var endpoints = _endpointSources
+                .SelectMany(es => es.Endpoints)
+                .OfType<RouteEndpoint>();
+            var output = endpoints.Select(
+                e =>
+                {
+                    var controller = e.Metadata
+                        .OfType<ControllerActionDescriptor>()
+                        .FirstOrDefault();
+                    var action = controller != null
+                        ? $"{controller.ControllerName}.{controller.ActionName}"
+                        : null;
+                    //var controllerMethod = controller != null
+                    //    ? $"{controller.ControllerTypeInfo.FullName}:{controller.MethodInfo.Name}"
+                    //    : null;
+                    return new
+                    {
+                        Method = e.Metadata.OfType<HttpMethodMetadata>().FirstOrDefault()?.HttpMethods?[0],
+                        Route = $"/{e.RoutePattern.RawText.TrimStart('/')}",
+                        Action = action,
+                        //ControllerMethod = controllerMethod
+                    };
+                }
+            );
+            var routen2 = endpoints
+                .Where(e => e.DisplayName.Contains($"{apiVersion.Split(".")[0]}.{controllerName}"))
+                .Select(e => e.RoutePattern);
+
+            List<Microsoft.AspNetCore.Routing.Patterns.RoutePattern> routenForThisController = new List<Microsoft.AspNetCore.Routing.Patterns.RoutePattern>(); ;
+            List<string> routenOutput = new List<string>();
+            foreach (Microsoft.AspNetCore.Routing.Patterns.RoutePattern r in routen2)
+            {
+                routenOutput.Add(r.RawText.Replace("{version:apiVersion}", apiVersion.Split(".")[0]));
+                routenForThisController.Add(r);
+            }
+
+            return JsonSerializer.Serialize(routenOutput);
+        }
+
     }
 }
