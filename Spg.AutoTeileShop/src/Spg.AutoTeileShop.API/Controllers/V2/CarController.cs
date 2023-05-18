@@ -55,30 +55,11 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
 
-        private string GetApiVersion()
-        {
-            var routeAttribute = GetType()
-                .GetCustomAttributes(typeof(RouteAttribute), true)
-                .OfType<RouteAttribute>()
-                .FirstOrDefault();
-
-            if (routeAttribute != null && routeAttribute.Template.Contains("{version:apiVersion}"))
-            {
-                var templateParts = routeAttribute.Template.Split('/');
-                if (templateParts.Length >= 3)
-                {
-                    return templateParts[1].Substring(1); // Ignoriere das 'v'-Präfix
-                }
-            }
-
-            return null; // Fallback-Wert, wenn die API-Version nicht gefunden werden kann
-        }
-
         // AddCar - Authorization
         // DeleteCar - Authorization
         // UpdateCar - Authorization
 
-        [HttpGet("")]
+        [HttpGet("Old")]
         public ActionResult<List<Car>> GetAllCars() // Auslaufend
         {
             return Ok(_readOnlycarService.GetAll());
@@ -173,22 +154,24 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpGet("ByMarkeAndModellAndBaujahrFilter")] // new
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] int baujahr)
+        [HttpGet("")] // new
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] string? baujahrS)
         {
             try
             {
-                if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
-                else if((marke.IsEmpty() || marke == null) && (baujahr == null || baujahr <= 0)) return Ok(_readOnlycarService.GetByModell(model));
-                else if ((model.IsEmpty() || model == null) && (baujahr == null || baujahr <= 0)) return Ok(_readOnlycarService.GetByMarke(marke));
-                else if (baujahr == null || baujahr <= 0) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
-                else if ((marke.IsEmpty() || marke == null) && (baujahr == null || baujahr <= 0) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
+                int baujahr = -1;
+                if (baujahrS is not null) baujahr = int.Parse(baujahrS);
+                if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null) && baujahr != -1) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
+                else if((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && model is not null) return Ok(_readOnlycarService.GetByModell(model));
+                else if ((model.IsEmpty() || model == null) && (baujahr == -1|| baujahr <= 0) && marke is not null) return Ok(_readOnlycarService.GetByMarke(marke));
+                else if ((baujahr == -1|| baujahr <= 0) &&  marke is not null && model is not null) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
+                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
                 else
                 return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)));
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
 
