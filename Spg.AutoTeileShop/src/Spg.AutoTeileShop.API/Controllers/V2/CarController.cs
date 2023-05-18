@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 
 using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Helper;
@@ -33,14 +34,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
 
         //requert for HATEOAS, List of Routes and Methodes
-        private string controllerName;
-        private string apiVersion;
+        private List<BuildRoutePattern> _routes;
 
 
         public CarController
             (IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
             IAddUpdateableCarService addUpdateableCarService, EndpointDataSource endpointDataSource,
-            IEnumerable<EndpointDataSource> endpointSources)
+            IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints )
         {
             _readOnlycarService = readOnlycarService;
             _deletableCarService = deletableCarService;
@@ -48,11 +48,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _endpointDataSource = endpointDataSource;
             _endpointSources = endpointSources;
 
-            this.controllerName = GetType().Name;
-
             //requert for HATEOAS, List of Routes and Methodes
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
-            this.apiVersion = apiVersionAttribute?.Versions.FirstOrDefault()?.ToString();
+            _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
 
         }
 
@@ -242,65 +240,5 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 return BadRequest();
             }
         }
-
-
-        [HttpGet("endpoints")]
-        public List<BuildRoutePattern> ListAllEndpoints()
-        {
-            var endpoints = _endpointSources
-                .SelectMany(es => es.Endpoints)
-                .OfType<RouteEndpoint>();
-            var output = endpoints.Select(
-                e =>
-                {
-                    var controller = e.Metadata
-                        .OfType<ControllerActionDescriptor>()
-                        .FirstOrDefault();
-                    var action = controller != null
-                        ? $"{controller.ControllerName}.{controller.ActionName}"
-                        : null;
-
-                    return new
-                    {
-                        Method = e.Metadata.OfType<HttpMethodMetadata>().FirstOrDefault()?.HttpMethods?[0],
-                        Route = $"/{e.RoutePattern.RawText.TrimStart('/')}",
-                        Action = action,
-                    };
-                }
-            );
-            var routen2 = endpoints
-                .Where(e => e.DisplayName.Contains($"{apiVersion.Split(".")[0]}.{controllerName}"))
-                .Select(e => e.RoutePattern);
-            
-            List<BuildRoutePattern> buildRoutePatterns = new List<BuildRoutePattern>();
-            foreach (Microsoft.AspNetCore.Routing.Patterns.RoutePattern r in routen2)
-            {
-                Microsoft.AspNetCore.Routing.Patterns.RoutePattern routePattern = r;
-
-                var methode = output.Where(a => a.Route.Equals("/" + r.RawText)).Select(o => o.Method);
-
-                //Filter if more than 1 Methode
-                if (methode.Count() == 2)
-                {
-                    BuildRoutePattern brP = new(r.RawText.Replace("{version:apiVersion}", apiVersion.Split(".")[0]), methode.FirstOrDefault());
-                    if(!buildRoutePatterns.Contains(brP)) buildRoutePatterns.Add(brP);
-                }
-                else
-                {
-                    List<string> methodeHalved = new();
-                    for (int i = 0; i <= (methode.Count() / 2) - 1; i++)
-                    {
-                        BuildRoutePattern brP = new(r.RawText.Replace("{version:apiVersion}", apiVersion.Split(".")[0]), methode.ElementAtOrDefault(i));
-                        if (!buildRoutePatterns.Contains(brP)) buildRoutePatterns.Add(brP);
-                    }
-                }                    
-            }
-            return buildRoutePatterns;
-            //return JsonSerializer.Serialize(buildRoutePatterns);
-        }
-
-    
-
-
     }
 }

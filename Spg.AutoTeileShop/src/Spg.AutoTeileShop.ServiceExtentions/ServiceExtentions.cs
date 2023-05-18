@@ -15,6 +15,7 @@ using FluentValidation;
 using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.Domain.DTO;
 using FluentValidation.AspNetCore;
+using Spg.AutoTeileShop.Application.Helper;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -70,6 +71,9 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             //Fluent Validation
             serviceCollection.AddFluentValidationAutoValidation();
             serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
+
+            //Get All Routes
+            serviceCollection.AddTransient<ListAllEndpoints>();
 
         }
     }
