@@ -20,6 +20,9 @@ using Spg.AutoTeileShop.Application.Services.CQS.Car;
 using Spg.AutoTeileShop.Domain;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
 using Spg.AutoTeileShop.Domain.Models;
+using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
+using Spg.AutoTeileShop.Repository2;
+using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -76,10 +79,25 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddFluentValidationAutoValidation();
             serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
 
+            //Generic Repositories
+            serviceCollection.AddTransient<IRepositoryBase<Car>, RepositoryBase<Car>>();
+            serviceCollection.AddTransient<IReadOnlyRepositoryBase<Car>, ReadOnlyRepositoryBase<Car>>();
+
 
             //Mediator & CommandHandler
             serviceCollection.AddTransient<IMediator, Mediator>();
+            serviceCollection.AddScoped(serviceProvider =>
+            {
+                // Zugriff auf den IServiceProvider
+                var scopedServiceProvider = serviceProvider.GetRequiredService<IServiceProvider>();
+
+                // Erstellung des Mediators mit dem IServiceProvider
+                return new Mediator(scopedServiceProvider);
+            });
             serviceCollection.AddScoped<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
+            serviceCollection.AddScoped<ICommandHandler<CreateCarCommand, Car>, CreateCarCommandHandler>();
+
+            
         }
     }
 }

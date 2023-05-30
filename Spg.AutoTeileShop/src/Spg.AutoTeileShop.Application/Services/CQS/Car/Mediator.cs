@@ -12,10 +12,16 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car
     public class Mediator : IMediator
     {
         private readonly IServiceProvider _serviceProvider;
+        private Func<object, Mediator> value;
 
         public Mediator(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+        }
+
+        public Mediator(Func<object, Mediator> value)
+        {
+            this.value = value;
         }
 
         public async Task<TResult> ExecuteAsync<TCommand, TResult>(TCommand command)

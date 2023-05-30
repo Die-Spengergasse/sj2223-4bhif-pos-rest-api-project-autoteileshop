@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Commands
 {
-    internal class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, Spg.AutoTeileShop.Domain.Models.Car>
+    public class CreateCarCommandHandler : ICommandHandler<CreateCarCommand, Spg.AutoTeileShop.Domain.Models.Car>
     {
         private readonly RepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repo;
 
