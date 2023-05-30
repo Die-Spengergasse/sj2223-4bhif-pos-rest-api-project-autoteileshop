@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public class ShoppingCart : EntityBase, IFindableByGuid
+    public class ShoppingCart : EntityBase
     {
         public int Id { get; private set; }
         public Guid guid { get;  set; }        

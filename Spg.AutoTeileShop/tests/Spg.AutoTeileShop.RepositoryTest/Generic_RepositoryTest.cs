@@ -80,7 +80,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
 
 
         [Fact]
-        public void Update_Car_SuccesTest()
+        public void Update_Car_SuccesTest() 
         {
             AutoTeileShopContext db = createDB();
             RepositoryBase<Car> repo = new(db);
@@ -175,7 +175,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
 
         // ChatGPT
         [Fact]
-        public async Task GetQueryable_ReturnsExpectedResult()
+        public async Task GetQueryable_Car_ReturnsExpectedResult()
         {
             // Arrange
             AutoTeileShopContext db = createDB();
@@ -213,7 +213,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
         }
 
         [Fact]
-        public void GetById_ReturnsExpectedResult()
+        public void GetById_Car_ReturnsExpectedResult()
         {
             // Arrange
             AutoTeileShopContext db = createDB();
@@ -245,45 +245,37 @@ namespace Spg.AutoTeileShop.RepositoryTest
             Assert.Null(result3);
         }
 
-        [Fact]
-        public void GetSingleOrDefaultByGuid_ReturnsExpectedResult()
-        {
-            // Arrange
-            AutoTeileShopContext db = createDB();
-            ReadOnlyRepositoryBase<Car> repo = new ReadOnlyRepositoryBase<Car>(db);
-            Guid guid1 = Guid.NewGuid();
-            Guid guid2 = Guid.NewGuid();
-            Car car1 = new Car()
-            {
-                Guid = guid1,
-                Baujahr = DateTime.Now,
-                Marke = "BMW",
-                Modell = "M3",
-            };
-            Car car2 = new Car()
-            {
-                Guid = guid2,
-                Baujahr = DateTime.Now,
-                Marke = "Audi",
-                Modell = "A3",
-            };
-            db.Cars.Add(car1);
-            db.Cars.Add(car2);
-            db.SaveChanges();
+        //[Fact]
+        //public void GetSingleOrDefaultByGuid_Car_ReturnsExpectedResult()
+        //{
+        //    // Arrange
+        //    AutoTeileShopContext db = createDB();
+        //    ReadOnlyRepositoryBase<Car> repo = new ReadOnlyRepositoryBase<Car>(db);
+        //    Car car1 = new Car()
+        //    {
+        //        Baujahr = DateTime.Now,
+        //        Marke = "BMW",
+        //        Modell = "M3",
+        //    };
+        //    Car car2 = new Car()
+        //    {
+        //        Baujahr = DateTime.Now,
+        //        Marke = "Audi",
+        //        Modell = "A3",
+        //    };
+        //    db.Cars.Add(car1);
+        //    db.Cars.Add(car2);
+        //    db.SaveChanges();
 
-            // Act
-            Car result1 = repo.GetSingleOrDefaultByGuid<Car>(guid1);
-            Car result2 = repo.GetSingleOrDefaultByGuid<Car>(guid2);
-            Car result3 = repo.GetSingleOrDefaultByGuid<Car>(Guid.NewGuid());
+        //    // Act
+        //    Car result1 = repo.GetSingleOrDefaultByGuid<Car>(Guid.NewGuid());
 
-            // Assert
-            Assert.Equal(car1, result1);
-            Assert.Equal(car2, result2);
-            Assert.Null(result3);
-        }
+        //    // Assert
+        //    Assert.Null(result1);
+        //}
 
         [Fact]
-        public async Task GetAll_ReturnsExpectedResult()
+        public async Task GetAll_Car_ReturnsExpectedResult()
         {
             // Arrange
             AutoTeileShopContext db = createDB();
@@ -320,7 +312,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
         }
 
         [Fact]
-        public async Task Get_ReturnsExpectedResult()
+        public async Task Get_Car_ReturnsExpectedResult()
         {
             // Arrange
             AutoTeileShopContext db = createDB();
@@ -356,5 +348,81 @@ namespace Spg.AutoTeileShop.RepositoryTest
             Assert.Contains(car1, resultList);
             Assert.Contains(car2, resultList);
         }
+
+        [Fact]
+        public async Task GetQueryable_User_ReturnsExpectedResult()
+        {
+            // Arrange
+            AutoTeileShopContext db = createDB();
+            ReadOnlyRepositoryBase<User> repo = new ReadOnlyRepositoryBase<User>(db);
+            User user1 = new User(Guid.NewGuid(), "John", "Doe", "Address 1", "123456789", "john@example.com", "password", Roles.User, true);
+            User user2 = new User(Guid.NewGuid(), "Jane", "Doe", "Address 2", "987654321", "jane@example.com", "password", Roles.Admin, true);
+            db.Users.Add(user1);
+            db.Users.Add(user2);
+            db.SaveChanges();
+
+            // Act
+            IQueryable<User> queryable = await repo.GetQueryable(
+                filter: null,
+                sortOrder: null,
+                includeNavigationProperty: "",
+                skip: null,
+                take: null
+            );
+
+            // Assert
+            List<User> resultList = queryable.ToList();
+            Assert.Equal(2, resultList.Count);
+            Assert.Contains(user1, resultList);
+            Assert.Contains(user2, resultList);
+        }
+
+        [Fact]
+        public void GetById_User_ReturnsExpectedResult()
+        {
+            // Arrange
+            AutoTeileShopContext db = createDB();
+            ReadOnlyRepositoryBase<User> repo = new ReadOnlyRepositoryBase<User>(db);
+            User user1 = new User(Guid.NewGuid(), "John", "Doe", "Address 1", "123456789", "john@example.com", "password", Roles.User, true);
+            User user2 = new User(Guid.NewGuid(), "Jane", "Doe", "Address 2", "987654321", "jane@example.com", "password", Roles.Admin, true);
+            db.Users.Add(user1);
+            db.Users.Add(user2);
+            db.SaveChanges();
+
+            // Act
+            User result1 = repo.GetById(user1.Id);
+            User result2 = repo.GetById(user2.Id);
+            User result3 = repo.GetById(3);
+
+            // Assert
+            Assert.Equal(user1, result1);
+            Assert.Equal(user2, result2);
+            Assert.Null(result3);
+        }
+
+        [Fact]
+        public void GetSingleOrDefaultByGuid_User_ReturnsExpectedResult()
+        {
+            // Arrange
+            AutoTeileShopContext db = createDB();
+            ReadOnlyRepositoryBase<User> repo = new ReadOnlyRepositoryBase<User>(db);
+            User user1 = new User(Guid.NewGuid(), "John", "Doe", "Address 1", "123456789", "john@example.com", "password", Roles.User, true);
+            User user2 = new User(Guid.NewGuid(), "Jane", "Doe", "Address 2", "987654321", "jane@example.com", "password", Roles.Admin, true);
+            db.Users.Add(user1);
+            db.Users.Add(user2);
+            db.SaveChanges();
+
+            // Act
+            User result1 = repo.GetSingleOrDefaultByGuid<User>(user1.Guid);
+            User result2 = repo.GetSingleOrDefaultByGuid<User>(user2.Guid);
+            User result3 = repo.GetSingleOrDefaultByGuid<User>(Guid.NewGuid());
+
+            // Assert
+            Assert.Equal(user1, result1);
+            Assert.Equal(user2, result2);
+            Assert.Null(result3);
+        }
+
+       
     }
 }
