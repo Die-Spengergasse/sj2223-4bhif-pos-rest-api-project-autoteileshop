@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Domain.Exeptions;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Infrastructure;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
         private readonly AutoTeileShopContext _db;
 
@@ -20,13 +21,8 @@ namespace Spg.AutoTeileShop.Repository2
 
         public void Create(TEntity newEntity)
         {
-            // TODO: NULL-Handling
-            if (newEntity is null)
-            {
-                throw new RepositoryCreateException($"{nameof(TEntity)} war NULL!");
-            }
+            if (newEntity is null) throw new RepositoryCreateException($"{nameof(TEntity)} war NULL!");
 
-            // TODO: Exception Handling
             _db.Add(newEntity);
             try
             {
@@ -40,12 +36,13 @@ namespace Spg.AutoTeileShop.Repository2
 
         public void Delete<TKey>(TKey id)
         {
-            throw new NotImplementedException();
+            _db.Set<TEntity>().Remove(_db.Set<TEntity>().Find(id) ?? throw new RepositoryDeleteException("Objekt nicht gefunden."));
+
         }
 
         public void Update<TKey>(TKey id, TEntity newEntity)
         {
-            throw new NotImplementedException();
+            _db.Set<TEntity>().Update(newEntity ?? throw new RepositoryUpdateException("Objekt ist null"));
         }
     }
 }
