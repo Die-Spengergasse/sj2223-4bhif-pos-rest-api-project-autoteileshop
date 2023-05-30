@@ -8,10 +8,10 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces
 {
     public interface IRepositoryBase<TEntity>
     {
-        void Create(TEntity newEntity);
+        Task<TEntity> Create(TEntity newEntity);
 
-        void Update<TKey>(TKey id, TEntity newEntity);
+        Task<TEntity> Update<TKey>(TKey id, TEntity newEntity);
 
-        void Delete<TKey>(TKey id);
+        Task<TEntity> Delete<TKey>(TKey id);
     }
 }

@@ -15,6 +15,11 @@ using FluentValidation;
 using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.Domain.DTO;
 using FluentValidation.AspNetCore;
+using Spg.AutoTeileShop.Domain.Interfaces;
+using Spg.AutoTeileShop.Application.Services.CQS.Car;
+using Spg.AutoTeileShop.Domain;
+using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
+using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -71,6 +76,10 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddFluentValidationAutoValidation();
             serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
 
+
+            //Mediator & CommandHandler
+            serviceCollection.AddTransient<IMediator, Mediator>();
+            serviceCollection.AddScoped<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
         }
     }
 }

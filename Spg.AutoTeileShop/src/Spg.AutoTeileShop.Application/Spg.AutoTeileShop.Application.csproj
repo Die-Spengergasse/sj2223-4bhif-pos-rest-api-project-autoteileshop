@@ -22,12 +22,6 @@
 		<ProjectReference Include="..\Spg.AutoTeileShop.DbExtentions\Spg.AutoTeileShop.DbExtentions.csproj" />
 	</ItemGroup>
 
-
-
-	<ItemGroup>
-	  <Folder Include="Services\CQS\Car\Queries\" />
-	</ItemGroup>
-
 	
 </Project>
 

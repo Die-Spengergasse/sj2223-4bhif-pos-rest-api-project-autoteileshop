@@ -19,14 +19,15 @@ namespace Spg.AutoTeileShop.Repository2
             _db = db;
         }
 
-        public void Create(TEntity newEntity)
+        public async Task<TEntity> Create(TEntity newEntity)
         {
             if (newEntity is null) throw new RepositoryCreateException($"{nameof(TEntity)} war NULL!");
 
-            _db.Add(newEntity);
+            await _db.AddAsync(newEntity);
             try
             {
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
+                return newEntity;
             }
             catch (DbUpdateException ex)
             {
@@ -34,16 +35,30 @@ namespace Spg.AutoTeileShop.Repository2
             }
         }
 
-        public void Delete<TKey>(TKey id)
+        public async Task<TEntity> Delete<TKey>(TKey id)
         {
             _db.Set<TEntity>().Remove(_db.Set<TEntity>().Find(id) ?? throw new RepositoryDeleteException("Objekt nicht gefunden."));
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
+            return _db.Set<TEntity>().Find(id);
         }
 
-        public void Update<TKey>(TKey id, TEntity newEntity)
+        public async Task<TEntity> Update<TKey>(TKey id, TEntity newEntity)
         {
-            _db.Set<TEntity>().Update(newEntity ?? throw new RepositoryUpdateException("Objekt ist null"));
-            _db.SaveChanges();
+            if (newEntity == null)
+            {
+                throw new RepositoryUpdateException("Objekt ist null");
+            }
+
+            var existingEntity = await _db.Set<TEntity>().FindAsync(id);
+
+            if (existingEntity != null)
+            {
+                _db.Entry(existingEntity).CurrentValues.SetValues(newEntity);
+                await _db.SaveChangesAsync();
+            }
+
+            return existingEntity;
         }
+
     }
 }
