@@ -1,4 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public enum Roles 
     { User, Admin, Salesman }
-    public class User 
+    public class User : EntityBase, IFindableByGuid
     {
         [Key]
         public int Id { get; private set; }

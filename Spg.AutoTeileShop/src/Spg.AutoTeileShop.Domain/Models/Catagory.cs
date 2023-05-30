@@ -1,4 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +16,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         Auspuff, Bremsen, Getriebe, Kupplung, Motor, Reifen, Räder, Scheibenwischer, Scheinwerfer, Sitze, Stoßdämpfer, Elektrik, Verkleidung
     }
     
-    public class Catagory
+    public class Catagory : EntityBase, IFindableByGuid
     {
         public int Id { get; private set; }
         public Catagory? TopCatagory{ get; set; }

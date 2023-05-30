@@ -37,12 +37,13 @@ namespace Spg.AutoTeileShop.Repository2
         public void Delete<TKey>(TKey id)
         {
             _db.Set<TEntity>().Remove(_db.Set<TEntity>().Find(id) ?? throw new RepositoryDeleteException("Objekt nicht gefunden."));
-
+            _db.SaveChanges();
         }
 
         public void Update<TKey>(TKey id, TEntity newEntity)
         {
             _db.Set<TEntity>().Update(newEntity ?? throw new RepositoryUpdateException("Objekt ist null"));
+            _db.SaveChanges();
         }
     }
 }

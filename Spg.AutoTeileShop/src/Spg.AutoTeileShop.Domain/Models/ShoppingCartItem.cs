@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public class ShoppingCartItem
+    public class ShoppingCartItem : EntityBase, IFindableByGuid
     {
         public int Id { get; private set; }
         public Guid guid { get;  set; }
