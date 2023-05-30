@@ -21,7 +21,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             AutoTeileShopContext db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-            db.Seed();
+            //db.Seed();
             return db;
         }
 
