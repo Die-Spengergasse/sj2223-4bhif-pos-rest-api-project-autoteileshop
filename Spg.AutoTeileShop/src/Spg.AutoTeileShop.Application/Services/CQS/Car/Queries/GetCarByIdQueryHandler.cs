@@ -24,7 +24,7 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
         public async Task<Spg.AutoTeileShop.Domain.Models.Car> HandleAsync(GetCarByIdQuery request)
         {
             return await Task.Run(() => _repository.GetById<int>(request.Id))
-                ?? throw new Exception("Customer konnte nicht gefunden werden!");
+                ?? throw new Exception("Car konnte nicht gefunden werden!");
         }
     }
 }
