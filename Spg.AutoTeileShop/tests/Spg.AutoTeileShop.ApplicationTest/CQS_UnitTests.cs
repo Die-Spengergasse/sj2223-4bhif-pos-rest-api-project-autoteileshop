@@ -25,8 +25,8 @@ namespace Spg.AutoTeileShop.ApplicationTest
         {
             DbContextOptions options = new DbContextOptionsBuilder()
                   //.UseSqlite("Data Source=AutoTeileShopTest.db")
-                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
-                  .UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
+                  .UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  //.UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -72,6 +72,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             var serviceProvider = new TestServiceProvider();
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
+
             //Act
             Car car = new()
             {
@@ -83,14 +84,19 @@ namespace Spg.AutoTeileShop.ApplicationTest
             CreateCarCommand commandCreate = new CreateCarCommand(car);
             await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
 
-            GetCarByIdQuery commandReadById = new GetCarByIdQuery(0);
-            var result = await mediator.ExecuteAsync<GetCarByIdQuery, Car>(commandReadById);
-
-            //Assert
-
+            GetCarByIdQuery queryReadById = new GetCarByIdQuery(1);
+            Car result = await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById);
+            //commandReadById = new GetCarByIdQuery(0);
+            //result = await mediator.QueryAsync<GetCarByIdQuery, Car>(commandReadById);
             Assert.NotNull(result);
             Assert.Equal(car, result);
             Assert.Single(db.Cars.ToList());
+    
+            //Assert
+
+            //Assert.NotNull(result);
+            //Assert.Equal(car, result);
+            //Assert.Single(db.Cars.ToList());
         }
     }
 }
