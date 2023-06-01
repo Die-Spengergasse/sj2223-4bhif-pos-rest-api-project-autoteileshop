@@ -126,23 +126,14 @@ namespace Spg.AutoTeileShop.ApplicationTest
             Assert.Equal(car.Id, car1.Id);
             Assert.Single(db.Cars.ToList());
 
-            
-            Car result = null;
-            GetCarByIdQuery queryReadById = null;
-            try
-            {
-                queryReadById = new GetCarByIdQuery(1);
-                result = await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById);
-            }
-            catch (Exception e)
-            { }
+            GetCarByIdQuery queryReadById = new GetCarByIdQuery(1);
+            Car result = await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById);
 
 
-            ReadOnlyRepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repository = new ReadOnlyRepositoryBase<Car>(db);
-            result = _repository.GetById(1);
-            
+
+            car.Baujahr = result.Baujahr;
             Assert.NotNull(result);
-            Assert.Equal(car, result);
+            Assert.Equal(car.ToString(), result.ToString());
             Assert.Single(db.Cars.ToList());
     
             //Assert

@@ -59,6 +59,21 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
+            //db.Database.EnsureDeleted();
+            //db.Database.EnsureCreated();
+            //db.Seed();
+            return db;
+        }
+
+        private AutoTeileShopContext createDB_Del_Create_DB()
+        {
+            DbContextOptions options = new DbContextOptionsBuilder()
+                  //.UseSqlite("Data Source=AutoTeileShopTest.db")
+                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  .UseSqlite(ReadLineWithQuestionMark())     //Home PC       
+                .Options;
+
+            AutoTeileShopContext db = new AutoTeileShopContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
             //db.Seed();
