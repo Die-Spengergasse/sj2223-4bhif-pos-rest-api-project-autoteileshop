@@ -70,7 +70,9 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             //Fluent Validation
             serviceCollection.AddFluentValidationAutoValidation();
             serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
-
+            serviceCollection.AddTransient<IValidator<CarDTO>, CarDtoValidator>();
+            serviceCollection.AddTransient<IValidator<CatagoryPostDTO>, PostCatagoryDtoValidator>();
+                
         }
     }
 }
