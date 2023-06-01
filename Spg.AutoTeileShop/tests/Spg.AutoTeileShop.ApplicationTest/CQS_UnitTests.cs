@@ -276,7 +276,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             Assert.Equal(result.ToList().ToString(), db.Cars.ToList().ToString());
 
         }
-        // ChatGPT:
+        //IDK
         [Fact]
         public async Task CQS_GetCarsByMarkeAndModellAndBaujahr_TestAsync()
         {
@@ -381,11 +381,47 @@ namespace Spg.AutoTeileShop.ApplicationTest
 
             var query = new GetCarsByBaujahrQuery(baujahr);
 
+            Car car = new Car()
+            {
+                Marke = "BMW",
+                Modell = "M1",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car2 = new Car()
+            {
+                Marke = "Audi",
+                Modell = "A3 Sport",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car3 = new Car()
+            {
+                Marke = "test",
+                Modell = "test",
+                Baujahr = DateTime.Now.AddDays(50)
+
+            };
+
+            db.Cars.Add(car);
+            db.Cars.Add(car2);
+            db.Cars.Add(car3);
+
+            db.SaveChanges();
+
+
             // Act
             var result = await mediator.QueryAsync<GetCarsByBaujahrQuery, IEnumerable<Car>>(query);
 
             // Assert
-            // Fügen Sie hier Ihre Assertions hinzu, um das erwartete Ergebnis mit dem tatsächlichen Ergebnis zu vergleichen
+            car.Baujahr = DateTime.Today;
+            result.First().Baujahr = DateTime.Today;
+            
+            Assert.Equal(car.ToString(), result.First().ToString());
+            Assert.Equal(car2.ToString(), result.First().ToString());
+            Assert.False(result.Contains(car3));
         }
 
         [Fact]
@@ -399,12 +435,46 @@ namespace Spg.AutoTeileShop.ApplicationTest
             var marke = "BMW";
 
             var query = new GetCarsByMarkeQuery(marke);
+            
+            Car car = new Car()
+            {
+                Marke = "BMW",
+                Modell = "M1",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car2 = new Car()
+            {
+                Marke = "BMW",
+                Modell = "A3 Sport",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car3 = new Car()
+            {
+                Marke = "test",
+                Modell = "test",
+                Baujahr = DateTime.Now.AddDays(50)
+
+            };
+
+            db.Cars.Add(car);
+            db.Cars.Add(car2);
+            db.Cars.Add(car3);
+
+            db.SaveChanges();
+
 
             // Act
             var result = await mediator.QueryAsync<GetCarsByMarkeQuery, IEnumerable<Car>>(query);
 
             // Assert
-            // Fügen Sie hier Ihre Assertions hinzu, um das erwartete Ergebnis mit dem tatsächlichen Ergebnis zu vergleichen
+
+            Assert.Equal(car.ToString(), result.First().ToString());
+            Assert.Equal(car2.ToString(), result.First().ToString());
+            Assert.False(result.Contains(car3));
         }
     }
 }
