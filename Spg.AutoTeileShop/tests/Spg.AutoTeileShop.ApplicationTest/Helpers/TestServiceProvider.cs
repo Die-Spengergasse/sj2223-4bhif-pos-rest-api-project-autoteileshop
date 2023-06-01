@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Spg.AutoTeileShop.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Domain.Interfaces;
-using Spg.AutoTeileShop.Application.Services.CQS.Car;
+using Spg.AutoTeileShop.Application.Services.CQS;
 
 namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 {
@@ -32,6 +32,19 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             else if (serviceType == typeof(IQueryHandler<GetCarByIdQuery, Car>))
             {
                 return new GetCarByIdQueryHandler(readOnlyRepo);
+            }
+            //GetAllCarsQueryHandler
+            else if (serviceType == typeof(ICommandHandler<DeleteCarCommand, int>))
+            {
+                return new DeleteCarCommandHandler(repo);
+            }
+            else if (serviceType == typeof(ICommandHandler<UpdateCarCommand, Car>))
+            {
+                return new UpdateCarCommandHandler(repo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetAllCarsQuery, IQueryable<Spg.AutoTeileShop.Domain.Models.Car>>))
+            {
+                return new GetAllCarsQueryHandler(readOnlyRepo);
             }
             else if (serviceType == typeof(IReadOnlyRepositoryBase<Car>))
             {
