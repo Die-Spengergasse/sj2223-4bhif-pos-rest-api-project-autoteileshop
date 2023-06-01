@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spg.AutoTeileShop.Application.Services.CQS.Car
+namespace Spg.AutoTeileShop.Application.Services.CQS
 {
     public class Mediator : IMediator
     {
