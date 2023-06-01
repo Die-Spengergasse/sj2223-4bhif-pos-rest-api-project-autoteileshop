@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Helper
@@ -11,7 +12,9 @@ namespace Spg.AutoTeileShop.Application.Helper
     {
         public string Href { get; set; } = "https://localhost:7083/";
 
-        public List<HateoasObject<TEntity>> buildHateoas(List<TEntity> values, List<Tid> identifyer, List<BuildRoutePattern> routes)
+//        public List<HateoasObject<TEntity>> buildHateoas(List<TEntity> values, List<Tid> identifyer, List<BuildRoutePattern> routes)
+        public string buildHateoas(List<TEntity> values, List<Tid> identifyer, List<BuildRoutePattern> routes)
+
         {
             List<HateoasObject<TEntity>> objects = new();
             List<BuildRoutePattern> filtertGuid;
@@ -29,7 +32,7 @@ namespace Spg.AutoTeileShop.Application.Helper
                     }
                     objects.Add(new HateoasObject<TEntity>(values.ElementAt(i), urls));
                 }
-                return objects;
+                return JsonSerializer.Serialize(objects);
             }
 
             // for int Ids
@@ -47,7 +50,8 @@ namespace Spg.AutoTeileShop.Application.Helper
                     }
                     objects.Add(new HateoasObject<TEntity>(values.ElementAt(i), urls));
                 }
-                return objects;
+                string s = JsonSerializer.Serialize(objects);
+                return s;
             }
             return null;
         }
