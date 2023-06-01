@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Spg.AutoTeileShop.Domain;
+using Spg.AutoTeileShop.Domain.Exeptions;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System;
@@ -24,7 +25,7 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
         public async Task<Spg.AutoTeileShop.Domain.Models.Car> HandleAsync(GetCarByIdQuery request)
         {
             Spg.AutoTeileShop.Domain.Models.Car c = await Task.Run(() => _repository.GetById<int>(request.Id))
-                ?? throw new Exception("Car konnte nicht gefunden werden!");
+                ?? throw new CarNotFoundException("Car konnte nicht gefunden werden!");
             return c;
         }
     }

@@ -5,6 +5,7 @@ using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
 using Spg.AutoTeileShop.ApplicationTest.Helpers;
 using Spg.AutoTeileShop.Domain;
+using Spg.AutoTeileShop.Domain.Exeptions;
 using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
@@ -109,38 +110,61 @@ namespace Spg.AutoTeileShop.ApplicationTest
             AutoTeileShopContext db = createDB();
             var serviceProvider = new TestServiceProvider();
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
-
-
-            //Act
             Car car = new()
             {
                 Baujahr = DateTime.Now,
                 Marke = "BMW",
                 Modell = "M3"
             };
-
             CreateCarCommand commandCreate = new CreateCarCommand(car);
             var car1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
 
-            
+
             Assert.Equal(car.Id, car1.Id);
             Assert.Single(db.Cars.ToList());
+
+            //Act
+
+
 
             GetCarByIdQuery queryReadById = new GetCarByIdQuery(1);
             Car result = await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById);
 
-
-
+            
+            //Assert
+            
             car.Baujahr = result.Baujahr;
             Assert.NotNull(result);
             Assert.Equal(car.ToString(), result.ToString());
             Assert.Single(db.Cars.ToList());
     
-            //Assert
+        }
 
-            //Assert.NotNull(result);
-            //Assert.Equal(car, result);
-            //Assert.Single(db.Cars.ToList());
+        [Fact]
+        public async Task CQS_GetById_Car__throw_CarNotFoundException_TestAsync()
+        {
+            //Arrange
+            //Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+            Car car = new()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+            CreateCarCommand commandCreate = new CreateCarCommand(car);
+            var car1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
+
+
+            Assert.Equal(car.Id, car1.Id);
+            Assert.Single(db.Cars.ToList());
+
+            //Act - Assert
+
+            GetCarByIdQuery queryReadById = new GetCarByIdQuery(2);
+            Assert.ThrowsAsync<CarNotFoundException>(async () => await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById));
         }
     }
 }
