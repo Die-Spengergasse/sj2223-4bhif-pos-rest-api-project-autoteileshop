@@ -39,5 +39,12 @@ namespace Spg.AutoTeileShop.Repository2.CustomGenericRepositories
             return _db.Cars.Where(c => c.Marke == marke && c.Modell == model && c.Baujahr.Year == baujahr.Year).ToList();
         }
 
+        public IEnumerable<Car> GetByFitProduct(Product product)
+        {
+            var cars = GetAll();
+            var result = cars.Result.Where(c => c.FitsForProducts.Contains(product));
+            return (IEnumerable<Car>)result;
+        }
+
     }
 }
