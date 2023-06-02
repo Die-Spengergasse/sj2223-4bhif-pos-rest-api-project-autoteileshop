@@ -31,7 +31,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyCarService _readOnlycarService;
         private readonly IDeletableCarService _deletableCarService;
         private readonly IAddUpdateableCarService _addUpdateableCarService;
-        //private readonly EndpointDataSource _endpointDataSource;
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
 
         //requert for HATEOAS, List of Routes and Methodes
@@ -40,13 +39,12 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         public CarController
             (IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
-            IAddUpdateableCarService addUpdateableCarService, EndpointDataSource endpointDataSource,
+            IAddUpdateableCarService addUpdateableCarService,
             IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints )
         {
             _readOnlycarService = readOnlycarService;
             _deletableCarService = deletableCarService;
             _addUpdateableCarService = addUpdateableCarService;
-           // _endpointDataSource = endpointDataSource;
             _endpointSources = endpointSources;
 
             //requert for HATEOAS, List of Routes and Methodes
