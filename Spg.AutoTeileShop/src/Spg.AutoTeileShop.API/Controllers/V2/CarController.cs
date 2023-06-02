@@ -196,7 +196,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        public ActionResult<Car> AddCar(CarDTO carDTO)
+        public ActionResult<Car> AddCar([FromQuery] CarDTOPost carDTO)
         {
             try
             {
@@ -211,13 +211,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpPut("")]
+        [HttpPut("{id}")]
         [Produces("application/json")]
-        public ActionResult<Car> UpdateCar(CarDTO carDTO)
+        public ActionResult<Car> UpdateCar(int id, [FromQuery] CarDTOUpdate carDTO)
         {
+            if (id <= 0) return BadRequest("Id must be greater than 0");
+            if (_readOnlycarService.GetById(id) == null) return NotFound("Car not found");
             try
             {
-                Car car = new Car(carDTO);
+                Car car = new Car(id, carDTO);
                 _addUpdateableCarService.Update(car);
                 return Ok(car);
             }

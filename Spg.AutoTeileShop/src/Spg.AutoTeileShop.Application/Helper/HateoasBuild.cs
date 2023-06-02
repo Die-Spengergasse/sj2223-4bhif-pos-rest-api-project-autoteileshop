@@ -46,12 +46,22 @@ namespace Spg.AutoTeileShop.Application.Helper
                     List<string> urls = new();
                     foreach (BuildRoutePattern route in filtertId)
                     {
-                        urls.Add(Href + route.RoutenPatternString.Replace("{id}", identifyer.ElementAt(i).ToString()));
+                        urls.Add(route.Methode+  ": " + Href + route.RoutenPatternString.Replace("{id}", identifyer.ElementAt(i).ToString()));
                     }
                     objects.Add(new HateoasObject<TEntity>(values.ElementAt(i), urls));
                 }
-                string s = JsonSerializer.Serialize(objects);
-                return s;
+                //Umgehen des Null Bugs
+                string output = "";
+                foreach(HateoasObject<TEntity> o in objects)
+                {
+                    output = output + JsonSerializer.Serialize(o) + Environment.NewLine;
+                    foreach (string s in o.urls)
+                    {
+                        output = output + s + Environment.NewLine;
+                    }
+                }
+                //string s = JsonSerializer.Serialize(objects);
+                return output;
             }
             return null;
         }
