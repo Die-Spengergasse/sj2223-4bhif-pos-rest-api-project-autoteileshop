@@ -50,6 +50,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
             //requert for HATEOAS, List of Routes and Methodes
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+            
             _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
 
         }
