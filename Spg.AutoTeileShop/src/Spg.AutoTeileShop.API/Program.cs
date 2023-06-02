@@ -65,25 +65,8 @@ builder.Services.AddVersionedApiExplorer(
 
 builder.Services.AddSwaggerGen(s =>
 {
-    
-    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
-    {
-        Title = "AutoTeile Shop - v2",
-        Description = "Description about AutoTeileShop",
-        Contact = new OpenApiContact()
-        {
-            Name = "David Ankenbrand and Johannes Scholz",
-            Email = "ank19415@spengergasse.at",
-            Url = new Uri("http://www.spengergasse.at")
-        },
 
-        License = new OpenApiLicense()
-        {
-            Name = "Spenger-Licence",
-            Url = new Uri("http://www.spengergasse.at/licence")
-        },
-        Version = "v2"
-    });
+
 
     s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
@@ -104,6 +87,25 @@ builder.Services.AddSwaggerGen(s =>
         Version = "v1"
     });
 
+
+    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "AutoTeile Shop - v2",
+        Description = "Description about AutoTeileShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "David Ankenbrand and Johannes Scholz",
+            Email = "ank19415@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v2"
+    });
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -157,8 +159,10 @@ app.UseAuthorization();
 app.UseCors("myAllowSpecificOrigins");
 
 app.MapControllers();
-
+app.MapGet("/api", () =>
+{
+    return "Hello world";
+}
+);
 app.Run();
-
-
 
