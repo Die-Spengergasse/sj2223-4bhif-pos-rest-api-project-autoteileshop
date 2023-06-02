@@ -20,7 +20,7 @@ namespace Spg.AutoTeileShop.Application.Helper
             //for Guids
             if (typeof(Tid) == typeof(Guid))
             {
-                filtertGuid = (List<BuildRoutePattern>)routes.Where(r => r.RoutenPatternString.Contains("{guid}"));
+                filtertGuid = (List<BuildRoutePattern>)routes.Where(r => r.RoutenPatternString.Contains("{guid}")).ToList();
                 //foreach (TEntity entity in values)
                 for(int i = 0; i< values.Count; i++)
                 {
