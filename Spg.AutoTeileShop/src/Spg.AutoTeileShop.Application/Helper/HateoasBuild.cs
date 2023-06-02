@@ -76,5 +76,59 @@ namespace Spg.AutoTeileShop.Application.Helper
             return null;
         }
 
+        public string buildHateoas(TEntity value, List<BuildRoutePattern> routes, Tid idParameter)
+        {
+            List<HateoasObject<TEntity>> objects = new List<HateoasObject<TEntity>>();
+            List<BuildRoutePattern> filteredRoutes;
+
+            // Überprüfen, ob die ID ein Guid ist
+            if (typeof(Tid) == typeof(Guid))
+            {
+                filteredRoutes = routes.Where(r => r.RoutenPatternString.Contains("{guid}")).ToList();
+                List<string> urls = new List<string>();
+
+                foreach (BuildRoutePattern route in filteredRoutes)
+                {
+                    string url = route.Methode + ": " + Href + route.RoutenPatternString.Replace("{guid}", idParameter.ToString());
+                    urls.Add(url);
+                }
+
+                objects.Add(new HateoasObject<TEntity>(value, urls));
+            }
+            // Überprüfen, ob die ID ein int ist
+            else if (typeof(Tid) == typeof(int))
+            {
+                filteredRoutes = routes.Where(r => r.RoutenPatternString.Contains("{id}")).ToList();
+                List<string> urls = new List<string>();
+
+                foreach (BuildRoutePattern route in filteredRoutes)
+                {
+                    string url = route.Methode + ": " + Href + route.RoutenPatternString.Replace("{id}", idParameter.ToString());
+                    urls.Add(url);
+                }
+
+                objects.Add(new HateoasObject<TEntity>(value, urls));
+            }
+
+            // Umgehen des Null-Bugs
+            StringBuilder outputBuilder = new StringBuilder();
+
+            foreach (HateoasObject<TEntity> o in objects)
+            {
+                outputBuilder.AppendLine(JsonSerializer.Serialize(o));
+
+                foreach (string s in o.urls)
+                {
+                    outputBuilder.AppendLine(s);
+                }
+            }
+
+            return outputBuilder.ToString();
+        }
+
+
+
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Bogus;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -83,7 +84,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 {
                     return NotFound();
                 }
-                return Ok(car);
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+                return Ok(hb.buildHateoas(car ,_routes, car.Id));
+                //return Ok(car);
             }
             catch (Exception ex)
             {
