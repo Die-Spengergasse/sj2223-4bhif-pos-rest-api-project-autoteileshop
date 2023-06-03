@@ -16,7 +16,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         Auspuff, Bremsen, Getriebe, Kupplung, Motor, Reifen, Räder, Scheibenwischer, Scheinwerfer, Sitze, Stoßdämpfer, Elektrik, Verkleidung
     }
     
-    public class Catagory : EntityBase
+    public class Catagory
     {
         public int Id { get; private set; }
         public Catagory? TopCatagory{ get; set; }

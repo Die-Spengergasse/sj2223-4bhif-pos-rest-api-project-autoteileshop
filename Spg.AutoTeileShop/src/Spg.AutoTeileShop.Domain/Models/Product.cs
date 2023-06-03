@@ -12,7 +12,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public enum QualityType { SehrGut, Gut, Mittel, Schlecht, SehrSchlecht }
 
-    public class Product : EntityBase, IFindableByGuid
+    public class Product
     {
         public int Id { get; private set; }
         public Guid Guid { get;  set; }
@@ -98,6 +98,25 @@ namespace Spg.AutoTeileShop.Domain.Models
                 if (entity.FitsForProducts.Contains(this))
                     entity.RemoveFitsForProducts(this);
             }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Product product &&
+                   Id == product.Id &&
+                   Guid.Equals(product.Guid) &&
+                   Name == product.Name &&
+                   Price == product.Price &&
+                   EqualityComparer<Catagory?>.Default.Equals(catagory, product.catagory) &&
+                   //Description == product.Description &&
+                   Image == product.Image &&
+                   Ean13 == product.Ean13 &&
+                   Quality == product.Quality &&
+                   Stock == product.Stock &&
+                   Discount == product.Discount &&
+                   receive == product.receive;
+                   //EqualityComparer<List<Car>>.Default.Equals(_productFitsForCar, product._productFitsForCar) &&
+                   //EqualityComparer<IReadOnlyList<Car>>.Default.Equals(ProductFitsForCar, product.ProductFitsForCar);
         }
     }
 }

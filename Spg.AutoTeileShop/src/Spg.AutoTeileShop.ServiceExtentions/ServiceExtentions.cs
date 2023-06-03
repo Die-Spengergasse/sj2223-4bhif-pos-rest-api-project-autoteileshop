@@ -23,6 +23,7 @@ using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
 using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Application.Services.CQS;
+using Spg.AutoTeileShop.Repository2.CustomGenericRepositories;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -83,10 +84,11 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IRepositoryBase<Car>, RepositoryBase<Car>>();
             serviceCollection.AddTransient<IReadOnlyRepositoryBase<Car>, ReadOnlyRepositoryBase<Car>>();
 
+            serviceCollection.AddTransient<IReadOnlyRepositoryBase<Car>, CarRepositoryCustom>();
 
             //Mediator & CommandHandler
             serviceCollection.AddTransient<IMediator, Mediator>();
-            serviceCollection.AddScoped(serviceProvider =>
+            serviceCollection.AddTransient(serviceProvider =>
             {
                 // Zugriff auf den IServiceProvider
                 var scopedServiceProvider = serviceProvider.GetRequiredService<IServiceProvider>();
@@ -94,10 +96,25 @@ namespace Spg.AutoTeileShop.ServiceExtentions
                 // Erstellung des Mediators mit dem IServiceProvider
                 return new Mediator(scopedServiceProvider);
             });
-            serviceCollection.AddScoped<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
-            serviceCollection.AddScoped<ICommandHandler<CreateCarCommand, Car>, CreateCarCommandHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
+            serviceCollection.AddTransient<ICommandHandler<CreateCarCommand, Car>, CreateCarCommandHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetAllCarsQuery, IQueryable<Car>>, GetAllCarsQueryHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>>, GetCarsByBaujahrQueryHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>>, GetCarsByMarkeQueryHandler>();
 
-            
+            //serviceCollection.AddTransient<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
+            //serviceCollection.AddTransient<ICommandHandler<CreateCarCommand, Car>, CreateCarCommandHandler>();
+            //serviceCollection.AddTransient<IQueryHandler<GetAllCarsQuery, IQueryable<Car>>, GetAllCarsQueryHandler>();
+            //serviceCollection.AddTransient<IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>>, GetCarsByBaujahrQueryHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarsByModellQuery, IEnumerable<Car>>, GetCarsByModellQueryHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>>, GetCarsByMarkeAndModellQueryHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>>, GetCarsByMarkeAndModellAndBaujahrQueryHandler>();
+            serviceCollection.AddTransient<IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>>, GetCarsByFitProductQueryHandler>();
+
+
+
+
+
         }
     }
 }

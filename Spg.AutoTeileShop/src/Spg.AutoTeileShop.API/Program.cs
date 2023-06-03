@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Application.Validators;
@@ -145,6 +146,17 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+string jwtSecret = builder.Configuration["AppSettings:Secret"] ?? AuthService.GenerateRandom(1024);
+
+//Authorizatio
+builder.Services.AddJwtAuthentication(jwtSecret, setDefault: false);
+builder.Services.AddCookieAuthentication(setDefault: true);
+
+//AuthService
+builder.Services.AddTransient<AuthService>(services =>
+new AuthService(jwtSecret)
+);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -155,6 +167,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseCors("myAllowSpecificOrigins");
 

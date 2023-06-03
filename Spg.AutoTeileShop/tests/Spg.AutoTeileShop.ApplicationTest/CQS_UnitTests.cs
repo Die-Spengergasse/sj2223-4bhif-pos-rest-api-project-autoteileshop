@@ -76,6 +76,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
 
             return null;
         }
+        
         [Fact]
         public async Task CQS_Create_Car_TestAsync()
         {

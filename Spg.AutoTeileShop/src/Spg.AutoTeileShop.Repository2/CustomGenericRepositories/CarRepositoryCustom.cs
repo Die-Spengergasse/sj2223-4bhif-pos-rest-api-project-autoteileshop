@@ -1,4 +1,6 @@
-﻿using Spg.AutoTeileShop.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
+using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.CustomGenericRepositories
 {
-    public class CarRepositoryCustom : ReadOnlyRepositoryBase<Car>
+    public class CarRepositoryCustom
     {
         private AutoTeileShopContext _db { get; set; }
-        public CarRepositoryCustom(AutoTeileShopContext context) : base(context)
+        public CarRepositoryCustom(AutoTeileShopContext context)
         {
             _db = context;
         }
@@ -41,9 +43,9 @@ namespace Spg.AutoTeileShop.Repository2.CustomGenericRepositories
 
         public IEnumerable<Car> GetByFitProduct(Product product)
         {
-            var cars = GetAll();
-            var result = cars.Result.Where(c => c.FitsForProducts.Contains(product));
-            return (IEnumerable<Car>)result;
+            var cars = _db.Cars.Include(c => c.FitsForProducts).ToList();
+            var result = cars.Where(c => c.FitsForProducts.Contains(product)).ToList();
+            return result;
         }
 
     }

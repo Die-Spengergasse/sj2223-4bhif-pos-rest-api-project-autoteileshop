@@ -12,7 +12,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public enum Roles 
     { User, Admin, Salesman }
-    public class User : EntityBase, IFindableByGuid
+    public class User : IFindableByGuid
     {
         [Key]
         public int Id { get; private set; }

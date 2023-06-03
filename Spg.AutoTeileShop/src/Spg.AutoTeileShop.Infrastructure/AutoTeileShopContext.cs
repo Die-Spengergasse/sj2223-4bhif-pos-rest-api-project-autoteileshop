@@ -33,8 +33,9 @@ namespace Spg.AutoTeileShop.Infrastructure
         {
             if (!options.IsConfigured)
                 //options.UseSqlite("Data Source=\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\db\\AutoTeileShop.db"); //Home PC
-                options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
-                                                                                                                    //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
+                //options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
+                options.UseSqlite(ReadLineWithQuestionMark());
+            //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
 
 
         }
@@ -201,7 +202,45 @@ namespace Spg.AutoTeileShop.Infrastructure
             }
         }
 
+        public static string ReadLineWithQuestionMark()
+        {
+            string relativeFilePath = "DataSource.txt";
+            string currentDirectory = Environment.CurrentDirectory;
+            int endIndex;
+            string extractedPath;
+            string filePath;
+            if (currentDirectory.Contains($"\\src\\"))
+            {
+                endIndex = currentDirectory.IndexOf($"\\src\\") + $"\\src\\".Length;
+                extractedPath = currentDirectory.Substring(0, endIndex);
+                filePath = Path.Combine(extractedPath, relativeFilePath);
+            }
+            else
+            {
+                endIndex = currentDirectory.IndexOf($"\\tests\\");
+                extractedPath = currentDirectory.Substring(0, endIndex);
+                //filePath = Path.Combine(extractedPath, $"\\src\\", relativeFilePath);
+                filePath = extractedPath + $"\\src\\" + relativeFilePath;
+            }
 
+
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("Die Datei wurde nicht gefunden.", relativeFilePath);
+            }
+
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                if (line.TrimStart().StartsWith("?"))
+                {
+                    return line.TrimStart('?').Trim();
+                }
+            }
+
+            return null;
+        }
 
     }
 }

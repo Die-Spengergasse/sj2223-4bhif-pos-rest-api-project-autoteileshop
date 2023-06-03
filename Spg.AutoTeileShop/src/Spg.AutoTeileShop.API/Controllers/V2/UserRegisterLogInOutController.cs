@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
+using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
+using System.Security.Claims;
 using System.Text.Json;
 //using Spg.AutoTeileShop.Application.Filter;
 
@@ -12,13 +16,18 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("2.0")]
-    public class RegisterController : ControllerBase
+    public class UserRegisterLogInOutController : ControllerBase
     {
         private readonly IUserRegistrationService _userRegistService;
+        private readonly AuthService _authService;
+        private readonly ILogger<UserController> _logger;
 
-        public RegisterController(IUserRegistrationService userRegistService)
+        public UserRegisterLogInOutController(IUserRegistrationService userRegistService,
+            ILogger<UserController> logger, AuthService authService)
         {
             _userRegistService = userRegistService;
+            _logger = logger;
+            _authService = authService;
         }
 
         // Register - Authorization
@@ -70,6 +79,49 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<string>> Login(UserCredentials user)
+        {
+            string token = await _authService.GenerateToken(user);
+
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(token);
+        }
+
+        [HttpPost("loginform")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status302Found)]
+        public async Task<ActionResult<string>> LoginAsync([FromForm] UserCredentials user)
+        {
+            await HttpContext
+                .SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            ClaimsIdentity claimsIdentity;
+            if ((claimsIdentity = await _authService.GenerateIdentity(user)) != null)
+            {
+                // Spezielle Properties (Expires, ...) können als 3. Parameter mit einer
+                // AuthenticationProperties Instanz übergeben werden.
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet("logout")]
+        [ProducesResponseType(StatusCodes.Status302Found)]
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await HttpContext
+                .SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/");
+        }
 
     }
 }
