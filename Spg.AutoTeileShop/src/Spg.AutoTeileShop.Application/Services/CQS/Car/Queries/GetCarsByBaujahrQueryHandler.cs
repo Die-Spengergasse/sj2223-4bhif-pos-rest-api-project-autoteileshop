@@ -11,9 +11,9 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
     public class GetCarsByBaujahrQueryHandler : IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Spg.AutoTeileShop.Domain.Models.Car>>
     {
-        private readonly CarRepositoryCustom _repository;
+        private readonly ICarRepositoryCustom _repository;
 
-        public GetCarsByBaujahrQueryHandler(CarRepositoryCustom repository)
+        public GetCarsByBaujahrQueryHandler(ICarRepositoryCustom repository)
         {
             _repository = repository;
         }

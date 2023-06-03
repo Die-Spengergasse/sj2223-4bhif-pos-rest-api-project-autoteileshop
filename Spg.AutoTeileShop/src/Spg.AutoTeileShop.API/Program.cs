@@ -142,10 +142,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-
-var app = builder.Build();
-
 string jwtSecret = builder.Configuration["AppSettings:Secret"] ?? AuthService.GenerateRandom(1024);
 
 //Authorizatio
@@ -156,6 +152,12 @@ builder.Services.AddCookieAuthentication(setDefault: true);
 builder.Services.AddTransient<AuthService>(services =>
 new AuthService(jwtSecret)
 );
+
+var app = builder.Build();
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 
 namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
@@ -25,9 +26,9 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
     public class GetCarsByModellQueryHandler : IQueryHandler<GetCarsByModellQuery, IEnumerable<Spg.AutoTeileShop.Domain.Models.Car>>
     {
-        private readonly CarRepositoryCustom _repository;
+        private readonly ICarRepositoryCustom _repository;
 
-        public GetCarsByModellQueryHandler(CarRepositoryCustom repository)
+        public GetCarsByModellQueryHandler(ICarRepositoryCustom repository)
         {
             _repository = repository;
         }
@@ -59,9 +60,9 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
     public class GetCarsByMarkeAndModellQueryHandler : IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Spg.AutoTeileShop.Domain.Models.Car>>
     {
-        private readonly CarRepositoryCustom _repository;
+        private readonly ICarRepositoryCustom _repository;
 
-        public GetCarsByMarkeAndModellQueryHandler(CarRepositoryCustom repository)
+        public GetCarsByMarkeAndModellQueryHandler(ICarRepositoryCustom repository)
         {
             _repository = repository;
         }
@@ -95,9 +96,9 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
     public class GetCarsByMarkeAndModellAndBaujahrQueryHandler : IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Spg.AutoTeileShop.Domain.Models.Car>>
     {
-        private readonly CarRepositoryCustom _repository;
+        private readonly ICarRepositoryCustom _repository;
 
-        public GetCarsByMarkeAndModellAndBaujahrQueryHandler(CarRepositoryCustom repository)
+        public GetCarsByMarkeAndModellAndBaujahrQueryHandler(ICarRepositoryCustom repository)
         {
             _repository = repository;
         }
@@ -127,9 +128,9 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
     public class GetCarsByFitProductQueryHandler : IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Spg.AutoTeileShop.Domain.Models.Car>>
     {
-        private readonly CarRepositoryCustom _repository;
+        private readonly ICarRepositoryCustom _repository;
 
-        public GetCarsByFitProductQueryHandler(CarRepositoryCustom repository)
+        public GetCarsByFitProductQueryHandler(ICarRepositoryCustom repository)
         {
             _repository = repository;
         }

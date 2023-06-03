@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.CustomGenericRepositories
 {
-    public class CarRepositoryCustom
+    public class CarRepositoryCustom : ICarRepositoryCustom
     {
         private AutoTeileShopContext _db { get; set; }
         public CarRepositoryCustom(AutoTeileShopContext context)
