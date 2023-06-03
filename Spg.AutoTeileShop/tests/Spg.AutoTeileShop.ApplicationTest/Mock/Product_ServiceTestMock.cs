@@ -31,10 +31,6 @@ namespace Spg.AutoTeileShop.ApplicationTest.Mock
                 .Setup(r => r.Add(product))
                 .Returns(MockUtilities.GetSeedingProduct());
 
-            
-            //_productRepositoryMock
-            //    .Setup(r => r.GetById(1))
-            //    .Returns(MockUtilities.GetSeedingProduct());
             //Act
 
             _productService.Add(product);
