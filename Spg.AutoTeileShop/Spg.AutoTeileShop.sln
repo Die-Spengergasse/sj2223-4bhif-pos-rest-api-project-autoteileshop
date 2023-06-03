@@ -46,11 +46,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.RepositoryTest", "tests\Spg.AutoTeileShop.RepositoryTest\Spg.AutoTeileShop.RepositoryTest.csproj", "{AF7D1CAB-7213-4119-B1C9-27188F0C8285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.Repository", "src\Spg.AutoTeileShop.Repository\Spg.AutoTeileShop.Repository.csproj", "{054677FB-C844-480D-8624-3966091634AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.Repository", "src\Spg.AutoTeileShop.Repository\Spg.AutoTeileShop.Repository.csproj", "{054677FB-C844-480D-8624-3966091634AA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2DD9753F-D304-4C66-B427-C4B52055CB1F} = {2DD9753F-D304-4C66-B427-C4B52055CB1F}
 		{741ACB30-71B8-4FF1-97E2-8B719776F98E} = {741ACB30-71B8-4FF1-97E2-8B719776F98E}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.OAuth.API", "..\Spg.OAuth\Spg.OAuth.API\Spg.OAuth.API.csproj", "{AD730213-4FB6-4C43-B821-535F46F79197}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,10 @@ Global
 		{054677FB-C844-480D-8624-3966091634AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{054677FB-C844-480D-8624-3966091634AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{054677FB-C844-480D-8624-3966091634AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD730213-4FB6-4C43-B821-535F46F79197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD730213-4FB6-4C43-B821-535F46F79197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD730213-4FB6-4C43-B821-535F46F79197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD730213-4FB6-4C43-B821-535F46F79197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

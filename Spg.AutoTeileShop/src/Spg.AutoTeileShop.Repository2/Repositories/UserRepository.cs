@@ -65,7 +65,11 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return user;
         }
 
-
+        public User? GetByGuid(Guid guid)
+        {
+            return _db.Users.Where(u => u.Guid == guid).SingleOrDefault();
+        }
+        
         public string ComputeSha256Hash(string value) // from ChatGPT supported
         {
             using (SHA256 hash = SHA256.Create())
@@ -73,11 +77,38 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
                 byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
                 return BitConverter.ToString(hashBytes).Replace("-", "");
             }
+        }    
+
+
+        private static string GenerateSalt()
+        {
+            // 128bit Salt erzeugen.
+            byte[] salt = new byte[128 / 8];
+            using (System.Security.Cryptography.RandomNumberGenerator rnd = System.Security.Cryptography.RandomNumberGenerator.Create())
+            {
+                rnd.GetBytes(salt);
+            }
+            return Convert.ToBase64String(salt);
         }
 
-        public User? GetByGuid(Guid guid)
+        private static string CalculateHash(string password, string salt)
         {
-            return _db.Users.Where(u => u.Guid == guid).SingleOrDefault();
+            byte[] saltBytes = Convert.FromBase64String(salt);
+            byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
+
+            System.Security.Cryptography.HMACSHA256 myHash = new System.Security.Cryptography.HMACSHA256(saltBytes);
+
+            byte[] hashedData = myHash.ComputeHash(passwordBytes);
+
+            // Das Bytearray wird Base64 codiert zurückgegeben.
+            string hashedPassword = Convert.ToBase64String(hashedData);
+            Console.WriteLine($"Salt:            {salt}");
+            Console.WriteLine($"Password:        {password}");
+            Console.WriteLine($"Hashed Password: {hashedPassword}");
+            return hashedPassword;
         }
+
+        static bool CheckPassword(string password, string salt, string hashedPassword) =>
+            hashedPassword == CalculateHash(password, salt);
     }
 }

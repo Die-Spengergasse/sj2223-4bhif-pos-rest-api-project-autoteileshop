@@ -1,4 +1,4 @@
-﻿using Spg.OAuth.Infrastructure;
+﻿using Spg.AutoTeileShop.Infrastructure;
 
 namespace Spg.OAuth.API.Helper
 {

@@ -106,29 +106,29 @@ builder.Services.AddSwaggerGen(s =>
         },
         Version = "v2"
     });
-    s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter JWT Token here"
-    });
-    s.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference=new OpenApiReference
-                {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
-                }
-            },
-            new string[]{}
-        }
-    });
+    //s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //{
+    //    Name = "Authorization",
+    //    Type = SecuritySchemeType.ApiKey,
+    //    Scheme = "Bearer",
+    //    BearerFormat = "JWT",
+    //    In = ParameterLocation.Header,
+    //    Description = "Enter JWT Token here"
+    //});
+    //s.AddSecurityRequirement(new OpenApiSecurityRequirement
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference=new OpenApiReference
+    //            {
+    //                Type=ReferenceType.SecurityScheme,
+    //                Id="Bearer"
+    //            }
+    //        },
+    //        new string[]{}
+    //    }
+    //});
 });
 
 

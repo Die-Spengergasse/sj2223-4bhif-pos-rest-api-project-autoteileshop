@@ -10,9 +10,9 @@ namespace Spg.OAuth.API.Helper
             services.AddIdentityServer()
                 .AddInMemoryClients(Config.Clients)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddTestUsers(Config.Users)
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddInMemoryApiScopes(Config.ApiScopes);
+                //.AddTestUsers(Config.Users)
+                //.AddAspNetIdentity<ApplicationUser>();
         }
 
         public static void Configure(IApplicationBuilder app)

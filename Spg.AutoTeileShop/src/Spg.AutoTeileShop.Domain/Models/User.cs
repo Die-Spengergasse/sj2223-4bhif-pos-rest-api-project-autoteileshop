@@ -23,6 +23,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Telefon { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;         //IsUnique
         public string PW { get; set; } = string.Empty;
+        public string Salt { get; set; } = string.Empty;
         public Roles Role { get; set; }
         public bool Confirmed { get; set; }
 
