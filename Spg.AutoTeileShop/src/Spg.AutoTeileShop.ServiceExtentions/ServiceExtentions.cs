@@ -81,10 +81,11 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IValidator<ProductDTO>, NewProductDtoValidator>();
 
             //Generic Repositories
+            //serviceCollection.AddTransient<CarRepositoryCustom>();
             serviceCollection.AddTransient<IRepositoryBase<Car>, RepositoryBase<Car>>();
             serviceCollection.AddTransient<IReadOnlyRepositoryBase<Car>, ReadOnlyRepositoryBase<Car>>();
 
-            serviceCollection.AddTransient<IReadOnlyRepositoryBase<Car>, CarRepositoryCustom>();
+
 
             //Mediator & CommandHandler
             serviceCollection.AddTransient<IMediator, Mediator>();
