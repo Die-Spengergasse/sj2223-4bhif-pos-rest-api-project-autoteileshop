@@ -138,8 +138,8 @@ namespace Spg.AutoTeileShop.RepositoryTest.Helpers
             db.Cars.First().FitsForProducts.Append(db.Products.OrderBy(c => c.Id).First());
             db.Cars.First().FitsForProducts.Append(db.Products.OrderBy(c => c.Id).Last());
 
-            db.Cars.Last().FitsForProducts.Append(db.Products.OrderBy(c => c.Id).First());
-            db.Cars.Last().FitsForProducts.Append(db.Products.OrderBy(c => c.Id).Last());
+            db.Cars.OrderBy(c => c.Id).Last().FitsForProducts.Append(db.Products.OrderBy(c => c.Id).First());
+            db.Cars.OrderBy(c => c.Id).Last().FitsForProducts.Append(db.Products.OrderBy(c => c.Id).Last());
         }
 
         public static List<ShoppingCartItem> GetSeedingShoppingCartItems(AutoTeileShopContext db)
@@ -147,19 +147,19 @@ namespace Spg.AutoTeileShop.RepositoryTest.Helpers
             return new List<ShoppingCartItem>()
             {
                 new ShoppingCartItem(
-                    new Guid("A3346D49-84E6-E721-55C4-9611507D62DF"),
+                    Guid.NewGuid(),
                     2,
-                    db.Products.First().Id,
-                    db.Products.First(),
+                    db.Products.OrderBy(u => u.Id).First().Id,
+                    db.Products.OrderBy(u => u.Id).First(),
                     null,
                     null
                 ),
 
                  new ShoppingCartItem(
-                    new Guid("N0CA58B2-9339-8B1B-A441-920B926FF3FD"),
+                    Guid.NewGuid(),
                     2,
-                    db.Products.First().Id,
-                    db.Products.First(),
+                    db.Products.OrderBy(u => u.Id).First().Id,
+                    db.Products.OrderBy(u => u.Id).First(),
                     null,
                     null
                 )
@@ -172,15 +172,15 @@ namespace Spg.AutoTeileShop.RepositoryTest.Helpers
             return new List<ShoppingCart>()
             {
                 new ShoppingCart(
-                    new Guid("78A27E03-9616-D9D2-F2D0-7BBDADCBB9A6"),
-                    db.Users.First().Id,
-                    db.Users.First(),
+                    Guid.NewGuid(),
+                    db.Users.OrderBy(u => u.Id).First().Id,
+                    db.Users.OrderBy(u => u.Id).First(),
                     db.ShoppingCartItems.ToList()
                     ),
                 new ShoppingCart(
-                    new Guid("21F3A351-A8E0-5007-C7AC-24F4C6DE5053"),
-                    db.Users.Last().Id,
-                    db.Users.Last(),
+                    Guid.NewGuid(),
+                    db.Users.OrderBy(u => u.Id).Last().Id,
+                    db.Users.OrderBy(u => u.Id).Last(),
                     new List<ShoppingCartItem>{db.ShoppingCartItems.First()}
                     )
             };
@@ -191,12 +191,12 @@ namespace Spg.AutoTeileShop.RepositoryTest.Helpers
             return new List<UserMailConfirme>()
             {
                 new UserMailConfirme(
-                    db.Users.First(),
+                    db.Users.OrderBy(u => u.Id).First(),
                      ComputeSha256Hash(Guid.NewGuid().ToString().Substring(0, 8)),
                      DateTime.Now
                     ),
                  new UserMailConfirme(
-                    db.Users.Last(),
+                    db.Users.OrderBy(u => u.Id).Last(),
                      ComputeSha256Hash(Guid.NewGuid().ToString().Substring(0, 8)),
                      DateTime.Now.AddDays(-2)
                     )

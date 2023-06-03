@@ -21,18 +21,22 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
         public static Product GetSeedingProduct()
         {
-            return new Product()
+            return new Product(1, Guid.NewGuid(), "test", 50.0m, GetSeedingCatagory_withoutTopCat(), "test",
+                "test", QualityType.Gut, 2, 0, DateTime.Now, DatabaseUtilities.GetSeedingCars_without_Product());
+        }
+
+        public static List<Product> GetSeedingProductsList()
+        {
+            return new List<Product>()
             {
-                Description = "Test",
-                Name = "Test",
-                Price = 10.0m,
-                Discount = 0,
-                Ean13 = "1234567890123",
-                Guid = Guid.NewGuid(),
-                Stock = 10,
-                Image = "/Test.jpg",
-                Quality = QualityType.Gut,
+                new Product(1, Guid.NewGuid(), "test", 50.0m, GetSeedingCatagory_withoutTopCat(), "test",
+                "test", QualityType.Gut, 2, 0, DateTime.Now, DatabaseUtilities.GetSeedingCars_without_Product()),
+
+                new Product(2, Guid.NewGuid(), "test2", 50.0m, GetSeedingCatagory_withoutTopCat(), "test2",
+                "test", QualityType.Gut, 2, 0, DateTime.Now, DatabaseUtilities.GetSeedingCars_without_Product()),
+
             };
+
         }
         public static Catagory GetSeedingCatagory_withoutTopCat()
         {

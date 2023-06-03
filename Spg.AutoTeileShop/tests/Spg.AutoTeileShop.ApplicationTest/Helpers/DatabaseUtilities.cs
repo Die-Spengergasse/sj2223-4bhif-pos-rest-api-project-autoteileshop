@@ -63,7 +63,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
 
 
-        private static List<Catagory> GetSeedingCategories()
+        public static List<Catagory> GetSeedingCategories()
         {
             var cat1 = new Catagory(null, "MotorKopf", "Test Description", CategoryTypes.MotorTeile);
 
@@ -75,7 +75,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
 
 
-        private static List<User> GetSeedingUser()
+        public static List<User> GetSeedingUser()
         {
             return new List<User>()
             {
@@ -92,7 +92,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             };
         }
 
-        private static List<Car> GetSeedingCars_without_Product()
+        public static List<Car> GetSeedingCars_without_Product()
         {
             return new List<Car>()
             {
@@ -101,7 +101,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             };
         }
 
-        private static List<Product> GetSeedingProducts_with_Cars(Catagory category, AutoTeileShopContext db)
+        public static List<Product> GetSeedingProducts_with_Cars(Catagory category, AutoTeileShopContext db)
         {
             return new List<Product>()
             {
@@ -135,7 +135,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
         }
 
-        private static void Set_Products_to_Cars(AutoTeileShopContext db)
+        public static void Set_Products_to_Cars(AutoTeileShopContext db)
         {
             db.Cars.First().FitsForProducts.Append(db.Products.First());
             db.Cars.First().FitsForProducts.Append(db.Products.Last());
@@ -144,7 +144,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             db.Cars.Last().FitsForProducts.Append(db.Products.Last());
         }
 
-        private static List<ShoppingCartItem> GetSeedingShoppingCartItems(AutoTeileShopContext db)
+        public static List<ShoppingCartItem> GetSeedingShoppingCartItems(AutoTeileShopContext db)
         {
             return new List<ShoppingCartItem>()
             {
@@ -169,7 +169,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             };
         }
 
-        private static List<ShoppingCart> GetSeedingShoppingCart(AutoTeileShopContext db)
+        public static List<ShoppingCart> GetSeedingShoppingCart(AutoTeileShopContext db)
         {
             return new List<ShoppingCart>()
             {

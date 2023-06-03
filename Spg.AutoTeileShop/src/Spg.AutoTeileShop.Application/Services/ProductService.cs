@@ -98,16 +98,34 @@ namespace Spg.AutoTeileShop.Application.Services
             product1.Image = product.Image;
             product1.catagory = product.catagory;
 
-            foreach (Car c in product.ProductFitsForCar)
+            //foreach (Car c in product.ProductFitsForCar)
+            //{
+            //    if (!product1.ProductFitsForCar.Contains(c))
+            //    {
+            //        product1.AddProductFitsForCar(c);
+            //    }
+            //}
+
+            //foreach (Car c in product1.ProductFitsForCar)
+            //{
+            //    if (product1.ProductFitsForCar.Contains(c))
+            //    {
+            //        product1.RemoveProductFitsForCar(c);
+            //    }
+            //}
+            
+            for (int i = 0; i < product.ProductFitsForCar.Count; i++)
             {
+                Car c = product.ProductFitsForCar[i];
                 if (!product1.ProductFitsForCar.Contains(c))
                 {
                     product1.AddProductFitsForCar(c);
                 }
             }
 
-            foreach (Car c in product1.ProductFitsForCar)
+            for (int i = 0; i < product1.ProductFitsForCar.Count; i++)
             {
+                Car c = product1.ProductFitsForCar[i];
                 if (product1.ProductFitsForCar.Contains(c))
                 {
                     product1.RemoveProductFitsForCar(c);
