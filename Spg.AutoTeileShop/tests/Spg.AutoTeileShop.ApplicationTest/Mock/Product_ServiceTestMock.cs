@@ -1,3 +1,4 @@
+using Moq;
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
@@ -10,31 +11,19 @@ namespace Spg.AutoTeileShop.ApplicationTest.Mock
 {
     public class Product_ServiceTestMock
     {
-        //private readonly Mock<Product> 
-        // TODO: Mocking
-        private AutoTeileShopContext createDB()
-        {
-            DbContextOptions options = new DbContextOptionsBuilder()
-                  //.UseSqlite("Data Source=AutoTeileShopTest.db")
-                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
-                  .UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
-                .Options;
+        private readonly Mock<ProductRepository> _productRepositoryMock = new Mock<ProductRepository>();
+        ProductService _productService;
 
-            AutoTeileShopContext db = new AutoTeileShopContext(options);
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
-            db.Seed();
-            return db;
+        public Product_ServiceTestMock()
+        {
+            _productService = new ProductService(_productRepositoryMock.Object);
         }
 
         [Fact]
-        public void Create_Succes_Test()
+        public void Create_Product_Succes_Test_Mock()
         {
             //Arrange
-                //Datenbank
-            AutoTeileShopContext db = createDB();
             
-            ProductService productService = new(new ProductRepository(db));
             Product product = new Product()
             {
                 Ean13 = "dagasgasf",
@@ -44,14 +33,15 @@ namespace Spg.AutoTeileShop.ApplicationTest.Mock
                 Price = 499.99M,
                 Stock = 1               
             };
-
+            _productRepositoryMock
+                .Setup(r => r.Add(product))
+                .Returns(product);
             //Act
 
-            productService.Add(product);
+            _productService.Add(product);
 
             //Assert
-
-            Assert.Single(db.Products.ToList());
+            _productRepositoryMock.Verify(r => r.Add(It.IsAny<Product>()), Times.Once);
         }
     }
 }
