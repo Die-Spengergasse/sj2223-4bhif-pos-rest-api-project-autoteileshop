@@ -148,7 +148,6 @@ builder.Services.AddVersionedApiExplorer(
     });
 
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
