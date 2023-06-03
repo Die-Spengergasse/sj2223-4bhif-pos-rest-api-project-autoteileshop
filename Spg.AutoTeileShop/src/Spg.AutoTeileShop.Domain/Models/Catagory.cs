@@ -33,6 +33,14 @@ namespace Spg.AutoTeileShop.Domain.Models
             CategoryType = categoryType;
         }
 
+        public Catagory(Catagory? topCatagory, string name, string description, CategoryTypes categoryType)
+        {
+            TopCatagory = topCatagory;
+            Name = name;
+            Description = description;
+            CategoryType = categoryType;
+        }
+
         public Catagory()
         {
         }

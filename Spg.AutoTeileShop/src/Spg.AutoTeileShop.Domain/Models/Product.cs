@@ -47,6 +47,21 @@ namespace Spg.AutoTeileShop.Domain.Models
             _productFitsForCar = productFitsForCar;
         }
 
+        public Product( Guid guid, string name, decimal price, Catagory? catagory, string description, string? image, QualityType quality, int stock, int discount, DateTime receive, List<Car> productFitsForCar)
+        {
+            Guid = guid;
+            Name = name;
+            Price = price;
+            this.catagory = catagory;
+            Description = description;
+            Image = image;
+            Quality = quality;
+            Stock = stock;
+            Discount = discount;
+            this.receive = receive;
+            _productFitsForCar.AddRange(productFitsForCar);
+        }
+
         public Product()
         {
         }

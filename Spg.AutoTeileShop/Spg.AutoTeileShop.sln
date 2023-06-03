@@ -42,9 +42,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.ServiceEx
 		{BE4F5AD1-ED96-4943-A32E-EAD651434622} = {BE4F5AD1-ED96-4943-A32E-EAD651434622}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.ApplicationTest", "tests\Spg.AutoTeileShop.ApplicationTest\Spg.AutoTeileShop.ApplicationTest.csproj", "{10322EB8-F247-4505-A128-AC554951D477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.ApplicationTest", "tests\Spg.AutoTeileShop.ApplicationTest\Spg.AutoTeileShop.ApplicationTest.csproj", "{10322EB8-F247-4505-A128-AC554951D477}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.RepositoryTest", "tests\Spg.AutoTeileShop.RepositoryTest\Spg.AutoTeileShop.RepositoryTest.csproj", "{AF7D1CAB-7213-4119-B1C9-27188F0C8285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AutoTeileShop.RepositoryTest", "tests\Spg.AutoTeileShop.RepositoryTest\Spg.AutoTeileShop.RepositoryTest.csproj", "{AF7D1CAB-7213-4119-B1C9-27188F0C8285}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AutoTeileShop.Repository", "src\Spg.AutoTeileShop.Repository\Spg.AutoTeileShop.Repository.csproj", "{054677FB-C844-480D-8624-3966091634AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2DD9753F-D304-4C66-B427-C4B52055CB1F} = {2DD9753F-D304-4C66-B427-C4B52055CB1F}
+		{741ACB30-71B8-4FF1-97E2-8B719776F98E} = {741ACB30-71B8-4FF1-97E2-8B719776F98E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +102,10 @@ Global
 		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF7D1CAB-7213-4119-B1C9-27188F0C8285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{054677FB-C844-480D-8624-3966091634AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054677FB-C844-480D-8624-3966091634AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054677FB-C844-480D-8624-3966091634AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054677FB-C844-480D-8624-3966091634AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

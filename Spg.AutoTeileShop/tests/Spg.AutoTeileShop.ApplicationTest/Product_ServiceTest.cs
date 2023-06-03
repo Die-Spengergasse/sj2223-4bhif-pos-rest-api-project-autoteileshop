@@ -8,7 +8,7 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 
 namespace Spg.AutoTeileShop.ApplicationTest
 {
-    public class Product_ServiceTest
+    public class Product_ServiceTestMock
     {
         private AutoTeileShopContext createDB()
         {

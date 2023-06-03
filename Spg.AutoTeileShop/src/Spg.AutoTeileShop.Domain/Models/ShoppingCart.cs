@@ -29,6 +29,14 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
+        public ShoppingCart( Guid guid, int UserId, User? UserNav, List<ShoppingCartItem> shoppingCartItems)
+        {
+            this.guid = guid;
+            this.UserId = UserId;
+            this.UserNav = UserNav;
+            _shoppingCartItems = shoppingCartItems;
+        }
+
         public ShoppingCart(int id, Guid guid, int UserId, User? UserNav, List<ShoppingCartItem> shoppingCartItems) : this(id, guid)
         {
             this.UserId = UserId;
