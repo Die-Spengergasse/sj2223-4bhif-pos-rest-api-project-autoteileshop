@@ -45,30 +45,27 @@ builder.Services.AddSwaggerGen(s =>
     s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
     );
 
-// NuGet: Microsoft.AspNetCore.Mvc.Versioning
-builder.Services.AddApiVersioning(o =>
-{
-    o.AssumeDefaultVersionWhenUnspecified = true;
-    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
-    o.ReportApiVersions = true;
-    o.ApiVersionReader = ApiVersionReader.Combine(
-        new QueryStringApiVersionReader("api-version"),
-        new HeaderApiVersionReader("X-Version"),
-        new MediaTypeApiVersionReader("ver"));
-});
-builder.Services.AddVersionedApiExplorer(
-    options =>
-    {
-        options.GroupNameFormat = "'v'VVV";
-        options.SubstituteApiVersionInUrl = true;
-    });
+//// NuGet: Microsoft.AspNetCore.Mvc.Versioning
+//builder.Services.AddApiVersioning(o =>
+//{
+//    o.AssumeDefaultVersionWhenUnspecified = true;
+//    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
+//    o.ReportApiVersions = true;
+//    o.ApiVersionReader = ApiVersionReader.Combine(
+//        new QueryStringApiVersionReader("api-version"),
+//        new HeaderApiVersionReader("X-Version"),
+//        new MediaTypeApiVersionReader("ver"));
+//});
+//builder.Services.AddVersionedApiExplorer(
+//    options =>
+//    {
+//        options.GroupNameFormat = "'v'VVV";
+//        options.SubstituteApiVersionInUrl = true;
+//    });
 
 
 builder.Services.AddSwaggerGen(s =>
 {
-
-
-
     s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
         Title = "AutoTeile Shop - v1",
@@ -87,7 +84,6 @@ builder.Services.AddSwaggerGen(s =>
         },
         Version = "v1"
     });
-
 
     s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
     {
@@ -131,6 +127,25 @@ builder.Services.AddSwaggerGen(s =>
     //    }
     //});
 });
+
+
+// NuGet: Microsoft.AspNetCore.Mvc.Versioning
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 
 
