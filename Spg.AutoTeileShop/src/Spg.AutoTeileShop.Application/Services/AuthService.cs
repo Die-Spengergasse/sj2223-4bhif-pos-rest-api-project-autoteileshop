@@ -19,23 +19,26 @@ namespace Spg.AutoTeileShop.Application.Services
         /// Konstruktor für die Verwendung ohne JWT.
         /// </summary>
         /// 
-        protected readonly IUserRepository _userRepository;
-        public AuthService(IUserRepository userRepository)
+        private readonly IUserRepository _userRepository;
+
+        public AuthService()
         {
-            _userRepository = userRepository;
         }
+
 
         /// <summary>
         /// Konstruktor mit Secret für die Verwendung mit JWT.
         /// </summary>
         /// <param name="secret">Base64 codierter String für das Secret des JWT.</param>
-        public AuthService(string secret)
+        public AuthService(string secret, IUserRepository userRepository)
         {
             if (string.IsNullOrEmpty(secret))
             {
                 throw new ArgumentException("Secret is null or empty.", nameof(secret));
             }
             _secret = Convert.FromBase64String(secret);
+            _userRepository = userRepository;
+
         }
 
         /// <summary>

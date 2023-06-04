@@ -163,8 +163,12 @@ builder.Services.AddJwtAuthentication(jwtSecret, setDefault: false);
 builder.Services.AddCookieAuthentication(setDefault: true);
 
 //AuthService
+
 builder.Services.AddTransient<AuthService>(services =>
-new AuthService(jwtSecret)
+{
+    var userRepository = services.GetRequiredService<IUserRepository>();
+    return new AuthService(jwtSecret, userRepository);
+    }
 );
 
 var app = builder.Build();
