@@ -1,9 +1,11 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Spg.AutoTeileShop.API.Helper;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.DbExtentions;
@@ -17,6 +19,7 @@ using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.ServiceExtentions;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Reflection;
 
 //product get del -id
@@ -104,29 +107,6 @@ builder.Services.AddSwaggerGen(s =>
         Version = "v2"
     });
 
-    //s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    //{
-    //    Name = "Authorization",
-    //    Type = SecuritySchemeType.ApiKey,
-    //    Scheme = "Bearer",
-    //    BearerFormat = "JWT",
-    //    In = ParameterLocation.Header,
-    //    Description = "Enter JWT Token here"
-    //});
-    //s.AddSecurityRequirement(new OpenApiSecurityRequirement
-    //{
-    //    {
-    //        new OpenApiSecurityScheme
-    //        {
-    //            Reference=new OpenApiReference
-    //            {
-    //                Type=ReferenceType.SecurityScheme,
-    //                Id="Bearer"
-    //            }
-    //        },
-    //        new string[]{}
-    //    }
-    //});
 });
 
 // NuGet: Microsoft.AspNetCore.Mvc.Versioning
@@ -161,6 +141,29 @@ string jwtSecret = builder.Configuration["AppSettings:Secret"] ?? AuthService.Ge
 //Authorizatio
 builder.Services.AddJwtAuthentication(jwtSecret, setDefault: false);
 builder.Services.AddCookieAuthentication(setDefault: true);
+
+//Authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrUser", policy =>
+    {
+        policy.Requirements.Add(new CustomAuthorizationRequirement("Admin", "User"));
+    });
+
+    options.AddPolicy("SalesmanOrAdmin", policy =>
+    {
+        policy.Requirements.Add(new CustomAuthorizationRequirement("Salesman", "Admin"));
+    });
+
+    options.AddPolicy("UserOrSalesman", policy =>
+    {
+        policy.Requirements.Add(new CustomAuthorizationRequirement("User", "Salesman"));
+    });
+});
+
+builder.Services.AddTransient<IAuthorizationHandler, CustomAuthorizationHandler>();
+
+
 
 //AuthService
 

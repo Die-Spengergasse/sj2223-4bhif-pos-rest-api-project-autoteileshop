@@ -24,6 +24,8 @@ using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Application.Services.CQS;
 using Spg.AutoTeileShop.Repository2.CustomGenericRepositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -108,9 +110,6 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>>, GetCarsByMarkeAndModellQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>>, GetCarsByMarkeAndModellAndBaujahrQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>>, GetCarsByFitProductQueryHandler>();
-
-
-
 
 
         }

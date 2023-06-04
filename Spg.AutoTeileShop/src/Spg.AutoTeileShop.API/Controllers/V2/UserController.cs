@@ -53,8 +53,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
         [HttpGet("{guid}")]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
+        [Authorize(Policy = "AdminOrUser")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {

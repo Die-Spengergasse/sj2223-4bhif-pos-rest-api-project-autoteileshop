@@ -37,7 +37,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         // Update Product - Authorization
 
 
-        [HttpGet("")]
+        [HttpGet("Old")]
         [AllowAnonymous]
         public ActionResult<List<Product>> GetAllProduct()
         {
@@ -73,7 +73,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpGet("filter")]
+        [HttpGet("")]
         [AllowAnonymous]
         public ActionResult<List<ProductDTOFilter>> GetProductByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
         {
