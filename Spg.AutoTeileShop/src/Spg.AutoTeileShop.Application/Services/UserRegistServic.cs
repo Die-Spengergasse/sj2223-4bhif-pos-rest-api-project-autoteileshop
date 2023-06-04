@@ -30,8 +30,8 @@ namespace Spg.AutoTeileShop.Application.Services
             postUser.Confirmed = false;
             postUser.Role = Roles.User;
             postUser.Guid = Guid.NewGuid();
-            postUser.PW = _userRepo.ComputeSha256Hash(postUser.PW);
             postUser.Salt = _userRepo.GenerateSalt();
+            postUser.PW = _userRepo.CalculateHash(postUser.PW, postUser.Salt);
             User user = _userRepo.SetUser(postUser);
 
             SendMail sm = new();
@@ -57,7 +57,7 @@ namespace Spg.AutoTeileShop.Application.Services
             UserMailConfirme checkUserMailConf = _userMailRepository.GetByMail(Mail);
             if (checkUserMailConf != null)
             {
-                if (checkUserMailConf.date.AddMinutes(15) <= DateTime.Now) 
+                if (checkUserMailConf.date.AddMinutes(15) <= DateTime.Now)
                 {
                     throw new Exception("Code ist abgelaufen");
                 }
@@ -69,7 +69,7 @@ namespace Spg.AutoTeileShop.Application.Services
                     return true;
                 }
                 throw new Exception("Falscher Code");
-            
+            }
             throw new Exception("Es wurde keine passende Mail gefunden");
         }
 

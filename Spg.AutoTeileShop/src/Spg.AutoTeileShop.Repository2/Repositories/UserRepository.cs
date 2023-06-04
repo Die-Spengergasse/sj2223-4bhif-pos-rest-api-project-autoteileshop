@@ -91,7 +91,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return Convert.ToBase64String(salt);
         }
 
-        private static string CalculateHash(string password, string salt)
+        public string CalculateHash(string password, string salt)
         {
             byte[] saltBytes = Convert.FromBase64String(salt);
             byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
@@ -108,7 +108,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return hashedPassword;
         }
 
-        static bool CheckPassword(string password, string salt, string hashedPassword) =>
+        bool CheckPassword(string password, string salt, string hashedPassword) =>
             hashedPassword == CalculateHash(password, salt);
     }
 }

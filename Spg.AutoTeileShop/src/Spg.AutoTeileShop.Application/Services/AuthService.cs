@@ -6,6 +6,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
+using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -16,8 +18,11 @@ namespace Spg.AutoTeileShop.Application.Services
         /// <summary>
         /// Konstruktor für die Verwendung ohne JWT.
         /// </summary>
-        public AuthService()
+        /// 
+        protected readonly IUserRepository _userRepository;
+        public AuthService(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
         }
 
         /// <summary>
@@ -44,26 +49,24 @@ namespace Spg.AutoTeileShop.Application.Services
         /// </returns>
         protected virtual async Task<string> CheckUserAndGetRole(UserCredentials credentials)
         {
-            #region Variablen zur Demonstration. Sind zu entfernen.
-            List<string> users = new List<string> { "pupil1", "teacher1" };
-            /// Fixes Salt zur Demonstration. Ist im Code durch das generierte Salt pro User zu ersetzen.
-            string salt = "5Snh3qZNODtDd2Ibsj7irayIl6E1WWmpbvXtcSGlm1o=";
-            /// Fixes Passwort zur Demonstration.
-            string password = "1234";
-            /// Fixer Hash zur Demonstration.
-            string hashedPassword = CalculateHash(password, salt);
-            #endregion
+            User? user = _userRepository.GetByEMail(credentials.EMail);
+            if (user is null) return null;
+            string salt = user.Salt;
+            string password = credentials.Password;
+            string hashedPassword = _userRepository.CalculateHash(password, salt);
 
-            // TODO: Abfragen, ob es den User überhaupt gibt
-            if (!users.Any(u => u == credentials.EMail)) { return null; }
+
 
             // TODO: Um das Passwort zu prüfen, berechnen wir den Hash mit dem Salt in der DB. Stimmt
             // das Ergebnis mit dem gespeichertem Ergebnis überein, ist das Passwort richtig.
-            string hash = CalculateHash(credentials.Password, salt);
+            string hash = _userRepository.CalculateHash(credentials.Password, salt);
             if (hash != hashedPassword) { return null; }
 
             // TODO: Die echte Rolle aus der DB lesen oder ermitteln.
-            return credentials.EMail.StartsWith("teacher") ? "Teacher" : "Pupil";
+            if (user.Role == Roles.User) return "User";
+            if (user.Role == Roles.Admin) return "Admin";
+            if (user.Role == Roles.Salesman) return "Salesman";
+            return null;
         }
 
         /// <summary>

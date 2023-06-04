@@ -21,6 +21,8 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
         User? Delete(User user);
         string ComputeSha256Hash(string value);
         string GenerateSalt();
+        string CalculateHash(string password, string salt);
+       
 
 
     }
