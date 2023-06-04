@@ -24,7 +24,7 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartRepository.AddShoppingCart(shoppingCart);
         }
 
-        public IEnumerable<ShoppingCartItem> GetAll()
+        public IEnumerable<ShoppingCart> GetAll()
         {
             return _shoppingCartRepository.GetAll_includeItems();
         }

@@ -50,7 +50,7 @@ namespace Spg.AutoTeileShop.Application.Services
         /// Rolle, wenn der Benutzer authentifiziert werden konnte.
         /// Null, wenn der Benutzer nicht authentifiziert werden konnte.
         /// </returns>
-        protected virtual async Task<string> CheckUserAndGetRole(UserCredentials credentials)
+        protected virtual async Task<RoleID> CheckUserAndGetRole(UserCredentials credentials)
         {
             User? user = _userRepository.GetByEMail(credentials.EMail);
             if (user is null) return null;
@@ -66,9 +66,9 @@ namespace Spg.AutoTeileShop.Application.Services
             if (hash != hashedPassword) { return null; }
 
             // TODO: Die echte Rolle aus der DB lesen oder ermitteln.
-            if (user.Role == Roles.User) return "User";
-            if (user.Role == Roles.Admin) return "Admin";
-            if (user.Role == Roles.Salesman) return "Salesman";
+            if (user.Role == Roles.User) return new RoleID("User", user.Guid, user.Id);
+            if (user.Role == Roles.Admin) return new RoleID("Admin", user.Guid, user.Id);
+            if (user.Role == Roles.Salesman) return new RoleID("Salesman", user.Guid, user.Id);
             return null;
         }
 
@@ -127,7 +127,8 @@ namespace Spg.AutoTeileShop.Application.Services
         {
             if (credentials is null) { throw new ArgumentNullException(nameof(credentials)); }
 
-            string role = await CheckUserAndGetRole(credentials);
+            var roleId = await CheckUserAndGetRole(credentials);
+            string role = roleId.Role;
             if (role == null) { return null; }
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -139,7 +140,12 @@ namespace Spg.AutoTeileShop.Application.Services
                     // Benutzername als Typ ClaimTypes.Name.
                     new Claim(ClaimTypes.Name, credentials.EMail.ToString()),
                     // Rolle des Benutzer als ClaimTypes.DefaultRoleClaimType
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, role),
+                    // ID-Guid als ClaimTypes.NameIdentifier
+                    new Claim(ClaimTypes.NameIdentifier, roleId.UserGuid.ToString()),
+                    // ID als ClaimTypes.Id
+                    new Claim(ClaimTypes.PrimarySid, roleId.UserID.ToString())
+
                 }),
                 Expires = DateTime.UtcNow + lifetime,
                 SigningCredentials = new SigningCredentials(
@@ -157,7 +163,8 @@ namespace Spg.AutoTeileShop.Application.Services
         /// <returns></returns>
         public async Task<ClaimsIdentity> GenerateIdentity(UserCredentials credentials)
         {
-            string role = await CheckUserAndGetRole(credentials);
+            var roleId = await CheckUserAndGetRole(credentials);
+            string role = roleId.Role;
             if (role != null)
             {
                 List<Claim> claims = new List<Claim>
@@ -213,6 +220,22 @@ namespace Spg.AutoTeileShop.Application.Services
             string hashedPassword = Convert.ToBase64String(hashedData);
             return hashedPassword;
         }
+    }
+
+    public class RoleID
+    {
+        public RoleID(string role, Guid userGuid, int userID)
+        {
+            Role = role;
+            UserGuid = userGuid;
+            UserID = userID;
+        }
+
+        public string Role { get; set; }
+        public Guid UserGuid { get; set; }
+        public int UserID { get; set; }
+
+        
     }
 
 }

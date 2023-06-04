@@ -25,9 +25,9 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return item;
         }
 
-        public IEnumerable<ShoppingCartItem> GetAll_includeItems()
+        public IEnumerable<ShoppingCart> GetAll_includeItems()
         {
-            return (IEnumerable<ShoppingCartItem>)_db.ShoppingCarts.Include(s => s.ShoppingCartItems).ToList();
+            return _db.ShoppingCarts.Include(s => s.ShoppingCartItems).ToList();
         }
 
         public ShoppingCart GetById(int Id)
@@ -37,7 +37,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public ShoppingCart GetByGuid(Guid guid)
         {
-            return _db.ShoppingCarts.Where(s => s.guid == guid).SingleOrDefault() ?? throw new KeyNotFoundException("ShoppingCart with guid " + guid + " not found");
+            return _db.ShoppingCarts.Include(s => s.UserNav).Where(s => s.guid == guid).SingleOrDefault() ?? throw new KeyNotFoundException("ShoppingCart with guid " + guid + " not found");
         }
 
         public ShoppingCart? GetByUserNav(Guid userGuid)

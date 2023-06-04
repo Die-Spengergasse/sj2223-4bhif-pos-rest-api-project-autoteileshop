@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
+using System.Security.Claims;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("2.0")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ShoppingCartItemController : ControllerBase
     {
         private readonly IDeleteAbleShoppingCartItemService _deleteAbleShoppingCartItemService;
@@ -116,9 +120,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpDelete("")]
-        public ActionResult<ShoppingCartItem> DeleteShoppingCartItem(Guid guid)
+        [HttpDelete("{guid}")]
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "User")]
+        [AllowAnonymous]
+        public ActionResult<ShoppingCartItem> DeleteShoppingCartItem([FromQuery] Guid guid)
         {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             try
             {
                 var item = _deleteAbleShoppingCartItemService.Delete(_readOnlyShoppingCartItemService.GetByGuid(guid));

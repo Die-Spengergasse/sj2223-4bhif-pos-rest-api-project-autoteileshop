@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
@@ -12,6 +15,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("2.0")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         private readonly IAddUpdateableUserService _addUpdateableUserService;
@@ -29,8 +33,11 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         //Add Methode für User ist in UserRegisterController da sie sonst nicht gebraucht wird
         [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<UserGetDTO>> GetAllUser()
         {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             IEnumerable<User> responseUser = _readOnlyUserService.GetAll();
 
             if (responseUser.ToList().Count == 0) { return NotFound(); }
@@ -46,6 +53,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
         [HttpGet("{guid}")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
             User response = null;
@@ -67,6 +77,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{guid}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<User> DeleteUserByGuid(Guid guid)
         {
             try
@@ -90,6 +102,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpPut("{guid}")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<User> UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
         {
             try
