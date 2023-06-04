@@ -2,7 +2,7 @@
 
 namespace Spg.OAuth.API.Helper
 {
-    public class IProfileService
+    public class ProfileService : IProfileService
     {
         protected readonly AutoTeileShopContext _db;
         
