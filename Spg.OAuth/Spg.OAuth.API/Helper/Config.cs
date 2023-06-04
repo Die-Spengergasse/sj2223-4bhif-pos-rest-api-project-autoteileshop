@@ -1,12 +1,19 @@
 ﻿using IdentityServer4.Models;
 using IdentityServer4.Test;
+using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Domain.Models;
+using Spg.AutoTeileShop.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Spg.OAuth.API.Helper
 {
     public static class Config
     {
+        static List<User> users = createDB().Users.ToList();
         public static IEnumerable<Client> Clients =>
+            
+            
             new List<Client>
             {
             new Client
@@ -41,6 +48,20 @@ namespace Spg.OAuth.API.Helper
                 Password = "password"
             }
             };
+
+        private static AutoTeileShopContext createDB()
+        {
+            DbContextOptions options = new DbContextOptionsBuilder()
+                  //.UseSqlite("Data Source=AutoTeileShopTest.db")
+                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  .UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
+                .Options;
+
+            AutoTeileShopContext db = new AutoTeileShopContext(options);
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+            return db;
+        }
     }
 
 }
