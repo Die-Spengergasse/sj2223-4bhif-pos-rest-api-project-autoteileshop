@@ -65,7 +65,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         /// Benutzern mit der Rolle Teacher (gesetzt mittels ClaimsIdentity.DefaultRoleClaimType in 
         /// UserService.GenerateToken()) aufgerufen werden.
         /// </summary>
-        [Authorize(Roles = "Teacher")]             // Nur User der Rolle Teacher dürfen das sehen.
+        [Authorize(Roles = "Admin")]             // Nur User der Rolle Teacher dürfen das sehen.
         [HttpGet("details")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -82,7 +82,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         public string GetAnonymous() => "Anonymous";
 
         // SZENARIO 2: Nur ein Token mit der eingetragenen Rolle Teacher ist erlaubt
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("demo2")]
         public string GetTeacher() => "Teacher";
 

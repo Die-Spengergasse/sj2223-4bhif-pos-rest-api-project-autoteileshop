@@ -32,9 +32,9 @@ namespace Spg.AutoTeileShop.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
-                //options.UseSqlite("Data Source=\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\db\\AutoTeileShop.db"); //Home PC
+                options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db"); //Home PC
                 //options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
-                options.UseSqlite(ReadLineWithQuestionMark());
+                //options.UseSqlite(ReadLineWithQuestionMark());
             //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
 
 
@@ -58,7 +58,10 @@ namespace Spg.AutoTeileShop.Infrastructure
                     c.Email = f.Internet.Email(c.Vorname, c.Nachname);
                     c.Telefon = f.Person.Phone;
                     c.Addrese = f.Address.FullAddress();
-                    c.PW = f.Internet.Password();                  
+                    c.Role = f.Random.Enum<Roles>();
+                    c.Salt = GenerateSalt();
+                    c.PW = CalculateHash(f.Internet.Password(), c.Salt);
+
                 })
             .Generate(50)
             .ToList();
@@ -202,6 +205,17 @@ namespace Spg.AutoTeileShop.Infrastructure
             }
         }
 
+        public string GenerateSalt()
+        {
+            // 128bit Salt erzeugen.
+            byte[] salt = new byte[128 / 8];
+            using (System.Security.Cryptography.RandomNumberGenerator rnd = System.Security.Cryptography.RandomNumberGenerator.Create())
+            {
+                rnd.GetBytes(salt);
+            }
+            return Convert.ToBase64String(salt);
+        }
+
         public static string ReadLineWithQuestionMark()
         {
             string relativeFilePath = "DataSource.txt";
@@ -241,6 +255,21 @@ namespace Spg.AutoTeileShop.Infrastructure
 
             return null;
         }
+        public string CalculateHash(string password, string salt)
+        {
+            byte[] saltBytes = Convert.FromBase64String(salt);
+            byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
 
+            System.Security.Cryptography.HMACSHA256 myHash = new System.Security.Cryptography.HMACSHA256(saltBytes);
+
+            byte[] hashedData = myHash.ComputeHash(passwordBytes);
+
+            // Das Bytearray wird Base64 codiert zurückgegeben.
+            string hashedPassword = Convert.ToBase64String(hashedData);
+            Console.WriteLine($"Salt:            {salt}");
+            Console.WriteLine($"Password:        {password}");
+            Console.WriteLine($"Hashed Password: {hashedPassword}");
+            return hashedPassword;
+        }
     }
 }
