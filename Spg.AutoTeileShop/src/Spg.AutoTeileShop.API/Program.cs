@@ -174,10 +174,14 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(x => {
+        x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
+    });
 }
 
 app.UseHttpsRedirection();
@@ -193,5 +197,7 @@ app.MapGet("/api", () =>
     return "Hello world";
 }
 );
+
+
 app.Run();
 

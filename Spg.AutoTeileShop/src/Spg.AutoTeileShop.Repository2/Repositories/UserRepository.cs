@@ -80,7 +80,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
         }    
 
 
-        private static string GenerateSalt()
+        public string GenerateSalt()
         {
             // 128bit Salt erzeugen.
             byte[] salt = new byte[128 / 8];

@@ -82,6 +82,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [AllowAnonymous]
         public async Task<ActionResult<string>> Login(UserCredentials user)
         {
             string token = await _authService.GenerateToken(user);
@@ -97,6 +98,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [HttpPost("loginform")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status302Found)]
+        [AllowAnonymous]
+
         public async Task<ActionResult<string>> LoginAsync([FromForm] UserCredentials user)
         {
             await HttpContext

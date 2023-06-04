@@ -74,5 +74,25 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             return _demopupils;
         }
+
+
+        // SZENARIO 1: Anonymer Zugriff erlaubt
+        [AllowAnonymous]
+        [HttpGet("demo1")]
+        public string GetAnonymous() => "Anonymous";
+
+        // SZENARIO 2: Nur ein Token mit der eingetragenen Rolle Teacher ist erlaubt
+        [Authorize(Roles = "Teacher")]
+        [HttpGet("demo2")]
+        public string GetTeacher() => "Teacher";
+
+        // SZENARIO 3: Keine Annotation: Es wird ein beliebiger gültiger JWT akzeptiert
+        [HttpGet("demo3")]
+        public ActionResult<string> GetMyData_2()
+        {
+            string username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? "";
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            return Ok($"{username}:{role}");
+        }
     }
 }

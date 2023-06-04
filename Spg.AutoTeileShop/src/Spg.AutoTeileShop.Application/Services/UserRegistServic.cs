@@ -31,6 +31,7 @@ namespace Spg.AutoTeileShop.Application.Services
             postUser.Role = Roles.User;
             postUser.Guid = Guid.NewGuid();
             postUser.PW = _userRepo.ComputeSha256Hash(postUser.PW);
+            postUser.Salt = _userRepo.GenerateSalt();
             User user = _userRepo.SetUser(postUser);
 
             SendMail sm = new();
@@ -68,7 +69,7 @@ namespace Spg.AutoTeileShop.Application.Services
                     return true;
                 }
                 throw new Exception("Falscher Code");
-            }
+            
             throw new Exception("Es wurde keine passende Mail gefunden");
         }
 
