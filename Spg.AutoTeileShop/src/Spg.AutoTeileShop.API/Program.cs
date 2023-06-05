@@ -22,9 +22,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Reflection;
 
-//product get del -id
-//ShoppingCart del put guid
-//ShoppingCartItem get ShoppingCar
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -160,8 +158,6 @@ builder.Services.AddTransient<AuthService>(services =>
 );
 
 var app = builder.Build();
-
-
 
 
 
