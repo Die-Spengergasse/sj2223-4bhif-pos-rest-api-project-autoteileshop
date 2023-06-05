@@ -31,7 +31,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _readOnlyUserService = readOnlyUserService;
         }
 
-        // All - Authorization
 
         [HttpGet("")]
         [Authorize(Roles = "admin")]
@@ -135,6 +134,38 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             catch (Exception ex)
             {
                 if (ex.Message.Contains($"No User Found with Id: {cartDTO.UserId}")) return BadRequest("User Navigation: " + ex.Message);
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{guid}")]
+        [Produces("application/json")]
+        [Authorize(Roles = "UserOrAdmin")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult DeleteShoppingCart(Guid guid)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            
+            try
+            {
+                ShoppingCart cart = _redOnlyShoppingCartService.GetByGuid(guid);
+                if (cart is null) return BadRequest("No ShoppingCart with this Guid");
+
+
+                // Check if User who is mentiont in the Cart is the same as the User who is logged in or the User is an admin
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(cart.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
+
+                var newCart = _deletableShoppingCartService.Remove(cart);
+
+                return Accepted(newCart);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest();
             }
         }
