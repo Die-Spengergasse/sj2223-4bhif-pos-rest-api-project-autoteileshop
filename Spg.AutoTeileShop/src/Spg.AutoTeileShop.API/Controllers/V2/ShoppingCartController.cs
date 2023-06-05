@@ -34,7 +34,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         // All - Authorization
 
         [HttpGet("")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()
         {
             var carts = _redOnlyShoppingCartService.GetAll();
@@ -47,10 +47,11 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
         [HttpGet("{guid}")]
+        //[Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
             
-            //if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "Admin") return Unauthorized();
+            //if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") return Unauthorized();
             try
             {
                 var cart = _redOnlyShoppingCartService.GetByGuid(guid);
@@ -58,12 +59,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 {
                     return NotFound();
                 }
-                // Check if User is mentiont in the Cart or the User is an Admin 
-                if (
-                !(bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
-                .Equals(cart.UserNav.Guid.ToString()))) return Unauthorized();
+                // Check if User is mentiont in the Cart or the User is an admin 
 
-                if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value != "Admin" ) return Unauthorized();
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(cart.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
    
                     
                 return Ok(cart);
@@ -104,19 +107,29 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<ShoppingCart> AddShoppingCart(ShoppingCartPostDTO cartDTO)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             try
-            {
+            { 
                 ShoppingCart cart = new(cartDTO);
                 if (cartDTO is null) return BadRequest("User Navigation is null");
                 cart.UserNav = _readOnlyUserService.GetById((int)cartDTO.UserId);
+
+
+                // Check if User who is mentiont in the Cart is the same as the User who is logged in or the User is an admin
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(cart.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
+
                 var newCart = _addUpdatableShoppingCartService.AddShoppingCart(cart);
+                
                 return Created($"/api/ShoppingCart/{newCart.guid}", newCart);
             }
             catch (Exception ex)

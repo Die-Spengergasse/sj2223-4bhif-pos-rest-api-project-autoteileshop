@@ -53,7 +53,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
         [HttpGet("{guid}")]
-        [Authorize(Policy = "AdminOrUser")]
+        [Authorize(Policy = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
@@ -101,7 +101,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpPut("{guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<User> UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
         {

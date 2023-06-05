@@ -145,9 +145,9 @@ builder.Services.AddCookieAuthentication(setDefault: true);
 //Authorization
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOrUser", policy =>
+    options.AddPolicy("UserOrAdmin", policy =>
     {
-        policy.Requirements.Add(new CustomAuthorizationRequirement("Admin", "User"));
+        policy.Requirements.Add(new CustomAuthorizationRequirement("User", "Admin"));
     });
 
     options.AddPolicy("SalesmanOrAdmin", policy =>
@@ -155,9 +155,9 @@ builder.Services.AddAuthorization(options =>
         policy.Requirements.Add(new CustomAuthorizationRequirement("Salesman", "Admin"));
     });
 
-    options.AddPolicy("UserOrSalesman", policy =>
+    options.AddPolicy("UserOrSalesmanOrAdmin", policy =>
     {
-        policy.Requirements.Add(new CustomAuthorizationRequirement("User", "Salesman"));
+        policy.Requirements.Add(new CustomAuthorizationRequirement("User", "Salesman", "Admin"));
     });
 });
 
