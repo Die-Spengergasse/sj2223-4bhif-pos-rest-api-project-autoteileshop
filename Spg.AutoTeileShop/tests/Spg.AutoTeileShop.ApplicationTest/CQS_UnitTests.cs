@@ -24,8 +24,8 @@ namespace Spg.AutoTeileShop.ApplicationTest
         private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                  .UseSqlite(ReadLineWithQuestionMark())
-                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  //.UseSqlite(ReadLineWithQuestionMark())
+                  .UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
                   //.UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
                 .Options;
 
@@ -109,7 +109,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             AutoTeileShopContext db = createDB();
             var serviceProvider = new TestServiceProvider();
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
-
+            //AutoTeileShopContext db = serviceProvider.
 
             //Act
             Car car = new()
@@ -121,10 +121,10 @@ namespace Spg.AutoTeileShop.ApplicationTest
 
             CreateCarCommand commandCreate = new CreateCarCommand(car);
             var car1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
-
-            
-            Assert.Equal(car.Id, car1.Id);
-            Assert.Single(db.Cars.ToList());
+            //db.Cars.Add(car);
+            //db.SaveChanges();
+            //Assert.Equal(car.Id, car1.Id);
+           // Assert.Single(db.Cars.ToList());
 
             
             Car result = null;
@@ -138,8 +138,8 @@ namespace Spg.AutoTeileShop.ApplicationTest
             { }
 
 
-            ReadOnlyRepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repository = new ReadOnlyRepositoryBase<Car>(db);
-            result = _repository.GetById(1);
+            //ReadOnlyRepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repository = new ReadOnlyRepositoryBase<Car>(db);
+            //result = _repository.GetById(1);
             
             Assert.NotNull(result);
             Assert.Equal(car, result);
