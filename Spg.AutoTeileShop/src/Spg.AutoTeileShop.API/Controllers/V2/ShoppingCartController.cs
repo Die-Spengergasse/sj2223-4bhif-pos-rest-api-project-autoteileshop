@@ -42,7 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             return Ok(carts);
         }
 
-
+        [HttpGet("{guid}")]
         [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
