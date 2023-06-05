@@ -45,8 +45,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
 
-        [HttpGet("{guid}")]
-        //[Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
             
@@ -81,6 +80,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByUser")]
+        [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery] Guid userGuid)
         {
             try
@@ -91,6 +91,12 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 {
                     return NotFound();
                 }
+                if (
+               (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+               .Equals(cart.UserNav.Guid.ToString())) == false
+               &&
+               (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
                 return Ok(cart);
             }
             catch (KeyNotFoundException ex)
