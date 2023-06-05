@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 using Spg.AutoTeileShop.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Domain.Interfaces;
-using Spg.AutoTeileShop.Application.Services.CQS.Car;
+using Spg.AutoTeileShop.Application.Services.CQS;
+using Spg.AutoTeileShop.Repository2.CustomGenericRepositories;
 
 namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 {
@@ -23,6 +24,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             AutoTeileShopContext db = createDB();
             ReadOnlyRepositoryBase<Car> readOnlyRepo = new ReadOnlyRepositoryBase<Car>(db);
             RepositoryBase<Car> repo = new RepositoryBase<Car>(db);
+            CarRepositoryCustom carRepo = new CarRepositoryCustom(db);
 
             // Hier können Sie die Instanzen Ihrer Abhängigkeiten erstellen und zurückgeben
             if (serviceType == typeof(ICommandHandler<CreateCarCommand, Car>))
@@ -33,10 +35,47 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             {
                 return new GetCarByIdQueryHandler(readOnlyRepo);
             }
+            //GetAllCarsQueryHandler
+            else if (serviceType == typeof(ICommandHandler<DeleteCarCommand, int>))
+            {
+                return new DeleteCarCommandHandler(repo);
+            }
+            else if (serviceType == typeof(ICommandHandler<UpdateCarCommand, Car>))
+            {
+                return new UpdateCarCommandHandler(repo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetAllCarsQuery, IQueryable<Spg.AutoTeileShop.Domain.Models.Car>>))
+            {
+                return new GetAllCarsQueryHandler(readOnlyRepo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>>))
+            {
+                return new GetCarsByBaujahrQueryHandler(carRepo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>>))
+            {
+                return new GetCarsByMarkeQueryHandler(carRepo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetCarsByModellQuery, IEnumerable<Car>>))
+            {
+                return new GetCarsByModellQueryHandler(carRepo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>>))
+            {
+                return new GetCarsByMarkeAndModellQueryHandler(carRepo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>>))
+            {
+                return new GetCarsByMarkeAndModellAndBaujahrQueryHandler(carRepo);
+            }
+            else if (serviceType == typeof(IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>>))
+            {
+                return new GetCarsByFitProductQueryHandler(carRepo);
+            }
             else if (serviceType == typeof(IReadOnlyRepositoryBase<Car>))
             {
                 return new ReadOnlyRepositoryBase<Car>(db);
-            }
+            } 
             else if (serviceType == typeof(IRepositoryBase<Car>))
             {
                 return new RepositoryBase<Car>(db);
@@ -59,8 +98,8 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
-            //db.Database.EnsureDeleted();
-            //db.Database.EnsureCreated();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
             //db.Seed();
             return db;
         }

@@ -12,6 +12,6 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces
 
         Task<TEntity> Update<TKey>(TKey id, TEntity newEntity);
 
-        Task<TEntity> Delete<TKey>(TKey id);
+        Task<TKey> Delete<TKey>(TKey id);
     }
 }

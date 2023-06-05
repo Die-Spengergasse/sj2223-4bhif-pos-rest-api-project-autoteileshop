@@ -214,7 +214,6 @@ namespace Spg.AutoTeileShop.RepositoryTest
         }
 
 
-        // ChatGPT
         [Fact]
         public async Task GetQueryable_Car_ReturnsExpectedResult()
         {

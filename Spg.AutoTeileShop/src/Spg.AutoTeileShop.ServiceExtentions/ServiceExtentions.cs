@@ -16,13 +16,13 @@ using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.Domain.DTO;
 using FluentValidation.AspNetCore;
 using Spg.AutoTeileShop.Domain.Interfaces;
-using Spg.AutoTeileShop.Application.Services.CQS.Car;
 using Spg.AutoTeileShop.Domain;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
 using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
+using Spg.AutoTeileShop.Application.Services.CQS;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {

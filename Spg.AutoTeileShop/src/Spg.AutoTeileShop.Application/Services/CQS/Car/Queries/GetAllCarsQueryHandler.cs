@@ -12,21 +12,21 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
 {
-    public class GetCarByIdQueryHandler : IQueryHandler<GetCarByIdQuery, Spg.AutoTeileShop.Domain.Models.Car>
+    public class GetAllCarsQueryHandler : IQueryHandler<GetAllCarsQuery, IQueryable<Spg.AutoTeileShop.Domain.Models.Car>>
     {
         private readonly IReadOnlyRepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repository;
 
-        public GetCarByIdQueryHandler(IReadOnlyRepositoryBase<Domain.Models.Car> repository)
+        public GetAllCarsQueryHandler(IReadOnlyRepositoryBase<Domain.Models.Car> repository)
         {
             _repository = repository;
         }
         public Expression<Func<Product, bool>>? Filter { get; set; }
 
-        public async Task<Spg.AutoTeileShop.Domain.Models.Car> HandleAsync(GetCarByIdQuery request)
+        public async Task<IQueryable<Spg.AutoTeileShop.Domain.Models.Car>> HandleAsync(GetAllCarsQuery request)
         {
-            Spg.AutoTeileShop.Domain.Models.Car c = await Task.Run(() => _repository.GetById<int>(request.Id))
-                ?? throw new CarNotFoundException("Car konnte nicht gefunden werden!");
-            return c;
+            return await Task.Run(() => _repository.GetAll())
+                ?? throw new CarNotFoundException("Kein Car gefunden");
+            
         }
     }
 }

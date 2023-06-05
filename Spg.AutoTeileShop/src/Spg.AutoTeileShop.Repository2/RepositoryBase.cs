@@ -35,11 +35,11 @@ namespace Spg.AutoTeileShop.Repository2
             }
         }
 
-        public async Task<TEntity> Delete<TKey>(TKey id)
+        public async Task<TKey> Delete<TKey>(TKey id)
         {
             _db.Set<TEntity>().Remove(_db.Set<TEntity>().Find(id) ?? throw new RepositoryDeleteException("Objekt nicht gefunden."));
             await _db.SaveChangesAsync();
-            return _db.Set<TEntity>().Find(id);
+            return id;
         }
 
         public async Task<TEntity> Update<TKey>(TKey id, TEntity newEntity)

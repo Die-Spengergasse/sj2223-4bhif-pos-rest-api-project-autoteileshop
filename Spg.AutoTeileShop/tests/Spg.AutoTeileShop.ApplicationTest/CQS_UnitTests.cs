@@ -5,6 +5,7 @@ using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
 using Spg.AutoTeileShop.ApplicationTest.Helpers;
 using Spg.AutoTeileShop.Domain;
+using Spg.AutoTeileShop.Domain.Exeptions;
 using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
@@ -24,8 +25,8 @@ namespace Spg.AutoTeileShop.ApplicationTest
         private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                  //.UseSqlite(ReadLineWithQuestionMark())
-                  .UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                  .UseSqlite(ReadLineWithQuestionMark())
+                  //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
                   //.UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
                 .Options;
 
@@ -109,9 +110,61 @@ namespace Spg.AutoTeileShop.ApplicationTest
             AutoTeileShopContext db = createDB();
             var serviceProvider = new TestServiceProvider();
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
-            //AutoTeileShopContext db = serviceProvider.
+
 
             //Act
+
+
+
+            GetCarByIdQuery queryReadById = new GetCarByIdQuery(1);
+            Car result = await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById);
+
+
+            //Assert
+
+            car.Baujahr = result.Baujahr;
+            Assert.NotNull(result);
+            Assert.Equal(car.ToString(), result.ToString());
+            Assert.Single(db.Cars.ToList());
+
+        }
+
+        [Fact]
+        public async Task CQS_GetById_Car__throw_CarNotFoundException_TestAsync()
+        {
+            //Arrange
+            //Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+            Car car = new()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+            CreateCarCommand commandCreate = new CreateCarCommand(car);
+            var car1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
+
+            
+            Assert.Equal(car.Id, car1.Id);
+            Assert.Single(db.Cars.ToList());
+
+            //Act - Assert
+
+            GetCarByIdQuery queryReadById = new GetCarByIdQuery(2);
+            Assert.ThrowsAsync<CarNotFoundException>(async () => await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById));
+        }
+
+        [Fact]
+        public async Task CQS_Delete_Car_TestAsync()
+        {
+            //Arrange
+            //Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
             Car car = new()
             {
                 Baujahr = DateTime.Now,
@@ -119,37 +172,300 @@ namespace Spg.AutoTeileShop.ApplicationTest
                 Modell = "M3"
             };
 
-            CreateCarCommand commandCreate = new CreateCarCommand(car);
-            var car1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
-            //db.Cars.Add(car);
-            //db.SaveChanges();
-            //Assert.Equal(car.Id, car1.Id);
-           // Assert.Single(db.Cars.ToList());
+            CreateCarCommand command = new CreateCarCommand(car);
+            var carResult = await mediator.ExecuteAsync<CreateCarCommand, Car>(command);
+            //Act
 
-            
-            Car result = null;
-            GetCarByIdQuery queryReadById = null;
-            try
-            {
-                queryReadById = new GetCarByIdQuery(1);
-                result = await mediator.QueryAsync<GetCarByIdQuery, Car>(queryReadById);
-            }
-            catch (Exception e)
-            { }
+            var result = await mediator.ExecuteAsync<DeleteCarCommand, int>(new DeleteCarCommand(car));
 
-
-            //ReadOnlyRepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repository = new ReadOnlyRepositoryBase<Car>(db);
-            //result = _repository.GetById(1);
-            
-            Assert.NotNull(result);
-            Assert.Equal(car, result);
-            Assert.Single(db.Cars.ToList());
-    
             //Assert
 
-            //Assert.NotNull(result);
-            //Assert.Equal(car, result);
-            //Assert.Single(db.Cars.ToList());
+            Assert.NotNull(result);
+            Assert.Equal(car.Id, result);
+            Assert.Empty(db.Cars.ToList());
+
+        }
+
+        [Fact]
+        public async Task CQS_Update_Car_TestAsync()
+        {
+            //Arrange
+            //Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            Car car = new()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+
+            CreateCarCommand command = new CreateCarCommand(car);
+            var carResult = await mediator.ExecuteAsync<CreateCarCommand, Car>(command);
+            //Act
+
+            car.Marke = "Benz";
+            var result = await mediator.ExecuteAsync<UpdateCarCommand, Car>(new UpdateCarCommand(car));
+
+            ReadOnlyRepositoryBase<Spg.AutoTeileShop.Domain.Models.Car> _repository = new ReadOnlyRepositoryBase<Car>(db);
+            result = _repository.GetById(1);
+            
+            Assert.NotNull(result);
+            Assert.Equal(car.Marke, result.Marke);
+            Assert.Equal("Benz", result.Marke);
+            Assert.Single(db.Cars.ToList());
+        }
+
+        [Fact]
+        public async Task CQS_GetAll_Cars_TestAsync()
+        {
+            //Arrange
+            //Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+            Car car = new()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+            Car car2 = new()
+            {
+                Baujahr = DateTime.Now,
+                Marke = "Audi",
+                Modell = "A3"
+            };
+            CreateCarCommand commandCreate = new CreateCarCommand(car);
+            var car1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate);
+            CreateCarCommand commandCreate2 = new CreateCarCommand(car2);
+            var car1_2 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate2);
+
+            Assert.Equal(2, db.Cars.Count());
+
+            //Act
+
+            GetAllCarsQuery queryGetAllCars = new GetAllCarsQuery();
+            IQueryable<Car> result = await mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(queryGetAllCars);
+
+
+            //Assert
+            foreach (Car c in result)
+            {
+                c.Baujahr = DateTime.Today;
+            }
+
+            for (int i = 0; i < result.Count(); i++)
+            {
+                Assert.Equal(result.ToList().ElementAt(i).Id, db.Cars.ToList().ElementAt(i).Id);
+            }
+
+            Assert.NotNull(result);
+            Assert.Equal(result.ToList().ToString(), db.Cars.ToList().ToString());
+
+        }
+        //IDK
+        [Fact]
+        public async Task CQS_GetCarsByMarkeAndModellAndBaujahr_TestAsync()
+        {
+            // Arrange
+            var db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            var marke = "BMW";
+            var modell = "M3";
+            var baujahr = DateTime.Now;
+
+            Car car = new Car()
+            {
+                Marke = marke,
+                Modell = modell,
+                Baujahr = baujahr
+
+            };
+            CreateCarCommand command = new CreateCarCommand(car);
+            var result1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(command);
+
+            Car car2 = new Car()
+            {
+                Marke = "test",
+                Modell = "test",
+                Baujahr = baujahr
+
+            };
+            var query = new GetCarsByMarkeAndModellAndBaujahrQuery(marke, modell, baujahr);
+
+            // Act
+            var result = await mediator.QueryAsync<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>>(query);
+
+            // Assert
+            car.Baujahr = DateTime.Today;
+            result.First().Baujahr = DateTime.Today;
+            Assert.Equal(result.First().ToString(), car.ToString());
+        }
+
+        [Fact]
+        public async Task CQS_GetCarsByFitProduct_TestAsync()
+        {
+            // Arrange
+            var db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            var product = new Product() {
+                Description = "test",
+                Guid = Guid.NewGuid(),
+                Image = "test",
+                Name = "test",
+                Price = 1.0M,
+            };
+            db.Products.Add(product);
+            db.SaveChanges();
+
+            Car car = new Car()
+            {
+                Marke = "BMW",
+                Modell = "M1",
+                Baujahr = DateTime.Now
+
+            };
+
+            car.AddFitsForProducts(product);
+            Car car2 = new Car()
+            {
+                Marke = "test",
+                Modell = "test",
+                Baujahr = DateTime.Now
+
+            };
+
+            db.Cars.Add(car);
+            db.Cars.Add(car2);
+            db.SaveChanges();
+
+
+            var query = new GetCarsByFitProductQuery(product);
+
+            // Act
+            var result = await mediator.QueryAsync<GetCarsByFitProductQuery, IEnumerable<Car>>(query);
+
+            // Assert
+            car.Baujahr = DateTime.Today;
+            result.First().Baujahr = DateTime.Today;
+
+            Assert.Equal(car.ToString(), result.First().ToString());
+        }
+
+        [Fact]
+        public async Task CQS_GetCarsByBaujahr_TestAsync()
+        {
+            // Arrange
+            var db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            var baujahr = DateTime.Now;
+
+            var query = new GetCarsByBaujahrQuery(baujahr);
+
+            Car car = new Car()
+            {
+                Marke = "BMW",
+                Modell = "M1",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car2 = new Car()
+            {
+                Marke = "Audi",
+                Modell = "A3 Sport",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car3 = new Car()
+            {
+                Marke = "test",
+                Modell = "test",
+                Baujahr = DateTime.Now.AddDays(50)
+
+            };
+
+            db.Cars.Add(car);
+            db.Cars.Add(car2);
+            db.Cars.Add(car3);
+
+            db.SaveChanges();
+
+
+            // Act
+            var result = await mediator.QueryAsync<GetCarsByBaujahrQuery, IEnumerable<Car>>(query);
+
+            // Assert
+            car.Baujahr = DateTime.Today;
+            result.First().Baujahr = DateTime.Today;
+            
+            Assert.Equal(car.ToString(), result.First().ToString());
+            Assert.Equal(car2.ToString(), result.First().ToString());
+            Assert.False(result.Contains(car3));
+        }
+
+        [Fact]
+        public async Task CQS_GetCarsByMarke_TestAsync()
+        {
+            // Arrange
+            var db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            var marke = "BMW";
+
+            var query = new GetCarsByMarkeQuery(marke);
+            
+            Car car = new Car()
+            {
+                Marke = "BMW",
+                Modell = "M1",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car2 = new Car()
+            {
+                Marke = "BMW",
+                Modell = "A3 Sport",
+                Baujahr = DateTime.Now
+
+            };
+
+            Car car3 = new Car()
+            {
+                Marke = "test",
+                Modell = "test",
+                Baujahr = DateTime.Now.AddDays(50)
+
+            };
+
+            db.Cars.Add(car);
+            db.Cars.Add(car2);
+            db.Cars.Add(car3);
+
+            db.SaveChanges();
+
+
+            // Act
+            var result = await mediator.QueryAsync<GetCarsByMarkeQuery, IEnumerable<Car>>(query);
+
+            // Assert
+
+            Assert.Equal(car.ToString(), result.First().ToString());
+            Assert.Equal(car2.ToString(), result.First().ToString());
+            Assert.False(result.Contains(car3));
         }
     }
 }
+
