@@ -47,7 +47,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
             
-            //if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") return Unauthorized();
             try
             {
                 var cart = _redOnlyShoppingCartService.GetByGuid(guid);
