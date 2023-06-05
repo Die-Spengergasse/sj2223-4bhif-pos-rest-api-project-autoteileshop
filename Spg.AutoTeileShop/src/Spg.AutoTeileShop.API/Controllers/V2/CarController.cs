@@ -28,11 +28,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _addUpdateableCarService = addUpdateableCarService;
         }
 
-        // AddCar - Authorization
-        // DeleteCar - Authorization
-        // UpdateCar - Authorization
 
         [HttpGet("")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetAllCars()
         {
             return Ok(_readOnlycarService.GetAll());
@@ -62,6 +60,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("byBaujahr")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByBaujahr([FromQuery] int year)
         {
             try
@@ -89,6 +88,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByModel")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByModell([FromQuery] string model)
         {
             try
@@ -102,6 +102,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModell")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
         {
             try
@@ -115,6 +116,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByMarkeAndModellAndBaujahr")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
         {
             try
@@ -128,6 +130,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SalesmanOrAdmin")]
         public ActionResult<Car> DeleteCar(int id)
         {
             try
@@ -145,6 +148,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
+        [Authorize(Roles = "SalesmanOrAdmin")]
         public ActionResult<Car> AddCar(CarDTO carDTO)
         {
             try
@@ -162,6 +166,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPut("")]
         [Produces("application/json")]
+        [Authorize(Roles = "SalesmanOrAdmin")]
         public ActionResult<Car> UpdateCar(CarDTO carDTO)
         {
             try

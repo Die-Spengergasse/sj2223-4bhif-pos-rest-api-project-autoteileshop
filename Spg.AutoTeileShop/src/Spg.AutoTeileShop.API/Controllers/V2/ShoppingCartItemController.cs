@@ -30,8 +30,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _readOnlyShoppingCartService = readOnlyShoppingCartService;
         }
 
-        // All - Authorization
-
         [HttpGet("")]
         [Authorize(Roles = "Admin")]
         public ActionResult<List<ShoppingCartItem>> GetAllShoppingCartItems()
@@ -73,6 +71,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ShoppingCart")]
+        [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery] int shoppingCartId)
         {
             try
@@ -132,6 +131,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPut("")]
         [Produces("application/json")]
+        [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> UpdateShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             try

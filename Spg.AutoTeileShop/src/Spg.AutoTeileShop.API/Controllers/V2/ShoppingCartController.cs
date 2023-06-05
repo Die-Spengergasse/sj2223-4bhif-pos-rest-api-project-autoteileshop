@@ -31,7 +31,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
         [HttpGet("")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()
         {
             var carts = _redOnlyShoppingCartService.GetAll();
@@ -61,8 +61,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 .Equals(cart.UserNav.Guid.ToString())) == false
                 &&
                 (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
-
-
 
                 return Ok(cart);
             }
