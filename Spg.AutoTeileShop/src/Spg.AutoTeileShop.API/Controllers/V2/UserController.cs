@@ -37,7 +37,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<UserGetDTO>> GetAllUser()
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             IEnumerable<User> responseUser = _readOnlyUserService.GetAll();
 
             if (responseUser.ToList().Count == 0) { return NotFound(); }
@@ -57,11 +56,16 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
+            var userGuid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             User response = null;
             try
             {
                 response = _readOnlyUserService.GetByGuid(guid);
-                if (response == null) { return NotFound(); }
+                if (response == null) return NotFound();
+
+                if (response.Guid.ToString().Equals(userGuid) == false && User.IsInRole("Admin") == false)
+                    return Unauthorized();
             }
             catch (Exception e)
             {
@@ -76,12 +80,16 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<User> DeleteUserByGuid(Guid guid)
         {
             try
             {
+                if (guid.ToString().Equals(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)
+                    == false && User.IsInRole("Admin") == false)
+                    return Unauthorized();
+
                 User response = _readOnlyUserService.GetByGuid(guid);
                 if (response is not null)
                 {
@@ -107,6 +115,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                if (guid.ToString().Equals(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)
+                    == false && User.IsInRole("Admin") == false)
+                    return Unauthorized();
                 _addUpdateableUserService.Update(guid, new User(userJSON));
                 return Ok();
             }

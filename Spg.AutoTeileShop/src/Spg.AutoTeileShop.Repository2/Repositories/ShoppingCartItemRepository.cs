@@ -36,17 +36,17 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public List<ShoppingCartItem> GetAll()
         {
-            return _db.ShoppingCartItems.ToList();
+            return _db.ShoppingCartItems.Include(s => s.ShoppingCartNav.UserNav).ToList();
         }
 
         public ShoppingCartItem GetByGuid(Guid guid)
         {
-            return (ShoppingCartItem)(_db.ShoppingCartItems.Where(s => s.guid == guid) ?? throw new KeyNotFoundException($"No Item found with Guid {guid}"));
+            return (ShoppingCartItem)(_db.ShoppingCartItems.Include(s => s.ShoppingCartNav.UserNav).Where(s => s.guid == guid) ?? throw new KeyNotFoundException($"No Item found with Guid {guid}"));
         }
 
         public ShoppingCartItem GetById(int Id)
         {
-            return _db.ShoppingCartItems.Find(Id) ?? throw new KeyNotFoundException($"No Item found with Guid {Id}");
+            return (ShoppingCartItem)(_db.ShoppingCartItems.Include(s => s.ShoppingCartNav.UserNav).Where(s => s.Id == Id) ?? throw new KeyNotFoundException($"No Item found with Guid {Id}"));
         }
 
         public ShoppingCartItem Update(ShoppingCartItem shoppingCartItem)

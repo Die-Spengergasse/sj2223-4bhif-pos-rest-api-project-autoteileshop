@@ -33,6 +33,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         // All - Authorization
 
         [HttpGet("")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<List<ShoppingCartItem>> GetAllShoppingCartItems()
         {
             var items = _readOnlyShoppingCartItemService.GetAll();
@@ -42,11 +43,21 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("{guid}")]
+        [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> GetShoppingCartItemByGuid(Guid guid)
         {
             try
             {
                 var item = _readOnlyShoppingCartItemService.GetByGuid(guid);
+                
+                // Check if User who is mentiont in the Cart is the same as the User who is logged in or the User is an admin
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(item.ShoppingCartNav.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
+
                 if (item is null)
                     return NotFound();
                 return Ok(item);
@@ -68,6 +79,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
                 if (shoppingCartId == 0) return BadRequest();
                 var shoppingCart = _readOnlyShoppingCartService.GetById(shoppingCartId);
+                
+                // Check if User who is mentiont in the Cart is the same as the User who is logged in or the User is an admin
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(shoppingCart.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+                
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
@@ -91,11 +110,18 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        public ActionResult<ShoppingCartItem> AddShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        [Authorize(Roles = "UserOrAdmin")]
+        public ActionResult<ShoppingCartItem> AddShoppingCartItem([FromBody] ShoppingCartItemPostDTO shoppingCartItem)
         {
             try
             {
-                var item = _addUpdateableShoppingCartItemService.Add(shoppingCartItem);
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(shoppingCartItem.ShoppingCartNav.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
+                var item = _addUpdateableShoppingCartItemService.Add(new ShoppingCartItem(shoppingCartItem));
                 return CreatedAtAction(nameof(GetShoppingCartItemByGuid), new { item.guid }, item);
             }
             catch (Exception e)
@@ -110,6 +136,12 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(shoppingCartItem.ShoppingCartNav.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+
                 var item = _addUpdateableShoppingCartItemService.Update(shoppingCartItem);
                 return Ok(item);
             }
@@ -121,16 +153,22 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{guid}")]
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "User")]
-        [AllowAnonymous]
+        [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> DeleteShoppingCartItem([FromQuery] Guid guid)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             try
             {
-                var item = _deleteAbleShoppingCartItemService.Delete(_readOnlyShoppingCartItemService.GetByGuid(guid));
+                var itemS = _readOnlyShoppingCartItemService.GetByGuid(guid);
+                
+                if (
+                (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                .Equals(itemS.ShoppingCartNav.UserNav.Guid.ToString())) == false
+                &&
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+                
+                var item = _deleteAbleShoppingCartItemService.Delete(itemS);
                 return Ok(item);
             }
             catch (KeyNotFoundException kE) { return Ok(); }

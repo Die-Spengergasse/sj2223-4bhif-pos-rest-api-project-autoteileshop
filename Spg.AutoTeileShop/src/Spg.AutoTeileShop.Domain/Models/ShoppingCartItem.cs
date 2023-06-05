@@ -1,4 +1,5 @@
-﻿using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
+﻿using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -41,6 +42,13 @@ namespace Spg.AutoTeileShop.Domain.Models
             ProductNav = productNav;
             ShoppingCartId = shoppingCartId;
             ShoppingCartNav = shoppingCartNav;
+        }
+        public ShoppingCartItem(ShoppingCartItemPostDTO dto)
+        {
+            guid = Guid.NewGuid();
+            Pieces = dto.Pieces;
+            ProductNav = dto.ProductNav;
+            ShoppingCartNav = dto.ShoppingCartNav;
         }
     }
 }
