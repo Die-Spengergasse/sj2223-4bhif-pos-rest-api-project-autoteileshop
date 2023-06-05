@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Metadata.Ecma335;
+
 using System.Security.Claims;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
@@ -31,7 +29,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _readOnlyUserService = readOnlyUserService;
         }
 
-
+        
         [HttpGet("")]
         [Authorize(Roles = "admin")]
         public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()
