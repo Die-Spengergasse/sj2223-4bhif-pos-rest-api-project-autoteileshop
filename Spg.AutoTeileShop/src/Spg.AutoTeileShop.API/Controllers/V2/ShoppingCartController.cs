@@ -29,7 +29,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _readOnlyUserService = readOnlyUserService;
         }
 
-        
+
         [HttpGet("")]
         [Authorize(Roles = "admin")]
         public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()
@@ -46,7 +46,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [Authorize(Roles = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
-            
+
             try
             {
                 var cart = _redOnlyShoppingCartService.GetByGuid(guid);
@@ -62,8 +62,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 &&
                 (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
 
-   
-                    
+
+
                 return Ok(cart);
             }
             catch (KeyNotFoundException ex)
@@ -113,10 +113,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<ShoppingCart> AddShoppingCart(ShoppingCartPostDTO cartDTO)
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
             try
-            { 
+            {
                 ShoppingCart cart = new(cartDTO);
                 if (cartDTO is null) return BadRequest("User Navigation is null");
                 cart.UserNav = _readOnlyUserService.GetById((int)cartDTO.UserId);
@@ -131,7 +129,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
 
                 var newCart = _addUpdatableShoppingCartService.AddShoppingCart(cart);
-                
+
                 return Created($"/api/ShoppingCart/{newCart.guid}", newCart);
             }
             catch (Exception ex)
@@ -148,7 +146,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         public IActionResult DeleteShoppingCart(Guid guid)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            
+
             try
             {
                 ShoppingCart cart = _redOnlyShoppingCartService.GetByGuid(guid);
