@@ -59,6 +59,7 @@ builder.Services.AddApiVersioning(o =>
         new HeaderApiVersionReader("X-Version"),
         new MediaTypeApiVersionReader("ver"));
 });
+
 builder.Services.AddVersionedApiExplorer(
     options =>
     {
@@ -109,23 +110,7 @@ builder.Services.AddSwaggerGen(s =>
 
 });
 
-//// NuGet: Microsoft.AspNetCore.Mvc.Versioning
-//builder.Services.AddApiVersioning(o =>
-//{
-//    o.AssumeDefaultVersionWhenUnspecified = true;
-//    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
-//    o.ReportApiVersions = true;
-//    o.ApiVersionReader = ApiVersionReader.Combine(
-//        new QueryStringApiVersionReader("api-version"),
-//        new HeaderApiVersionReader("X-Version"),
-//        new MediaTypeApiVersionReader("ver"));
-//});
-builder.Services.AddVersionedApiExplorer(
-    options =>
-    {
-        options.GroupNameFormat = "'v'VVV";
-        options.SubstituteApiVersionInUrl = true;
-    });
+
 
 
 builder.Services.AddCors(options =>
