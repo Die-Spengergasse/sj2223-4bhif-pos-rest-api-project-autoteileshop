@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+
 using Microsoft.AspNetCore.Routing;
 
 using Microsoft.EntityFrameworkCore;
@@ -99,7 +100,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
-                return Ok(_readOnlycarService.GetByBauJahr(new DateTime(year, 1, 1)));
+                var result = _readOnlycarService.GetByBauJahr(new DateTime(year, 1, 1));
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
+                return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
             catch (Exception e)
             {
@@ -129,7 +133,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
-                return Ok(_readOnlycarService.GetByModell(model));
+                var result = _readOnlycarService.GetByModell(model);
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
+                return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
             catch (Exception e)
             {
@@ -142,7 +149,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
-                return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
+                var result = _readOnlycarService.GetByMarkeAndModell(marke, model);
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
+                return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
             catch (Exception e)
             {
@@ -155,7 +165,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
-                return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(merke, model, new DateTime(baujahr, 1, 1)));
+                var result = _readOnlycarService.GetByMarkeAndModellAndBaujahr(merke, model, new DateTime(baujahr, 1, 1));
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
+                return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
             catch (Exception e)
             {
@@ -176,7 +189,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 else if ((baujahr == -1|| baujahr <= 0) &&  marke is not null && model is not null) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
                 else if ((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
                 else
+
                 return Ok(_readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)));
+                // Hatoes implementierung ~?
             }
             catch (Exception e)
             {
@@ -189,8 +204,12 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
-                _deletableCarService.Delete(_readOnlycarService.GetById(id));
-                return Ok();
+                var result = _deletableCarService.Delete(_readOnlycarService.GetById(id));
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
+                _deletableCarService.Delete(_readOnlycarService.GetById(id)); // ~?
+                
+                return Ok(_deletableCarService.Delete(_readOnlycarService.GetById(id)));
             }
             catch (Exception e)
             {
@@ -207,8 +226,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 Car car = new Car(carDTO);
-                _addUpdateableCarService.Add(car);
+                _addUpdateableCarService.Add(car); // ~?
+
+                var result = _addUpdateableCarService.Add(car); ;
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
                 return Created("/api/Car/" + car.Id, car);
+                // return Ok(result);  ~? return ok überflüssig   
             }
             catch (Exception e)
             {
@@ -226,8 +250,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 Car car = new Car(id, carDTO);
-                _addUpdateableCarService.Update(car);
+                _addUpdateableCarService.Update(car); // ~?
+
+                var result = _addUpdateableCarService.Update(car);
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
                 return Ok(car);
+                // return Ok(result);  ~? return ok überflüssig 
             }
             catch (Exception e)
             {
