@@ -7,6 +7,7 @@ using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -45,8 +46,14 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IDeletableCatagoryService, CatagoryService>();
             serviceCollection.AddTransient<ICatagoryRepository, CatagoryRepository>();
 
+            //ShoppingCartItem Controller
+            serviceCollection.AddTransient<IAddUpdateableShoppingCartItemService, ShoppingCartItemService>();
+            serviceCollection.AddTransient<IReadOnlyShoppingCartItemService, ShoppingCartItemService>();
+            serviceCollection.AddTransient<IDeleteAbleShoppingCartItemService, ShoppingCartItemService>();
+            serviceCollection.AddTransient<IShoppingCartItemRepository, ShoppingCartItemRepository>();
 
-            
+
+
         }
     }
 }
