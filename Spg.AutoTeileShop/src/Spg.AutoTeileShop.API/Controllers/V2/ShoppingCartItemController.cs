@@ -53,7 +53,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
                 .Equals(item.ShoppingCartNav.UserNav.Guid.ToString())) == false
                 &&
-                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
+                (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "Admin") == false) return Unauthorized();
 
 
                 if (item is null)

@@ -20,13 +20,51 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
         {
             _repository = repository;
         }
-        public Expression<Func<Product, bool>>? Filter { get; set; }
+        //public Expression<Func<Product, bool>>? Filter { get; set; }
 
         public async Task<IQueryable<Spg.AutoTeileShop.Domain.Models.Car>> HandleAsync(GetAllCarsQuery request)
         {
-            return await Task.Run(() => _repository.GetAll())
-                ?? throw new CarNotFoundException("Kein Car gefunden");
-            
+            var query = _repository.GetAll();
+            IQueryable<Domain.Models.Car> result = null;
+            Task<IQueryable<Domain.Models.Car>> task = null;
+
+            // Filtern
+            if (request.Filter != null)
+            {
+                // query = Task.FromResult((IQueryable<Domain.Models.Car>)query.Result.Where(request.Filter).AsQueryable()); //(Task<IQueryable<Domain.Models.Car>>)
+                result = query.Result.Where(request.Filter).AsQueryable();
+                task = Task.FromResult(result);
+
+                query = task;
+            }
+            // Sortieren
+      
+
+            if (request.SortBy != null)
+            {
+                if (request.SortDescending)
+                {
+                    result = query.Result.OrderByDescending(request.SortBy).AsQueryable();
+                    query = Task.FromResult(result);
+                }
+                else
+                {
+                    result = query.Result.OrderBy(request.SortBy).AsQueryable();
+                    query = Task.FromResult(result);
+                }
+            }
+
+
+            // Paginieren
+            result = query.Result.Skip((request.PageNumber - 1) * request.PageSize)
+                         .Take(request.PageSize);
+            query = Task.FromResult(result);
+
+            // Return
+            task = await Task.FromResult(query)
+                       ?? throw new CarNotFoundException("Kein Car gefunden");
+
+            return task.Result;
         }
     }
 }
