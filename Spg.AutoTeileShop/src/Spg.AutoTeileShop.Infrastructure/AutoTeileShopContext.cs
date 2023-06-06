@@ -32,10 +32,10 @@ namespace Spg.AutoTeileShop.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
-                options.UseSqlite("Data Source=\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\db\\AutoTeileShop.db"); //Home PC
+                options.UseSqlite($"Data Source=Data Source = C:\\Users\\User\\source\\repos\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\AutoTeileShop.db"); //Hannes
                             //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
-            
-            
+
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

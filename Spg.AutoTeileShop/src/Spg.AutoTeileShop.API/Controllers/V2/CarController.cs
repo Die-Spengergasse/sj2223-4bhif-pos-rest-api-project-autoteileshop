@@ -31,9 +31,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyCarService _readOnlycarService;
         private readonly IDeletableCarService _deletableCarService;
         private readonly IAddUpdateableCarService _addUpdateableCarService;
+        //requert for HATEOAS, List of Routes and Methodes
+
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
 
-        //requert for HATEOAS, List of Routes and Methodes
         private List<BuildRoutePattern> _routes;
 
 
@@ -112,7 +113,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
-                return Ok(_readOnlycarService.GetByMarke(marke));
+                var result = _readOnlycarService.GetByMarke(marke);
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+
+                return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
             catch (Exception e)
             {
