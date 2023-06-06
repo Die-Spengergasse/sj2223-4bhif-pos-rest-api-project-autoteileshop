@@ -20,13 +20,31 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
         {
             _repository = repository;
         }
-        public Expression<Func<Product, bool>>? Filter { get; set; }
+        //public Expression<Func<Product, bool>>? Filter { get; set; }
 
         public async Task<IQueryable<Spg.AutoTeileShop.Domain.Models.Car>> HandleAsync(GetAllCarsQuery request)
         {
-            return await Task.Run(() => _repository.GetAll())
-                ?? throw new CarNotFoundException("Kein Car gefunden");
-            
+            var query = _repository.GetAll();
+
+            // Filtern
+            if (request.Filter != null)
+                query = (Task<IQueryable<Domain.Models.Car>>)query.Result.Where(request.Filter);
+
+            // Sortieren
+            if (request.SortBy != null)
+            {
+                if (request.SortDescending)
+                    query = (Task<IQueryable<Domain.Models.Car>>)(IQueryable<Domain.Models.Car>)query.Result.OrderByDescending(request.SortBy);
+                else
+                    query= (Task<IQueryable<Domain.Models.Car>>)query.Result.OrderBy(request.SortBy);
+            }
+
+            // Paginieren
+            query = (Task<IQueryable<Domain.Models.Car>>)query.Result.Skip((request.PageNumber - 1) * request.PageSize)
+                         .Take(request.PageSize);
+
+            return (IQueryable<Domain.Models.Car>)(await Task.FromResult(query)
+                       ?? throw new CarNotFoundException("Kein Car gefunden"));
         }
     }
 }
