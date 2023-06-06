@@ -25,26 +25,46 @@ namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Queries
         public async Task<IQueryable<Spg.AutoTeileShop.Domain.Models.Car>> HandleAsync(GetAllCarsQuery request)
         {
             var query = _repository.GetAll();
+            IQueryable<Domain.Models.Car> result = null;
+            Task<IQueryable<Domain.Models.Car>> task = null;
 
             // Filtern
             if (request.Filter != null)
-                query = (Task<IQueryable<Domain.Models.Car>>)query.Result.Where(request.Filter);
+            {
+                // query = Task.FromResult((IQueryable<Domain.Models.Car>)query.Result.Where(request.Filter).AsQueryable()); //(Task<IQueryable<Domain.Models.Car>>)
+                result = query.Result.Where(request.Filter).AsQueryable();
+                task = Task.FromResult(result);
 
+                query = task;
+            }
             // Sortieren
+      
+
             if (request.SortBy != null)
             {
                 if (request.SortDescending)
-                    query = (Task<IQueryable<Domain.Models.Car>>)(IQueryable<Domain.Models.Car>)query.Result.OrderByDescending(request.SortBy);
+                {
+                    result = query.Result.OrderByDescending(request.SortBy).AsQueryable();
+                    query = Task.FromResult(result);
+                }
                 else
-                    query= (Task<IQueryable<Domain.Models.Car>>)query.Result.OrderBy(request.SortBy);
+                {
+                    result = query.Result.OrderBy(request.SortBy).AsQueryable();
+                    query = Task.FromResult(result);
+                }
             }
 
-            // Paginieren
-            query = (Task<IQueryable<Domain.Models.Car>>)query.Result.Skip((request.PageNumber - 1) * request.PageSize)
-                         .Take(request.PageSize);
 
-            return (IQueryable<Domain.Models.Car>)(await Task.FromResult(query)
-                       ?? throw new CarNotFoundException("Kein Car gefunden"));
+            // Paginieren
+            result = query.Result.Skip((request.PageNumber - 1) * request.PageSize)
+                         .Take(request.PageSize);
+            query = Task.FromResult(result);
+
+            // Return
+            task = await Task.FromResult(query)
+                       ?? throw new CarNotFoundException("Kein Car gefunden");
+
+            return task.Result;
         }
     }
 }

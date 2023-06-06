@@ -480,7 +480,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
 
         //Filtering Paging, Sorting
         [Fact]
-        public async Task CQS_GetAllCarsQuery_Filter_TestAsync()
+        public async Task CQS_GetAllCarsQuery_Filter_And_Sor_TestAsync()
         {
             // Arrange
             // Datenbank
@@ -501,11 +501,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
                 Modell = "A3"
             };
 
-            //CreateCarCommand commandCreate1 = new CreateCarCommand(car1);
-            //var createdCar1 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate1);
-
-            //CreateCarCommand commandCreate2 = new CreateCarCommand(car2);
-            //var createdCar2 = await mediator.ExecuteAsync<CreateCarCommand, Car>(commandCreate2);
+            
             db.Cars.AddRange(car1, car2);
             db.SaveChanges();
 
@@ -533,6 +529,216 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Die folgenden Assertions können je nach Anforderungen angepasst werden
             Assert.Equal("BMW", carResult.Marke);
             Assert.Equal("M3", carResult.Modell);
+        }
+
+        [Fact]
+        public async Task CQS_GetAllCarsQuery_Filter_And_Sort_multibleCars_TestAsync()
+        {
+            // Arrange
+            // Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            Car car1 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+            Car car2 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "A3"
+            };
+            Car car3 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "Audi",
+                Modell = "A3"
+            };
+
+
+            db.Cars.AddRange(car1, car2, car3);
+            db.SaveChanges();
+
+            Assert.Equal(3, db.Cars.Count());
+
+            // Act
+            GetAllCarsQuery query = new GetAllCarsQuery
+            {
+                Filter = c => c.Marke == "BMW",    // Beispiel für Filterung
+                SortBy = c => c.Modell,            // Beispiel für Sortierung nach Modell
+                SortDescending = false,            // Aufsteigende Sortierung
+                PageNumber = 1,                    // Erste Seite
+                PageSize = 10                       // Eine Seite mit einem Element
+            };
+
+            var result = await mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(query);
+
+            // Assert
+            Assert.Equal(result.Count(), 2);   // Es sollte nur ein Auto zurückgegeben werden, da wir nur eine Seite mit einem Element angefordert haben
+
+            Car carResult1 = result.FirstOrDefault();
+            Car carResult2 = result.Last();
+
+            Assert.NotNull(carResult1);   // Das zurückgegebene Auto sollte nicht null sein
+            Assert.NotNull(carResult2);
+            Assert.Equal(car2.Id, carResult1.Id);   // Das zurückgegebene Auto sollte das erwartete Auto sein
+            Assert.Equal(car1.Id, carResult2.Id);
+
+            Assert.Equal("BMW", carResult1.Marke);
+            Assert.Equal("A3", carResult1.Modell);
+        }
+
+        [Fact]
+        public async Task CQS_GetAllCarsQuery_Filter__And_SortDescending_multibleCars_TestAsync()
+        {
+            // Arrange
+            // Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            Car car1 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+            Car car2 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "A3"
+            };
+            Car car3 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "Audi",
+                Modell = "A3"
+            };
+
+
+            db.Cars.AddRange(car1, car2, car3);
+            db.SaveChanges();
+
+            Assert.Equal(3, db.Cars.Count());
+
+            // Act
+            GetAllCarsQuery query = new GetAllCarsQuery
+            {
+                Filter = c => c.Marke == "BMW",    // Beispiel für Filterung
+                SortBy = c => c.Modell,            // Beispiel für Sortierung nach Modell
+                SortDescending = true,            // Aufsteigende Sortierung
+                PageNumber = 1,                    // Erste Seite
+                PageSize = 10                       // Eine Seite mit einem Element
+            };
+
+            var result = await mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(query);
+
+            // Assert
+            Assert.Equal(result.Count(), 2);   // Es sollte nur ein Auto zurückgegeben werden, da wir nur eine Seite mit einem Element angefordert haben
+
+            Car carResult1 = result.FirstOrDefault();
+            Car carResult2 = result.Last();
+
+            Assert.NotNull(carResult1);   // Das zurückgegebene Auto sollte nicht null sein
+            Assert.NotNull(carResult2);
+            Assert.Equal(car1.Id, carResult1.Id);   // Das zurückgegebene Auto sollte das erwartete Auto sein
+            Assert.Equal(car2.Id, carResult2.Id);
+
+            Assert.Equal("BMW", carResult1.Marke);
+            Assert.Equal("M3", carResult1.Modell);
+        }
+
+        [Fact]
+        public async Task CQS_GetAllCarsQuery_Paging_multibleCars_TestAsync()
+        {
+            // Arrange
+            // Datenbank
+            AutoTeileShopContext db = createDB();
+            var serviceProvider = new TestServiceProvider();
+            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
+            Car car1 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "M3"
+            };
+            Car car2 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "BMW",
+                Modell = "A3"
+            };
+            Car car3 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "Audi",
+                Modell = "A3"
+            };
+
+            Car car4 = new Car
+            {
+                Baujahr = DateTime.Now,
+                Marke = "Audi",
+                Modell = "A2"
+            };
+
+
+            db.Cars.AddRange(car1, car2, car3, car4);
+            db.SaveChanges();
+
+            Assert.Equal(4, db.Cars.Count());
+
+            // Act
+            GetAllCarsQuery query = new GetAllCarsQuery
+            {
+                Filter = null,    // Beispiel für Filterung
+                SortBy = null,            // Beispiel für Sortierung nach Modell
+                SortDescending = false,            // Aufsteigende Sortierung
+                PageNumber = 1,                    // Erste Seite
+                PageSize = 2                       // Eine Seite mit einem Element
+            };
+
+            GetAllCarsQuery query2 = new GetAllCarsQuery
+            {
+                Filter = null,    // Beispiel für Filterung
+                SortBy = null,            // Beispiel für Sortierung nach Modell
+                SortDescending = false,            // Aufsteigende Sortierung
+                PageNumber = 2,                    // Erste Seite
+                PageSize = 2                       // Eine Seite mit einem Element
+            };
+            var result = await mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(query);
+
+            var result2 = await mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(query2);
+
+
+            // Assert
+            Assert.Equal(result.Count(), 2);   // Es sollte nur ein Auto zurückgegeben werden, da wir nur eine Seite mit einem Element angefordert haben
+
+            Car carResult1 = result.FirstOrDefault();
+            Car carResult2 = result.OrderBy(r => r.Id).Last();
+
+            Car carResult3 = result2.FirstOrDefault();
+            Car carResult4 = result2.OrderBy(r => r.Id).Last();
+
+            Assert.NotNull(carResult1);   // Das zurückgegebene Auto sollte nicht null sein
+            Assert.NotNull(carResult2);
+            Assert.NotNull(carResult3);
+            Assert.NotNull(carResult4);
+            Assert.Equal(car1.Id, carResult1.Id);   // Das zurückgegebene Auto sollte das erwartete Auto sein
+            Assert.Equal(car2.Id, carResult2.Id);
+            Assert.Equal(car3.Id, carResult3.Id);   
+            Assert.Equal(car4.Id, carResult4.Id);
+
+            Assert.Equal("BMW", carResult1.Marke);
+            Assert.Equal("M3", carResult1.Modell);
+            Assert.Equal("BMW", carResult2.Marke);
+            Assert.Equal("A3", carResult2.Modell);
         }
 
     }
