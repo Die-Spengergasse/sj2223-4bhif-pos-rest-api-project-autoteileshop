@@ -1132,5 +1132,13 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             AutoTeileShopContext db = createDB();           
         }
+
+        [Fact]
+        public void DomainModel_ShoppingCart_ShoppingCartItem_LazyLoading_Test()
+        {
+            AutoTeileShopContext db = createDB();
+            db.Seed();
+            Assert.NotNull(db.ShoppingCartItems.First().ShoppingCartNav.Id);
+        }
     }
 }

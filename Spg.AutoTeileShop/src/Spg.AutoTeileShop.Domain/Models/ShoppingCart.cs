@@ -16,7 +16,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public int? UserId { get; set; }
         public User? UserNav { get; set; }
         private List<ShoppingCartItem> _shoppingCartItems = new();
-        public IReadOnlyList<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems;
+        public virtual IReadOnlyList<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems;
 
 
         public ShoppingCart(int id, Guid guid)
