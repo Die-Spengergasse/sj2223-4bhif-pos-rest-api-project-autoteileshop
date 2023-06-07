@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 
@@ -15,18 +17,35 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IDeletableCatagoryService _deletableCatagoryService;
         private readonly IAddUpdateableCatagoryService _addUpdateableCatagoryService;
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
+        //Hateaos
+        private readonly IEnumerable<EndpointDataSource> _endpointSources;
+        private List<BuildRoutePattern> _routes;
 
-        public CatagoryController(IDeletableCatagoryService deletableCatagoryService, IAddUpdateableCatagoryService addUpdateableCatagoryService, IReadOnlyCatagoryService readOnlyCatagoryService)
+
+        public CatagoryController
+            (IDeletableCatagoryService deletableCatagoryService, IAddUpdateableCatagoryService addUpdateableCatagoryService,
+            IReadOnlyCatagoryService readOnlyCatagoryService, IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints)
         {
             _deletableCatagoryService = deletableCatagoryService;
             _addUpdateableCatagoryService = addUpdateableCatagoryService;
             _readOnlyCatagoryService = readOnlyCatagoryService;
+            //Hateaos
+            _endpointSources = endpointSources;
+
+            var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+
+            _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
+
+
         }
 
         [HttpGet("")]
         public ActionResult<List<Catagory>> GetAll()
         {
-            return Ok(_readOnlyCatagoryService.GetAllCatagories());
+            var result = _readOnlyCatagoryService.GetAllCatagories();
+            HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+            
+            return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
         }
 
         [HttpGet("{id}")]
@@ -35,6 +54,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                var result = _readOnlyCatagoryService.GetCatagoryById(id);
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 return Ok(_readOnlyCatagoryService.GetCatagoryById(id));
             }
             catch (Exception e)
@@ -51,6 +73,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                var result = _readOnlyCatagoryService.GetCatagoryByName(name);
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 return Ok(_readOnlyCatagoryService.GetCatagoryByName(name));
             }
             catch (Exception e)
@@ -67,6 +92,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                var result = _readOnlyCatagoryService.GetCatagoryDescriptionById(id);
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 return Ok(_readOnlyCatagoryService.GetCatagoryDescriptionById(id));
             }
             catch (Exception e)
@@ -160,6 +188,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                var result = _addUpdateableCatagoryService.UpdateCatagory(Id, catagory);
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 return Ok(_addUpdateableCatagoryService.UpdateCatagory(Id, catagory));
             }
             catch (Exception e)
@@ -174,8 +205,12 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             Catagory catagory = null;
             try
             {
+                //var result = _deletableCatagoryService.DeleteCatagory(catagory); / (_deletableCatagoryService.DeleteCatagory(catagory) not null error )
+                //HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 catagory = _readOnlyCatagoryService.GetCatagoryById(id);
                 _deletableCatagoryService.DeleteCatagory(catagory);
+
                 return Ok(catagory);
             }
             catch (Exception e)
