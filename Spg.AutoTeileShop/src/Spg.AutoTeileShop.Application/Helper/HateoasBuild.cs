@@ -76,7 +76,7 @@ namespace Spg.AutoTeileShop.Application.Helper
             return null;
         }
 
-        public string buildHateoas(TEntity value, List<BuildRoutePattern> routes, Tid idParameter)
+        public string buildHateoas(TEntity value, Tid idParameter, List<BuildRoutePattern> routes)
         {
             List<HateoasObject<TEntity>> objects = new List<HateoasObject<TEntity>>();
             List<BuildRoutePattern> filteredRoutes;
