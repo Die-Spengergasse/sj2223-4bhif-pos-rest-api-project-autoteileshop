@@ -231,7 +231,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 Car car = new Car(carDTO);
-                //_addUpdateableCarService.Add(car); // ~?
 
                 var result = _addUpdateableCarService.Add(car); ;
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
