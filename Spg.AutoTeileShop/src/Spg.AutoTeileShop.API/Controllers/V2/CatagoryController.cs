@@ -205,9 +205,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             Catagory catagory = null;
             try
             {
-                //var result = _deletableCatagoryService.DeleteCatagory(catagory); / (_deletableCatagoryService.DeleteCatagory(catagory) not null error )
-                //HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
-
                 catagory = _readOnlyCatagoryService.GetCatagoryById(id);
                 _deletableCatagoryService.DeleteCatagory(catagory);
 

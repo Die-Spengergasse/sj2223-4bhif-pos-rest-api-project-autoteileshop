@@ -185,16 +185,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
                 int baujahr = -1;
                 if (baujahrS is not null) baujahr = int.Parse(baujahrS);
-                if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null) && baujahr != -1) return Ok(_readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1)));
-                else if((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && model is not null) return Ok(_readOnlycarService.GetByModell(model));
-                else if ((model.IsEmpty() || model == null) && (baujahr == -1|| baujahr <= 0) && marke is not null) return Ok(_readOnlycarService.GetByMarke(marke));
-                else if ((baujahr == -1|| baujahr <= 0) &&  marke is not null && model is not null) return Ok(_readOnlycarService.GetByMarkeAndModell(marke, model));
-                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && (model.IsEmpty() || model == null)) return Ok(_readOnlycarService.GetAll());
+                if((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null) && baujahr != -1) cars = _readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1));
+                else if((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && model is not null) cars = _readOnlycarService.GetByModell(model);
+                else if ((model.IsEmpty() || model == null) && (baujahr == -1|| baujahr <= 0) && marke is not null) cars = _readOnlycarService.GetByMarke(marke);
+                else if ((baujahr == -1|| baujahr <= 0) &&  marke is not null && model is not null) cars = _readOnlycarService.GetByMarkeAndModell(marke, model);
+                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1|| baujahr <= 0) && (model.IsEmpty() || model == null)) cars = _readOnlycarService.GetAll();
                 else
+                { cars = _readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)); }
 
-                cars = _readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1));
-
-                    
+                
 
                 return Ok(hb.buildHateoas(cars.ToList(), cars.Select(s => s.Id).ToList(), _routes.ToList()));
             }
@@ -231,7 +230,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 Car car = new Car(carDTO);
-                //_addUpdateableCarService.Add(car); // ~?
 
                 var result = _addUpdateableCarService.Add(car); ;
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
