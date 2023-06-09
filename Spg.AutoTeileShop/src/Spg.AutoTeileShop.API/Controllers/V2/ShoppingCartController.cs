@@ -68,11 +68,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 var cart = _redOnlyShoppingCartService.GetByGuid(guid);
+                HateoasBuild<ShoppingCart, int> hb = new HateoasBuild<ShoppingCart, int>();
+
                 if (cart == null)
                 {
                     return NotFound();
                 }
-                return Ok(cart);
+                return Ok(hb.buildHateoas(cart, cart.Id, _routes));
             }
             catch (KeyNotFoundException ex)
             {
@@ -91,11 +93,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
 
                 var cart = _redOnlyShoppingCartService.GetByUserNav(userGuid);
+                HateoasBuild<ShoppingCart, int> hb = new HateoasBuild<ShoppingCart, int>();
+
                 if (cart == null)
                 {
                     return NotFound();
                 }
-                return Ok(cart);
+                return Ok(hb.buildHateoas(cart, cart.Id, _routes));
             }
             catch (KeyNotFoundException ex)
             {
