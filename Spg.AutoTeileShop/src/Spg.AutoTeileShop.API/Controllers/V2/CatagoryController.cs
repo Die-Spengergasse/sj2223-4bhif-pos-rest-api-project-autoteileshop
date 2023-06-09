@@ -128,13 +128,17 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
             else if (topCatagoryId != 0)
             {
+                var result = _readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));
+                    HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
 
                 try
                 {
+                    
+
                     List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));
                     if (catagorys.Count == 0)
                         return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
-                    return Ok(catagorys);
+                    return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
 
                 }
                 catch (Exception e)
@@ -145,12 +149,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
             else if (topCatagoryId != 0 && categoryType != null)
             {
+                var result = _readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 try
                 {
                     List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagoryandByType(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId), (CategoryTypes)categoryType);
                     if (catagorys.Count == 0)
                         return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
-                    return Ok(catagorys);
+                    return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
 
                 }
                 catch (Exception e)
@@ -161,7 +168,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
             else if (topCatagoryId == null && categoryType == null)
             {
-                return Ok(_readOnlyCatagoryService.GetAllCatagories());
+                var result = _readOnlyCatagoryService.GetAllCatagories();
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
+                return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
             return BadRequest("No Query Parameters given");
 
