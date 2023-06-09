@@ -18,7 +18,7 @@ namespace Spg.AutoTeileShop.RepositoryTest.Helpers
         {
             // Das garantiert eine DB-Connection die von EF Core nicht automatisch geschlossen wird
             string connectionString2 = "DataSource=:memory:";
-            string connectionString = "Data Source=InMemorySample;Mode=Memory;Cache=Shared";
+            //string connectionString = "Data Source=InMemorySample;Mode=Memory;Cache=Shared";
 
             SqliteConnection connection = new SqliteConnection(connectionString2); //"Data Source=:memory:"
             connection.Open();
