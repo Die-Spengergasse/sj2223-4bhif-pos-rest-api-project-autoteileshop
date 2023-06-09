@@ -18,7 +18,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Guid Guid { get;  set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public Catagory? catagory { get; set; }
+        public virtual Catagory? catagory { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? Image { get; set; }
         public string Ean13 { get; set; } = string.Empty;
@@ -29,7 +29,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         // n zu m Relation
         private List<Car> _productFitsForCar = new();
-        public IReadOnlyList<Car> ProductFitsForCar => _productFitsForCar;
+        public virtual IReadOnlyList<Car> ProductFitsForCar => _productFitsForCar;
 
         public Product(int id, Guid guid, string name, decimal price, Catagory? catagory, string description, string? image, QualityType quality, int stock, int discount, DateTime receive, List<Car> productFitsForCar)
         {

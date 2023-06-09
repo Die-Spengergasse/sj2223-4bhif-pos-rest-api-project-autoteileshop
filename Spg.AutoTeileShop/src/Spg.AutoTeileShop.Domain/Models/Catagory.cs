@@ -19,7 +19,7 @@ namespace Spg.AutoTeileShop.Domain.Models
     public class Catagory
     {
         public int Id { get; private set; }
-        public Catagory? TopCatagory{ get; set; }
+        public virtual Catagory? TopCatagory{ get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public CategoryTypes CategoryType { get; set; }

@@ -16,7 +16,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public string Modell { get; set; } = string.Empty;
         public DateTime Baujahr { get; set; }
         private List<Product> _fitsForProducts { get; set; } = new();
-        public IReadOnlyList<Product> FitsForProducts => _fitsForProducts;
+        public virtual IReadOnlyList<Product> FitsForProducts => _fitsForProducts;
 
         public Car()
         {
