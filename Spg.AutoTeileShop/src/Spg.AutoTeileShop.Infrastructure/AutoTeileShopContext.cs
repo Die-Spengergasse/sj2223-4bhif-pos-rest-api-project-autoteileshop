@@ -5,9 +5,11 @@ using Spg.AutoTeileShop.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Randomizer = Bogus.Randomizer;
 
 namespace Spg.AutoTeileShop.Infrastructure
 {
@@ -35,10 +37,10 @@ namespace Spg.AutoTeileShop.Infrastructure
             if (!options.IsConfigured)
                 //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db"); //Home PC
                 // options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
-            options.UseLazyLoadingProxies();                                                                                                                                    
-            options.UseSqlite(ReadLineWithQuestionMark());
-            //options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db");
-            
+            options.UseLazyLoadingProxies();
+            //options.UseSqlite(ReadLineWithQuestionMark());
+            options.UseSqlite("DataSource = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223 - 4bhif - pos - rest - api - project - autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db");
+
 
             //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
 
