@@ -25,9 +25,9 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
             return item;
         }
 
-        public IEnumerable<ShoppingCartItem> GetAll_includeItems()
+        public IEnumerable<ShoppingCart> GetAll_includeItems()
         {
-            return (IEnumerable<ShoppingCartItem>)_db.ShoppingCarts.Include(s => s.ShoppingCartItems).ToList();
+            return (IEnumerable<ShoppingCart>)_db.ShoppingCarts.Include(s => s.ShoppingCartItems).ToList();
         }
 
         public ShoppingCart GetById(int Id)

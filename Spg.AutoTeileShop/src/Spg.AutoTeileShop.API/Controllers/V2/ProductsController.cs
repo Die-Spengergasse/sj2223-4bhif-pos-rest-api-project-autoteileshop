@@ -23,7 +23,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyProductService _readOnlyproductService;
         private readonly IDeletableProductService _deletableProductService;
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
-
         private readonly IValidator<ProductDTO> _validator;
         
         //Hateaos
@@ -43,9 +42,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             
             //Hateaos
             _endpointSources = endpointSources;
-
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
-
             _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
 
 
