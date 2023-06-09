@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
@@ -24,6 +25,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
 
         private readonly IValidator<ProductDTO> _validator;
+        
         //Hateaos
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
         private List<BuildRoutePattern> _routes;
@@ -64,7 +66,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 HateoasBuild<Product, int> hb = new HateoasBuild<Product, int>();
 
                 if (requestBody.Count == 0) { return NotFound(); }
-                return Ok(requestBody);
+                return Ok(hb.buildHateoas(requestBody.ToList(), requestBody.Select(s => s.Id).ToList(), _routes));
             }
             catch (Exception e)
             {
@@ -79,7 +81,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 Product? product = _readOnlyproductService.GetById(id);
-                return Ok(product);
+                HateoasBuild<Product, int> hb = new HateoasBuild<Product, int>();
+
+                return Ok(hb.buildHateoas(product, product.Id, _routes));
             }
             catch (KeyNotFoundException kE)
             {
@@ -95,8 +99,11 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [AllowAnonymous]
         public ActionResult<List<ProductDTOFilter>> GetProductByFilterNameorCatagory([FromQuery] string? name, [FromQuery] int catagoryId)
         {
+            HateoasBuild<ProductDTOFilter, int> hb = new HateoasBuild<ProductDTOFilter, int>();
             try
             {
+                
+
                 Catagory? catagory = null;
                 if (catagoryId != 0)
                 {
@@ -114,7 +121,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                             ProductDTOFilter productDTO = new ProductDTOFilter(item);
                             ProductCatDTOs.Add(productDTO);
                         }
-                        return Ok(ProductCatDTOs);
+                       
+                        return Ok(hb.buildHateoas(ProductCatDTOs.ToList(), ProductCatDTOs.Select(s => s.Id).ToList(), _routes));
                     }
                 }
                 if ((name.Count() != 0 || name is not null) && catagory is null)
@@ -124,7 +132,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                         new ProductDTOFilter(_readOnlyproductService.GetByName(name))
                     };
                     if (productsName.Count == 0) return NotFound();
-                    return Ok(productsName);
+                    return Ok(hb.buildHateoas(productsName.ToList(), productsName.Select(s => s.Id).ToList(), _routes));
 
                 }
                 if ((name.Count() != 0 || name is not null) && catagory is not null)
@@ -135,11 +143,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                     if (ProductsCat.Count() == 0 || productsName is null) { return NotFound(); }
                     if (ProductsCat.Count() != 0 && productsName is not null)
                     {
+                        HateoasBuild<ProductDTOFilter, int> hb2 = new HateoasBuild<ProductDTOFilter, int>();
                         foreach (Product item in ProductsCat)
                         {
                             if (item.Name == name)
                             {
-                                return Ok(new ProductDTOFilter(item));
+                                var pDTOf = new ProductDTOFilter(item);
+                                return Ok(hb2.buildHateoas(pDTOf, pDTOf.Id, _routes));
                             }
                         }
                     }

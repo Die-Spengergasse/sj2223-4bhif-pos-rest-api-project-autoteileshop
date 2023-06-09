@@ -134,7 +134,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 try
                 {
                     
-
                     List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));
                     if (catagorys.Count == 0)
                         return NotFound($"No Catagorys with TopCatagory: {topCatagoryId} found");
