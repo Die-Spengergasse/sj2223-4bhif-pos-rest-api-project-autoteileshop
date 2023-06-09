@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public class Car  //: EntityBase
+    public class Car 
     {
         public  int Id { get; private set; }
         public string Marke { get;  set; } = string.Empty;

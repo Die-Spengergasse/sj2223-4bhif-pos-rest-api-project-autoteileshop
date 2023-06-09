@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+// using Microsoft.EntityFrameworkCore.InMemory;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using System;
@@ -16,16 +17,26 @@ namespace Spg.AutoTeileShop.RepositoryTest.Helpers
         public static DbContextOptions GetDbOptions()
         {
             // Das garantiert eine DB-Connection die von EF Core nicht automatisch geschlossen wird
-            SqliteConnection connection = new SqliteConnection("Data Source=:memory:");
+            string connectionString2 = "DataSource=:memory:";
+            string connectionString = "Data Source=InMemorySample;Mode=Memory;Cache=Shared";
+
+            SqliteConnection connection = new SqliteConnection(connectionString2); //"Data Source=:memory:"
             connection.Open();
-
-
 
             return new DbContextOptionsBuilder()
                 .UseSqlite(connection)
                 .Options;
         }
 
+        //public static DbContextOptions GetDbOptions()
+        //{
+        //    // Das garantiert eine DB-Connection, die von EF Core nicht automatisch geschlossen wird
+        //    string connectionString = "DataSource=:memory:";
+        //    var optionsBuilder = new DbContextOptionsBuilder();
+        //    optionsBuilder.UseSqlite(connectionString);
+
+        //    return optionsBuilder.Options;
+        //}
 
 
         public static void InitializeDatabase(AutoTeileShopContext db)

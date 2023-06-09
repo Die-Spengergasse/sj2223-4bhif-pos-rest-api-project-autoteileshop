@@ -12,9 +12,9 @@ namespace Spg.AutoTeileShop.RepositoryTest
         {
 
             DbContextOptions options = new DbContextOptionsBuilder()
-                  .UseSqlite(ReadLineWithQuestionMark())
+                  //.UseSqlite(ReadLineWithQuestionMark())
                   //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
-                  //.UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC       
+                  .UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db")     //Home PC       
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
