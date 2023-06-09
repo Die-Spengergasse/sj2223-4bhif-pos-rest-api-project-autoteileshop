@@ -3,7 +3,9 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
@@ -22,14 +24,29 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
 
         private readonly IValidator<ProductDTO> _validator;
+        //Hateaos
+        private readonly IEnumerable<EndpointDataSource> _endpointSources;
+        private List<BuildRoutePattern> _routes;
 
-        public ProductsController(IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService, IDeletableProductService deletableProductService, IReadOnlyCatagoryService readOnlyCatagoryService, IValidator<ProductDTO> validator)
+        public ProductsController
+            (IAddUpdateableProductService addUpdateproductService, IReadOnlyProductService readOnlyproductService,
+            IDeletableProductService deletableProductService, IReadOnlyCatagoryService readOnlyCatagoryService, IValidator<ProductDTO> validator,
+            IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints)
         {
             _addUpdateproductService = addUpdateproductService;
             _readOnlyproductService = readOnlyproductService;
             _deletableProductService = deletableProductService;
             _readOnlyCatagoryService = readOnlyCatagoryService;
             _validator = validator;
+            
+            //Hateaos
+            _endpointSources = endpointSources;
+
+            var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+
+            _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
+
+
         }
 
         // Add Product - Authorization
@@ -44,6 +61,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 List<Product> requestBody = _readOnlyproductService.GetAll().ToList();
+                HateoasBuild<Product, int> hb = new HateoasBuild<Product, int>();
 
                 if (requestBody.Count == 0) { return NotFound(); }
                 return Ok(requestBody);
