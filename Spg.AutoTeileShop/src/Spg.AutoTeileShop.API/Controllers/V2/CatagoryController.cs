@@ -57,7 +57,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 var result = _readOnlyCatagoryService.GetCatagoryById(id);
                 HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
 
-                return Ok(_readOnlyCatagoryService.GetCatagoryById(id));
+                return Ok(hb.buildHateoas(result, result.Id, _routes));
             }
             catch (Exception e)
             {
@@ -76,7 +76,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 var result = _readOnlyCatagoryService.GetCatagoryByName(name);
                 HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
 
-                return Ok(_readOnlyCatagoryService.GetCatagoryByName(name));
+                return Ok(hb.buildHateoas(result, result.Id, _routes));
             }
             catch (Exception e)
             {
@@ -93,8 +93,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 var result = _readOnlyCatagoryService.GetCatagoryDescriptionById(id);
-                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
-
+                
                 return Ok(_readOnlyCatagoryService.GetCatagoryDescriptionById(id));
             }
             catch (Exception e)
@@ -105,18 +104,21 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
         }
 
-        [HttpGet("filter")] //in this fromat it donst shine of in the Swagger interface
+        [HttpGet("filter")] //in this fromat it does not exist in the Swagger interface
         [AllowAnonymous]
         public ActionResult<List<Catagory>> GetCatagoryByTypeOrTopCatagory([FromQuery] CategoryTypes? categoryType, [FromQuery] int topCatagoryId)
         {
             if (categoryType != null)
             {
+                var result = _readOnlyCatagoryService.GetCatagoriesByType((CategoryTypes)categoryType);
+                HateoasBuild<Catagory, int> hb = new HateoasBuild<Catagory, int>();
+
                 try
                 {
                     List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByType((CategoryTypes)categoryType);
                     if (catagorys.Count == 0)
                         return NotFound($"No Catagorys with Type: {categoryType} found");
-                    return Ok(catagorys);
+                    return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
 
                 }
                 catch (Exception e)
@@ -126,6 +128,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             }
             else if (topCatagoryId != 0)
             {
+
                 try
                 {
                     List<Catagory> catagorys = (List<Catagory>)_readOnlyCatagoryService.GetCatagoriesByTopCatagory(_readOnlyCatagoryService.GetCatagoryById(topCatagoryId));

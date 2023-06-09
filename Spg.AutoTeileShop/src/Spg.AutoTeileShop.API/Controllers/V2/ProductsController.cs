@@ -61,6 +61,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 List<Product> requestBody = _readOnlyproductService.GetAll().ToList();
+                HateoasBuild<Product, int> hb = new HateoasBuild<Product, int>();
 
                 if (requestBody.Count == 0) { return NotFound(); }
                 return Ok(requestBody);
