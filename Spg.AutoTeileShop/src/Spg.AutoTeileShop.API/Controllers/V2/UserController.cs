@@ -80,7 +80,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 return BadRequest();
 
             }
-            return Ok(new UserGetDTO(response));
+            return Ok(new UserGetDTO(response)); // Hateaos implementation failed caused by return statement (nothing to return)
         }
 
         [HttpDelete("{guid}")]
