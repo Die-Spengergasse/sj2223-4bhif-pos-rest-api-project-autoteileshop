@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
@@ -20,27 +22,45 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IAddUpdateableShoppingCartService _addUpdatableShoppingCartService;
         private readonly IReadOnlyUserService _readOnlyUserService;
 
-        public ShoppingCartController(IReadOnlyShoppingCartService shoppingCartService, IDeletableShoppingCartService deletableShoppingCartService, IAddUpdateableShoppingCartService updatableShoppingCartService, IReadOnlyUserService readOnlyUserService)
+        //Hateaos
+        private readonly IEnumerable<EndpointDataSource> _endpointSources;
+        private List<BuildRoutePattern> _routes;
+
+        public ShoppingCartController
+        (IReadOnlyShoppingCartService shoppingCartService, IDeletableShoppingCartService deletableShoppingCartService,
+        IAddUpdateableShoppingCartService updatableShoppingCartService, IReadOnlyUserService readOnlyUserService, IEnumerable<EndpointDataSource> endpointSources,
+        ListAllEndpoints listAllEndpoints)
+
         {
             _redOnlyShoppingCartService = shoppingCartService;
             _deletableShoppingCartService = deletableShoppingCartService;
             _addUpdatableShoppingCartService = updatableShoppingCartService;
             _readOnlyUserService = readOnlyUserService;
-        }
+            
+            //Hateaos
+            _endpointSources = endpointSources;
+            var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+            _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
 
-        // All - Authorization
+        }
 
         [HttpGet("")]
         public ActionResult<List<ShoppingCart>> GetAllShoppingCarts()
         {
-            var carts = _redOnlyShoppingCartService.GetAll();
-            if (carts.Count() == 0 || carts == null)
+            try
+            {
+
+                List<ShoppingCart> carts = _redOnlyShoppingCartService.GetAll().ToList();
+                HateoasBuild<ShoppingCart, int> hb = new HateoasBuild<ShoppingCart, int>();
+
+                if (carts.Count == 0) { return NotFound(); }
+                return Ok(hb.buildHateoas(carts.ToList(), carts.Select(s => s.Id).ToList(), _routes));
+            }
+            catch
             {
                 return NotFound();
             }
-            return Ok(carts);
         }
-
 
         [HttpGet("{guid}")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
@@ -48,11 +68,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 var cart = _redOnlyShoppingCartService.GetByGuid(guid);
+                HateoasBuild<ShoppingCart, int> hb = new HateoasBuild<ShoppingCart, int>();
+
                 if (cart == null)
                 {
                     return NotFound();
                 }
-                return Ok(cart);
+                return Ok(hb.buildHateoas(cart, cart.Id, _routes));
             }
             catch (KeyNotFoundException ex)
             {
@@ -71,11 +93,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
 
                 var cart = _redOnlyShoppingCartService.GetByUserNav(userGuid);
+                HateoasBuild<ShoppingCart, int> hb = new HateoasBuild<ShoppingCart, int>();
+
                 if (cart == null)
                 {
                     return NotFound();
                 }
-                return Ok(cart);
+                return Ok(hb.buildHateoas(cart, cart.Id, _routes));
             }
             catch (KeyNotFoundException ex)
             {
