@@ -81,8 +81,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 }
                 return BadRequest();
             }
-            //HateoasBuild<UserGetDTO, Guid> hb = neHateoasBuild<UserGetDTO, Guid>();
-            return Ok(); //hb.buildHateoas(response, response.Guid, _routes)); // Hateaos implementation failed caused by return statement (response not null)
+            HateoasBuild<UserGetDTO, Guid> hb = new HateoasBuild<UserGetDTO, Guid>();
+            return Ok(hb.buildHateoas(new UserGetDTO(response), response.Guid, _routes));
         }
 
         [HttpDelete("{guid}")]
