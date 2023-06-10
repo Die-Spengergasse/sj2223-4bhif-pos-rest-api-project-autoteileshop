@@ -56,6 +56,24 @@ builder.Services.AddSwaggerGen(s =>
     );
 
 
+// NuGet: Microsoft.AspNetCore.Mvc.Versioning
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
+
 builder.Services.AddSwaggerGen(s =>
 {
 
@@ -97,50 +115,33 @@ builder.Services.AddSwaggerGen(s =>
         Version = "v2"
     });
 
-    s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "Enter JWT Token here"
-    });
-    s.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference=new OpenApiReference
-                {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
-                }
-            },
-            new string[]{}
-        }
-    });
+    //s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //{
+    //    Name = "Authorization",
+    //    Type = SecuritySchemeType.ApiKey,
+    //    Scheme = "Bearer",
+    //    BearerFormat = "JWT",
+    //    In = ParameterLocation.Header,
+    //    Description = "Enter JWT Token here"
+    //});
+    //s.AddSecurityRequirement(new OpenApiSecurityRequirement
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference=new OpenApiReference
+    //            {
+    //                Type=ReferenceType.SecurityScheme,
+    //                Id="Bearer"
+    //            }
+    //        },
+    //        new string[]{}
+    //    }
+    //});
 });
 
 
 
-// NuGet: Microsoft.AspNetCore.Mvc.Versioning
-builder.Services.AddApiVersioning(o =>
-{
-    o.AssumeDefaultVersionWhenUnspecified = true;
-    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(2, 0);
-    o.ReportApiVersions = true;
-    o.ApiVersionReader = ApiVersionReader.Combine(
-        new QueryStringApiVersionReader("api-version"),
-        new HeaderApiVersionReader("X-Version"),
-        new MediaTypeApiVersionReader("ver"));
-});
-builder.Services.AddVersionedApiExplorer(
-    options =>
-    {
-        options.GroupNameFormat = "'v'VVV";
-        options.SubstituteApiVersionInUrl = true;
-    });
 
 
 
