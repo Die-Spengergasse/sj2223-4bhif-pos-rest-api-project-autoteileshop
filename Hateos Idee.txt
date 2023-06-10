@@ -1,0 +1,1 @@
+Du bekommst jetzt 3 Klassen die ich für eine Umsetzung von Hateoas verwende, das ganze läuft in einer Dotnet 7, c# ASP.NET Core API für Autoteile. Es funktioniert so das man dem Generischen HateoasBuild den Typ der Objekte der Ruckgabe und die Art der Id übergibt(int oder Guid). Jetzt will ich das man auch noch Optionen mit geben kann für gewisse Routen: z.B. 

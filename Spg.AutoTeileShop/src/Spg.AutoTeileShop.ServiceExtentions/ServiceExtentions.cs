@@ -23,6 +23,15 @@ using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.Repository2.CustomGenericRepositories;
 using Spg.AutoTeileShop.Repository2.Repositories;
+using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
+using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
+using Microsoft.AspNetCore.Mvc.Filters;
+using FluentValidation;
+using Spg.AutoTeileShop.Application.Validators;
+using Spg.AutoTeileShop.Domain.DTO;
+using FluentValidation.AspNetCore;
+using Spg.AutoTeileShop.Application.Helper;
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -107,7 +116,9 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>>, GetCarsByMarkeAndModellQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>>, GetCarsByMarkeAndModellAndBaujahrQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>>, GetCarsByFitProductQueryHandler>();
-
+            
+            //Get All Routes
+            serviceCollection.AddTransient<ListAllEndpoints>();
 
         }
     }

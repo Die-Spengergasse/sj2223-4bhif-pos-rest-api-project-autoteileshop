@@ -1,13 +1,25 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.API.Helper;
+using Org.BouncyCastle.Asn1.Cmp;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.ServiceExtentions;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Web.Helpers;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,11 +39,13 @@ builder.Services.ConfigureSQLite(connectionString);
 builder.Services.AddControllers();
 
 
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s =>
     s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
     );
+
 
 // NuGet: Microsoft.AspNetCore.Mvc.Versioning
 builder.Services.AddApiVersioning(o =>
@@ -153,11 +167,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(x =>
-    {
-        x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
-    });
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -166,14 +176,55 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.UseCors("myAllowSpecificOrigins");
+app.MapControllers();
+
+//HATEOAS
+var linksv1 = new List<string>();
+// Get Controller names
+var assembly = typeof(Program).Assembly;
+var controllerTypes = assembly.GetTypes().Where(type => typeof(ControllerBase).IsAssignableFrom(type) && !type.IsAbstract);
+
+var controllerNames = controllerTypes.Select(x => x.Name.Replace("Controller", "")).ToList();
+
+// Build Links
+for (int i = 0; i <= (controllerNames.Count / 2) - 1; i++)
+{
+    linksv1.Add("https://localhost:7083/api/v1/" + controllerNames[i]);
+}
+
+var linksv2 = new List<string>();
+
+for (int i = 0; i <= (controllerNames.Count / 2) - 1; i++)
+{
+    linksv2.Add("https://localhost:7083/api/v2/" + controllerNames[i]);
+}
+
+// links to Json
+var Controllerv1 = new { Controller = linksv1 };
+var Controllerv2 = new { Controller = linksv2 };
+
+
+var jsonsConv1 = JsonConvert.SerializeObject(Controllerv1, Formatting.Indented);
+var jsonsConv2 = JsonConvert.SerializeObject(Controllerv2, Formatting.Indented);
+
+
+// Version Links
+var versionList = new List<string>
+{
+    "https://localhost:7083/api/v1",
+    "https://localhost:7083/api/v2"
+};
+
+// Version to Json
+var jsonsVersion = JsonConvert.SerializeObject(versionList, Formatting.Indented);
+
+// Minimal API
+
 
 app.MapControllers();
-app.MapGet("/api", () =>
-{
-    return "Hello world";
-}
-);
 
-
+app.MapGet("/api/", () => jsonsVersion);
+app.MapGet("/api/v1", () => jsonsConv1);
+app.MapGet("/api/v2", () => jsonsConv2);
 app.Run();
 

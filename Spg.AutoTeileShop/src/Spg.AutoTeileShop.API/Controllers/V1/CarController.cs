@@ -156,9 +156,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V1
             }
         }
 
-        [HttpPut("")]
+        [HttpPut("{id}")]
         [Produces("application/json")]
-        public ActionResult<Car> UpdateCar(CarDTO carDTO)
+        public ActionResult<Car> UpdateCar(int id, CarDTO carDTO)
         {
             try
             {

@@ -1,0 +1,3325 @@
+{
+"openapi": "3.0.1",
+"info": {
+"title": "AutoTeile Shop - v2",
+"description": "Description about AutoTeileShop",
+"contact": {
+"name": "David Ankenbrand and Johannes Scholz",
+"url": "http://www.spengergasse.at",
+"email": "ank19415@spengergasse.at"
+},
+"license": {
+"name": "Spenger-Licence",
+"url": "http://www.spengergasse.at/licence"
+},
+"version": "v2"
+},
+"paths": {
+"/api/v{version}/Car/Old": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car/{id}": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+},
+"404": {
+"description": "Not Found",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProblemDetails"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProblemDetails"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProblemDetails"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "Marke",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "Modell",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "Baujahr",
+"in": "query",
+"schema": {
+"type": "string",
+"format": "date-time"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car/byBaujahr": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "year",
+"in": "query",
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car/ByMarke": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "marke",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car/ByModel": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "model",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car/ByMarkeAndModell": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "marke",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "model",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car/ByMarkeAndModellAndBaujahr": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "merke",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "model",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "baujahr",
+"in": "query",
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Car": {
+"get": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "marke",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "model",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "baujahrS",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"Car"
+],
+"parameters": [
+{
+"name": "Marke",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "Modell",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "Baujahr",
+"in": "query",
+"schema": {
+"type": "string",
+"format": "date-time"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Car"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Catagory": {
+"get": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/CatagoryPostDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/CatagoryPostDTO"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/CatagoryPostDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Catagory/{id}": {
+"get": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success"
+}
+}
+}
+},
+"/api/v{version}/Catagory/name/{name}": {
+"get": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "name",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Catagory/{id}/Description": {
+"get": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "string"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "string"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "string"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Catagory/filter": {
+"get": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "categoryType",
+"in": "query",
+"schema": {
+"$ref": "#/components/schemas/CategoryTypes"
+}
+},
+{
+"name": "topCatagoryId",
+"in": "query",
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Catagory/{Id}": {
+"put": {
+"tags": [
+"Catagory"
+],
+"parameters": [
+{
+"name": "Id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Catagory"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Products": {
+"get": {
+"tags": [
+"Products"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Product"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Product"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Product"
+}
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"Products"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProductDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProductDTO"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProductDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"Products"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProductDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProductDTO"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ProductDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Products/{id}": {
+"get": {
+"tags": [
+"Products"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"Products"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"required": true,
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/Product"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Products/filter": {
+"get": {
+"tags": [
+"Products"
+],
+"parameters": [
+{
+"name": "name",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "catagoryId",
+"in": "query",
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ProductDTOFilter"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ProductDTOFilter"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ProductDTOFilter"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Register": {
+"post": {
+"tags": [
+"Register"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserRegistDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserRegistDTO"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserRegistDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+}
+}
+},
+"400": {
+"description": "Bad Request",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/ProblemDetails"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/Register/CheckCode/{mail}/{code}": {
+"get": {
+"tags": [
+"Register"
+],
+"parameters": [
+{
+"name": "mail",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "code",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success"
+}
+}
+}
+},
+"/api/v{version}/Seed/seed": {
+"get": {
+"tags": [
+"Seed"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success"
+}
+}
+}
+},
+"/api/v{version}/ShoppingCart": {
+"get": {
+"tags": [
+"ShoppingCart"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"ShoppingCart"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartPostDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartPostDTO"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartPostDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/ShoppingCart/{guid}": {
+"get": {
+"tags": [
+"ShoppingCart"
+],
+"parameters": [
+{
+"name": "guid",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/ShoppingCart/ByUser": {
+"get": {
+"tags": [
+"ShoppingCart"
+],
+"parameters": [
+{
+"name": "userGuid",
+"in": "query",
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/ShoppingCartItem": {
+"get": {
+"tags": [
+"ShoppingCartItem"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+}
+}
+}
+},
+"post": {
+"tags": [
+"ShoppingCartItem"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"ShoppingCartItem"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"ShoppingCartItem"
+],
+"parameters": [
+{
+"name": "guid",
+"in": "query",
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/ShoppingCartItem/{guid}": {
+"get": {
+"tags": [
+"ShoppingCartItem"
+],
+"parameters": [
+{
+"name": "guid",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/ShoppingCartItem/ShoppingCart": {
+"get": {
+"tags": [
+"ShoppingCartItem"
+],
+"parameters": [
+{
+"name": "shoppingCartId",
+"in": "query",
+"schema": {
+"type": "integer",
+"format": "int32"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItemDTOGet"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItemDTOGet"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItemDTOGet"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/User": {
+"get": {
+"tags": [
+"User"
+],
+"parameters": [
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserGetDTO"
+}
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserGetDTO"
+}
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/UserGetDTO"
+}
+}
+}
+}
+}
+}
+}
+},
+"/api/v{version}/User/{guid}": {
+"get": {
+"tags": [
+"User"
+],
+"parameters": [
+{
+"name": "guid",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserGetDTO"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserGetDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserGetDTO"
+}
+}
+}
+}
+}
+},
+"delete": {
+"tags": [
+"User"
+],
+"parameters": [
+{
+"name": "guid",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+}
+}
+}
+}
+},
+"put": {
+"tags": [
+"User"
+],
+"parameters": [
+{
+"name": "guid",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string",
+"format": "uuid"
+}
+},
+{
+"name": "version",
+"in": "path",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "api-version",
+"in": "query",
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "X-Version",
+"in": "header",
+"schema": {
+"type": "string"
+}
+}
+],
+"requestBody": {
+"content": {
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserUpdateDTO"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserUpdateDTO"
+}
+},
+"application/*+json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/UserUpdateDTO"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "Success",
+"content": {
+"text/plain; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+},
+"application/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+},
+"text/json; ver=2.0": {
+"schema": {
+"$ref": "#/components/schemas/User"
+}
+}
+}
+}
+}
+}
+}
+},
+"components": {
+"schemas": {
+"Car": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"marke": {
+"type": "string",
+"nullable": true
+},
+"modell": {
+"type": "string",
+"nullable": true
+},
+"baujahr": {
+"type": "string",
+"format": "date-time"
+},
+"fitsForProducts": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Product"
+},
+"nullable": true,
+"readOnly": true
+}
+},
+"additionalProperties": false
+},
+"Catagory": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"topCatagory": {
+"$ref": "#/components/schemas/Catagory"
+},
+"name": {
+"type": "string",
+"nullable": true
+},
+"description": {
+"type": "string",
+"nullable": true
+},
+"categoryType": {
+"$ref": "#/components/schemas/CategoryTypes"
+}
+},
+"additionalProperties": false
+},
+"CatagoryPostDTO": {
+"type": "object",
+"properties": {
+"name": {
+"type": "string",
+"nullable": true
+},
+"description": {
+"type": "string",
+"nullable": true
+},
+"categoryType": {
+"$ref": "#/components/schemas/CategoryTypes"
+},
+"topCatagoryId": {
+"type": "integer",
+"format": "int32"
+}
+},
+"additionalProperties": false
+},
+"CategoryTypes": {
+"enum": [
+0,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+19
+],
+"type": "integer",
+"format": "int32"
+},
+"ProblemDetails": {
+"type": "object",
+"properties": {
+"type": {
+"type": "string",
+"nullable": true
+},
+"title": {
+"type": "string",
+"nullable": true
+},
+"status": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"detail": {
+"type": "string",
+"nullable": true
+},
+"instance": {
+"type": "string",
+"nullable": true
+}
+},
+"additionalProperties": {}
+},
+"Product": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"name": {
+"type": "string",
+"nullable": true
+},
+"price": {
+"type": "number",
+"format": "double"
+},
+"catagory": {
+"$ref": "#/components/schemas/Catagory"
+},
+"description": {
+"type": "string",
+"nullable": true
+},
+"image": {
+"type": "string",
+"nullable": true
+},
+"ean13": {
+"type": "string",
+"nullable": true
+},
+"quality": {
+"$ref": "#/components/schemas/QualityType"
+},
+"stock": {
+"type": "integer",
+"format": "int32"
+},
+"discount": {
+"type": "integer",
+"format": "int32"
+},
+"receive": {
+"type": "string",
+"format": "date-time"
+},
+"productFitsForCar": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/Car"
+},
+"nullable": true,
+"readOnly": true
+}
+},
+"additionalProperties": false
+},
+"ProductDTO": {
+"required": [
+"name"
+],
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32"
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"name": {
+"maxLength": 20,
+"minLength": 1,
+"type": "string"
+},
+"price": {
+"type": "number",
+"format": "double"
+},
+"catagory": {
+"$ref": "#/components/schemas/Catagory"
+},
+"description": {
+"type": "string",
+"nullable": true
+},
+"image": {
+"type": "string",
+"nullable": true
+},
+"ean13": {
+"type": "string",
+"nullable": true
+},
+"quality": {
+"$ref": "#/components/schemas/QualityType"
+},
+"stock": {
+"type": "integer",
+"format": "int32"
+},
+"discount": {
+"type": "integer",
+"format": "int32"
+}
+},
+"additionalProperties": false
+},
+"ProductDTOFilter": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32"
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"name": {
+"type": "string",
+"nullable": true
+},
+"price": {
+"type": "number",
+"format": "double"
+},
+"catagoryId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"description": {
+"type": "string",
+"nullable": true
+},
+"image": {
+"type": "string",
+"nullable": true
+},
+"ean13": {
+"type": "string",
+"nullable": true
+},
+"quality": {
+"$ref": "#/components/schemas/QualityType"
+},
+"stock": {
+"type": "integer",
+"format": "int32"
+},
+"discount": {
+"type": "integer",
+"format": "int32"
+}
+},
+"additionalProperties": false
+},
+"QualityType": {
+"enum": [
+0,
+1,
+2,
+3,
+4
+],
+"type": "integer",
+"format": "int32"
+},
+"Roles": {
+"enum": [
+0,
+1,
+2
+],
+"type": "integer",
+"format": "int32"
+},
+"ShoppingCart": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"userId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"userNav": {
+"$ref": "#/components/schemas/User"
+},
+"shoppingCartItems": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+},
+"nullable": true,
+"readOnly": true
+}
+},
+"additionalProperties": false
+},
+"ShoppingCartItem": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"pieces": {
+"type": "integer",
+"format": "int32"
+},
+"productId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"productNav": {
+"$ref": "#/components/schemas/Product"
+},
+"shoppingCartId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"shoppingCartNav": {
+"$ref": "#/components/schemas/ShoppingCart"
+}
+},
+"additionalProperties": false
+},
+"ShoppingCartItemDTOGet": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"pieces": {
+"type": "integer",
+"format": "int32"
+},
+"productId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"shoppingCartId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"ShoppingCartPostDTO": {
+"type": "object",
+"properties": {
+"userId": {
+"type": "integer",
+"format": "int32",
+"nullable": true
+},
+"shoppingCartItems": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/ShoppingCartItem"
+},
+"nullable": true,
+"readOnly": true
+}
+},
+"additionalProperties": false
+},
+"User": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"vorname": {
+"type": "string",
+"nullable": true
+},
+"nachname": {
+"type": "string",
+"nullable": true
+},
+"addrese": {
+"type": "string",
+"nullable": true
+},
+"telefon": {
+"type": "string",
+"nullable": true
+},
+"email": {
+"type": "string",
+"nullable": true
+},
+"pw": {
+"type": "string",
+"nullable": true
+},
+"role": {
+"$ref": "#/components/schemas/Roles"
+},
+"confirmed": {
+"type": "boolean"
+}
+},
+"additionalProperties": false
+},
+"UserGetDTO": {
+"type": "object",
+"properties": {
+"id": {
+"type": "integer",
+"format": "int32",
+"readOnly": true
+},
+"guid": {
+"type": "string",
+"format": "uuid"
+},
+"vorname": {
+"type": "string",
+"nullable": true
+},
+"nachname": {
+"type": "string",
+"nullable": true
+},
+"addrese": {
+"type": "string",
+"nullable": true
+},
+"telefon": {
+"type": "string",
+"nullable": true
+},
+"email": {
+"type": "string",
+"nullable": true
+},
+"role": {
+"$ref": "#/components/schemas/Roles"
+},
+"confirmed": {
+"type": "boolean"
+}
+},
+"additionalProperties": false
+},
+"UserRegistDTO": {
+"type": "object",
+"properties": {
+"vorname": {
+"type": "string",
+"nullable": true
+},
+"nachname": {
+"type": "string",
+"nullable": true
+},
+"addrese": {
+"type": "string",
+"nullable": true
+},
+"telefon": {
+"type": "string",
+"nullable": true
+},
+"email": {
+"type": "string",
+"nullable": true
+},
+"pw": {
+"type": "string",
+"nullable": true
+}
+},
+"additionalProperties": false
+},
+"UserUpdateDTO": {
+"type": "object",
+"properties": {
+"vorname": {
+"type": "string",
+"nullable": true
+},
+"nachname": {
+"type": "string",
+"nullable": true
+},
+"addrese": {
+"type": "string",
+"nullable": true
+},
+"telefon": {
+"type": "string",
+"nullable": true
+},
+"email": {
+"type": "string",
+"nullable": true
+},
+"pw": {
+"type": "string",
+"nullable": true
+},
+"role": {
+"$ref": "#/components/schemas/Roles"
+},
+"confirmed": {
+"type": "boolean"
+}
+},
+"additionalProperties": false
+}
+},
+"securitySchemes": {
+"Bearer": {
+"type": "apiKey",
+"description": "Enter JWT Token here",
+"name": "Authorization",
+"in": "header"
+}
+}
+},
+"security": [
+{
+"Bearer": []
+}
+]
+}

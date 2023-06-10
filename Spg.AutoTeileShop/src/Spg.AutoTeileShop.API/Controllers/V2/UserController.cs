@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System.Security.Claims;
@@ -17,12 +19,25 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IAddUpdateableUserService _addUpdateableUserService;
         private readonly IDeletableUserService _deletableUserService;
         private readonly IReadOnlyUserService _readOnlyUserService;
-
-        public UserController(IAddUpdateableUserService addUpdateableUserService, IDeletableUserService deletableUserService, IReadOnlyUserService readOnlyUserService)
+        private readonly IEnumerable<EndpointDataSource> _endpointSources;
+        //requert for HATEOAS, List of Routes and Methodes
+        private List<BuildRoutePattern> _routes;
+        
+        public UserController(IAddUpdateableUserService addUpdateableUserService, IDeletableUserService deletableUserService,
+            IReadOnlyUserService readOnlyUserService, IEnumerable<EndpointDataSource> endpointSources,
+            ListAllEndpoints listAllEndpoints)
         {
             _addUpdateableUserService = addUpdateableUserService;
             _deletableUserService = deletableUserService;
             _readOnlyUserService = readOnlyUserService;
+
+            //requert for HATEOAS, List of Routes and Methodes
+            _endpointSources = endpointSources;
+
+            var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+
+            _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
+
         }
 
         // All - Authorization
@@ -42,7 +57,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
                 response.Add(new UserGetDTO(user));
             }
-            return Ok(response);
+            HateoasBuild<UserGetDTO, Guid> hb = new HateoasBuild<UserGetDTO, Guid>();
+
+            return Ok(hb.buildHateoas(response.ToList(), response.Select(c => c.Guid).ToList(), _routes));
         }
 
 
@@ -55,6 +72,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             var userGuid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             User response = null;
+
             try
             {
                 response = _readOnlyUserService.GetByGuid(guid);
@@ -70,9 +88,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                     return NotFound(e);
                 }
                 return BadRequest();
-
             }
-            return Ok(new UserGetDTO(response));
+            HateoasBuild<UserGetDTO, Guid> hb = new HateoasBuild<UserGetDTO, Guid>();
+            return Ok(hb.buildHateoas(new UserGetDTO(response), response.Guid, _routes));
         }
 
         [HttpDelete("{guid}")]

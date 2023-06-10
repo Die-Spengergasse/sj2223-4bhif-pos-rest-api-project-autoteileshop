@@ -17,11 +17,26 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public Car(CarDTO carDto)
         {
+            this.Id = carDto.Id;
+            this.Marke = carDto.Marke;
+            this.Modell = carDto.Modell;
+            this.Baujahr = carDto.Baujahr;
+        }
+        public Car(CarDTOPost carDto)
+        {
             this.Marke = carDto.Marke;
             this.Modell = carDto.Modell;
             this.Baujahr = carDto.Baujahr;
         }
 
+        public Car(int Id, CarDTOUpdate carDto)
+        {
+            this.Id = Id;
+            this.Marke = carDto.Marke;
+            this.Modell = carDto.Modell;
+            this.Baujahr = carDto.Baujahr;
+        }
+        
         public Car(int id, string marke, string modell, DateTime baujahr, List<Product> fitsForProducts)
         {
             Id = id;

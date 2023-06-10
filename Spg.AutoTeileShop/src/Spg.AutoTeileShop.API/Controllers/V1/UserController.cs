@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
@@ -36,6 +37,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V1
             {
                 response.Add(new UserGetDTO(user));
             }
+    
             return Ok(response);
         }
 

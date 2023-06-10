@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
@@ -20,12 +21,25 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IReadOnlyShoppingCartItemService _readOnlyShoppingCartItemService;
         private readonly IReadOnlyShoppingCartService _readOnlyShoppingCartService;
 
-        public ShoppingCartItemController(IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService, IReadOnlyShoppingCartItemService readOnlyShoppingCartItemService, IReadOnlyShoppingCartService readOnlyShoppingCartService)
+        //Hateaos
+        private readonly IEnumerable<EndpointDataSource> _endpointSources;
+        private List<BuildRoutePattern> _routes;
+
+        public ShoppingCartItemController
+        (IDeleteAbleShoppingCartItemService deleteAbleShoppingCartItemService, IAddUpdateableShoppingCartItemService addUpdateableShoppingCartItemService,
+        IReadOnlyShoppingCartItemService readOnlyShoppingCartItemService, IReadOnlyShoppingCartService readOnlyShoppingCartService, IEnumerable<EndpointDataSource> endpointSources,
+        ListAllEndpoints listAllEndpoints)
         {
             _deleteAbleShoppingCartItemService = deleteAbleShoppingCartItemService;
             _addUpdateableShoppingCartItemService = addUpdateableShoppingCartItemService;
             _readOnlyShoppingCartItemService = readOnlyShoppingCartItemService;
             _readOnlyShoppingCartService = readOnlyShoppingCartService;
+
+            //Hateaos
+            _endpointSources = endpointSources;
+            var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
+            _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
+
         }
 
         [HttpGet("")]
@@ -33,9 +47,11 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         public ActionResult<List<ShoppingCartItem>> GetAllShoppingCartItems()
         {
             var items = _readOnlyShoppingCartItemService.GetAll();
+            HateoasBuild<ShoppingCartItem, int> hb = new HateoasBuild<ShoppingCartItem, int>();
+            
             if (items.Count() == 0 || items is null)
                 return NotFound();
-            return Ok(items);
+            return Ok(hb.buildHateoas(items.ToList(), items.Select(s => s.Id).ToList(), _routes));
         }
 
         [HttpGet("{guid}")]
@@ -56,7 +72,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
                 if (item is null)
                     return NotFound();
-                return Ok(item);
+                HateoasBuild<ShoppingCartItem, int> hb = new HateoasBuild<ShoppingCartItem, int>();
+                return Ok(hb.buildHateoas(item, item.Id, _routes));
             }
             catch (KeyNotFoundException knfe)
             {
@@ -74,6 +91,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             try
             {
+                HateoasBuild<ShoppingCartItemDTOGet, int> hb = new HateoasBuild<ShoppingCartItemDTOGet, int>();
+
                 if (shoppingCartId == 0) return BadRequest();
                 var shoppingCart = _readOnlyShoppingCartService.GetById(shoppingCartId);
 
@@ -87,13 +106,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
-
+            
                 List<ShoppingCartItemDTOGet> itemsDTO = new();
                 foreach (ShoppingCartItem item in items)
                 {
-                    itemsDTO.Add(new ShoppingCartItemDTOGet(item));
+                    itemsDTO.Add(new ShoppingCartItemDTOGet(item));   
                 }
-                return Ok(itemsDTO);
+                return Ok(hb.buildHateoas(itemsDTO.ToList(), itemsDTO.Select(s => s.Id).ToList(), _routes));
             }
             catch (KeyNotFoundException knfe)
             {
@@ -141,7 +160,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
 
                 var item = _addUpdateableShoppingCartItemService.Update(shoppingCartItem);
-                return Ok(item);
+                HateoasBuild<ShoppingCartItem, int> hb = new HateoasBuild<ShoppingCartItem, int>();
+
+                return Ok(hb.buildHateoas(item, item.Id, _routes));
             }
             catch (KeyNotFoundException kE) { return BadRequest(kE.Message); }
             catch (Exception e)
