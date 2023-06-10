@@ -65,7 +65,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [HttpGet("{guid}")]
         public ActionResult<UserGetDTO> GetUserByGuid(Guid guid)
         {
+           
             User response = null;
+
             try
             {
                 response = _readOnlyUserService.GetByGuid(guid);
@@ -78,9 +80,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                     return NotFound(e);
                 }
                 return BadRequest();
-
             }
-            return Ok(new UserGetDTO(response)); // Hateaos implementation failed caused by return statement (nothing to return)
+            //HateoasBuild<UserGetDTO, Guid> hb = neHateoasBuild<UserGetDTO, Guid>();
+            return Ok(); //hb.buildHateoas(response, response.Guid, _routes)); // Hateaos implementation failed caused by return statement (response not null)
         }
 
         [HttpDelete("{guid}")]
