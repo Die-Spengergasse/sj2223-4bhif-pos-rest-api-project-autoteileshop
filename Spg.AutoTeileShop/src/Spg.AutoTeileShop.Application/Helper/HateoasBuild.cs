@@ -112,10 +112,15 @@ namespace Spg.AutoTeileShop.Application.Helper
 
             // Umgehen des Null-Bugs
             StringBuilder outputBuilder = new StringBuilder();
+            var options = new JsonSerializerOptions
+            {
+                IgnoreNullValues = true,
+                IgnoreReadOnlyProperties = true
+            };
 
             foreach (HateoasObject<TEntity> o in objects)
             {
-                outputBuilder.AppendLine(JsonSerializer.Serialize(o.objekt));
+                outputBuilder.AppendLine(JsonSerializer.Serialize(o.objekt, options));
 
                 foreach (string s in o.urls)
                 {

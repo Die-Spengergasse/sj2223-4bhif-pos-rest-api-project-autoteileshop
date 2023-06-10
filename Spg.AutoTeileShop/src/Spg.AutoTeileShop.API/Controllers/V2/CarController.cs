@@ -77,7 +77,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             catch (Exception ex)
             {
                 if (ex.Message.Contains($"No Car found with Id: {id}")) { return BadRequest(ex.Message); }
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
 
