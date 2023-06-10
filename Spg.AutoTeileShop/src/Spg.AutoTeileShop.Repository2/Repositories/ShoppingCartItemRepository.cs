@@ -1,13 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework.Constraints;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.Repositories
 {
@@ -22,7 +16,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public ShoppingCartItem Add(ShoppingCartItem shoppingCartItem)
         {
-           _db.ShoppingCartItems.Add(shoppingCartItem);
+            _db.ShoppingCartItems.Add(shoppingCartItem);
             _db.SaveChanges();
             return shoppingCartItem;
         }

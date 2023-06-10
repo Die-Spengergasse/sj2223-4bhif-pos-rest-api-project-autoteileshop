@@ -1,12 +1,8 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.Repositories
 {
@@ -69,7 +65,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
         {
             return _db.Users.Where(u => u.Guid == guid).SingleOrDefault();
         }
-        
+
         public string ComputeSha256Hash(string value) // from ChatGPT supported
         {
             using (SHA256 hash = SHA256.Create())
@@ -77,7 +73,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
                 byte[] hashBytes = hash.ComputeHash(Encoding.UTF8.GetBytes(value));
                 return BitConverter.ToString(hashBytes).Replace("-", "");
             }
-        }    
+        }
 
 
         public string GenerateSalt()

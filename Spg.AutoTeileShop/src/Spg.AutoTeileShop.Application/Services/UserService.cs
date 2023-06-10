@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
+﻿using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.Application.Services
@@ -19,9 +14,9 @@ namespace Spg.AutoTeileShop.Application.Services
 
         public User? Add(User user)
         {
-            if(user is not null)
-            return _userRepository.SetUser(user);
-            
+            if (user is not null)
+                return _userRepository.SetUser(user);
+
             return null;
         }
 
@@ -65,5 +60,5 @@ namespace Spg.AutoTeileShop.Application.Services
             }
             return null;
         }
-    }    
+    }
 }

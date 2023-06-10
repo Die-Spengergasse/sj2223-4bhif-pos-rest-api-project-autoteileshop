@@ -1,10 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -78,7 +73,7 @@ namespace Spg.AutoTeileShop.Application.Services
 
             foreach (Product p in car.FitsForProducts)
             {
-                if (!car2.FitsForProducts.Contains(p)) 
+                if (!car2.FitsForProducts.Contains(p))
                 {
                     car2.AddFitsForProducts(p);
                 }

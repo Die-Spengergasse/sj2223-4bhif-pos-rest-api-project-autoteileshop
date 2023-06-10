@@ -1,6 +1,6 @@
-﻿using Spg.AutoTeileShop.Infrastructure;
+﻿using Spg.AutoTeileShop.Domain.Exeptions;
 using Spg.AutoTeileShop.Domain.Interfaces.RepoBase_Interfaces;
-using Spg.AutoTeileShop.Domain.Exeptions;
+using Spg.AutoTeileShop.Infrastructure;
 
 namespace Spg.AutoTeileShop.Repository
 {
@@ -19,9 +19,9 @@ namespace Spg.AutoTeileShop.Repository
             {
                 throw new RepositoryCreateException($"{nameof(TEntity)} war NULL!");
             }
-            
+
             _db.Set<TEntity>().Add(entity);
-            
+
             try
             {
                 _db.SaveChanges();

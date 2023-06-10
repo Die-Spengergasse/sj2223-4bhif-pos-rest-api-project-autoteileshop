@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Spg.AutoTeileShop.Domain;
 using Spg.AutoTeileShop.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services.CQS
 {

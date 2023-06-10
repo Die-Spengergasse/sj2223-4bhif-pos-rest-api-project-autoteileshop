@@ -1,10 +1,4 @@
-﻿using System;
-using MediatR;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Spg.AutoTeileShop.Domain.Models;
+﻿using MediatR;
 
 namespace Spg.AutoTeileShop.Application.Services.CQS.Car.Commands
 {

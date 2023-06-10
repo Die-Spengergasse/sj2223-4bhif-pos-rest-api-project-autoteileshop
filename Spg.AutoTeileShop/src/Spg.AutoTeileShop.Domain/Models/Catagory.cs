@@ -1,11 +1,4 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
@@ -15,11 +8,11 @@ namespace Spg.AutoTeileShop.Domain.Models
         //Sub
         Auspuff, Bremsen, Getriebe, Kupplung, Motor, Reifen, Räder, Scheibenwischer, Scheinwerfer, Sitze, Stoßdämpfer, Elektrik, Verkleidung
     }
-    
+
     public class Catagory
     {
         public int Id { get; private set; }
-        public virtual Catagory? TopCatagory{ get; set; }
+        public virtual Catagory? TopCatagory { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public CategoryTypes CategoryType { get; set; }

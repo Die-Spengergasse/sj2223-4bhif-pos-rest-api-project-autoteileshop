@@ -31,5 +31,5 @@ namespace Spg.AutoTeileShop.Domain.DTO
             this.Discount = product.Discount;
         }
     }
-    
+
 }

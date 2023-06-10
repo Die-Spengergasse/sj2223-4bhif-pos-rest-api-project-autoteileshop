@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Spg.AutoTeileShop.Domain
+﻿namespace Spg.AutoTeileShop.Domain
 {
     public interface ICommandHandler<TCommand, TResult>
     {

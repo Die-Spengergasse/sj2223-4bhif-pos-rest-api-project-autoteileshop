@@ -2,13 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 //using Spg.AutoTeileShop.
 
 namespace Spg.AutoTeileShop.ApplicationTest.Helpers
@@ -36,7 +31,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
             db.Catagories.AddRange(GetSeedingCategories());
             db.SaveChanges();
-            
+
             db.Users.AddRange(GetSeedingUser());
             db.SaveChanges();
 
@@ -55,7 +50,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
             db.ShoppingCarts.AddRange(GetSeedingShoppingCart(db));
             db.SaveChanges();
-            
+
             db.UserMailConfirms.AddRange(GetSeedingUserMailConfirme(db));
             db.SaveChanges();
 
@@ -117,7 +112,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
                     10,
                     DateTime.Now.AddDays(-14),
                     db.Cars.ToList()),
-               
+
                 new Product(
                     Guid.NewGuid(),
                     "Another Test Product",
@@ -139,7 +134,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
         {
             db.Cars.First().FitsForProducts.Append(db.Products.First());
             db.Cars.First().FitsForProducts.Append(db.Products.Last());
-            
+
             db.Cars.Last().FitsForProducts.Append(db.Products.First());
             db.Cars.Last().FitsForProducts.Append(db.Products.Last());
         }
@@ -148,7 +143,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
         {
             return new List<ShoppingCartItem>()
             {
-                new ShoppingCartItem(                
+                new ShoppingCartItem(
                     new Guid("da7de159-0d7d-4416-b7e0-9c6723fd333f"),
                     2,
                     db.Products.First().Id,
@@ -156,7 +151,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
                     null,
                     null
                 ),
-                
+
                  new ShoppingCartItem(
                     new Guid("5b4c4bbf-e458-46a7-8827-d02b934cba78"),
                     2,

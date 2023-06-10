@@ -2,11 +2,6 @@
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.Repositories
 {

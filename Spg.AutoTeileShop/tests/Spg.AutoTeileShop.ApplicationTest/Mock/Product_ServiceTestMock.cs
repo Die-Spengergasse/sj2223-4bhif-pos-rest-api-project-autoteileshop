@@ -1,12 +1,8 @@
 using Moq;
-using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
-using Spg.AutoTeileShop.Domain.DTO;
+using Spg.AutoTeileShop.ApplicationTest.Helpers;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Infrastructure;
-using Spg.AutoTeileShop.Repository2.Repositories;
-using Spg.AutoTeileShop.ApplicationTest.Helpers;
 
 namespace Spg.AutoTeileShop.ApplicationTest.Mock
 {
@@ -38,7 +34,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Mock
             //Assert
             _productRepositoryMock.Verify(r => r.Add(It.IsAny<Product>()), Times.Once);
         }
-        
+
         [Fact]
         public void Update_Product_Succes_Test_Mock()
         {

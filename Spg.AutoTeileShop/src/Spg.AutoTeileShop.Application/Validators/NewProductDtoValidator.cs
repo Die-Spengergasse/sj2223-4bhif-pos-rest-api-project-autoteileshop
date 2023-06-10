@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using Spg.AutoTeileShop.Domain.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Validators
 {
@@ -13,11 +8,11 @@ namespace Spg.AutoTeileShop.Application.Validators
         public NewProductDtoValidator()
         {
             RuleFor(p => p.Name)
-                .Length(3,20)
+                .Length(3, 20)
                 .WithMessage("Bitte zwischen 3 und 20!")
                 .WithErrorCode("9000");
 
             RuleFor(p => p.Ean13).Length(13).WithMessage("Bitte 13 Zeichen!");
         }
-        }
+    }
 }

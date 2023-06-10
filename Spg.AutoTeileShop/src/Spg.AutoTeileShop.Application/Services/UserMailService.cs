@@ -1,10 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {

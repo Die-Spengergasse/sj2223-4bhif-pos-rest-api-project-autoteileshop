@@ -1,16 +1,10 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public enum Roles 
+    public enum Roles
     { User, Admin, Salesman }
     public class User : IFindableByGuid
     {
@@ -33,7 +27,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public User
         (int id, Guid guid, string vorname, string nachname,
-        string addrese,string telefon, string email, string pW, Roles role, bool confirmed)
+        string addrese, string telefon, string email, string pW, Roles role, bool confirmed)
         {
             Id = id;
             Guid = guid;
@@ -49,7 +43,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 
 
         public User
-        ( Guid guid, string vorname, string nachname,
+        (Guid guid, string vorname, string nachname,
         string addrese, string telefon, string email, string pW, Roles role, bool confirmed)
         {
             Guid = guid;
@@ -73,7 +67,7 @@ namespace Spg.AutoTeileShop.Domain.Models
             PW = urDTO.PW;
         }
 
-        public User (UserUpdateDTO uuDTO)
+        public User(UserUpdateDTO uuDTO)
         {
             Vorname = uuDTO.Vorname;
             Nachname = uuDTO.Nachname;

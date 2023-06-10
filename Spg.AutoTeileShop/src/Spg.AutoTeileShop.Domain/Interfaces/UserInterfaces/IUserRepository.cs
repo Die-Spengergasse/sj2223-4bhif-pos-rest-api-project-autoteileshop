@@ -1,16 +1,11 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
 {
     public interface IUserRepository
     {
         IEnumerable<User> GetAll();
-        User? GetById (int Id);
+        User? GetById(int Id);
         User? GetByGuid(Guid guid);
 
         User? GetByName(string name);
@@ -22,7 +17,7 @@ namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
         string ComputeSha256Hash(string value);
         string GenerateSalt();
         string CalculateHash(string password, string salt);
-       
+
 
 
     }

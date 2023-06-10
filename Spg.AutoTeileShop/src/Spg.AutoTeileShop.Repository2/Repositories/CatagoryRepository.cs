@@ -1,11 +1,6 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.Repositories
 {
@@ -48,8 +43,8 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public Catagory GetCatagoryById(int id)
         {
-            return _db.Catagories.Find(id) ?? throw  new Exception($"Catagory with Id: {id} not found");
-    }
+            return _db.Catagories.Find(id) ?? throw new Exception($"Catagory with Id: {id} not found");
+        }
 
         public Catagory GetCatagoryByName(string name)
         {

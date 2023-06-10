@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Infrastructure;
 
 
 namespace Spg.AutoTeileShop.API.Controllers.V1

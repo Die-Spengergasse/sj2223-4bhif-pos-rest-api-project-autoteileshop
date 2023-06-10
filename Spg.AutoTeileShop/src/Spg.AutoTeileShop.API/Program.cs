@@ -1,26 +1,13 @@
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Spg.AutoTeileShop.API.Helper;
 using Spg.AutoTeileShop.Application.Services;
-using Spg.AutoTeileShop.Application.Validators;
 using Spg.AutoTeileShop.DbExtentions;
-using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
-using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
-using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
-using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Infrastructure;
-using Spg.AutoTeileShop.Repository2.Repositories;
 using Spg.AutoTeileShop.ServiceExtentions;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -154,7 +141,7 @@ builder.Services.AddTransient<AuthService>(services =>
 {
     var userRepository = services.GetRequiredService<IUserRepository>();
     return new AuthService(jwtSecret, userRepository);
-    }
+}
 );
 
 var app = builder.Build();
@@ -166,7 +153,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(x => {
+    app.UseSwaggerUI(x =>
+    {
         x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
     });

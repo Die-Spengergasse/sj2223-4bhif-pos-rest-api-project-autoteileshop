@@ -1,11 +1,4 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 
@@ -15,7 +8,7 @@ namespace Spg.AutoTeileShop.Domain.Models
     public class Product
     {
         public int Id { get; private set; }
-        public Guid Guid { get;  set; }
+        public Guid Guid { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public virtual Catagory? catagory { get; set; }
@@ -47,7 +40,7 @@ namespace Spg.AutoTeileShop.Domain.Models
             _productFitsForCar = productFitsForCar;
         }
 
-        public Product( Guid guid, string name, decimal price, Catagory? catagory, string description, string? image, QualityType quality, int stock, int discount, DateTime receive, List<Car> productFitsForCar)
+        public Product(Guid guid, string name, decimal price, Catagory? catagory, string description, string? image, QualityType quality, int stock, int discount, DateTime receive, List<Car> productFitsForCar)
         {
             Guid = guid;
             Name = name;
@@ -87,8 +80,8 @@ namespace Spg.AutoTeileShop.Domain.Models
                 _productFitsForCar.Add(entity);
                 if (!entity.FitsForProducts.Contains(this))
                     entity.AddFitsForProducts(this);
-            }  
-                
+            }
+
         }
         public void RemoveProductFitsForCar(Car entity)
         {
@@ -115,8 +108,8 @@ namespace Spg.AutoTeileShop.Domain.Models
                    Stock == product.Stock &&
                    Discount == product.Discount &&
                    receive == product.receive;
-                   //EqualityComparer<List<Car>>.Default.Equals(_productFitsForCar, product._productFitsForCar) &&
-                   //EqualityComparer<IReadOnlyList<Car>>.Default.Equals(ProductFitsForCar, product.ProductFitsForCar);
+            //EqualityComparer<List<Car>>.Default.Equals(_productFitsForCar, product._productFitsForCar) &&
+            //EqualityComparer<IReadOnlyList<Car>>.Default.Equals(ProductFitsForCar, product.ProductFitsForCar);
         }
     }
 }

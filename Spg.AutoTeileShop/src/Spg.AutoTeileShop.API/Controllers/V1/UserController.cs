@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 
 namespace Spg.AutoTeileShop.API.Controllers.V1
 {

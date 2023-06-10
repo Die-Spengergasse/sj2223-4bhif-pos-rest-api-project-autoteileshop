@@ -1,13 +1,9 @@
-﻿using Spg.AutoTeileShop.Domain.DTO;
 ﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -235,7 +231,7 @@ namespace Spg.AutoTeileShop.Application.Services
         public Guid UserGuid { get; set; }
         public int UserID { get; set; }
 
-        
+
     }
 
 }

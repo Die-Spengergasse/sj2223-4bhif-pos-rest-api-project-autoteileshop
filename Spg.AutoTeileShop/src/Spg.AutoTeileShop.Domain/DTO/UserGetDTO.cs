@@ -1,9 +1,4 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.DTO
 {
@@ -20,7 +15,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
             Email = user.Email;
             Role = user.Role;
             Confirmed = user.Confirmed;
-            
+
         }
 
         public int Id { get; private set; }
@@ -32,7 +27,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
         public string Email { get; set; } = string.Empty;         //IsUnique
         public Roles Role { get; set; }
         public bool Confirmed { get; set; }
-        
-        
+
+
     }
 }

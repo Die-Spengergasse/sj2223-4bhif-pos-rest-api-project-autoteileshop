@@ -1130,7 +1130,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         [Fact]
         public void Z_DomainModel_Create_DB()
         {
-            AutoTeileShopContext db = createDB();           
+            AutoTeileShopContext db = createDB();
         }
 
         [Fact]

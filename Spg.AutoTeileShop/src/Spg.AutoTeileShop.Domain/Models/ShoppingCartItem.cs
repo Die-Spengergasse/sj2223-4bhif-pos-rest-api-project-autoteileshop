@@ -1,19 +1,12 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
     public class ShoppingCartItem
     {
         public int Id { get; private set; }
-        public Guid guid { get;  set; }
-        public int Pieces { get; set; }        
+        public Guid guid { get; set; }
+        public int Pieces { get; set; }
         public int? ProductId { get; set; }
         public virtual Product? ProductNav { get; set; }
         public int? ShoppingCartId { get; set; }

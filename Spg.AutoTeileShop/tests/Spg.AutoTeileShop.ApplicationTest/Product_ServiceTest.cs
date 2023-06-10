@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application.Services;
-using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
@@ -71,7 +69,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            
+
             ProductService productService = new(new ProductRepository(db));
             Product product = new Product()
             {
@@ -80,7 +78,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
                 Guid = Guid.NewGuid(),
                 Name = "Pro Test",
                 Price = 499.99M,
-                Stock = 1               
+                Stock = 1
             };
 
             //Act

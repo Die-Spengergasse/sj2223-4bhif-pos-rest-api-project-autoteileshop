@@ -2,11 +2,6 @@
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
@@ -132,8 +127,8 @@ namespace Spg.AutoTeileShop.Domain.Test
             //var carChanges = new Car(car.Id, "Audi", "A3", new DateTime(2021, 1, 1), new List<Product>());
             var car2 = cRepo.Update2(car);
 
-            Assert.Equal(1, _db.Cars.Count()); 
-            Assert.Equal(car2.ToString(), _db.Cars.First().ToString()) ;
+            Assert.Equal(1, _db.Cars.Count());
+            Assert.Equal(car2.ToString(), _db.Cars.First().ToString());
         }
 
         [Fact]
@@ -157,7 +152,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(1, _db.Cars.Count());
             Assert.Equal(car, _db.Cars.First());
         }
-        
+
         [Fact]
         public void Repository_Car_Update4_useUpdate3_with_Tracking_ON_Test()
         {

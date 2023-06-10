@@ -1,10 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -62,6 +57,6 @@ namespace Spg.AutoTeileShop.Application.Services
             return _shoppingCartItemRepository.Update(sCI);
 
         }
-        
+
     }
 }

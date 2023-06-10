@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Infrastructure;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2

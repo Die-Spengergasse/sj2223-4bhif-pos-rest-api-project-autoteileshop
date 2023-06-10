@@ -3,11 +3,6 @@ using Spg.AutoTeileShop.Infrastructure;
 //using Spg.AutoTeileShop.Repository;
 using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.RepositoryTest.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.RepositoryTest
 {
@@ -32,7 +27,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
 
                 // Arrange
                 DatabaseUtilities.InitializeDatabase(db);
-                
+
 
                 Product newProduct = new Product(
                     Guid.NewGuid(),
@@ -55,6 +50,6 @@ namespace Spg.AutoTeileShop.RepositoryTest
             }
         }
     }
-  
-    
+
+
 }

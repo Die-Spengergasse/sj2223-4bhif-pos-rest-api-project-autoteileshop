@@ -1,13 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Spg.AutoTeileShop.API.Controllers.V1
 {

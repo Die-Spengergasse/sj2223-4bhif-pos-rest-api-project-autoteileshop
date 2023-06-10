@@ -1,12 +1,5 @@
-﻿using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
-using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
+﻿using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Repository2.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {

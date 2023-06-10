@@ -1,14 +1,8 @@
 ﻿using Bogus;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Proxies;
 using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Randomizer = Bogus.Randomizer;
 
 namespace Spg.AutoTeileShop.Infrastructure
@@ -20,7 +14,7 @@ namespace Spg.AutoTeileShop.Infrastructure
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public DbSet<Car> Cars{ get; set; }
+        public DbSet<Car> Cars { get; set; }
         public DbSet<UserMailConfirme> UserMailConfirms { get; set; }
 
 
@@ -37,7 +31,7 @@ namespace Spg.AutoTeileShop.Infrastructure
             if (!options.IsConfigured)
                 //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db"); //Home PC
                 // options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
-            options.UseLazyLoadingProxies();
+                options.UseLazyLoadingProxies();
             //options.UseSqlite(ReadLineWithQuestionMark());
             //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db");
 
@@ -75,13 +69,13 @@ namespace Spg.AutoTeileShop.Infrastructure
             Users.AddRange(users);
             SaveChanges();
 
-            
+
             List<Car> cars = new Faker<Car>("de")
             .Rules((f, ca) =>
             {
                 ca.Marke = f.Vehicle.Manufacturer();
                 ca.Modell = f.Vehicle.Model();
-                ca.Baujahr = f.Date.Past(15, DateTime.Now);                
+                ca.Baujahr = f.Date.Past(15, DateTime.Now);
             })
             .Generate(60)
             .ToList();
@@ -95,14 +89,14 @@ namespace Spg.AutoTeileShop.Infrastructure
             {
 
                 ca.Description = f.Name.JobDescriptor();
-                Array values = Enum.GetValues(typeof(CategoryTypes));                              
+                Array values = Enum.GetValues(typeof(CategoryTypes));
                 ca.CategoryType = (CategoryTypes)values.GetValue(random.Next(values.Length));
                 ca.Name = ca.CategoryType.ToString();
-                
+
             })
             .Generate(20)
             .ToList();
-            
+
 
 
             foreach (Catagory c in catagory)
@@ -127,11 +121,11 @@ namespace Spg.AutoTeileShop.Infrastructure
             Catagories.AddRange(catagory);
             SaveChanges();
 
-            
+
             List<Product> product = new Faker<Product>("de")
             .Rules((f, p) =>
             {
-                
+
                 p.Guid = f.Random.Guid();
                 p.Name = f.Commerce.ProductName();
                 p.Price = f.Random.Decimal(0, 1000);
@@ -141,13 +135,13 @@ namespace Spg.AutoTeileShop.Infrastructure
 
                 Array values = Enum.GetValues(typeof(QualityType));
                 Random random = new Random();
-                p.Quality= (QualityType)values.GetValue(random.Next(values.Length));
+                p.Quality = (QualityType)values.GetValue(random.Next(values.Length));
 
                 p.Stock = f.Random.Int(11, 1000);
                 p.Discount = f.Random.Int(0, 100);
                 p.receive = f.Date.Past(10, DateTime.Now);
                 p.AddProductFitsForCar(f.PickRandom(cars));
-                
+
 
             })
             .Generate(500)
@@ -175,7 +169,7 @@ namespace Spg.AutoTeileShop.Infrastructure
            {
                sh.guid = f.Random.Guid();
                sh.UserNav = f.PickRandom(users);
-               for(int i = 0; i < 2; i++)
+               for (int i = 0; i < 2; i++)
                {
                    var item = f.PickRandom(items2);
                    sh.AddShoppingCartItem(item);

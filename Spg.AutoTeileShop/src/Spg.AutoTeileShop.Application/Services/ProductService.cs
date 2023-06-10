@@ -1,12 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Repository2.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -113,7 +106,7 @@ namespace Spg.AutoTeileShop.Application.Services
             //        product1.RemoveProductFitsForCar(c);
             //    }
             //}
-            
+
             for (int i = 0; i < product.ProductFitsForCar.Count; i++)
             {
                 Car c = product.ProductFitsForCar[i];

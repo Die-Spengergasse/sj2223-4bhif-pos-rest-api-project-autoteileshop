@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;

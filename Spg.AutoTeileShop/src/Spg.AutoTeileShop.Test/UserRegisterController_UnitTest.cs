@@ -1,30 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.API.Controllers.V1;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
-using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
-using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
     [Collection("Sequential tests")]
     public class UserRegisterController_UnitTest
     {
-        
+
         private UserRepository _userRepo;
         private UserMailRepo _userMailRepository;
         private UserRegistServic _userRegistServic;

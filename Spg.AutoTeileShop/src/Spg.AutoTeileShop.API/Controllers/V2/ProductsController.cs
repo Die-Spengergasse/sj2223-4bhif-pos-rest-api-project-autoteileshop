@@ -2,13 +2,11 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {
@@ -33,7 +31,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _readOnlyCatagoryService = readOnlyCatagoryService;
             _validator = validator;
         }
-        
+
 
         [HttpGet("Old")]
         [AllowAnonymous]

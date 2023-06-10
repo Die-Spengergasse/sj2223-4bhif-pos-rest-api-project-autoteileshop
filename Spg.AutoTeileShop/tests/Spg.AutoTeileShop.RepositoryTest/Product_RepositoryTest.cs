@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
@@ -32,7 +31,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
             string extractedPath;
             string filePath;
             if (currentDirectory.Contains($"\\src\\"))
-            { 
+            {
                 endIndex = currentDirectory.IndexOf($"\\src\\") + $"\\src\\".Length;
                 extractedPath = currentDirectory.Substring(0, endIndex);
                 filePath = Path.Combine(extractedPath, relativeFilePath);
@@ -42,9 +41,9 @@ namespace Spg.AutoTeileShop.RepositoryTest
                 endIndex = currentDirectory.IndexOf($"\\tests\\");
                 extractedPath = currentDirectory.Substring(0, endIndex);
                 //filePath = Path.Combine(extractedPath, $"\\src\\", relativeFilePath);
-                filePath = extractedPath +  $"\\src\\" + relativeFilePath;
+                filePath = extractedPath + $"\\src\\" + relativeFilePath;
             }
-           
+
 
             if (!File.Exists(filePath))
             {

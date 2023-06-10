@@ -1,22 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Spg.AutoTeileShop.Application.Services.CQS.Car;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
 using Spg.AutoTeileShop.ApplicationTest.Helpers;
-using Spg.AutoTeileShop.Domain;
 using Spg.AutoTeileShop.Domain.Exeptions;
 using Spg.AutoTeileShop.Domain.Interfaces;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using Spg.AutoTeileShop.Repository2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Spg.AutoTeileShop.ApplicationTest
 {
@@ -76,7 +65,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
 
             return null;
         }
-        
+
         [Fact]
         public async Task CQS_Create_Car_TestAsync()
         {
@@ -326,7 +315,8 @@ namespace Spg.AutoTeileShop.ApplicationTest
             var serviceProvider = new TestServiceProvider();
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
-            var product = new Product() {
+            var product = new Product()
+            {
                 Description = "test",
                 Guid = Guid.NewGuid(),
                 Image = "test",
@@ -419,7 +409,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Assert
             car.Baujahr = DateTime.Today;
             result.First().Baujahr = DateTime.Today;
-            
+
             Assert.Equal(car.ToString(), result.First().ToString());
             Assert.Equal(car2.ToString(), result.First().ToString());
             Assert.False(result.Contains(car3));
@@ -436,7 +426,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             var marke = "BMW";
 
             var query = new GetCarsByMarkeQuery(marke);
-            
+
             Car car = new Car()
             {
                 Marke = "BMW",
@@ -501,7 +491,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
                 Modell = "A3"
             };
 
-            
+
             db.Cars.AddRange(car1, car2);
             db.SaveChanges();
 
@@ -732,7 +722,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             Assert.NotNull(carResult4);
             Assert.Equal(car1.Id, carResult1.Id);   // Das zurückgegebene Auto sollte das erwartete Auto sein
             Assert.Equal(car2.Id, carResult2.Id);
-            Assert.Equal(car3.Id, carResult3.Id);   
+            Assert.Equal(car3.Id, carResult3.Id);
             Assert.Equal(car4.Id, carResult4.Id);
 
             Assert.Equal("BMW", carResult1.Marke);

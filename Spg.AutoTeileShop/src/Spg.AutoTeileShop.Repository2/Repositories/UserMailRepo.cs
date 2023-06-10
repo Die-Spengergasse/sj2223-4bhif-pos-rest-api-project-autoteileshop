@@ -2,12 +2,8 @@
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2.Repositories
 {
@@ -40,7 +36,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public UserMailConfirme? GetByMail(string mail)
         {
-           return _db.UserMailConfirms.Include("User").Where(u => u.User.Email== mail).SingleOrDefault();
+            return _db.UserMailConfirms.Include("User").Where(u => u.User.Email == mail).SingleOrDefault();
         }
 
         public UserMailConfirme? SetUserMailConfirme(UserMailConfirme userMailConfirme)

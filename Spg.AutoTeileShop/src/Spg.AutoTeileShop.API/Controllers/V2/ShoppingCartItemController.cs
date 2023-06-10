@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCart_Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.ShoppingCartItem_Interface;
 using Spg.AutoTeileShop.Domain.Models;
@@ -47,7 +45,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 var item = _readOnlyShoppingCartItemService.GetByGuid(guid);
-                
+
                 // Check if User who is mentiont in the Cart is the same as the User who is logged in or the User is an admin
                 if (
                 (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
@@ -78,14 +76,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             {
                 if (shoppingCartId == 0) return BadRequest();
                 var shoppingCart = _readOnlyShoppingCartService.GetById(shoppingCartId);
-                
+
                 // Check if User who is mentiont in the Cart is the same as the User who is logged in or the User is an admin
                 if (
                 (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
                 .Equals(shoppingCart.UserNav.Guid.ToString())) == false
                 &&
                 (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
-                
+
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
@@ -161,13 +159,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 var itemS = _readOnlyShoppingCartItemService.GetByGuid(guid);
-                
+
                 if (
                 (bool)(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
                 .Equals(itemS.ShoppingCartNav.UserNav.Guid.ToString())) == false
                 &&
                 (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value == "admin") == false) return Unauthorized();
-                
+
                 var item = _deleteAbleShoppingCartItemService.Delete(itemS);
                 return Ok(item);
             }

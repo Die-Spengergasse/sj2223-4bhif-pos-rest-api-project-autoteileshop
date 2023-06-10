@@ -4,7 +4,6 @@ using Microsoft.Data.Sqlite;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System.Text.Json;
 //using Spg.AutoTeileShop.Application.Filter;
 
 namespace Spg.AutoTeileShop.API.Controllers.V1

@@ -1,18 +1,11 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
     public class ShoppingCart
     {
         public int Id { get; private set; }
-        public Guid guid { get;  set; }        
+        public Guid guid { get; set; }
         public int? UserId { get; set; }
         public virtual User? UserNav { get; set; }
         private List<ShoppingCartItem> _shoppingCartItems = new();
@@ -29,7 +22,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
-        public ShoppingCart( Guid guid, int UserId, User? UserNav, List<ShoppingCartItem> shoppingCartItems)
+        public ShoppingCart(Guid guid, int UserId, User? UserNav, List<ShoppingCartItem> shoppingCartItems)
         {
             this.guid = guid;
             this.UserId = UserId;
@@ -93,7 +86,7 @@ namespace Spg.AutoTeileShop.Domain.Models
                 return false;
             }
         }
-        
+
         public void RemoveShoppingCartItem(ShoppingCartItem item)
         {
             if (item is not null)
@@ -109,13 +102,13 @@ namespace Spg.AutoTeileShop.Domain.Models
                     {
                         _shoppingCartItems.Single(s => s.guid == item.guid).Pieces -= item.Pieces;
                     }
-                    
+
                 }
                 else { throw new Exception("ShoppingCart does not contains this ShoppingCarItem"); }
             }
         }
 
-        
+
     }
 }
 

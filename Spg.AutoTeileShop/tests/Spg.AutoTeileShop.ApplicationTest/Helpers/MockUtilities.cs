@@ -1,9 +1,4 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 {
@@ -68,9 +63,10 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
 
         public static User GetSeedingUser()
         {
-            return new User() {
+            return new User()
+            {
                 Guid = Guid.NewGuid(),
-                Nachname= "Test",
+                Nachname = "Test",
                 Addrese = "Test",
                 Email = "Test",
                 PW = "Test",
@@ -98,7 +94,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             };
         }
 
-        public static ShoppingCart GetSeedingShoppingCart() 
+        public static ShoppingCart GetSeedingShoppingCart()
         {
             ShoppingCart sc = new ShoppingCart()
             {

@@ -1,18 +1,11 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
-    public class Car 
+    public class Car
     {
-        public  int Id { get; private set; }
-        public string Marke { get;  set; } = string.Empty;
+        public int Id { get; private set; }
+        public string Marke { get; set; } = string.Empty;
         public string Modell { get; set; } = string.Empty;
         public DateTime Baujahr { get; set; }
         private List<Product> _fitsForProducts { get; set; } = new();
@@ -63,7 +56,7 @@ namespace Spg.AutoTeileShop.Domain.Models
                 if (entity.ProductFitsForCar.Contains(this))
                     entity.RemoveProductFitsForCar(this);
             }
-            
+
         }
     }
 }

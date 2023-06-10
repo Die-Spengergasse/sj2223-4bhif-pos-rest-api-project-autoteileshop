@@ -4,11 +4,6 @@ using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
@@ -97,5 +92,5 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
     }
 
-    
+
 }

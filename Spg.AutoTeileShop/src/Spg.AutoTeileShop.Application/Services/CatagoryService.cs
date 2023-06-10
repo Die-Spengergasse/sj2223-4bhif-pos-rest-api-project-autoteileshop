@@ -1,10 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.Catagory_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -57,15 +52,15 @@ namespace Spg.AutoTeileShop.Application.Services
             return _catagoryRepository.GetCatagoryDescriptionById(id);
         }
 
-        public Catagory UpdateCatagory(int Id,Catagory catagory)
+        public Catagory UpdateCatagory(int Id, Catagory catagory)
         {
             Catagory updateCatagory = _catagoryRepository.GetCatagoryById(Id);
-            
+
             updateCatagory.TopCatagory = catagory.TopCatagory;
             updateCatagory.Name = catagory.Name;
             updateCatagory.Description = catagory.Description;
             updateCatagory.CategoryType = catagory.CategoryType;
-            
+
             return _catagoryRepository.UpdateCatagory(catagory);
         }
 
@@ -74,5 +69,5 @@ namespace Spg.AutoTeileShop.Application.Services
             return _catagoryRepository.GetCatagoriesByTopCatagory(topCatagory).Where(c => c.CategoryType == categoryType);
         }
     }
-    
+
 }

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Spg.AutoTeileShop.Application.Services;
@@ -7,8 +8,6 @@ using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using System.Security.Claims;
-using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
 //using Spg.AutoTeileShop.Application.Filter;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2

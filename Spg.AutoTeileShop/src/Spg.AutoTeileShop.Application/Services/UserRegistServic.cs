@@ -1,13 +1,6 @@
 ﻿using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.UserMailConfirmInterface;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Repository2.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Services
 {
@@ -86,6 +79,6 @@ namespace Spg.AutoTeileShop.Application.Services
             return user;
         }
 
-        
+
     }
 }

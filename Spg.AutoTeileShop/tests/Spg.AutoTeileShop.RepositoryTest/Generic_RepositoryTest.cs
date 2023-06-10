@@ -2,11 +2,6 @@
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.RepositoryTest
 {
@@ -15,7 +10,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
         private AutoTeileShopContext createDB()
         {
             DbContextOptions options = new DbContextOptionsBuilder()
-                   // .UseSqlite(ReadLineWithQuestionMark())
+                  // .UseSqlite(ReadLineWithQuestionMark())
                   //.UseSqlite("Data Source=AutoTeileShopTest.db")
                   //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
                   .UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db")     //Home PC       
@@ -121,7 +116,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
 
 
         [Fact]
-        public void Update_Car_SuccesTest() 
+        public void Update_Car_SuccesTest()
         {
             AutoTeileShopContext db = createDB();
             RepositoryBase<Car> repo = new(db);
@@ -143,7 +138,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
 
             //Act 2
             car.Marke = "Audi";
-            repo.Update(car.Id,car);
+            repo.Update(car.Id, car);
 
             //Assert 2
 
@@ -173,7 +168,7 @@ namespace Spg.AutoTeileShop.RepositoryTest
             //Act 1
             repo.Create(carAudi);
             repo.Create(carBMW);
-            
+
             var cars = repoRead.GetAll();
 
             //Assert 1 
@@ -463,6 +458,6 @@ namespace Spg.AutoTeileShop.RepositoryTest
             Assert.Null(result3);
         }
 
-       
+
     }
 }

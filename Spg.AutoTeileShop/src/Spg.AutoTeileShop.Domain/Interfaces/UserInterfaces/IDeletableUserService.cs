@@ -1,15 +1,9 @@
-﻿using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
-using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces
 {
     public interface IDeletableUserService
     {
-        User? Delete(User user); 
+        User? Delete(User user);
     }
 }

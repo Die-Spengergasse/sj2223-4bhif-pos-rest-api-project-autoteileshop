@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Spg.AutoTeileShop.Domain.Models;
 
 namespace Spg.AutoTeileShop.API.Helper
 {

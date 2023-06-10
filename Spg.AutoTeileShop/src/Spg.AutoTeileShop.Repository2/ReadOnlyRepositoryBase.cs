@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Repository2
 {

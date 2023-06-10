@@ -1,18 +1,13 @@
-﻿using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
+﻿using Microsoft.EntityFrameworkCore;
+using Spg.AutoTeileShop.Application.Services.CQS;
+using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Queries;
+using Spg.AutoTeileShop.Domain;
+using Spg.AutoTeileShop.Domain.Interfaces;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using Spg.AutoTeileShop.Domain;
-using Spg.AutoTeileShop.Repository2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Spg.AutoTeileShop.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Spg.AutoTeileShop.Domain.Interfaces;
-using Spg.AutoTeileShop.Application.Services.CQS;
+using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.Repository2.CustomGenericRepositories;
 
 namespace Spg.AutoTeileShop.ApplicationTest.Helpers
@@ -75,7 +70,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             else if (serviceType == typeof(IReadOnlyRepositoryBase<Car>))
             {
                 return new ReadOnlyRepositoryBase<Car>(db);
-            } 
+            }
             else if (serviceType == typeof(IRepositoryBase<Car>))
             {
                 return new RepositoryBase<Car>(db);
@@ -94,7 +89,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             DbContextOptions options = new DbContextOptionsBuilder()
                   //.UseSqlite("Data Source=AutoTeileShopTest.db")
                   .UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db")
-                  
+
                 //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
                 //.UseSqlite(ReadLineWithQuestionMark())     //Home PC       
                 .Options;

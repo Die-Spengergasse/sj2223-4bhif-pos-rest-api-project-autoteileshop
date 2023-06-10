@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {

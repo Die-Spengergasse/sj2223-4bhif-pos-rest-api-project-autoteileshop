@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Application;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 using Spg.AutoTeileShop.Repository2.Repositories;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Spg.AutoTeileShop.Domain.Test
 {
@@ -69,20 +65,20 @@ namespace Spg.AutoTeileShop.Domain.Test
             return null;
         }
 
-        private UserMailService Get_Service_UserMail(AutoTeileShopContext _db) 
+        private UserMailService Get_Service_UserMail(AutoTeileShopContext _db)
         {
             UserMailRepo userMailRepo = new UserMailRepo(_db);
             return new UserMailService(userMailRepo);
         }
 
-        private UserRegistServic Get_Service_UserRegist(AutoTeileShopContext _db) 
+        private UserRegistServic Get_Service_UserRegist(AutoTeileShopContext _db)
         {
             UserRepository userRepo = new(_db);
             UserMailRepo userMailRepo = new(_db);
-            UserMailService _userMailService = new(userMailRepo); 
+            UserMailService _userMailService = new(userMailRepo);
 
             return new UserRegistServic(userRepo, userMailRepo, _userMailService);
-            
+
         }
 
         [Fact]
@@ -102,7 +98,7 @@ namespace Spg.AutoTeileShop.Domain.Test
             AutoTeileShopContext db = createDB();
             UserRegistServic userRegist = Get_Service_UserRegist(db);
             // Guid guid, string vorname, string nachname,string addrese, string telefon, string email, string pW, Roles role, bool confirmed
-            User userPost = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false) ;
+            User userPost = new User(Guid.NewGuid(), "TestVorname", "TestNachname", "TestAdresse", "06762656646", "davidMailEmpfangTestSPG@web.de", "TestPasswort", Roles.User, false);
             var obj = userRegist.Register_sendMail_Create_User(userPost, "mailtestdavid01@gmail.com");
 
             UserMailService userMailService = Get_Service_UserMail(db);
@@ -137,7 +133,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void Repo_CreateUser_Test() 
+        public void Repo_CreateUser_Test()
         {
             AutoTeileShopContext db = createDB();
             UserRepository userRepository = new(db);
@@ -150,11 +146,11 @@ namespace Spg.AutoTeileShop.Domain.Test
         }
 
         [Fact]
-        public void Service_Mail_Check_Test() 
+        public void Service_Mail_Check_Test()
         {
             SendMail sm = new();
             Assert.True(sm.ValidateMail("david.ankenbrand98@gmail.com"));
-           // Assert.True(sm.ValidateMail("david.ankenbrand@gmx.at"));
+            // Assert.True(sm.ValidateMail("david.ankenbrand@gmx.at"));
             Assert.False(sm.ValidateMail("test425236551safasfasf@gmail.com"));
             Assert.False(sm.ValidateMail("david.ankenbrand@testXY.com"));
         }

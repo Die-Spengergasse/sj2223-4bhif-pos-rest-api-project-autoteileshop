@@ -1,5 +1,4 @@
-﻿using Bogus.DataSets;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Domain.Interfaces.ProductServiceInterfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
@@ -45,7 +44,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
         }
 
         public Product? GetByName(string name)
-        { 
+        {
             return _db.Products.Include(p => p.catagory).SingleOrDefault(p => p.Name == name)
                 ?? throw new KeyNotFoundException($"Product {name} not found");
         }
