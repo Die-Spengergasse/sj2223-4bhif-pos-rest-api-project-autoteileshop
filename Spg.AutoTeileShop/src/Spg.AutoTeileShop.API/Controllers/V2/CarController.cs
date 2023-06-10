@@ -1,10 +1,12 @@
 ﻿using Bogus;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.Car_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
+using System.Web.WebPages;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
 {
@@ -234,7 +236,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPut("{id}")]
         [Produces("application/json")]
-        public ActionResult<Car> UpdateCar(CarDTO carDTO)
+        public ActionResult<Car> UpdateCar(int id, CarDTOUpdate carDTO)
         {
             if (id <= 0) return BadRequest("Id must be greater than 0");
             if (_readOnlycarService.GetById(id) == null) return NotFound("Car not found");

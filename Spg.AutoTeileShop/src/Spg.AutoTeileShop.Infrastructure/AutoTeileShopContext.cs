@@ -67,6 +67,15 @@ namespace Spg.AutoTeileShop.Infrastructure
             .Generate(50)
             .ToList();
             Users.AddRange(users);
+            User admin = new User()
+            {
+                Guid = Guid.NewGuid(),
+                Vorname = "Admin",
+                Nachname = "Admin",
+                Email = "admin",
+                Salt = GenerateSalt(),
+                PW = CalculateHash("admin", GenerateSalt())
+            };
             SaveChanges();
 
 
