@@ -38,7 +38,7 @@ namespace Spg.AutoTeileShop.Repository2.CustomGenericRepositories
 
         public IEnumerable<Car> GetByFitProduct(Product product)
         {
-            var cars = _db.Cars.Include(c => c.FitsForProducts).ToList();
+            var cars = _db.Cars.ToList();
             var result = cars.Where(c => c.FitsForProducts.Contains(product)).ToList();
             return result;
         }

@@ -45,7 +45,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public Product? GetByName(string name)
         {
-            return _db.Products.Include(p => p.catagory).SingleOrDefault(p => p.Name == name)
+            return _db.Products.SingleOrDefault(p => p.Name == name)
                 ?? throw new KeyNotFoundException($"Product {name} not found");
         }
 

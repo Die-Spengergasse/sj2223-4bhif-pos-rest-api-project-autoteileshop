@@ -22,7 +22,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public IEnumerable<ShoppingCart> GetAll_includeItems()
         {
-            return _db.ShoppingCarts.Include(s => s.ShoppingCartItems).ToList();
+            return _db.ShoppingCarts.ToList();
         }
 
         public ShoppingCart GetById(int Id)
@@ -32,7 +32,7 @@ namespace Spg.AutoTeileShop.Repository2.Repositories
 
         public ShoppingCart GetByGuid(Guid guid)
         {
-            return _db.ShoppingCarts.Include(s => s.UserNav).Where(s => s.guid == guid).SingleOrDefault() ?? throw new KeyNotFoundException("ShoppingCart with guid " + guid + " not found");
+            return _db.ShoppingCarts.Where(s => s.guid == guid).SingleOrDefault() ?? throw new KeyNotFoundException("ShoppingCart with guid " + guid + " not found");
         }
 
         public ShoppingCart? GetByUserNav(Guid userGuid)
