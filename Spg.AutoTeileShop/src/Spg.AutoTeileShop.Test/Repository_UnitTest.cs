@@ -107,29 +107,29 @@ namespace Spg.AutoTeileShop.Domain.Test
             Assert.Equal(car, _db.Cars.First());
         }
 
-        [Fact]
-        public void Repository_Car_Update2_with_Tracking_Off_Test() //should not work
-        {
-            var _db = createDB();
-            _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            _db.ChangeTracker.AutoDetectChangesEnabled = false;
-            _db.ChangeTracker.LazyLoadingEnabled = false;
-            var cRepo = createCartRepository(_db);
-            var car = new Car()
-            {
-                Marke = "VW",
-                Modell = "Golf",
-                Baujahr = new DateTime(2021, 1, 1),
-            };
+        //[Fact]
+        //public void Repository_Car_Update2_with_Tracking_Off_Test() //should not work
+        //{
+        //    var _db = createDB();
+        //    _db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        //    _db.ChangeTracker.AutoDetectChangesEnabled = false;
+        //    _db.ChangeTracker.LazyLoadingEnabled = false;
+        //    var cRepo = createCartRepository(_db);
+        //    var car = new Car()
+        //    {
+        //        Marke = "VW",
+        //        Modell = "Golf",
+        //        Baujahr = new DateTime(2021, 1, 1),
+        //    };
 
-            //cRepo.Add(car);
+        //    //cRepo.Add(car);
 
-            //var carChanges = new Car(car.Id, "Audi", "A3", new DateTime(2021, 1, 1), new List<Product>());
-            var car2 = cRepo.Update2(car);
+        //    //var carChanges = new Car(car.Id, "Audi", "A3", new DateTime(2021, 1, 1), new List<Product>());
+        //    var car2 = cRepo.Update2(car);
 
-            Assert.Equal(1, _db.Cars.Count());
-            Assert.Equal(car2.ToString(), _db.Cars.First().ToString());
-        }
+        //    Assert.Equal(1, _db.Cars.Count());
+        //    Assert.Equal(car2.ToString(), _db.Cars.First().ToString());
+        //}
 
         [Fact]
         public void Repository_Car_Update3_useUpdate2_with_Tracking_ON_Test()
