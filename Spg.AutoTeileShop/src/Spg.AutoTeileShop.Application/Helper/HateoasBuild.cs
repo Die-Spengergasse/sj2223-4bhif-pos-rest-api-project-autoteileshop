@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace Spg.AutoTeileShop.Application.Helper
             return null;
         }
 
-        public string buildHateoas(TEntity value, Tid idParameter, List<BuildRoutePattern> routes)
+        public string buildHateoas2(TEntity value, Tid idParameter, List<BuildRoutePattern> routes)
         {
             List<HateoasObject<TEntity>> objects = new List<HateoasObject<TEntity>>();
             List<BuildRoutePattern> filteredRoutes;
@@ -111,7 +112,21 @@ namespace Spg.AutoTeileShop.Application.Helper
                 objects.Add(new HateoasObject<TEntity>(value, urls));
             }
 
-            // Umgehen des Null-Bugs
+            // Umgehen des Null-Bugs -- TODO: Bessere Lösung finden
+            //Read all Props of the Object
+            Type type = typeof(TEntity);
+            //PropertyInfo[] properties = type.GetProperties();
+
+            //foreach (HateoasObject<TEntity> t in objects)
+            //{
+            //    foreach (PropertyInfo property in properties)
+            //    {
+            //        string name = property.Name;
+            //        object value2 = property.GetValue(t.);
+
+            //        Console.WriteLine($"{name}: {value}");
+            //    }
+            //}
             StringBuilder outputBuilder = new StringBuilder();
             var options = new JsonSerializerOptions
             {
@@ -133,6 +148,72 @@ namespace Spg.AutoTeileShop.Application.Helper
             return outputBuilder.ToString();
         }
 
+
+        public string buildHateoas(TEntity value, Tid idParameter, List<BuildRoutePattern> routes)
+        {
+            HateoasObject<TEntity> object1 = null;
+            List<BuildRoutePattern> filteredRoutes;
+
+            // Überprüfen, ob die ID ein Guid ist
+            if (typeof(Tid) == typeof(Guid))
+            {
+                filteredRoutes = routes.Where(r => r.RoutenPatternString.Contains("{guid}")).ToList();
+                List<string> urls = new List<string>();
+
+                foreach (BuildRoutePattern route in filteredRoutes)
+                {
+                    string url = route.Methode + ": " + Href + route.RoutenPatternString.Replace("{guid}", idParameter.ToString());
+                    urls.Add(url);
+                }
+
+                object1 = new HateoasObject<TEntity>(value, urls);
+            }
+            // Überprüfen, ob die ID ein int ist
+            else if (typeof(Tid) == typeof(int))
+            {
+                filteredRoutes = routes.Where(r => r.RoutenPatternString.Contains("{id}")).ToList();
+                List<string> urls = new List<string>();
+
+                foreach (BuildRoutePattern route in filteredRoutes)
+                {
+                    string url = route.Methode + ": " + Href + route.RoutenPatternString.Replace("{id}", idParameter.ToString());
+                    urls.Add(url);
+                }
+
+                object1 = new HateoasObject<TEntity>(value, urls);
+            }
+
+            // Umgehen des Null-Bugs -- TODO: Bessere Lösung finden
+            //Read all Props of the Object
+            //Type type = typeof(TEntity);
+            //PropertyInfo[] properties = type.GetProperties();
+ 
+            //foreach (PropertyInfo property in properties)
+            //{
+            //    string name = property.Name;
+            //    object value2 = property.GetValue(object1.objekt);
+
+            //    Console.WriteLine($"{name}: {value}");
+            //}
+            
+            StringBuilder outputBuilder = new StringBuilder();
+            var options = new JsonSerializerOptions
+            {
+                IgnoreNullValues = true,
+                IgnoreReadOnlyProperties = true,
+                IncludeFields = true
+
+            };
+
+            outputBuilder.AppendLine(JsonSerializer.Serialize(object1, options));
+
+            foreach (string s in object1.urls)
+            {
+                outputBuilder.AppendLine(s);
+            }
+
+            return outputBuilder.ToString();
+        }
 
 
 

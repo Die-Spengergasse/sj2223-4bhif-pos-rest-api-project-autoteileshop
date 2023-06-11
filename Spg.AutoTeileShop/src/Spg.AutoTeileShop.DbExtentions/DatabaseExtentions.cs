@@ -11,7 +11,7 @@ namespace Spg.AutoTeileShop.DbExtentions
             serviceCollection.AddDbContext<AutoTeileShopContext>(options =>
             {
                 if (!options.IsConfigured)
-                    options.UseLazyLoadingProxies();
+                    //options.UseLazyLoadingProxies();
                 options.UseSqlite(connectionString);
             });
 
