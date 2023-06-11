@@ -64,13 +64,14 @@ namespace Spg.AutoTeileShop.Application.Helper
                 string output = "";
                 foreach(HateoasObject<TEntity> o in objects)
                 {
-                    output = output + JsonSerializer.Serialize(o.objekt) + Environment.NewLine;
+                    output = output + JsonSerializer.Serialize(o) + Environment.NewLine;
                     foreach (string s in o.urls)
                     {
                         output = output + s + Environment.NewLine;
                     }
                 }
                 //string s = JsonSerializer.Serialize(objects);
+                //output = output.Replace("");
                 return output;
             }
             return null;
@@ -116,11 +117,12 @@ namespace Spg.AutoTeileShop.Application.Helper
             {
                 IgnoreNullValues = true,
                 IgnoreReadOnlyProperties = true
+                
             };
 
             foreach (HateoasObject<TEntity> o in objects)
             {
-                outputBuilder.AppendLine(JsonSerializer.Serialize(o.objekt, options));
+                outputBuilder.AppendLine(JsonSerializer.Serialize(o, options));
 
                 foreach (string s in o.urls)
                 {
