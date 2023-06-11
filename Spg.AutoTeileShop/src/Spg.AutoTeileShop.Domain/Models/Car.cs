@@ -15,6 +15,11 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
+        public override string ToString()
+        {
+            return $"Id: {Id}, Marke: {Marke}, Modell: {Modell}, Baujahr: {Baujahr}";
+        }
+
         public Car(CarDTO carDto)
         {
             this.Id = carDto.Id;
