@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Helper
 {
-    public class HateoasBuild<TEntity,Tid> where TEntity : class
+    public class HateoasBuild<TEntity, Tid> where TEntity : class
     {
         public string Href { get; set; } = "https://localhost:7083/";
 
@@ -23,7 +23,7 @@ namespace Spg.AutoTeileShop.Application.Helper
             {
                 filtertGuid = (List<BuildRoutePattern>)routes.Where(r => r.RoutenPatternString.Contains("{guid}")).ToList();
                 //foreach (TEntity entity in values)
-                for(int i = 0; i< values.Count; i++)
+                for (int i = 0; i < values.Count; i++)
                 {
                     List<string> urls = new();
                     foreach (BuildRoutePattern route in filtertGuid)
@@ -57,13 +57,13 @@ namespace Spg.AutoTeileShop.Application.Helper
                     List<string> urls = new();
                     foreach (BuildRoutePattern route in filtertId)
                     {
-                        urls.Add(route.Methode+  ": " + Href + route.RoutenPatternString.Replace("{id}", identifyer.ElementAt(i).ToString()));
+                        urls.Add(route.Methode + ": " + Href + route.RoutenPatternString.Replace("{id}", identifyer.ElementAt(i).ToString()));
                     }
                     objects.Add(new HateoasObject<TEntity>(values.ElementAt(i), urls));
                 }
                 //Umgehen des Null Bugs
                 string output = "";
-                foreach(HateoasObject<TEntity> o in objects)
+                foreach (HateoasObject<TEntity> o in objects)
                 {
                     output = output + o.objekt.ToString() + Environment.NewLine;
                     foreach (string s in o.urls)
@@ -71,13 +71,13 @@ namespace Spg.AutoTeileShop.Application.Helper
                         output = output + s + Environment.NewLine;
                     }
                 }
- 
+
                 return output;
             }
             return null;
         }
 
-       
+
         public string buildHateoas(TEntity value, Tid idParameter, List<BuildRoutePattern> routes)
         {
             HateoasObject<TEntity> object1 = null;
@@ -115,7 +115,7 @@ namespace Spg.AutoTeileShop.Application.Helper
 
 
             StringBuilder outputBuilder = new StringBuilder();
-  
+
             outputBuilder.AppendLine(object1.objekt.ToString());
             foreach (string s in object1.urls)
             {
@@ -124,8 +124,6 @@ namespace Spg.AutoTeileShop.Application.Helper
 
             return outputBuilder.ToString();
         }
-
-
 
 
     }
