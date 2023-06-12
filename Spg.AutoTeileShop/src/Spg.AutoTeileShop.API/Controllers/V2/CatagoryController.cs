@@ -183,7 +183,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Catagory> AddCatagory(CatagoryPostDTO catagoryDTO)
         {
             try
@@ -200,7 +200,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPut("{Id}")]
         [Produces("application/json")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Catagory> UpdateCatagory(int Id, Catagory catagory)
         {
             try
@@ -217,7 +217,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult DeleteCatagory(int id)
         {
             Catagory catagory = null;

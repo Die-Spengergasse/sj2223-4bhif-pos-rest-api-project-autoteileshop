@@ -17,5 +17,9 @@ namespace Spg.AutoTeileShop.Domain.DTO
             this.Modell = car.Modell;
             this.Baujahr = car.Baujahr;
         }
+
+        public CarDTOUpdate()
+        {
+        }
     }
 }

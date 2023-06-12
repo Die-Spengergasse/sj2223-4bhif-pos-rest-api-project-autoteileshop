@@ -67,7 +67,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("{guid}")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByGuid(Guid guid)
         {
 
@@ -101,7 +101,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByUser")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]  
         public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery] Guid userGuid)
         {
             try
@@ -135,7 +135,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<ShoppingCart> AddShoppingCart(ShoppingCartPostDTO cartDTO)
         {
@@ -167,7 +167,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpDelete("{guid}")]
         [Produces("application/json")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteShoppingCart(Guid guid)
         {

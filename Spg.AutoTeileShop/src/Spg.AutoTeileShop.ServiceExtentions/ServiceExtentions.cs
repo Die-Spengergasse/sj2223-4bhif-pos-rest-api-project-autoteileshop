@@ -108,6 +108,9 @@ namespace Spg.AutoTeileShop.ServiceExtentions
 
             serviceCollection.AddTransient<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
             serviceCollection.AddTransient<ICommandHandler<CreateCarCommand, Car>, CreateCarCommandHandler>();
+            serviceCollection.AddTransient<ICommandHandler<UpdateCarCommand, Car>, UpdateCarCommandHandler>();
+            serviceCollection.AddTransient<ICommandHandler<DeleteCarCommand, int>, DeleteCarCommandHandler>();
+
             serviceCollection.AddTransient<IQueryHandler<GetAllCarsQuery, IQueryable<Car>>, GetAllCarsQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>>, GetCarsByBaujahrQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>>, GetCarsByMarkeQueryHandler>();

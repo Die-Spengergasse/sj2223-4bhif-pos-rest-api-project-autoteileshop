@@ -160,7 +160,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Product> AddProduct(ProductDTO pDto)
         {
             ValidationResult result = _validator.Validate(pDto);
@@ -184,7 +184,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPut("")]
         [Produces("application/json")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Product> UpdateProduct(ProductDTO pDto)
         {
             try
@@ -198,7 +198,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Product> DeleteProduct(int id)
         {
             try

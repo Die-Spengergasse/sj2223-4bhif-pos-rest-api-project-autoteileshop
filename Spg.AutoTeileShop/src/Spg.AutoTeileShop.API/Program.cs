@@ -36,7 +36,11 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.ConfigureSQLite(connectionString);
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 
 

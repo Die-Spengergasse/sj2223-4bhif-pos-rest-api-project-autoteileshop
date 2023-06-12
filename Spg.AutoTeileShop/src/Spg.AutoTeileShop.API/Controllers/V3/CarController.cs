@@ -21,9 +21,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
     public class CarController : ControllerBase
     {
 
-        private readonly IReadOnlyCarService _readOnlycarService;
-        private readonly IDeletableCarService _deletableCarService;
-        private readonly IAddUpdateableCarService _addUpdateableCarService;
+        //private readonly IReadOnlyCarService _readOnlycarService;
+        //private readonly IDeletableCarService _deletableCarService;
+        //private readonly IAddUpdateableCarService _addUpdateableCarService;
         //requert for HATEOAS, List of Routes and Methodes
 
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
@@ -35,6 +35,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         private readonly IQueryHandler<GetCarByIdQuery, Car> _getCarByIdQueryHandler;
         private readonly ICommandHandler<CreateCarCommand, Car> _createCarCommandHandler;
         private readonly IQueryHandler<GetAllCarsQuery, IQueryable<Car>> _getAllCarsQueryHandler;
+        private readonly IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>> _getCarsByBaujahrQueryHandler;
+        private readonly IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>> _getCarsByMarkeQueryHandler;
+        private readonly IQueryHandler<GetCarsByModellQuery, IEnumerable<Car>> _getCarsByModellQueryHandler;
+        private readonly IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>> _getCarsByMarkeAndModellQueryHandler;
+        private readonly IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>> _getCarsByMarkeAndModellAndBaujahrQueryHandler;
+        private readonly IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>> _getCarsByFitProductQueryHandler;
+
 
 
         public CarController
@@ -43,11 +50,19 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
             IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints
             ,IMediator mediator
             ,IQueryHandler<GetAllCarsQuery, IQueryable<Car>> getAllCarsQueryHandler
+            ,IQueryHandler<GetCarByIdQuery, Car> getCarByIdQueryHandler
+            ,ICommandHandler<CreateCarCommand, Car> createCarCommandHandler
+            , IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>> getCarsByBaujahrQueryHandler,
+            IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>> getCarsByMarkeQueryHandler,
+            IQueryHandler<GetCarsByModellQuery, IEnumerable<Car>> getCarsByModellQueryHandler,
+            IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>> getCarsByMarkeAndModellQueryHandler,
+            IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>> getCarsByMarkeAndModellAndBaujahrQueryHandler,
+            IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>> getCarsByFitProductQueryHandler
             )
         {
-            _readOnlycarService = readOnlycarService;
-            _deletableCarService = deletableCarService;
-            _addUpdateableCarService = addUpdateableCarService;
+            //_readOnlycarService = readOnlycarService;
+            //_deletableCarService = deletableCarService;
+            //_addUpdateableCarService = addUpdateableCarService;
             _endpointSources = endpointSources;
 
             //requert for HATEOAS, List of Routes and Methodes
@@ -58,6 +73,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
             //CQS
             _mediator = mediator;
             _getAllCarsQueryHandler = getAllCarsQueryHandler;
+            _getCarByIdQueryHandler = getCarByIdQueryHandler;
+            _createCarCommandHandler = createCarCommandHandler;
+            _getCarsByBaujahrQueryHandler = getCarsByBaujahrQueryHandler;
+            _getCarsByMarkeQueryHandler = getCarsByMarkeQueryHandler;
+            _getCarsByModellQueryHandler = getCarsByModellQueryHandler;
+            _getCarsByMarkeAndModellQueryHandler = getCarsByMarkeAndModellQueryHandler;
+            _getCarsByMarkeAndModellAndBaujahrQueryHandler = getCarsByMarkeAndModellAndBaujahrQueryHandler;
+            _getCarsByFitProductQueryHandler = getCarsByFitProductQueryHandler;
         }
 
         // AddCar - Authorization
@@ -65,18 +88,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         // UpdateCar - Authorization
 
         [HttpGet("Old")]
-        public async Task<ActionResult<List<Car>>> GetAllCarsAsync() // Auslaufend
+        public ActionResult<List<Car>> GetAllCarsAsync() // Auslaufend
         {
-            //var cars = _readOnlycarService.GetAll();
-
-            //CQS
-            GetAllCarsQuery query = new GetAllCarsQuery
-            {
+            GetAllCarsQuery query = new GetAllCarsQuery{
+            SortBy = c => c.Marke
 
             };
 
-            var cars = await _mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(query);
-
+            var cars = _mediator.QueryAsync<GetAllCarsQuery, IQueryable<Car>>(query).Result;
 
             HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
@@ -92,14 +111,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         {
             try
             {
-                Car? car = _readOnlycarService.GetById(id);
+                var query = new GetCarByIdQuery(id);
+                Car? car = _mediator.QueryAsync<GetCarByIdQuery, Car>(query).Result;
                 if (car == null)
                 {
                     return NotFound();
                 }
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
                 return Ok(hb.buildHateoas(car, car.Id, _routes));
-                //return Ok(car);
             }
             catch (Exception ex)
             {
@@ -114,7 +133,16 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         {
             try
             {
-                var result = _readOnlycarService.GetByBauJahr(new DateTime(year, 1, 1));
+                //GetAllCarsQuery query = new GetAllCarsQuery //-- Newer Version
+                //{
+                //    Filter = c => c.Baujahr.Year == year
+                //};
+
+                GetCarsByBaujahrQuery query = new GetCarsByBaujahrQuery(new DateTime(year, 1, 1));
+
+                var result = _mediator.QueryAsync<GetCarsByBaujahrQuery, IQueryable<Car>>(query).Result;
+                
+                //var result = _readOnlycarService.GetByBauJahr(new DateTime(year, 1, 1));
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
                 return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
@@ -131,7 +159,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         {
             try
             {
-                var result = _readOnlycarService.GetByMarke(marke);
+                //GetAllCarsQuery query = new GetAllCarsQuery // Old Version
+                //{
+                //    Filter = c => c.Marke == marke
+                //};
+
+                GetCarsByMarkeQuery query = new GetCarsByMarkeQuery(marke);
+
+                var result = _mediator.QueryAsync<GetCarsByMarkeQuery, IQueryable<Car>>(query).Result;
+
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
                 return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
@@ -148,8 +184,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         {
             try
             {
-                var result = _readOnlycarService.GetByModell(model);
-                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+                //GetAllCarsQuery query = new GetAllCarsQuery // Old Version
+                //{
+                //    Filter = c => c.Modell == model
+                //};
+
+                GetCarsByMarkeQuery query = new GetCarsByMarkeQuery(model);
+
+
+                var result = _mediator.QueryAsync<GetCarsByMarkeQuery, IQueryable<Car>>(query).Result; HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
                 return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
             }
@@ -161,11 +204,18 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
         [HttpGet("ByMarkeAndModell")]
         [AllowAnonymous]
-        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string marke, [FromQuery] string model)
+        public ActionResult<List<Car>> GetByMarkeAndModell([FromQuery] string? marke, [FromQuery] string? model)
         {
             try
             {
-                var result = _readOnlycarService.GetByMarkeAndModell(marke, model);
+                //GetAllCarsQuery query = new GetAllCarsQuery // Old Version
+                //{
+                //    Filter = c => c.Marke.Equals(marke) && c.Modell.Equals(model)
+                //};
+
+                GetCarsByMarkeAndModellQuery query = new GetCarsByMarkeAndModellQuery(marke, model);
+
+                var result = _mediator.QueryAsync<GetCarsByMarkeAndModellQuery, IQueryable<Car>>(query).Result;
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
                 return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
@@ -178,11 +228,17 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
         [HttpGet("ByMarkeAndModellAndBaujahr")]
         [AllowAnonymous]
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string merke, [FromQuery] string model, [FromQuery] int baujahr)
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahr([FromQuery] string marke, [FromQuery] string model, [FromQuery] int baujahr)
         {
             try
             {
-                var result = _readOnlycarService.GetByMarkeAndModellAndBaujahr(merke, model, new DateTime(baujahr, 1, 1));
+                //GetAllCarsQuery query = new GetAllCarsQuery // Old Version
+                //{
+                //    Filter = c => c.Marke == marke
+                //};
+                GetCarsByMarkeAndModellAndBaujahrQuery query = new GetCarsByMarkeAndModellAndBaujahrQuery(marke, model, new DateTime(baujahr, 1, 1));
+
+                var result = _mediator.QueryAsync<GetCarsByMarkeAndModellAndBaujahrQuery, IQueryable<Car>>(query).Result;
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
                 return Ok(hb.buildHateoas(result.ToList(), result.Select(s => s.Id).ToList(), _routes));
@@ -202,13 +258,35 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
             {
                 int baujahr = -1;
                 if (baujahrS is not null) baujahr = int.Parse(baujahrS);
-                if ((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null) && baujahr != -1) cars = _readOnlycarService.GetByBauJahr(new DateTime(baujahr, 1, 1));
-                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1 || baujahr <= 0) && model is not null) cars = _readOnlycarService.GetByModell(model);
-                else if ((model.IsEmpty() || model == null) && (baujahr == -1 || baujahr <= 0) && marke is not null) cars = _readOnlycarService.GetByMarke(marke);
-                else if ((baujahr == -1 || baujahr <= 0) && marke is not null && model is not null) cars = _readOnlycarService.GetByMarkeAndModell(marke, model);
-                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1 || baujahr <= 0) && (model.IsEmpty() || model == null)) cars = _readOnlycarService.GetAll();
+                GetAllCarsQuery query = new GetAllCarsQuery();
+
+                if ((marke.IsEmpty() || marke == null) && (model.IsEmpty() || model == null) && baujahr != -1)
+                {
+                    query.Filter = c => c.Baujahr.Year == baujahr;
+                }
+                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1 || baujahr <= 0) && model is not null)
+                {
+                    query.Filter = c => c.Modell.Equals(model);
+                }
+                else if ((model.IsEmpty() || model == null) && (baujahr == -1 || baujahr <= 0) && marke is not null)
+                {
+                    query.Filter = c => c.Marke.Equals(marke);
+                }
+                else if ((baujahr == -1 || baujahr <= 0) && marke is not null && model is not null)
+                {
+                    query.Filter = c => c.Marke.Equals(marke) && c.Modell.Equals(model);
+                }
+                else if ((marke.IsEmpty() || marke == null) && (baujahr == -1 || baujahr <= 0) && (model.IsEmpty() || model == null))
+                {
+                    // Kein Filter erforderlich
+                }
                 else
-                { cars = _readOnlycarService.GetByMarkeAndModellAndBaujahr(marke, model, new DateTime(baujahr, 1, 1)); }
+                {
+                    query.Filter = c => c.Marke.Equals(marke) && c.Modell.Equals(model) && c.Baujahr.Year == baujahr;
+                }
+
+                cars =  _mediator.QueryAsync<GetAllCarsQuery, List<Car>>(query).Result;
+
 
 
 
@@ -221,17 +299,15 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Car> DeleteCar(int id)
         {
             try
             {
-                var result = _deletableCarService.Delete(_readOnlycarService.GetById(id));
-                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
-
-                _deletableCarService.Delete(_readOnlycarService.GetById(id)); // ~?
-
-                return Ok(_deletableCarService.Delete(_readOnlycarService.GetById(id)));
+   
+                GetCarByIdQuery query = new GetCarByIdQuery(id);
+                DeleteCarCommand command = new DeleteCarCommand(_mediator.QueryAsync<GetCarByIdQuery, Car>(query).Result);
+                return Ok(_mediator.ExecuteAsync<DeleteCarCommand, Car>(command).Result);
             }
             catch (Exception e)
             {
@@ -242,17 +318,18 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPost("")]
-        [Produces("application/json")]
+        //[Produces("application/json")]
         public ActionResult<Car> AddCar(CarDTO carDTO)
         {
             try
             {
                 Car car = new Car(carDTO);
+                CreateCarCommand command = new CreateCarCommand(car);
+                var result = _mediator.ExecuteAsync<CreateCarCommand, Car>(command);
 
-                var result = _addUpdateableCarService.Add(car); ;
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
-                return Created("/api/Car/" + car.Id, car);
+                return Ok(hb.buildHateoas(result.Result, result.Result.Id, _routes));
             }
             catch (Exception e)
             {
@@ -262,18 +339,22 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPut("{id}")]
-        [Produces("application/json")]
-        public ActionResult<Car> UpdateCar(int id, CarDTOUpdate carDTO)
+        //[Produces("application/json")]
+        public ActionResult<Car> UpdateCar(int id, [FromQuery]CarDTOUpdate carDTO)
         {
             if (id <= 0) return BadRequest("Id must be greater than 0");
-            if (_readOnlycarService.GetById(id) == null) return NotFound("Car not found");
+           
+            GetCarByIdQuery query = new GetCarByIdQuery(id);
+            var carOrg = _mediator.QueryAsync<GetCarByIdQuery, Car>(query);
+            if ( carOrg.Result == null) return NotFound("Car not found");
             try
             {
                 Car car = new Car(id, carDTO);
 
-                var result = _addUpdateableCarService.Update(car);
-                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+                UpdateCarCommand command = new UpdateCarCommand(car);
+                var result = _mediator.ExecuteAsync<UpdateCarCommand, Car>(command).Result;
 
+                HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
                 return Ok(hb.buildHateoas(result, result.Id, _routes));
             }
             catch (Exception e)

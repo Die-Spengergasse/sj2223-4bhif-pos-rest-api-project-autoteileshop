@@ -56,7 +56,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("{guid}")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> GetShoppingCartItemByGuid(Guid guid)
         {
             try
@@ -87,7 +87,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ShoppingCart")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<List<ShoppingCartItemDTOGet>> GetShoppingCartItemByShoppingCart([FromQuery] int shoppingCartId)
         {
             try
@@ -127,7 +127,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPost("")]
         [Produces("application/json")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> AddShoppingCartItem([FromBody] ShoppingCartItemPostDTO shoppingCartItem)
         {
             try
@@ -149,7 +149,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         [HttpPut("")]
         [Produces("application/json")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> UpdateShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             try
@@ -173,7 +173,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{guid}")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<ShoppingCartItem> DeleteShoppingCartItem([FromQuery] Guid guid)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;

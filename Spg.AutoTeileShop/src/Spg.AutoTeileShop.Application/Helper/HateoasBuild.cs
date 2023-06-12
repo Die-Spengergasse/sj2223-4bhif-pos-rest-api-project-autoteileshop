@@ -114,11 +114,16 @@ namespace Spg.AutoTeileShop.Application.Helper
                 object1 = new HateoasObject<TEntity>(value, urls);
             }
 
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true, // Hier wird das Einrückungsformat aktiviert
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // Hier wird das CamelCase-Format für Eigenschaften verwendet (optional)
+            };
 
 
             StringBuilder outputBuilder = new StringBuilder();
 
-            outputBuilder.AppendLine(object1.objekt.ToString());
+            outputBuilder.AppendLine(JsonSerializer.Serialize(object1.objekt, options));
             foreach (string s in object1.urls)
             {
                 outputBuilder.AppendLine(s);

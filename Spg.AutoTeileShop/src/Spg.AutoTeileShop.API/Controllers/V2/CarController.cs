@@ -194,7 +194,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "SalesmanOrAdmin")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Car> DeleteCar(int id)
         {
             try

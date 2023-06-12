@@ -123,7 +123,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpPut("{guid}")]
-        [Authorize(Roles = "UserOrAdmin")]
+        [Authorize(Policy = "UserOrAdmin")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<User> UpdateUser([FromBody()] UserUpdateDTO userJSON, Guid guid)
         {
