@@ -10,7 +10,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
             Guid = user.Guid;
             Vorname = user.Vorname;
             Nachname = user.Nachname;
-            Addrese = user.Addrese;
+            Addrese = user.Adresse;
             Telefon = user.Telefon;
             Email = user.Email;
             Role = user.Role;

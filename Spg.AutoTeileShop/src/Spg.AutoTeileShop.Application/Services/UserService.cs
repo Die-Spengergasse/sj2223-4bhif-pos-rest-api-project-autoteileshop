@@ -49,7 +49,7 @@ namespace Spg.AutoTeileShop.Application.Services
             User user2 = GetByGuid(guid) ?? throw new Exception("no User found");
             if (user is not null)
             {
-                user2.Addrese = user.Addrese;
+                user2.Adresse = user.Adresse;
                 user2.Email = user.Email;
                 user2.Nachname = user.Nachname;
                 user2.Vorname = user.Vorname;

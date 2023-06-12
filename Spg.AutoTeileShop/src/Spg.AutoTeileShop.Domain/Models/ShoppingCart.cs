@@ -12,6 +12,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public virtual IReadOnlyList<ShoppingCartItem> ShoppingCartItems => _shoppingCartItems;
 
 
+
         public ShoppingCart(int id, Guid guid)
         {
             Id = id;
@@ -108,6 +109,11 @@ namespace Spg.AutoTeileShop.Domain.Models
             }
         }
 
+        public override string ToString()
+        {
+            string userString = UserNav != null ? UserNav.ToString() : "null";
+            return $"{{\"Id\": {Id}, \"guid\": \"{guid}\", \"UserId\": {UserId}, \"UserNav\": {userString}}}";
+        }
 
     }
 }

@@ -158,7 +158,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
-                Addrese = "TestStaﬂe ",
+                Adresse = "TestStaﬂe ",
                 Telefon = "0004514554",
                 Role = Roles.User
             };
@@ -178,7 +178,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Musterman@gmx.at",
-                Addrese = "TestStaﬂe ",
+                Adresse = "TestStaﬂe ",
                 Telefon = "0004514554",
                 Role = Roles.User
             };
@@ -193,7 +193,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                     Vorname = "Max",
                     Nachname = "Musterman",
                     Email = "Max.Musterman@gmx.at",
-                    Addrese = "safasfasf ",
+                    Adresse = "safasfasf ",
                     Telefon = "14561454",
                     Role = Roles.User
                 };
@@ -219,7 +219,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Guid = Guid.NewGuid(),
                 Vorname = "Max",
                 Nachname = "Musterman",
-                Addrese = "TestStaﬂe ",
+                Adresse = "TestStaﬂe ",
                 Telefon = "0004514554",
                 Role = Roles.User
             };
@@ -233,7 +233,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                     Guid = Guid.NewGuid(),
                     Vorname = "Max",
                     Nachname = "Musterman",
-                    Addrese = "safasfasf ",
+                    Adresse = "safasfasf ",
                     Telefon = "14561454",
                     Role = Roles.User
                 };
@@ -303,7 +303,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Muster@gmx.at",
-                Addrese = "TestStaﬂe ",
+                Adresse = "TestStaﬂe ",
                 Telefon = "0004514554",
                 Role = Roles.User
             };
@@ -406,7 +406,7 @@ namespace Spg.AutoTeileShop.Domain.Test
                 Vorname = "Max",
                 Nachname = "Musterman",
                 Email = "Max.Muster@gmx.at",
-                Addrese = "TestStaﬂe ",
+                Adresse = "TestStaﬂe ",
                 Telefon = "0004514554",
                 Role = Roles.User
             };
@@ -1080,7 +1080,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         //        Vorname = "Max",
         //        Nachname = "Musterman",
         //        Email = "Max.Musterman@gmx.at",
-        //        Addrese = "TestStaﬂe ",
+        //        Adresse = "TestStaﬂe ",
         //        Telefon = "0004514554",
         //        Role = Roles.User
 
@@ -1103,7 +1103,7 @@ namespace Spg.AutoTeileShop.Domain.Test
         //        Vorname = "Max",
         //        Nachname = "Musterman",
         //        Email = "Max.Musterman@gmx.at",
-        //        Addrese = "TestStaﬂe ",
+        //        Adresse = "TestStaﬂe ",
         //        Telefon = "0004514554",
         //        Role = Roles.User
         //    };

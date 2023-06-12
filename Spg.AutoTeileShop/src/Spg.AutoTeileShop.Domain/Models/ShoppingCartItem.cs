@@ -15,6 +15,16 @@ namespace Spg.AutoTeileShop.Domain.Models
         public ShoppingCartItem()
         {
         }
+        //public override string ToString()
+        //{
+        //    return $"Id: {Id}, Guid: {guid}, Pieces: {Pieces}, ProductId: {ProductId}, ShoppingCartId: {ShoppingCartId}";
+        //}
+
+        public override string ToString()
+        {
+            string json = $"{{\"Id\": {Id}, \"guid\": \"{guid}\", \"Pieces\": {Pieces}, \"ProductId\": {ProductId}, \"ShoppingCartId\": {ShoppingCartId}, }}";
+            return json;
+        }
 
         public ShoppingCartItem(int id, Guid guid, int pieces, int? productId, Product productNav, int? shoppingCartId, ShoppingCart? shoppingCartNav)
         {

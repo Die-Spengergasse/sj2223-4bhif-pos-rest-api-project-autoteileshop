@@ -25,7 +25,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
         {
             Vorname = user.Vorname;
             Nachname = user.Nachname;
-            Addrese = user.Addrese;
+            Addrese = user.Adresse;
             Telefon = user.Telefon;
             Email = user.Email;
             PW = user.PW;

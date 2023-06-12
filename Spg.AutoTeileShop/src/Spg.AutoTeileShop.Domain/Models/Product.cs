@@ -11,6 +11,7 @@ namespace Spg.AutoTeileShop.Domain.Models
         public Guid Guid { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
+        public int? CatagoryId { get; set; } 
         public virtual Catagory? catagory { get; set; }
         public string Description { get; set; } = string.Empty;
         public string? Image { get; set; }
@@ -23,6 +24,14 @@ namespace Spg.AutoTeileShop.Domain.Models
         // n zu m Relation
         private List<Car> _productFitsForCar = new();
         public virtual IReadOnlyList<Car> ProductFitsForCar => _productFitsForCar;
+
+
+        public override string ToString()
+        {
+            string catagoryString = catagory != null ? catagory.ToString() : "null";
+            return $"{{\"Id\": {Id}, \"Guid\": \"{Guid}\", \"Name\": \"{Name}\", \"Price\": {Price}, \"catagory\": {catagoryString}, \"Description\": \"{Description}\", \"Image\": \"{Image}\", \"Ean13\": \"{Ean13}\", \"Quality\": \"{Quality}\", \"Stock\": {Stock}, \"Discount\": {Discount}, \"receive\": \"{receive}\"}}";
+        }
+
 
         public Product(int id, Guid guid, string name, decimal price, Catagory? catagory, string description, string? image, QualityType quality, int stock, int discount, DateTime receive, List<Car> productFitsForCar)
         {

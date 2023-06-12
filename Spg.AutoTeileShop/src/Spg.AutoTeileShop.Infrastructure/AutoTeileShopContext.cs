@@ -4,6 +4,7 @@ using Spg.AutoTeileShop.Domain.Models;
 using System.Security.Cryptography;
 using System.Text;
 using Randomizer = Bogus.Randomizer;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace Spg.AutoTeileShop.Infrastructure
 {
@@ -37,13 +38,50 @@ namespace Spg.AutoTeileShop.Infrastructure
 
 
             //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
-
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<Car>()
+                .HasMany(c => c.FitsForProducts)
+                .WithMany(p => p.ProductFitsForCar);
+
+            modelBuilder.Entity<Catagory>()
+                .HasOne(c => c.TopCatagory)
+                .WithMany()
+                .HasForeignKey(c => c.TopCatagoryId);
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.catagory)
+                .WithMany()
+                .HasForeignKey(p => p.CatagoryId);
+
+            modelBuilder.Entity<ShoppingCart>()
+                .HasMany(s => s.ShoppingCartItems)
+                .WithOne(sci => sci.ShoppingCartNav)
+                .HasForeignKey(sci => sci.ShoppingCartId);
+
+            modelBuilder.Entity<ShoppingCart>()
+                .HasOne(sc => sc.UserNav)
+                .WithMany()
+                .HasForeignKey(sc => sc.UserId);
+            
+            modelBuilder.Entity<ShoppingCartItem>()
+                .HasOne(sci => sci.ProductNav)
+                .WithMany()
+                .HasForeignKey(sci => sci.ProductId);
+
+            modelBuilder.Entity<ShoppingCartItem>()
+                .HasOne(sci => sci.ShoppingCartNav)
+                .WithMany(s => s.ShoppingCartItems)
+                .HasForeignKey(sci => sci.ShoppingCartId);
+
+            modelBuilder.Entity<UserMailConfirme>()
+            .HasOne(umc => umc.User)
+            .WithOne()
+            .HasForeignKey<UserMailConfirme>(umc => umc.Id);
+
         }
 
         public void Seed()
@@ -58,7 +96,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                     c.Nachname = f.Name.LastName();
                     c.Email = f.Internet.Email(c.Vorname, c.Nachname);
                     c.Telefon = f.Person.Phone;
-                    c.Addrese = f.Address.FullAddress();
+                    c.Adresse = f.Address.FullAddress();
                     c.Role = f.Random.Enum<Roles>();
                     c.Salt = GenerateSalt();
                     c.PW = CalculateHash(f.Internet.Password(), c.Salt);
@@ -88,6 +126,7 @@ namespace Spg.AutoTeileShop.Infrastructure
             })
             .Generate(60)
             .ToList();
+
             Cars.AddRange(cars);
             SaveChanges();
 

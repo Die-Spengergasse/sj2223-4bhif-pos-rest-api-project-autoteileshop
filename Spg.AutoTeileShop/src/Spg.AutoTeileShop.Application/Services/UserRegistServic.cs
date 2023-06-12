@@ -71,7 +71,7 @@ namespace Spg.AutoTeileShop.Application.Services
             User user = new User();
             user.Vorname = Vorname;
             user.Nachname = Nachname;
-            user.Addrese = Addrese;
+            user.Adresse = Addrese;
             user.Telefon = Telefon;
             user.Email = Email;
             user.PW = PW;

@@ -7,7 +7,7 @@ namespace Spg.AutoTeileShop.Application
 {
     public class SendMail
     {
-        //"mailtestdavid01@gmail.com" Test Mail Addrese zum versenden von Mails
+        //"mailtestdavid01@gmail.com" Test Mail Adresse zum versenden von Mails
         //davidMailEmpfangTestSPG@web.de -- Empfänger
         public string Send(string Acc, string emailFrom, string emailTo, string emailSubject, string emailBody)
         {

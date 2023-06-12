@@ -1,10 +1,11 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
+using System.Text.Json;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
     public class Car
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string Marke { get; set; } = string.Empty;
         public string Modell { get; set; } = string.Empty;
         public DateTime Baujahr { get; set; }
@@ -15,10 +16,13 @@ namespace Spg.AutoTeileShop.Domain.Models
         {
         }
 
+
+
         public override string ToString()
         {
-            return $"Id: {Id}, Marke: {Marke}, Modell: {Modell}, Baujahr: {Baujahr}";
+            return $"{{\"Id\": {Id}, \"Marke\": \"{Marke}\", \"Modell\": \"{Modell}\", \"Baujahr\": \"{Baujahr.ToString("yyyy-MM-dd")}\"}}";
         }
+
 
         public Car(CarDTO carDto)
         {

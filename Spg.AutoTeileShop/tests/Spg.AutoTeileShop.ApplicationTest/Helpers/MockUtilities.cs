@@ -67,7 +67,7 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
             {
                 Guid = Guid.NewGuid(),
                 Nachname = "Test",
-                Addrese = "Test",
+                Adresse = "Test",
                 Email = "Test",
                 PW = "Test",
                 Vorname = "Test",
