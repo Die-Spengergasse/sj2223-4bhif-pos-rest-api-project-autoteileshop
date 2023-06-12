@@ -123,6 +123,10 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             //Get All Routes
             serviceCollection.AddTransient<ListAllEndpoints>();
 
+            serviceCollection.AddTransient<IValidator<CarDTO>, CarDtoValidator>();
+            serviceCollection.AddTransient<IValidator<CatagoryPostDTO>, PostCatagoryDtoValidator>();
+
+
         }
     }
 }
