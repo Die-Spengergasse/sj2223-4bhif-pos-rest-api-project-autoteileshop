@@ -107,6 +107,25 @@ builder.Services.AddSwaggerGen(s =>
         Version = "v2"
     });
 
+    s.SwaggerDoc("v3", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "AutoTeile Shop - v3 - CQS",
+        Description = "Description about AutoTeileShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "David Ankenbrand and Johannes Scholz",
+            Email = "ank19415@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v3"
+    });
+
 });
 
 
@@ -170,6 +189,7 @@ if (app.Environment.IsDevelopment())
     {
         x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
+        x.SwaggerEndpoint("/swagger/v3/swagger.json", "v3");
     });
 }
 
@@ -202,20 +222,30 @@ for (int i = 0; i <= (controllerNames.Count / 2) - 1; i++)
     linksv2.Add("https://localhost:7083/api/v2/" + controllerNames[i]);
 }
 
+
+var linksv3 = new List<string>
+{
+    "https://localhost:7083/api/v3/" + "Car/"
+};
 // links to Json
+
 var Controllerv1 = new { Controller = linksv1 };
 var Controllerv2 = new { Controller = linksv2 };
+var Controllerv3 = new { Controller = linksv3 };
 
 
 var jsonsConv1 = JsonConvert.SerializeObject(Controllerv1, Formatting.Indented);
 var jsonsConv2 = JsonConvert.SerializeObject(Controllerv2, Formatting.Indented);
+var jsonsConv3 = JsonConvert.SerializeObject(Controllerv3, Formatting.Indented);
+
 
 
 // Version Links
 var versionList = new List<string>
 {
     "https://localhost:7083/api/v1",
-    "https://localhost:7083/api/v2"
+    "https://localhost:7083/api/v2",
+    "https://localhost:7083/api/v3"
 };
 
 // Version to Json
@@ -229,5 +259,6 @@ app.MapControllers();
 app.MapGet("/api/", () => jsonsVersion);
 app.MapGet("/api/v1", () => jsonsConv1);
 app.MapGet("/api/v2", () => jsonsConv2);
+app.MapGet("/api/v3", () => jsonsConv3);
 app.Run();
 
