@@ -10,13 +10,13 @@ namespace Spg.AutoTeileShop.Infrastructure
 {
     public class AutoTeileShopContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Catagory> Catagories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public DbSet<Car> Cars { get; set; }
-        public DbSet<UserMailConfirme> UserMailConfirms { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Catagory> Catagories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public virtual DbSet<Car> Cars { get; set; }
+        public virtual DbSet<UserMailConfirme> UserMailConfirms { get; set; }
 
 
         public AutoTeileShopContext(DbContextOptions options) : base(options)
@@ -27,18 +27,18 @@ namespace Spg.AutoTeileShop.Infrastructure
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            if (!options.IsConfigured)
-                //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db"); //Home PC
-                // options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
-                options.UseLazyLoadingProxies();
-            //options.UseSqlite(ReadLineWithQuestionMark());
-            //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db");
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //{
+        //    if (!options.IsConfigured)
+        //        //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db"); //Home PC
+        //        // options.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"); //Home PC
+        //        //options.UseLazyLoadingProxies();
+        //    //options.UseSqlite(ReadLineWithQuestionMark());
+        //    //options.UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db");
 
 
-            //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
-        }
+        //    //  D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db"     //Laptop
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -80,7 +80,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                 .HasOne(sc => sc.UserNav)
                 .WithMany()
                 .HasForeignKey(sc => sc.UserId);
-            
+
             modelBuilder.Entity<ShoppingCartItem>()
                 .HasOne(sci => sci.ProductNav)
                 .WithMany()
