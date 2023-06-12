@@ -1,4 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
+using System.Text;
 
 namespace Spg.AutoTeileShop.Domain.DTO
 {
@@ -22,6 +23,19 @@ namespace Spg.AutoTeileShop.Domain.DTO
 
         public UserRegisterResponsDTO()
         {
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("{");
+            builder.AppendFormat("\"Vorname\": \"{0}\", ", Vorname);
+            builder.AppendFormat("\"Nachname\": \"{0}\", ", Nachname);
+            builder.AppendFormat("\"Adresse\": \"{0}\", ", Addrese);
+            builder.AppendFormat("\"Telefon\": \"{0}\", ", Telefon);
+            builder.AppendFormat("\"Email\": \"{0}\", ", Email);
+            builder.Append("}");
+            return builder.ToString();
         }
     }
 }

@@ -18,6 +18,12 @@ namespace Spg.AutoTeileShop.Domain.DTO
             ProductId = cart.ProductId;
             ShoppingCartId = cart.ShoppingCartId;
         }
+
+        public override string ToString()
+        {
+            string userString = UserNav != null ? UserNav.ToString() : "null";
+            return $"{{\"Id\": {Id}, \"guid\": \"{guid}\", \"UserId\": {UserId}, \"UserNav\": {userString}}}";
+        }
     }
 
 

@@ -16,6 +16,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             DbContextOptions options = new DbContextOptionsBuilder()
                 //  .UseSqlite(ReadLineWithQuestionMark())
                 //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
+                //.UseLazyLoadingProxies()
                 .UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db")     //Home PC       
                 .Options;
 
@@ -72,7 +73,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
             //Act
             Car car = new()
@@ -98,7 +99,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
             Car car = new()
             {
@@ -136,7 +137,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
             Car car = new()
             {
@@ -163,7 +164,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             Car car = new()
@@ -193,7 +194,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             Car car = new()
@@ -224,7 +225,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             //Arrange
             //Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
             Car car = new()
             {
@@ -272,7 +273,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
         {
             // Arrange
             var db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             var marke = "BMW";
@@ -312,7 +313,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
         {
             // Arrange
             var db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             var product = new Product()
@@ -365,7 +366,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
         {
             // Arrange
             var db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             var baujahr = DateTime.Now;
@@ -376,7 +377,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             {
                 Marke = "BMW",
                 Modell = "M1",
-                Baujahr = DateTime.Now
+                Baujahr = baujahr
 
             };
 
@@ -384,7 +385,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             {
                 Marke = "Audi",
                 Modell = "A3 Sport",
-                Baujahr = DateTime.Now
+                Baujahr = baujahr
 
             };
 
@@ -392,7 +393,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             {
                 Marke = "test",
                 Modell = "test",
-                Baujahr = DateTime.Now.AddDays(50)
+                Baujahr = DateTime.Now.AddYears(3)
 
             };
 
@@ -407,11 +408,11 @@ namespace Spg.AutoTeileShop.ApplicationTest
             var result = await mediator.QueryAsync<GetCarsByBaujahrQuery, IEnumerable<Car>>(query);
 
             // Assert
-            car.Baujahr = DateTime.Today;
-            result.First().Baujahr = DateTime.Today;
+            //car.Baujahr = DateTime.Today;
+            //result.First().Baujahr = DateTime.Today;
 
             Assert.Equal(car.ToString(), result.First().ToString());
-            Assert.Equal(car2.ToString(), result.First().ToString());
+            Assert.Equal(car2.ToString(), result.Last().ToString());
             Assert.False(result.Contains(car3));
         }
 
@@ -420,7 +421,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
         {
             // Arrange
             var db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             var marke = "BMW";
@@ -464,7 +465,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Assert
 
             Assert.Equal(car.ToString(), result.First().ToString());
-            Assert.Equal(car2.ToString(), result.First().ToString());
+            Assert.Equal(car2.ToString(), result.Last().ToString());
             Assert.False(result.Contains(car3));
         }
 
@@ -475,7 +476,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Arrange
             // Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             Car car1 = new Car
@@ -527,7 +528,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Arrange
             // Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             Car car1 = new Car
@@ -588,7 +589,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Arrange
             // Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             Car car1 = new Car
@@ -649,7 +650,7 @@ namespace Spg.AutoTeileShop.ApplicationTest
             // Arrange
             // Datenbank
             AutoTeileShopContext db = createDB();
-            var serviceProvider = new TestServiceProvider();
+            var serviceProvider = new TestServiceProvider(db);
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
 
             Car car1 = new Car

@@ -30,6 +30,11 @@ namespace Spg.AutoTeileShop.Domain.DTO
             this.Stock = product.Stock;
             this.Discount = product.Discount;
         }
+
+        public override string ToString()
+        {
+            return $"{{\"Id\": {Id}, \"Guid\": \"{Guid}\", \"Name\": \"{Name}\", \"Price\": {Price}, \"catagory\": {catagoryId}, \"Description\": \"{Description}\", \"Image\": \"{Image}\", \"Ean13\": \"{Ean13}\", \"Quality\": \"{Quality}\", \"Stock\": {Stock}, \"Discount\": {Discount}}}";
+        }
     }
 
 }

@@ -16,5 +16,9 @@ namespace Spg.AutoTeileShop.Domain.DTO
             this.Modell = car.Modell;
             this.Baujahr = car.Baujahr;
         }
+        public override string ToString()
+        {
+            return $"{{\"Id\": {Id}, \"Marke\": \"{Marke}\", \"Modell\": \"{Modell}\", \"Baujahr\": \"{Baujahr.ToString("yyyy-MM-dd")}\"}}";
+        }
     }
 }
