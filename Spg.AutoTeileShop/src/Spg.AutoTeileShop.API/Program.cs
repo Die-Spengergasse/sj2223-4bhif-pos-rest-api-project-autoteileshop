@@ -47,8 +47,41 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s =>
-    s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First())
-    );
+{
+    s.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
+    // Füge die JWT-Authentifizierung hinzu
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'"
+    };
+
+    s.AddSecurityDefinition("Bearer", securityScheme);
+
+    var securityRequirement = new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    };
+
+    s.AddSecurityRequirement(securityRequirement);
+    // Hinzufügen des Bearer-Präfixes für den Authorization-Header
+    s.OperationFilter<AddAuthorizationHeaderOperationFilter>();
+});
 
 
 // NuGet: Microsoft.AspNetCore.Mvc.Versioning

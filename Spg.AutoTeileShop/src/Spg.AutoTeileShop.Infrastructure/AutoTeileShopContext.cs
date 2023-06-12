@@ -127,7 +127,8 @@ namespace Spg.AutoTeileShop.Infrastructure
                 Nachname = "Admin",
                 Email = "admin",
                 Salt = GenerateSalt(),
-                PW = CalculateHash("admin", GenerateSalt())
+                PW = CalculateHash("admin", GenerateSalt()),
+                Role = Roles.Admin
             };
             Users.Add(admin);
             SaveChanges();
