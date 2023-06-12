@@ -193,7 +193,7 @@ if (app.Environment.IsDevelopment())
     {
         x.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         x.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
-        x.SwaggerEndpoint("/swagger/v3/swagger.json", "v3");
+        x.SwaggerEndpoint("/swagger/v3/swagger.json", "v3-CQS");
     });
 }
 
