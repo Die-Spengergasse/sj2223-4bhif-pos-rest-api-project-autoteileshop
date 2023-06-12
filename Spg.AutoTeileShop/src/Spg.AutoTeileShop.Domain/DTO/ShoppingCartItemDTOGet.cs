@@ -4,7 +4,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
 {
     public class ShoppingCartItemDTOGet
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public Guid guid { get; set; }
         public int Pieces { get; set; }
         public int? ProductId { get; set; }

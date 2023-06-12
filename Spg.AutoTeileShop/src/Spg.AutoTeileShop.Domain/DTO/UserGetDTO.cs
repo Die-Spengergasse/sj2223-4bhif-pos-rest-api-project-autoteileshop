@@ -18,7 +18,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
 
         }
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public Guid Guid { get; set; }
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;

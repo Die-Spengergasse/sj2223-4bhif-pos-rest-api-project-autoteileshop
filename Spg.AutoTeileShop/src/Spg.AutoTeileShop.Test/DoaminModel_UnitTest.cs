@@ -13,8 +13,8 @@ namespace Spg.AutoTeileShop.Domain.Test
             DbContextOptions options = new DbContextOptionsBuilder()
             //.UseSqlite(@"Data Source= D:/4 Klasse/Pos1 Repo/sj2223-4bhif-pos-rest-api-project-autoteileshop/Spg.AutoTeileShop/src/AutoTeileShop.db")      //Laptop
             //.UseSqlite(@"Data Source = I:\Dokumente 4TB\HTL\4 Klasse\POS1 Git Repo\sj2223-4bhif-pos-rest-api-project-autoteileshop\Spg.AutoTeileShop\src\Spg.AutoTeileShop.API\db\AutoTeileShop.db")     //Home PC relativ       
-            //.UseSqlite("Data Source = I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\AutoTeileShop.db")     //Home PC       
-            .UseSqlite(ReadLineWithQuestionMark())
+            .UseSqlite("DataSource= I:\\Dokumente 4TB\\HTL\\4 Klasse\\POS1 Git Repo\\sj2223-4bhif-pos-rest-api-project-autoteileshop\\Spg.AutoTeileShop\\src\\Spg.AutoTeileShop.API\\dbAutoTeileShop.db")     //Home PC       
+            //.UseSqlite(ReadLineWithQuestionMark())
                 .Options;
 
             AutoTeileShopContext db = new AutoTeileShopContext(options);
@@ -1117,15 +1117,13 @@ namespace Spg.AutoTeileShop.Domain.Test
         {
             AutoTeileShopContext db = createDB();
             db.Seed();
-            Assert.Equal(db.Users.Count(), 50);
+            Assert.Equal(db.Users.Count(), 51);
             Assert.Equal(db.Cars.Count(), 60);
             Assert.Equal(db.Catagories.Count(), 20);
             Assert.Equal(db.Products.Count(), 500);
             Assert.Equal(db.ShoppingCartItems.Count(), 100);
             Assert.Equal(db.ShoppingCarts.Count(), 50);
             Assert.Equal(db.UserMailConfirms.Count(), 50);
-
-
         }
         [Fact]
         public void Z_DomainModel_Create_DB()

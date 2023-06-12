@@ -4,7 +4,7 @@ namespace Spg.AutoTeileShop.Domain.Models
 {
     public class ShoppingCart
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public Guid guid { get; set; }
         public int? UserId { get; set; }
         public virtual User? UserNav { get; set; }

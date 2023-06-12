@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Infrastructure;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2
@@ -18,6 +19,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [HttpGet("seed")]
         public IActionResult Seed()
         {
+            //_context.Database.Migrate();
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
             _context.Seed();

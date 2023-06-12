@@ -45,7 +45,21 @@ namespace Spg.AutoTeileShop.Infrastructure
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<Car>()
                 .HasMany(c => c.FitsForProducts)
-                .WithMany(p => p.ProductFitsForCar);
+                .WithMany(p => p.ProductFitsForCar)
+                .UsingEntity<Dictionary<string, object>>(
+                "CarProduct",
+                j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId").HasPrincipalKey(nameof(Product.Id)),
+                j => j.HasOne<Car>().WithMany().HasForeignKey("CarId").HasPrincipalKey(nameof(Car.Id)),
+                j =>
+                {
+                    j.HasKey("CarId", "ProductId");
+                    j.ToTable("CarProduct"); // Optional: Benenne die Zwischentabelle explizit
+                });
+            //.UsingEntity(
+            //    "CarProduct",
+            //    l => l.HasOne(typeof(Car)).WithMany().HasForeignKey("CarId").HasPrincipalKey(nameof(Car.Id)),
+            //    r => r.HasOne(typeof(Product)).WithMany().HasForeignKey("ProductId").HasPrincipalKey(nameof(Product.Id)),
+            //    j => j.HasKey("FitsForProductsId", "ProductFitsForCarId"));
 
             modelBuilder.Entity<Catagory>()
                 .HasOne(c => c.TopCatagory)
@@ -78,9 +92,10 @@ namespace Spg.AutoTeileShop.Infrastructure
                 .HasForeignKey(sci => sci.ShoppingCartId);
 
             modelBuilder.Entity<UserMailConfirme>()
-            .HasOne(umc => umc.User)
-            .WithOne()
-            .HasForeignKey<UserMailConfirme>(umc => umc.Id);
+                .HasOne(umc => umc.User)
+                .WithMany()
+                .HasForeignKey(umc => umc.UserId);
+
 
         }
 
@@ -114,6 +129,7 @@ namespace Spg.AutoTeileShop.Infrastructure
                 Salt = GenerateSalt(),
                 PW = CalculateHash("admin", GenerateSalt())
             };
+            Users.Add(admin);
             SaveChanges();
 
 

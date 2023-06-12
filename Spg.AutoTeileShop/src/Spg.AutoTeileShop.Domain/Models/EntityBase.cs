@@ -2,7 +2,7 @@
 {
     public class EntityBase
     {
-        public int Id { get; private set; } // PK
+        public int Id { get; set; } // PK
         public DateTime? LastChangeDate { get; set; }
     }
 }
