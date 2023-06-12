@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
         private List<BuildRoutePattern> _routes;
 
+        private readonly IValidator<CatagoryPostDTO> _validator;
+
+
 
         public CatagoryController
             (IDeletableCatagoryService deletableCatagoryService, IAddUpdateableCatagoryService addUpdateableCatagoryService,
-            IReadOnlyCatagoryService readOnlyCatagoryService, IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints)
+            IReadOnlyCatagoryService readOnlyCatagoryService, IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints, IValidator<CatagoryPostDTO> validator)
         {
             _deletableCatagoryService = deletableCatagoryService;
             _addUpdateableCatagoryService = addUpdateableCatagoryService;
@@ -37,8 +41,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
 
             _routes = listAllEndpoints.ListAllEndpointsAndMethodes(GetType().Name, apiVersionAttribute?.Versions.FirstOrDefault()?.ToString(), this._endpointSources);
-
-
+            _validator = validator;
         }
 
         [HttpGet("")]

@@ -161,6 +161,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V1
         [Produces("application/json")]
         public ActionResult<Product> UpdateProduct(ProductDTO pDto)
         {
+            ValidationResult result = _validator.Validate(pDto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            if (!ModelState.IsValid) return BadRequest();
             try
             {
                 return _addUpdateproductService.Update(new Product(pDto));
