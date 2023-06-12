@@ -21,8 +21,8 @@ namespace Spg.AutoTeileShop.Domain.DTO
 
         public override string ToString()
         {
-            string userString = UserNav != null ? UserNav.ToString() : "null";
-            return $"{{\"Id\": {Id}, \"guid\": \"{guid}\", \"UserId\": {UserId}, \"UserNav\": {userString}}}";
+            string json = $"{{\"Id\": {Id}, \"guid\": \"{guid}\", \"Pieces\": {Pieces}, \"ProductId\": {ProductId}, \"ShoppingCartId\": {ShoppingCartId}, }}";
+            return json;
         }
     }
 
