@@ -20,7 +20,8 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public override string ToString()
         {
-            return $"{{\"Id\": {Id}, \"Marke\": \"{Marke}\", \"Modell\": \"{Modell}\", \"Baujahr\": \"{Baujahr.ToString("yyyy-MM-dd")}\"}}";
+            //return $"{{\"Id\": {Id}, \"Marke\": \"{Marke}\", \"Modell\": \"{Modell}\", \"Baujahr\": \"{Baujahr.ToString("yyyy-MM-dd")}\"}}";
+            return JsonSerializer.Serialize(this);
         }
 
 

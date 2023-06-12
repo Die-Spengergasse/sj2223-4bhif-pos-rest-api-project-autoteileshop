@@ -36,7 +36,8 @@ namespace Spg.AutoTeileShop.Application.Helper
                 string output = "";
                 foreach (HateoasObject<TEntity> o in objects)
                 {
-                    output = output + o.objekt.ToString() + Environment.NewLine;
+                    //output = output + o.objekt.ToString() + Environment.NewLine;
+                    output = output + JsonSerializer.Serialize(o.objekt) + Environment.NewLine;
                     foreach (string s in o.urls)
                     {
                         output = output + s + Environment.NewLine;
@@ -65,7 +66,8 @@ namespace Spg.AutoTeileShop.Application.Helper
                 string output = "";
                 foreach (HateoasObject<TEntity> o in objects)
                 {
-                    output = output + o.objekt.ToString() + Environment.NewLine;
+                    //output = output + o.objekt.ToString() + Environment.NewLine;
+                    output = output + JsonSerializer.Serialize(o.objekt) + Environment.NewLine;
                     foreach (string s in o.urls)
                     {
                         output = output + s + Environment.NewLine;
