@@ -148,9 +148,8 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpPut("")]
-        [Produces("application/json")]
         [Authorize(Policy = "UserOrAdmin")]
-        public ActionResult<ShoppingCartItem> UpdateShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        public ActionResult<ShoppingCartItem> UpdateShoppingCartItem([FromBody] ShoppingCartItem shoppingCartItem)
         {
             try
             {
