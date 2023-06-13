@@ -13,11 +13,11 @@ namespace Spg.AutoTeileShop.ApplicationTest.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<Car, CarDTO>();
+            //CreateMap<Car, CarDTO>();
             CreateMap<CarDTO, Car>();
-            CreateMap<Car, CarDTOPost>();
+           // CreateMap<Car, CarDTOPost>();
             CreateMap<CarDTOPost, Car>();
-            CreateMap<Car, CarDTOUpdate>();
+            //CreateMap<Car, CarDTOUpdate>();
             CreateMap<CarDTOUpdate, Car>();
         }
     }

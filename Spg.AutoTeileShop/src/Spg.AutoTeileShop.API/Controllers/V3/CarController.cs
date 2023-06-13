@@ -360,6 +360,27 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
                 return BadRequest();
             }
         }
+
+        [HttpPut("AddDelProduct/{delORAdd}")]
+        public ActionResult<Car> DelOrAddProductToFitsForCar(int carId, int productId, bool delOrAdd)
+        {
+            Task<Car> result = null;
+            if (carId <= 0 || productId <= 0) return BadRequest("Car-Id or Product-Id is 0 or less");
+            if (delOrAdd) // Add
+            {
+                AddProductCarCommand command = new AddProductCarCommand(carId, productId);
+                result = _mediator.ExecuteAsync<AddProductCarCommand, Car>(command);
+            }
+            else // Remove
+            {
+                RemoveProductCarCommand command = new RemoveProductCarCommand(carId, productId);
+                result = _mediator.ExecuteAsync<RemoveProductCarCommand, Car>(command);
+            }
+            if (result is null) return BadRequest();
+            
+            HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
+            return Ok(hb.buildHateoas(result.Result, result.Result.Id, _routes));
+        }
     }
 
 }

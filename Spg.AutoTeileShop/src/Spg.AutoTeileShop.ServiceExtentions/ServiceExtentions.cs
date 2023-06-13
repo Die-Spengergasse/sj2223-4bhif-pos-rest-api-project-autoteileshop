@@ -86,6 +86,8 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<ICarRepositoryCustom, CarRepositoryCustom>();
             serviceCollection.AddTransient<IRepositoryBase<Car>, RepositoryBase<Car>>();
             serviceCollection.AddTransient<IReadOnlyRepositoryBase<Car>, ReadOnlyRepositoryBase<Car>>();
+            serviceCollection.AddTransient<IReadOnlyRepositoryBase<Product>, ReadOnlyRepositoryBase<Product>>();
+
 
 
 
@@ -100,11 +102,13 @@ namespace Spg.AutoTeileShop.ServiceExtentions
                 return new Mediator(scopedServiceProvider);
             });
 
-            serviceCollection.AddTransient<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
             serviceCollection.AddTransient<ICommandHandler<CreateCarCommand, Car>, CreateCarCommandHandler>();
             serviceCollection.AddTransient<ICommandHandler<UpdateCarCommand, Car>, UpdateCarCommandHandler>();
             serviceCollection.AddTransient<ICommandHandler<DeleteCarCommand, int>, DeleteCarCommandHandler>();
+            serviceCollection.AddTransient<ICommandHandler<AddProductCarCommand, Car>, AddProductCarCommandHandler>();
+            serviceCollection.AddTransient<ICommandHandler<RemoveProductCarCommand, Car>, RemoveProductCarCommandHandler>();
 
+            serviceCollection.AddTransient<IQueryHandler<GetCarByIdQuery, Car>, GetCarByIdQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetAllCarsQuery, IQueryable<Car>>, GetAllCarsQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>>, GetCarsByBaujahrQueryHandler>();
             serviceCollection.AddTransient<IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>>, GetCarsByMarkeQueryHandler>();
@@ -120,9 +124,6 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IValidator<CarDTO>, CarDtoValidator>();
             serviceCollection.AddTransient<IValidator<CatagoryPostDTO>, PostCatagoryDtoValidator>();
 
-
-            // AutoMapper
-            //serviceCollection.AddAutoMapper(typeof(Program));
 
         }
     }
