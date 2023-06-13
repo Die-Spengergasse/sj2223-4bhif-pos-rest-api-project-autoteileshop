@@ -47,6 +47,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         // UpdateCar - Authorization
 
         [HttpGet("Old")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetAllCars() // Auslaufend
         {
             var cars = _readOnlycarService.GetAll();

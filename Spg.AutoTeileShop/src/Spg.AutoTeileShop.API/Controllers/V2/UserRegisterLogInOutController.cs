@@ -31,7 +31,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
 
         // Register - Authorization
 
-        [HttpPost("")]
+        [HttpPost("Regist")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces("application/json")]
@@ -84,14 +84,22 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         [AllowAnonymous]
         public async Task<ActionResult<string>> Login(UserCredentials user)
         {
-            string token = await _authService.GenerateToken(user);
-
-            if (token == null)
+            try
             {
-                return Unauthorized();
-            }
+                string token = await _authService.GenerateToken(user);
 
-            return Ok(token);
+                if (token == null)
+                {
+                    return Unauthorized();
+                }
+
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                if(ex.Message.Contains("User is not confirmed")) return Unauthorized(ex.Message);
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost("loginform")]

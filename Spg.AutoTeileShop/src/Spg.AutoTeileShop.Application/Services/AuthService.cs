@@ -50,6 +50,7 @@ namespace Spg.AutoTeileShop.Application.Services
         {
             User? user = _userRepository.GetByEMail(credentials.EMail);
             if (user is null) return null;
+            if (user.Confirmed == false) throw new Exception("User is not confirmed"); 
             string salt = user.Salt;
             string password = credentials.Password;
             string hashedPassword = _userRepository.CalculateHash(password, salt);

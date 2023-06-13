@@ -12,7 +12,7 @@ namespace Spg.AutoTeileShop.DbExtentions
             {
                 if (!options.IsConfigured)
                 {
-                    //options.UseLazyLoadingProxies();
+                   // options.UseLazyLoadingProxies();
                     options.UseSqlite(connectionString);
                 }
             });
