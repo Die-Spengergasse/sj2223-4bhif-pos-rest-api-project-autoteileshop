@@ -11,6 +11,7 @@ namespace Spg.AutoTeileShop.Application
         //davidMailEmpfangTestSPG@web.de -- Empfänger
         public string Send(string Acc, string emailFrom, string emailTo, string emailSubject, string emailBody)
         {
+            emailFrom = "mailtestdavid01@gmail.com";
             string guidString = Guid.NewGuid().ToString().Substring(0, 8);
 
             var client = new SmtpClient("smtp.gmail.com", 587)
@@ -24,7 +25,7 @@ namespace Spg.AutoTeileShop.Application
             }
             if (emailBody.Count() == 0)
             { emailBody = "Dies ist die Bestätigung für die Anmeldung des Accounts " + Acc + " ,\r\nBitte geben sie diesen Code: " + guidString + " zur Bestätigung ein. \r\n Dieser Code läuft nach 15 Minuten ab"; }
-            //client.Send(emailFrom, emailTo, emailSubject, emailBody);     //not active in test phase
+            client.Send(emailFrom, emailTo, emailSubject, emailBody);     //not active in test phase
             return guidString;
         }
 

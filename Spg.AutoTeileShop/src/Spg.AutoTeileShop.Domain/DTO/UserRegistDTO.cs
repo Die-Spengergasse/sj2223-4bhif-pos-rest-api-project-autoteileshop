@@ -16,9 +16,9 @@ namespace Spg.AutoTeileShop.Domain.DTO
         public string Addrese { get; set; } = string.Empty;
         [PhoneAttribute(ErrorMessage = "Das ist keine gültige Telefon Nummer!")]
         public string Telefon { get; set; } = string.Empty;
-        [RegularExpression("^[A-Za-z0-9,@,.]")]
+        //[RegularExpression("^[A-Za-z0-9,@,.]")]
         [EmailAddress(ErrorMessage = "Das ist keine gültige E-mail Adresse!")]
-        //[RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]        
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]        
         public string Email { get; set; } = string.Empty;         //IsUnique
         public string PW { get; set; } = string.Empty;
 
