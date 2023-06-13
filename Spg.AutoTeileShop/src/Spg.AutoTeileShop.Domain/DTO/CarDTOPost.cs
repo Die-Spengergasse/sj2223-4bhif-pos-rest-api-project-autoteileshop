@@ -6,12 +6,6 @@
         public string Modell { get; set; } = string.Empty;
         public DateTime Baujahr { get; set; }
 
-        //public CarDTOPost(Car car)
-        //{
-        //    this.Marke = car.Marke;
-        //    this.Modell = car.Modell;
-        //    this.Baujahr = car.Baujahr;
-        //}
 
         public CarDTOPost()
         {

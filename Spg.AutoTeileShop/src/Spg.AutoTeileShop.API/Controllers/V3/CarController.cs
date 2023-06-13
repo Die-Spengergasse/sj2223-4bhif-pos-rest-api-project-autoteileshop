@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
@@ -19,9 +20,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
     public class CarController : ControllerBase
     {
 
-        //private readonly IReadOnlyCarService _readOnlycarService;
-        //private readonly IDeletableCarService _deletableCarService;
-        //private readonly IAddUpdateableCarService _addUpdateableCarService;
+
         //requert for HATEOAS, List of Routes and Methodes
 
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
@@ -40,27 +39,28 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         private readonly IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>> _getCarsByMarkeAndModellAndBaujahrQueryHandler;
         private readonly IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>> _getCarsByFitProductQueryHandler;
 
-
+        // AutoMapper
+        private readonly IMapper _mapper;
 
         public CarController
-            (IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
+            (
+            IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
             IAddUpdateableCarService addUpdateableCarService,
-            IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints
-            , IMediator mediator
-            , IQueryHandler<GetAllCarsQuery, IQueryable<Car>> getAllCarsQueryHandler
-            , IQueryHandler<GetCarByIdQuery, Car> getCarByIdQueryHandler
-            , ICommandHandler<CreateCarCommand, Car> createCarCommandHandler
-            , IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>> getCarsByBaujahrQueryHandler,
+            IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints,
+            IMediator mediator,
+            IQueryHandler<GetAllCarsQuery, IQueryable<Car>> getAllCarsQueryHandler,
+            IQueryHandler<GetCarByIdQuery, Car> getCarByIdQueryHandler,
+            ICommandHandler<CreateCarCommand, Car> createCarCommandHandler,
+            IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>> getCarsByBaujahrQueryHandler,
             IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>> getCarsByMarkeQueryHandler,
             IQueryHandler<GetCarsByModellQuery, IEnumerable<Car>> getCarsByModellQueryHandler,
             IQueryHandler<GetCarsByMarkeAndModellQuery, IEnumerable<Car>> getCarsByMarkeAndModellQueryHandler,
             IQueryHandler<GetCarsByMarkeAndModellAndBaujahrQuery, IEnumerable<Car>> getCarsByMarkeAndModellAndBaujahrQueryHandler,
-            IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>> getCarsByFitProductQueryHandler
+            IQueryHandler<GetCarsByFitProductQuery, IEnumerable<Car>> getCarsByFitProductQueryHandler,
+            IMapper mapper
             )
         {
-            //_readOnlycarService = readOnlycarService;
-            //_deletableCarService = deletableCarService;
-            //_addUpdateableCarService = addUpdateableCarService;
+
             _endpointSources = endpointSources;
 
             //requert for HATEOAS, List of Routes and Methodes
@@ -79,11 +79,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
             _getCarsByMarkeAndModellQueryHandler = getCarsByMarkeAndModellQueryHandler;
             _getCarsByMarkeAndModellAndBaujahrQueryHandler = getCarsByMarkeAndModellAndBaujahrQueryHandler;
             _getCarsByFitProductQueryHandler = getCarsByFitProductQueryHandler;
+            //AutoMapper
+            _mapper = mapper;
         }
 
-        // AddCar - Authorization
-        // DeleteCar - Authorization
-        // UpdateCar - Authorization
 
         [HttpGet("Old")]
         public ActionResult<List<Car>> GetAllCarsAsync() // Auslaufend
@@ -317,12 +316,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPost("")]
-        //[Produces("application/json")]
-        public ActionResult<Car> AddCar(CarDTO carDTO)
+        public ActionResult<Car> AddCar([FromBody] CarDTOPost carDTO)
         {
             try
-            {
-                Car car = new Car(carDTO);
+            {   if (carDTO is null) return BadRequest("CarDto is null ");
+                
+
+                Car car = _mapper.Map<Car>(carDTO);
                 CreateCarCommand command = new CreateCarCommand(car);
                 var result = _mediator.ExecuteAsync<CreateCarCommand, Car>(command);
 
@@ -338,17 +338,16 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPut("{id}")]
-        //[Produces("application/json")]
         public ActionResult<Car> UpdateCar(int id, [FromQuery] CarDTOUpdate carDTO)
         {
             if (id <= 0) return BadRequest("Id must be greater than 0");
 
             GetCarByIdQuery query = new GetCarByIdQuery(id);
-            var carOrg = _mediator.QueryAsync<GetCarByIdQuery, Car>(query);
-            if (carOrg.Result == null) return NotFound("Car not found");
+            if (_mediator.QueryAsync<GetCarByIdQuery, Car>(query).Result == null) return NotFound("Car not found");
             try
             {
-                Car car = new Car(id, carDTO);
+                Car car = _mapper.Map<Car>(carDTO);
+                car.Id = id;
 
                 UpdateCarCommand command = new UpdateCarCommand(car);
                 var result = _mediator.ExecuteAsync<UpdateCarCommand, Car>(command).Result;

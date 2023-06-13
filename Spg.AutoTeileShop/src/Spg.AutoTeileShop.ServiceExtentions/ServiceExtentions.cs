@@ -24,6 +24,8 @@ using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Repository2;
 using Spg.AutoTeileShop.Repository2.CustomGenericRepositories;
 using Spg.AutoTeileShop.Repository2.Repositories;
+using AutoMapper;
+
 
 namespace Spg.AutoTeileShop.ServiceExtentions
 {
@@ -118,6 +120,9 @@ namespace Spg.AutoTeileShop.ServiceExtentions
             serviceCollection.AddTransient<IValidator<CarDTO>, CarDtoValidator>();
             serviceCollection.AddTransient<IValidator<CatagoryPostDTO>, PostCatagoryDtoValidator>();
 
+
+            // AutoMapper
+            //serviceCollection.AddAutoMapper(typeof(Program));
 
         }
     }

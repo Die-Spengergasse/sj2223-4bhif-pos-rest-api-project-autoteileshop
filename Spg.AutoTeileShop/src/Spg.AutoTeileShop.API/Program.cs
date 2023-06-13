@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Spg.AutoTeileShop.API.Helper;
@@ -10,6 +11,7 @@ using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.ServiceExtentions;
+using AutoMapper;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,8 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddAllTransient();
 
 builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 //DB
 builder.Services.ConfigureSQLite(connectionString);
