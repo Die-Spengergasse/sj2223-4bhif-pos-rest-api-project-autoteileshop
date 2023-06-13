@@ -24,9 +24,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
 
         //requert for HATEOAS, List of Routes and Methodes
-
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
-
         private List<BuildRoutePattern> _routes;
 
         // CQS
@@ -46,8 +44,6 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
         public CarController
             (
-            IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
-            IAddUpdateableCarService addUpdateableCarService,
             IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints,
             IMediator mediator,
             IQueryHandler<GetAllCarsQuery, IQueryable<Car>> getAllCarsQueryHandler,
