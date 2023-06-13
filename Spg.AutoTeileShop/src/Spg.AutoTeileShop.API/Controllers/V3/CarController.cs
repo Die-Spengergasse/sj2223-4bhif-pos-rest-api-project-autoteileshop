@@ -17,6 +17,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("3.0")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CarController : ControllerBase
     {
 
@@ -85,6 +86,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
 
         [HttpGet("Old")]
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetAllCarsAsync() // Auslaufend
         {
             GetAllCarsQuery query = new GetAllCarsQuery
@@ -248,6 +250,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpGet("")] // new
+        [AllowAnonymous]
         public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] string? baujahrS)
         {
             HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
@@ -316,6 +319,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPost("")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Car> AddCar([FromBody] CarDTOPost carDTO)
         {
             try
@@ -338,6 +342,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Car> UpdateCar(int id, [FromQuery] CarDTOUpdate carDTO)
         {
             if (id <= 0) return BadRequest("Id must be greater than 0");
@@ -362,6 +367,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         }
 
         [HttpPut("AddDelProduct/{delORAdd}")]
+        [Authorize(Policy = "SalesmanOrAdmin")]
         public ActionResult<Car> DelOrAddProductToFitsForCar(int carId, int productId, bool delOrAdd)
         {
             Task<Car> result = null;

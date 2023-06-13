@@ -7,7 +7,7 @@ using Spg.AutoTeileShop.Repository2.Repositories;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Spg.AutoTeileShop.Domain.Test
+namespace Spg.AutoTeileShop.ApplicationTest
 {
     [Collection("Sequential tests")]
     public class Service_UnitTests
