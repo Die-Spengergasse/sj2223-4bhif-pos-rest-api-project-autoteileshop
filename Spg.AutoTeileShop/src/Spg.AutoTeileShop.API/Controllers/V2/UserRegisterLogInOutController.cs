@@ -98,7 +98,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             catch (Exception ex)
             {
                 if(ex.Message.Contains("User is not confirmed")) return Unauthorized(ex.Message);
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
 

@@ -10,7 +10,7 @@
         public UserMailConfirme(int id, User user, string code, DateTime date)
         {
             Id = id;
-            // UserId = userId;
+            //UserId = userId;
             User = user;
             Code = code;
             this.date = date;

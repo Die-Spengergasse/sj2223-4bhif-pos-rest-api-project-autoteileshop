@@ -56,8 +56,9 @@ namespace Spg.AutoTeileShop.Application.Services
                 }
                 if (checkUserMailConf.Code == _userRepo.ComputeSha256Hash(code))
                 {
-                    checkUserMailConf.User.Confirmed = true;
-                    _userRepo.UpdateUser(checkUserMailConf.User);
+                    User? user = _userRepo.GetByEMail(Mail);
+                    user.Confirmed = true;
+                    _userRepo.UpdateUser(user);
                     _userMailRepository.DeletUserMailbyId(checkUserMailConf.Id);
                     return true;
                 }
