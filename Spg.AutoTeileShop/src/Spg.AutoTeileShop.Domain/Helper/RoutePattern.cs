@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing.Patterns;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Spg.AutoTeileShop.Domain.Helper
+﻿namespace Spg.AutoTeileShop.Domain.Helper
 {
     public class BuildRoutePattern
     {

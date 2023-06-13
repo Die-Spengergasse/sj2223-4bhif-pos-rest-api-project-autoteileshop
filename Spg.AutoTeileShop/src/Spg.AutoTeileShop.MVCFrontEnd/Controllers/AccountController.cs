@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.DTO_MVC;
+using Spg.AutoTeileShop.Domain.Helper;
 using Spg.AutoTeileShop.Domain.Interfaces.Authentication;
 using System.Text.Json;
 
@@ -33,7 +33,7 @@ namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
                 HttpContext.Response.Cookies.Append("4bhif_login", json);
                 return RedirectToAction("Index", "Home");
             }
-            return View("Login", new LoginDTO() { Email = ""});
+            return View("Login", new LoginDTO() { Email = "" });
         }
 
         [HttpGet]

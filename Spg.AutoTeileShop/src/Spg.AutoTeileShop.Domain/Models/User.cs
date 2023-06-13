@@ -1,6 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 

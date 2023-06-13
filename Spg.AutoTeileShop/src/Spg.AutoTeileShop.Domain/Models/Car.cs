@@ -46,7 +46,7 @@ namespace Spg.AutoTeileShop.Domain.Models
             this.Modell = carDto.Modell;
             this.Baujahr = carDto.Baujahr;
         }
-        
+
         public Car(int id, string marke, string modell, DateTime baujahr, List<Product> fitsForProducts)
         {
             Id = id;

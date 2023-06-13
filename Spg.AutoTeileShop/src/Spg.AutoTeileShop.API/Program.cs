@@ -1,25 +1,15 @@
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Spg.AutoTeileShop.API.Helper;
-using Org.BouncyCastle.Asn1.Cmp;
 using Spg.AutoTeileShop.Application.Services;
 using Spg.AutoTeileShop.DbExtentions;
 using Spg.AutoTeileShop.Domain.Interfaces.UserInterfaces;
 using Spg.AutoTeileShop.ServiceExtentions;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Web.Helpers;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);

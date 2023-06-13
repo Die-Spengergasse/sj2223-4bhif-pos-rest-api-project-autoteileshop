@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Spg.AutoTeileShop.Infrastructure;
 
 namespace Spg.AutoTeileShop.API.Controllers.V2

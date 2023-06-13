@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 using Spg.AutoTeileShop.Domain.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Helper
 {

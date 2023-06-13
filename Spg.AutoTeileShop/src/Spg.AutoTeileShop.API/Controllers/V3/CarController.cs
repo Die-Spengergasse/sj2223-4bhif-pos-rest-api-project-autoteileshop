@@ -1,6 +1,4 @@
-﻿
-using Bogus;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Application.Services.CQS.Car.Commands;
@@ -48,10 +46,10 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
             (IReadOnlyCarService readOnlycarService, IDeletableCarService deletableCarService,
             IAddUpdateableCarService addUpdateableCarService,
             IEnumerable<EndpointDataSource> endpointSources, ListAllEndpoints listAllEndpoints
-            ,IMediator mediator
-            ,IQueryHandler<GetAllCarsQuery, IQueryable<Car>> getAllCarsQueryHandler
-            ,IQueryHandler<GetCarByIdQuery, Car> getCarByIdQueryHandler
-            ,ICommandHandler<CreateCarCommand, Car> createCarCommandHandler
+            , IMediator mediator
+            , IQueryHandler<GetAllCarsQuery, IQueryable<Car>> getAllCarsQueryHandler
+            , IQueryHandler<GetCarByIdQuery, Car> getCarByIdQueryHandler
+            , ICommandHandler<CreateCarCommand, Car> createCarCommandHandler
             , IQueryHandler<GetCarsByBaujahrQuery, IEnumerable<Car>> getCarsByBaujahrQueryHandler,
             IQueryHandler<GetCarsByMarkeQuery, IEnumerable<Car>> getCarsByMarkeQueryHandler,
             IQueryHandler<GetCarsByModellQuery, IEnumerable<Car>> getCarsByModellQueryHandler,
@@ -90,8 +88,9 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         [HttpGet("Old")]
         public ActionResult<List<Car>> GetAllCarsAsync() // Auslaufend
         {
-            GetAllCarsQuery query = new GetAllCarsQuery{
-            SortBy = c => c.Marke
+            GetAllCarsQuery query = new GetAllCarsQuery
+            {
+                SortBy = c => c.Marke
 
             };
 
@@ -141,7 +140,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
                 GetCarsByBaujahrQuery query = new GetCarsByBaujahrQuery(new DateTime(year, 1, 1));
 
                 var result = _mediator.QueryAsync<GetCarsByBaujahrQuery, IQueryable<Car>>(query).Result;
-                
+
                 //var result = _readOnlycarService.GetByBauJahr(new DateTime(year, 1, 1));
                 HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
 
@@ -285,7 +284,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
                     query.Filter = c => c.Marke.Equals(marke) && c.Modell.Equals(model) && c.Baujahr.Year == baujahr;
                 }
 
-                cars =  _mediator.QueryAsync<GetAllCarsQuery, List<Car>>(query).Result;
+                cars = _mediator.QueryAsync<GetAllCarsQuery, List<Car>>(query).Result;
 
 
 
@@ -304,7 +303,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
         {
             try
             {
-   
+
                 GetCarByIdQuery query = new GetCarByIdQuery(id);
                 DeleteCarCommand command = new DeleteCarCommand(_mediator.QueryAsync<GetCarByIdQuery, Car>(query).Result);
                 return Ok(_mediator.ExecuteAsync<DeleteCarCommand, Car>(command).Result);
@@ -340,13 +339,13 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
         [HttpPut("{id}")]
         //[Produces("application/json")]
-        public ActionResult<Car> UpdateCar(int id, [FromQuery]CarDTOUpdate carDTO)
+        public ActionResult<Car> UpdateCar(int id, [FromQuery] CarDTOUpdate carDTO)
         {
             if (id <= 0) return BadRequest("Id must be greater than 0");
-           
+
             GetCarByIdQuery query = new GetCarByIdQuery(id);
             var carOrg = _mediator.QueryAsync<GetCarByIdQuery, Car>(query);
-            if ( carOrg.Result == null) return NotFound("Car not found");
+            if (carOrg.Result == null) return NotFound("Car not found");
             try
             {
                 Car car = new Car(id, carDTO);

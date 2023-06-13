@@ -37,7 +37,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _deletableShoppingCartService = deletableShoppingCartService;
             _addUpdatableShoppingCartService = updatableShoppingCartService;
             _readOnlyUserService = readOnlyUserService;
-            
+
             //Hateaos
             _endpointSources = endpointSources;
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
@@ -101,7 +101,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         }
 
         [HttpGet("ByUser")]
-        [Authorize(Policy = "UserOrAdmin")]  
+        [Authorize(Policy = "UserOrAdmin")]
         public ActionResult<ShoppingCart> GetShoppingCartByUserNav([FromQuery] Guid userGuid)
         {
             try

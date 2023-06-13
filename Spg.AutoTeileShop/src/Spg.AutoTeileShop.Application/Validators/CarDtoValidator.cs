@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using Spg.AutoTeileShop.Domain.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Application.Validators
 {
@@ -13,7 +8,7 @@ namespace Spg.AutoTeileShop.Application.Validators
         public CarDtoValidator()
         {
             RuleFor(c => c.Modell)
-                .Length(1,25)
+                .Length(1, 25)
                 .WithMessage("Bitte zwischen 1 und 25!")
                 .WithErrorCode("9000");
 
@@ -26,7 +21,7 @@ namespace Spg.AutoTeileShop.Application.Validators
                 .LessThanOrEqualTo(DateTime.Now)
                 .WithMessage("Ein Baujahr kann nicht in der Zukunft liegen!")
                 .WithErrorCode("9002");
-            
+
         }
     }
 }

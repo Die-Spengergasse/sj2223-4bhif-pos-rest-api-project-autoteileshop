@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
+﻿using Spg.AutoTeileShop.Domain.Interfaces.Generic_Repository_Interfaces;
 using Spg.AutoTeileShop.Domain.Models;
 using Spg.AutoTeileShop.Infrastructure;
 

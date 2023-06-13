@@ -2,8 +2,6 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AutoTeileShop.Application.Helper;
 using Spg.AutoTeileShop.Domain.DTO;
@@ -25,7 +23,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IDeletableProductService _deletableProductService;
         private readonly IReadOnlyCatagoryService _readOnlyCatagoryService;
         private readonly IValidator<ProductDTO> _validator;
-        
+
         //Hateaos
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
         private List<BuildRoutePattern> _routes;
@@ -40,7 +38,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             _deletableProductService = deletableProductService;
             _readOnlyCatagoryService = readOnlyCatagoryService;
             _validator = validator;
-            
+
             //Hateaos
             _endpointSources = endpointSources;
             var apiVersionAttribute = (ApiVersionAttribute)Attribute.GetCustomAttribute(GetType(), typeof(ApiVersionAttribute));
@@ -96,7 +94,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             HateoasBuild<ProductDTOFilter, int> hb = new HateoasBuild<ProductDTOFilter, int>();
             try
             {
-                
+
 
                 Catagory? catagory = null;
                 if (catagoryId != 0)
@@ -115,7 +113,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                             ProductDTOFilter productDTO = new ProductDTOFilter(item);
                             ProductCatDTOs.Add(productDTO);
                         }
-                       
+
                         return Ok(hb.buildHateoas(ProductCatDTOs.ToList(), ProductCatDTOs.Select(s => s.Id).ToList(), _routes));
                     }
                 }

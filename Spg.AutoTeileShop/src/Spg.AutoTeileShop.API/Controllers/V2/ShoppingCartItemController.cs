@@ -49,7 +49,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         {
             var items = _readOnlyShoppingCartItemService.GetAll();
             HateoasBuild<ShoppingCartItem, int> hb = new HateoasBuild<ShoppingCartItem, int>();
-            
+
             if (items.Count() == 0 || items is null)
                 return NotFound();
             return Ok(hb.buildHateoas(items.ToList(), items.Select(s => s.Id).ToList(), _routes));
@@ -107,11 +107,11 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
                 var items = _readOnlyShoppingCartItemService.GetByShoppingCart(shoppingCart);
                 if (items.Count() == 0 || items is null)
                     return NotFound();
-            
+
                 List<ShoppingCartItemDTOGet> itemsDTO = new();
                 foreach (ShoppingCartItem item in items)
                 {
-                    itemsDTO.Add(new ShoppingCartItemDTOGet(item));   
+                    itemsDTO.Add(new ShoppingCartItemDTOGet(item));
                 }
                 return Ok(hb.buildHateoas(itemsDTO.ToList(), itemsDTO.Select(s => s.Id).ToList(), _routes));
             }

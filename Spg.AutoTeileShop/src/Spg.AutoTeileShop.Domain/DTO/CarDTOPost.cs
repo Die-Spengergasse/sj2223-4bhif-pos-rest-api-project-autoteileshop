@@ -1,7 +1,4 @@
-﻿using Spg.AutoTeileShop.Domain.Models;
-using System.ComponentModel.DataAnnotations;
-
-namespace Spg.AutoTeileShop.Domain.DTO
+﻿namespace Spg.AutoTeileShop.Domain.DTO
 {
     public class CarDTOPost
     {

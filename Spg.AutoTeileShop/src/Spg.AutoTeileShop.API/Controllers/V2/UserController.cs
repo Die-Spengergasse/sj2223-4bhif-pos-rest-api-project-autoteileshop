@@ -22,7 +22,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
         private readonly IEnumerable<EndpointDataSource> _endpointSources;
         //requert for HATEOAS, List of Routes and Methodes
         private List<BuildRoutePattern> _routes;
-        
+
         public UserController(IAddUpdateableUserService addUpdateableUserService, IDeletableUserService deletableUserService,
             IReadOnlyUserService readOnlyUserService, IEnumerable<EndpointDataSource> endpointSources,
             ListAllEndpoints listAllEndpoints)

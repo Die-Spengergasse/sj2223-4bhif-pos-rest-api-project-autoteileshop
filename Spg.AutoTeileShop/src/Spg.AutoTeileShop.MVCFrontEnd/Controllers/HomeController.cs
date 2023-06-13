@@ -3,8 +3,6 @@ using Spg.AutoTeileShop.Domain.DTO;
 using Spg.AutoTeileShop.MVCFrontEnd.Models;
 using System.Diagnostics;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Web.Helpers;
 
 namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
 {
@@ -34,7 +32,7 @@ namespace Spg.AutoTeileShop.MVCFrontEnd.Controllers
             {
                 return RedirectToAction("Unauthorized", "Home");
             }
-            return View("Privacy" , userInfoJson);
+            return View("Privacy", userInfoJson);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,10 +1,5 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AutoTeileShop.Domain.DTO
 {
@@ -22,7 +17,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
         [PhoneAttribute(ErrorMessage = "Das ist keine gültige Telefon Nummer!")]
         public string Telefon { get; set; } = string.Empty;
         [RegularExpression("^[A-Za-z0-9,@,.]")]
-        [EmailAddress(ErrorMessage ="Das ist keine gültige E-mail Adresse!")]
+        [EmailAddress(ErrorMessage = "Das ist keine gültige E-mail Adresse!")]
         //[RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")]        
         public string Email { get; set; } = string.Empty;         //IsUnique
         public string PW { get; set; } = string.Empty;

@@ -1,5 +1,4 @@
 ﻿using Spg.AutoTeileShop.Domain.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace Spg.AutoTeileShop.Domain.DTO
 {
@@ -12,7 +11,7 @@ namespace Spg.AutoTeileShop.Domain.DTO
 
         public CarDTOUpdate(Car car)
         {
-           // this.Id = car.Id;
+            // this.Id = car.Id;
             this.Marke = car.Marke;
             this.Modell = car.Modell;
             this.Baujahr = car.Baujahr;
