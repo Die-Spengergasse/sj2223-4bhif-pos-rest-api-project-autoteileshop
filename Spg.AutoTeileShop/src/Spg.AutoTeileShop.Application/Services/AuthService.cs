@@ -68,43 +68,7 @@ namespace Spg.AutoTeileShop.Application.Services
             return null;
         }
 
-        /// <summary>
-        /// Erstellt einen neuen Benutzer in der Datenbank. Dafür wird ein Salt generiert und der
-        /// Hash des Passwortes berechnet.
-        /// Wird eine PupilId übergeben, so wird die Rolle "Pupil" zugewiesen, ansonsten "Teacher".
-        /// </summary>
-        /// <param name="credentials"></param>
-        /// <returns></returns>
-        /*
-        public async Task<User> CreateUser(UserCredentials credentials)
-        {
-            string salt = GenerateRandom();
-            // Den neuen Userdatensatz erstellen
-            User newUser = new User
-            {
-                U_Name = credentials.EMail,
-                U_Salt = salt,
-                U_Hash = CalculateHash(credentials.Password, salt),
-            };
-            // Die Rolle des Users zuweisen
-            newUser.U_Role = "";
-            db.Entry(newUser).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-            await db.SaveChangesAsync();
-            return newUser;
-        }
-        */
-
-        /// <summary>
-        /// Liest die Details des übergebenen Users aus der Datenbank.
-        /// </summary>
-        /// <param name="userid">EMail, nach dem gesucht wird.</param>
-        /// <returns>Userobjekt aus der Datenbank</returns>
-        /*
-        public Task<User> GetUserDetails(string userid)
-        {
-            
-        }
-        */
+       
 
         public Task<string> GenerateToken(UserCredentials credentials)
         {
