@@ -1,5 +1,6 @@
 ﻿using Spg.AutoTeileShop.Domain.DTO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Spg.AutoTeileShop.Domain.Models
 {
@@ -20,8 +21,12 @@ namespace Spg.AutoTeileShop.Domain.Models
 
         public override string ToString()
         {
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles
+            };
             //return $"{{\"Id\": {Id}, \"Marke\": \"{Marke}\", \"Modell\": \"{Modell}\", \"Baujahr\": \"{Baujahr.ToString("yyyy-MM-dd")}\"}}";
-            return JsonSerializer.Serialize(this);
+            return JsonSerializer.Serialize(this, options);
         }
 
 
