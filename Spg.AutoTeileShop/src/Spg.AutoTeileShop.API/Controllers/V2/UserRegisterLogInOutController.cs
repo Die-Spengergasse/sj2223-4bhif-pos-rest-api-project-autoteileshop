@@ -66,7 +66,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V2
             try
             {
                 bool isChecked = _userRegistService.CheckCode_and_verify(mail, code);
-                if (isChecked) return Ok();
+                if (isChecked) return Ok("User confirmed!");
                 return BadRequest("Code konnte nicht gefunden werden");
             }
             catch (Exception ex)
