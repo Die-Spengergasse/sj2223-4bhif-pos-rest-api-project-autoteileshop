@@ -248,7 +248,7 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
 
         [HttpGet("")] // new
         [AllowAnonymous]
-        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] string? baujahrS)
+        public ActionResult<List<Car>> GetByMarkeAndModellAndBaujahrFilter([FromQuery] string? marke, [FromQuery] string? model, [FromQuery] string? baujahrS, [FromQuery] int? pageAct , [FromQuery] int? pageSize)
         {
             HateoasBuild<Car, int> hb = new HateoasBuild<Car, int>();
             IEnumerable<Car> cars = new List<Car>();
@@ -283,10 +283,14 @@ namespace Spg.AutoTeileShop.API.Controllers.V3
                     query.Filter = c => c.Marke.Equals(marke) && c.Modell.Equals(model) && c.Baujahr.Year == baujahr;
                 }
 
-                cars = _mediator.QueryAsync<GetAllCarsQuery, List<Car>>(query).Result;
 
+                if (pageSize is not null && pageAct is not null)
+                {
+                    query.PageSize = pageSize.Value;
+                    query.PageNumber = pageAct.Value;
+                }
 
-
+                cars = _mediator.QueryAsync<GetAllCarsQuery, IQueryable < Spg.AutoTeileShop.Domain.Models.Car>> (query).Result;
 
                 return Ok(hb.buildHateoas(cars.ToList(), cars.Select(s => s.Id).ToList(), _routes.ToList()));
             }
