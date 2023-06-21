@@ -193,6 +193,7 @@ builder.Services.AddAuthorization(options =>
     {
         policy.Requirements.Add(new CustomAuthorizationRequirement("User", "Salesman", "Admin"));
     });
+
 });
 
 builder.Services.AddTransient<IAuthorizationHandler, CustomAuthorizationHandler>();
